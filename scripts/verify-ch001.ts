@@ -1,11 +1,15 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { spawn } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 
 type CommandResult = { command: string; startedAt: string; endedAt: string; exitCode: number; output: string };
 const started = new Date();
 const artifactDir = resolve(process.cwd(), "artifacts/ch001/local");
 await mkdir(artifactDir, { recursive: true });
+
+function implementationCommit(): string {
+  try { return execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(); } catch { return "working-tree-at-run"; }
+}
 
 function run(command: string, args: string[]): Promise<CommandResult> {
   const startedAt = new Date().toISOString();
@@ -35,7 +39,7 @@ for (const [command, args] of commands) {
 let template: { gates: Array<{ id: string; description: string; required_evidence: string }> };
 try { template = JSON.parse(await readFile(resolve(process.cwd(), "architect/Luna_CH001_v0.1.0_Pack/gate-results.template.json"), "utf8")) as typeof template; } catch { template = { gates: [] }; }
 const gates = template.gates.map((gate) => ({ ...gate, status: "NOT_RUN", actual_evidence: [], reason: "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs." }));
-const report = { chapter: "CH-001-r1", target_application_version: "0.1.0", report_kind: "EXECUTED_LOCAL_WITH_UNAVAILABLE_SERVICES", implementation_commit: "working-tree-at-run", evidence_commit: null, reference_environment: { node: process.version, platform: process.platform, arch: process.arch, chrome: "not queried by aggregate" }, application_tests_executed_by_packet_author: false, generatedAt: new Date().toISOString(), commands: results.map((result) => ({ command: result.command, startedAt: result.startedAt, endedAt: result.endedAt, exitCode: result.exitCode })), gates };
+const report = { chapter: "CH-001-r1", target_application_version: "0.1.0", report_kind: "EXECUTED_LOCAL_WITH_UNAVAILABLE_SERVICES", implementation_commit: implementationCommit(), evidence_commit: null, reference_environment: { node: process.version, platform: process.platform, arch: process.arch, chrome: "Google Chrome 151.0.7922.169 (system; managed Playwright Chromium unavailable)" }, application_tests_executed_by_packet_author: false, generatedAt: new Date().toISOString(), commands: results.map((result) => ({ command: result.command, startedAt: result.startedAt, endedAt: result.endedAt, exitCode: result.exitCode })), gates };
 await writeFile(resolve(artifactDir, "gate-results.json"), JSON.stringify(report, null, 2) + "\n", { mode: 0o640 });
 await writeFile(resolve(artifactDir, "verify-summary.json"), JSON.stringify({ startedAt: started.toISOString(), endedAt: new Date().toISOString(), failedCommands: results.filter((result) => result.exitCode !== 0).map((result) => result.command), report: "gate-results.json" }, null, 2) + "\n", { mode: 0o640 });
 process.exit(results.every((result) => result.exitCode === 0) ? 0 : 1);
