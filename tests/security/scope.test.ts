@@ -11,6 +11,7 @@ describe("CH-001 security and scope assertions", () => {
     expect(compose).toContain('127.0.0.1:3000:3000');
     expect(compose).not.toMatch(/5432:\\d/);
     expect(compose).not.toMatch(/worker:\\s*[\\r\\n\\s-]*ports:/);
+    expect(compose).toContain('command: ["pnpm", "--filter", "@oss/worker", "start"]');
     expect(compose).toContain("cap_drop:");
     expect(compose).toContain("- ALL");
   });

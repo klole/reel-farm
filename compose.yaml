@@ -78,6 +78,7 @@ services:
       PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
     volumes:
       - oss_media_data:/data/media
+    command: ["pnpm", "--filter", "@oss/worker", "start"]
     depends_on:
       migrate:
         condition: service_completed_successfully
