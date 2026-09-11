@@ -1,0 +1,555 @@
+{
+  "record_kind": "TEMPLATE_NOT_EXECUTED",
+  "chapter": "CH-001R-r2",
+  "target_application_version": "0.1.0",
+  "implementation_commit": null,
+  "tested_tree": null,
+  "working_tree_clean_before_run": null,
+  "run_id": null,
+  "reference_environment": null,
+  "started_at_utc": null,
+  "ended_at_utc": null,
+  "commands": [],
+  "finding_dispositions": [],
+  "gates": [
+    {
+      "id": "CH001-001",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + E4-local; setup log and environment record.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-002",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + E4-local; before/after record/hash checks.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-003",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; sanitized Compose config/assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-004",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; network assertions/log summary and export.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-005",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + E4-local; state transitions/screenshots.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-006",
+      "status": "NOT_RUN",
+      "required_evidence": "E4-local; before/after verification.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-007",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; database assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-008",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; real session requests/browser test.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-009",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; sanitized header assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-010",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; route matrix.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-011",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; command and HTTP authorization checks.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-012",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; scoped scan/report.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-013",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; browser journey/database reads.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-014",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; database invariants.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-015",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; parameterized contract/command tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-016",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; deterministic unit tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-017",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; browser test with controlled responses.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-018",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; two independent browser pages.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-019",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; network fault tests and head assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-020",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; immutable snapshot test.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-021",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; real decoder/storage/browser.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-022",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; batch test.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-023",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; signature/decode tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-024",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; safely bounded adversarial fixtures.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-025",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; decoded metadata/output checks.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-026",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; storage and HTTP tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-027",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; record assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-028",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; failure boundaries and hash checks.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-029",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; interaction/state tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-030",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; editor and output.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-031",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; both-ratio corpus.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-032",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; focused control tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-033",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; crop-marker assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-034",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; grouped edit and shortcut tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-035",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; text corpus.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-036",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 accessibility checks + visual/keyboard review.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-037",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; real worker/database test.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-038",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; failure/transaction assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-039",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; command concurrency tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-040",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; real corpus render.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-041",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; controlled missing/delayed resource fixtures.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-042",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; architecture inspection and validation failures.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-043",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; containment tests with network/file sentinels.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-044",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; launch/config assertions and canary tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-045",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; deterministic hang/failure fixture.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-046",
+      "status": "NOT_RUN",
+      "required_evidence": "E4-local; process lifecycle log and DB checks.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-047",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; fencing/unique-finalization test.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-048",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + E4-local; failpoint/recovery checks.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-049",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; error-policy/state tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-050",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; diff images/report.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-051",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; network/body-hash check.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-052",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; machine-readable hash comparison.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-053",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + visual; ZIP structure and sequence assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-054",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; text and checksum assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-055",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; stale-state browser test.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-056",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; content and path scan.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-057",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; call-count and failure tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-058",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; route and worker-down tests.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-059",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; full browser test and representative ZIP.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-060",
+      "status": "NOT_RUN",
+      "required_evidence": "Visual/keyboard review at recorded build.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-061",
+      "status": "NOT_RUN",
+      "required_evidence": "E2 + manual; screenshots and report.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-062",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; command log/exit codes.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-063",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; migration/checksum assertions.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-064",
+      "status": "NOT_RUN",
+      "required_evidence": "E2; failure injection and UI/state evidence.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-065",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; scoped scanning/network report.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-066",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + clean-run evidence; do not claim an independent human test unless one occurred.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-067",
+      "status": "NOT_RUN",
+      "required_evidence": "E1; provenance/dependency records.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-068",
+      "status": "NOT_RUN",
+      "required_evidence": "E1; diff/dependency/navigation inspection.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-069",
+      "status": "NOT_RUN",
+      "required_evidence": "E1; state/traceability check.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-070",
+      "status": "NOT_RUN",
+      "required_evidence": "E1; handoff/result-file consistency.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-071",
+      "status": "NOT_RUN",
+      "required_evidence": "E1 + E2; artifact manifest/scan.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    },
+    {
+      "id": "CH001-072",
+      "status": "NOT_RUN",
+      "required_evidence": "E1; diff, action declaration, state.",
+      "actual_evidence": [],
+      "reason": "Template only; replace with actual repair-run evidence."
+    }
+  ],
+  "artifacts": [],
+  "overall_checkpoint_complete": false,
+  "containing_evidence_commit": "Resolve after commit and return its full SHA in the final handoff message; no self-referential SHA required in this file.",
+  "instructions": {
+    "actual_evidence_item_fields": [
+      "kind",
+      "test_or_review_id",
+      "reviewer_when_applicable",
+      "implementation_commit_or_tree",
+      "run_id",
+      "path_or_artifact_reference",
+      "sha256",
+      "observed_result"
+    ],
+    "command_item_fields": [
+      "command",
+      "started_at_utc",
+      "ended_at_utc",
+      "exit_code",
+      "discovered_tests",
+      "executed_tests",
+      "passed_tests",
+      "failed_tests",
+      "skipped_tests",
+      "report_reference"
+    ],
+    "artifact_item_fields": [
+      "path_or_artifact_reference",
+      "sha256",
+      "bytes",
+      "description",
+      "sanitization_review"
+    ],
+    "no_pass_without_execution_or_appropriate_inspection": true
+  }
+}

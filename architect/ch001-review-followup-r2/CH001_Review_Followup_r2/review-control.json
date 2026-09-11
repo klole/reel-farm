@@ -1,0 +1,89 @@
+{
+  "record_kind": "ARCHITECT_STATIC_REVIEW_OF_SUBMITTED_EVIDENCE",
+  "repository": "https://github.com/klole/reel-farm",
+  "original_chapter": "CH-001-r1",
+  "authorized_continuation": "CH-001R-r2",
+  "original_base_commit": "ce17fdf5cade9b91b46da86af943a8be651289f5",
+  "reviewed_implementation_commit": "bdd6540b90f2d59b7ef11215cd0ceb631fc6336a",
+  "reviewed_evidence_commit": "ad0dd5fdd6764e4f3a40a6028720bff272130d42",
+  "north_star_revision": "NS-0.2",
+  "north_star_sha256": "3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d",
+  "verdict": "REPAIR_REQUIRED",
+  "accepted_application_version": null,
+  "next_feature_chapter_authorized": false,
+  "reported_original_gates": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 72
+  },
+  "reported_original_test_counts": {
+    "unit_passed": 6,
+    "security_passed": 4
+  },
+  "reported_commands": [
+    {
+      "command": "pnpm lint",
+      "reported_exit_code": 0
+    },
+    {
+      "command": "pnpm typecheck",
+      "reported_exit_code": 0
+    },
+    {
+      "command": "pnpm build",
+      "reported_exit_code": 0
+    },
+    {
+      "command": "pnpm test:unit",
+      "reported_exit_code": 0
+    },
+    {
+      "command": "pnpm test:security",
+      "reported_exit_code": 0
+    },
+    {
+      "command": "pnpm test:integration",
+      "reported_exit_code": 2
+    },
+    {
+      "command": "pnpm test:e2e",
+      "reported_exit_code": 2
+    },
+    {
+      "command": "pnpm test:render",
+      "reported_exit_code": 2
+    },
+    {
+      "command": "pnpm test:smoke",
+      "reported_exit_code": 2
+    },
+    {
+      "command": "pnpm verify:ch001",
+      "reported_exit_code": 1
+    }
+  ],
+  "reviewer_reexecuted_application_commands": false,
+  "reviewer_performed_application_visual_review": false,
+  "reviewer_mutated_repository": false,
+  "reviewer_dispatched_ci": false,
+  "repair_application_results_exist_in_this_packet": false,
+  "findings": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11"
+  ],
+  "notes": [
+    "Same submitted commits as the previous review, not a new repair completion.",
+    "Reported command outcomes are not independent reruns.",
+    "Static source consequences require reproduction where labeled.",
+    "Packet validation is not application verification."
+  ]
+}

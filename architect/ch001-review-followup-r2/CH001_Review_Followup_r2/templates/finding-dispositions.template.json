@@ -1,0 +1,166 @@
+{
+  "record_kind": "TEMPLATE_NOT_EXECUTED",
+  "chapter": "CH-001R-r2",
+  "findings": [
+    {
+      "id": "R01",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-062"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R02",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-062",
+        "CH001-069",
+        "CH001-070",
+        "CH001-071"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R03",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-001",
+        "CH001-003",
+        "CH001-040",
+        "CH001-044",
+        "CH001-063"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R04",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-044",
+        "CH001-065"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R05",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-017",
+        "CH001-018",
+        "CH001-019",
+        "CH001-021",
+        "CH001-034",
+        "CH001-059"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R06",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-017",
+        "CH001-018",
+        "CH001-019",
+        "CH001-020",
+        "CH001-055"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R07",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-005",
+        "CH001-036",
+        "CH001-064"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R08",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-045",
+        "CH001-046",
+        "CH001-047",
+        "CH001-048",
+        "CH001-049"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R09",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-022",
+        "CH001-023",
+        "CH001-024",
+        "CH001-064"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R10",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-035",
+        "CH001-041",
+        "CH001-042",
+        "CH001-049",
+        "CH001-050"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    },
+    {
+      "id": "R11",
+      "status": "OPEN",
+      "related_gate_ids": [
+        "CH001-060",
+        "CH001-061",
+        "CH001-062",
+        "CH001-066",
+        "CH001-067",
+        "CH001-068",
+        "CH001-069",
+        "CH001-070",
+        "CH001-071",
+        "CH001-072"
+      ],
+      "repair_or_disproof": null,
+      "test_reference": null,
+      "actual_result": null,
+      "remaining_limitation": null
+    }
+  ]
+}

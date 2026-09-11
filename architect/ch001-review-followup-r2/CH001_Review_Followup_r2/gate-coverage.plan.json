@@ -1,0 +1,1049 @@
+{
+  "record_kind": "PLAN_NOT_EXECUTED",
+  "chapter": "CH-001R-r2",
+  "parent_chapter": "CH-001-r1",
+  "reviewed_implementation_commit": "bdd6540b90f2d59b7ef11215cd0ceb631fc6336a",
+  "reviewed_evidence_commit": "ad0dd5fdd6764e4f3a40a6028720bff272130d42",
+  "original_acceptance_git_blob": "ae3de51811b3e740952352ce6272402a6d23c5da",
+  "gate_count": 72,
+  "source_only_gate_ids": [
+    "CH001-067",
+    "CH001-068",
+    "CH001-069",
+    "CH001-070",
+    "CH001-072"
+  ],
+  "implementation_or_live_tests_executed_by_packet_author": false,
+  "gates": [
+    {
+      "id": "CH001-001",
+      "original_procedure": "From a clean checkout/disposable environment, follow the written setup and Compose instructions. Reach first-owner setup without undeclared manual fixes.",
+      "original_required_evidence": "E2 + E4-local; setup log and environment record.",
+      "planned_suites": [
+        "LIFECYCLE",
+        "DOC"
+      ],
+      "related_findings": [
+        "R03"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-002",
+      "original_procedure": "Repeat setup/start. Existing generated secrets, owner, database records, and media remain intact; no silent reseed or reset.",
+      "original_required_evidence": "E2 + E4-local; before/after record/hash checks.",
+      "planned_suites": [
+        "LIFECYCLE"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-003",
+      "original_procedure": "Inspect and exercise network binding. Only the web surface is host-published on loopback; database and worker are not publicly bound.",
+      "original_required_evidence": "E1 + E2; sanitized Compose config/assertions.",
+      "planned_suites": [
+        "LIFECYCLE",
+        "SECURITY"
+      ],
+      "related_findings": [
+        "R03"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-004",
+      "original_procedure": "With provider credentials absent and external runtime requests denied/monitored, complete the manual workflow. Dependency/image pulls are outside this runtime observation window.",
+      "original_required_evidence": "E2; network assertions/log summary and export.",
+      "planned_suites": [
+        "UI",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-005",
+      "original_procedure": "Stop the worker. The editor/save/local media remain usable; status becomes degraded and a requested render honestly waits. Restart restores readiness.",
+      "original_required_evidence": "E2 + E4-local; state transitions/screenshots.",
+      "planned_suites": [
+        "UI",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R07"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-006",
+      "original_procedure": "Stop and recreate the app/worker/database containers without deleting volumes. Login, projects, revision IDs, accepted media hashes, and ready exports remain valid.",
+      "original_required_evidence": "E4-local; before/after verification.",
+      "planned_suites": [
+        "LIFECYCLE"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-007",
+      "original_procedure": "Missing/invalid setup token cannot create an owner. Two simultaneous valid setup attempts create exactly one owner/workspace; reused bootstrap is closed.",
+      "original_required_evidence": "E2; database assertions.",
+      "planned_suites": [
+        "DB",
+        "HTTP"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-008",
+      "original_procedure": "Correct login works; wrong credentials fail; basic rate limiting operates; logout and finite expiry invalidate protected access.",
+      "original_required_evidence": "E2; real session requests/browser test.",
+      "planned_suites": [
+        "HTTP",
+        "UI"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-009",
+      "original_procedure": "Inspect cookie flags and execute cross-origin state-changing attempts, including multipart upload. Unsafe host/origin/CSRF requests fail. The loopback HTTP exception is explicit.",
+      "original_required_evidence": "E1 + E2; sanitized header assertions.",
+      "planned_suites": [
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-010",
+      "original_procedure": "Unauthenticated requests cannot read/mutate projects, drafts, assets, thumbnails, render details, final images, exports, or owner-only status.",
+      "original_required_evidence": "E2; route matrix.",
+      "planned_suites": [
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-011",
+      "original_procedure": "Controlled second-workspace fixtures cannot access another workspace's resources by guessing IDs or supplying foreign asset references.",
+      "original_required_evidence": "E2; command and HTTP authorization checks.",
+      "planned_suites": [
+        "DB",
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-012",
+      "original_procedure": "Passwords/setup tokens/session secrets are absent from ordinary logs, URLs, committed config, browser bundles, output manifests, screenshots, and export files. Auth bypass/signup shortcuts are absent.",
+      "original_required_evidence": "E1 + E2; scoped scan/report.",
+      "planned_suites": [
+        "SECURITY",
+        "DOC"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-013",
+      "original_procedure": "Create, list, rename, reopen, and switch between two projects with independent persisted drafts.",
+      "original_required_evidence": "E2; browser journey/database reads.",
+      "planned_suites": [
+        "UI",
+        "DB"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-014",
+      "original_procedure": "Save a valid document, inspect its immutable revision/hash, save an edit, and prove the earlier revision was not mutated.",
+      "original_required_evidence": "E2; database invariants.",
+      "planned_suites": [
+        "DB"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-015",
+      "original_procedure": "Reject unsupported schema versions/layout/font IDs, bad slide/block IDs, duplicate IDs, illegal counts/boxes, foreign assets, arbitrary URLs, and invalid numeric values.",
+      "original_required_evidence": "E2; parameterized contract/command tests.",
+      "planned_suites": [
+        "UNIT",
+        "DB"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-016",
+      "original_procedure": "Semantically identical documents with different object-key insertion order hash consistently under the declared canonicalizer; array order/content changes alter the hash.",
+      "original_required_evidence": "E2; deterministic unit tests.",
+      "planned_suites": [
+        "UNIT"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-017",
+      "original_procedure": "Autosave reports unsaved/saving/saved correctly, flush-before-preview waits for acknowledgment, and browser close/reopen retrieves the saved deck.",
+      "original_required_evidence": "E2; browser test with controlled responses.",
+      "planned_suites": [
+        "UI"
+      ],
+      "related_findings": [
+        "R05",
+        "R06"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-018",
+      "original_procedure": "Two tabs edit the same base revision. The second stale save is rejected; its local buffer survives; explicit safe reload does not silently discard unacknowledged work.",
+      "original_required_evidence": "E2; two independent browser pages.",
+      "planned_suites": [
+        "UI"
+      ],
+      "related_findings": [
+        "R05",
+        "R06"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-019",
+      "original_procedure": "Delay/drop/reorder save responses and temporarily fail a save. A late response cannot clobber newer text or show false saved state; retry/reconciliation does not overwrite a later revision.",
+      "original_required_evidence": "E2; network fault tests and head assertions.",
+      "planned_suites": [
+        "UI",
+        "DB"
+      ],
+      "related_findings": [
+        "R05",
+        "R06"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-020",
+      "original_procedure": "Title, caption, hashtags, slide content and order are bound to one saved revision. Concurrent later editing cannot change a render/export already requested for that revision.",
+      "original_required_evidence": "E2; immutable snapshot test.",
+      "planned_suites": [
+        "DB",
+        "UI",
+        "RENDER"
+      ],
+      "related_findings": [
+        "R06"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-021",
+      "original_procedure": "Upload valid JPEG, PNG, and static WebP in a batch. Each has a durable accepted record, image dimensions/hash, thumbnail, and selectable local asset.",
+      "original_required_evidence": "E2; real decoder/storage/browser.",
+      "planned_suites": [
+        "HTTP",
+        "UI"
+      ],
+      "related_findings": [
+        "R05"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-022",
+      "original_procedure": "Mix valid and invalid files in a batch. Per-file errors are useful; accepted files remain available and are not rolled back unnecessarily.",
+      "original_required_evidence": "E2; batch test.",
+      "planned_suites": [
+        "HTTP"
+      ],
+      "related_findings": [
+        "R09"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-023",
+      "original_procedure": "Reject disguised HTML/SVG, corrupt/truncated data, animation, unsupported formats, and mismatched content. Do not trust extension/MIME alone.",
+      "original_required_evidence": "E2; signature/decode tests.",
+      "planned_suites": [
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [
+        "R09"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-024",
+      "original_procedure": "Enforce byte, decoded-pixel, edge, frame, batch, and execution limits. Oversized inputs cannot bypass streaming limits by lying about content length.",
+      "original_required_evidence": "E2; safely bounded adversarial fixtures.",
+      "planned_suites": [
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [
+        "R09"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-025",
+      "original_procedure": "EXIF orientation displays/exports correctly. Transparent-image handling is intentional. Public/render/export derivatives omit private EXIF/GPS metadata.",
+      "original_required_evidence": "E2 + visual; decoded metadata/output checks.",
+      "planned_suites": [
+        "HTTP",
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-026",
+      "original_procedure": "Traversal-like and header-injection filenames cannot escape storage or alter download headers. Media is not anonymously exposed through static paths.",
+      "original_required_evidence": "E2; storage and HTTP tests.",
+      "planned_suites": [
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-027",
+      "original_procedure": "Retain source/upload time/user assertion and original/derivative hashes. Identical bytes do not erase distinct source records; no cross-workspace deduplication leak.",
+      "original_required_evidence": "E2; record assertions.",
+      "planned_suites": [
+        "DB",
+        "HTTP"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-028",
+      "original_procedure": "Inject decode/storage/DB commit failure. No accepted asset points to missing bytes; failed staging is safely tracked/cleaned. Missing/corrupt referenced media later blocks render without deleting the draft.",
+      "original_required_evidence": "E2; failure boundaries and hash checks.",
+      "planned_suites": [
+        "DB",
+        "HTTP",
+        "RENDER"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-029",
+      "original_procedure": "Add, duplicate, remove, and reorder slides using non-drag controls. IDs remain stable on reorder and are fresh on duplication. Minimum/maximum slide bounds are enforced.",
+      "original_required_evidence": "E2; interaction/state tests.",
+      "planned_suites": [
+        "UI",
+        "UNIT"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-030",
+      "original_procedure": "All three layouts work, can be mixed, and preserve text through switching. Hiding/replacing an image does not delete its accepted local original.",
+      "original_required_evidence": "E2 + visual; editor and output.",
+      "planned_suites": [
+        "UI",
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-031",
+      "original_procedure": "Changing 9:16/4:5 updates every slide's trusted geometry and resulting dimensions without stretching the source or losing text.",
+      "original_required_evidence": "E2 + visual; both-ratio corpus.",
+      "planned_suites": [
+        "UI",
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-032",
+      "original_procedure": "Every exposed text/font/weight/size/line-height/alignment/color/panel/placement control changes stored data and final rendering as intended. No decorative controls.",
+      "original_required_evidence": "E2; focused control tests.",
+      "planned_suites": [
+        "UI",
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-033",
+      "original_procedure": "Cover/contain, focal reposition, reset, and replacement are nondestructive and match final output. Use off-center and landscape fixtures.",
+      "original_required_evidence": "E2 + visual; crop-marker assertions.",
+      "planned_suites": [
+        "UI",
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-034",
+      "original_procedure": "At least 50 logical session edits support sensible undo/redo. New edits clear redo; text editing does not double-apply app/browser keyboard undo.",
+      "original_required_evidence": "E2; grouped edit and shortcut tests.",
+      "planned_suites": [
+        "UI",
+        "UNIT"
+      ],
+      "related_findings": [
+        "R05"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-035",
+      "original_procedure": "Long text/newlines/unbroken tokens produce measured wrapping or an explicit overflow error. No silent clipping or minimum-font-size violation.",
+      "original_required_evidence": "E2 + visual; text corpus.",
+      "planned_suites": [
+        "UI",
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [
+        "R10"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-036",
+      "original_procedure": "Empty/loading/error/saved/conflict states are understandable; main actions have labels/focus and keyboard access. Desktop and narrow layouts do not hide essential actions.",
+      "original_required_evidence": "E2 accessibility checks + visual/keyboard review.",
+      "planned_suites": [
+        "UI",
+        "VISUAL"
+      ],
+      "related_findings": [
+        "R07"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-037",
+      "original_procedure": "A render request references an exact immutable saved revision. A queued job renders that snapshot even after the live draft changes.",
+      "original_required_evidence": "E2; real worker/database test.",
+      "planned_suites": [
+        "DB",
+        "RENDER"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-038",
+      "original_procedure": "Application intent and pg-boss enqueue share a tested transaction, or an exercised outbox/reconciliation mechanism prevents lost work. Simulated handoff failure cannot lose acknowledged intent.",
+      "original_required_evidence": "E2; failure/transaction assertions.",
+      "planned_suites": [
+        "DB",
+        "LIFECYCLE"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-039",
+      "original_procedure": "Replay the same render command with the same client request ID/payload: one logical request. Same key/different payload: conflict.",
+      "original_required_evidence": "E2; command concurrency tests.",
+      "planned_suites": [
+        "DB",
+        "HTTP"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-040",
+      "original_procedure": "Render all layouts at both canvas presets using the pinned browser and local assets. Output JPEG dimensions/count/decode validity match the document.",
+      "original_required_evidence": "E2; real corpus render.",
+      "planned_suites": [
+        "RENDER"
+      ],
+      "related_findings": [
+        "R03"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-041",
+      "original_procedure": "Delay required fonts/images. Capture waits for actual font faces/image decode. Missing resources fail with actionable diagnostics; no silent fallback success.",
+      "original_required_evidence": "E2; controlled missing/delayed resource fixtures.",
+      "planned_suites": [
+        "RENDER"
+      ],
+      "related_findings": [
+        "R10"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-042",
+      "original_procedure": "Editor and worker use the shared trusted scene/layout implementation. Overflow, missing media, and unsupported glyph conditions prevent a ready artifact.",
+      "original_required_evidence": "E1 + E2; architecture inspection and validation failures.",
+      "planned_suites": [
+        "RENDER",
+        "SECURITY",
+        "DOC"
+      ],
+      "related_findings": [
+        "R10"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-043",
+      "original_procedure": "User script-like strings render as text. Rejected URLs/CSS/HTML cannot execute, read local files, or make outbound requests.",
+      "original_required_evidence": "E2; containment tests with network/file sentinels.",
+      "planned_suites": [
+        "RENDER",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-044",
+      "original_procedure": "Shipped renderer runs non-root with verified sandbox configuration and a minimal browser subprocess environment. No auth cookies, DB secrets, privileged container, broad host mounts, or Docker socket access.",
+      "original_required_evidence": "E1 + E2; launch/config assertions and canary tests.",
+      "planned_suites": [
+        "RENDER",
+        "SECURITY",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R03",
+        "R04"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-045",
+      "original_procedure": "Render execution timeout terminates the affected attempt, leaves an honest failure/retry state, and does not hang the entire worker indefinitely.",
+      "original_required_evidence": "E2; deterministic hang/failure fixture.",
+      "planned_suites": [
+        "RENDER",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R08"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-046",
+      "original_procedure": "Kill/restart a worker during a render. The accepted request becomes recoverable, retains revision identity, respects attempt limits, and eventually succeeds or explicitly fails.",
+      "original_required_evidence": "E4-local; process lifecycle log and DB checks.",
+      "planned_suites": [
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R08"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-047",
+      "original_procedure": "Duplicate/reclaimed job deliveries cannot finalize competing outputs for one request. A stale attempt cannot overwrite the accepted newer success.",
+      "original_required_evidence": "E2; fencing/unique-finalization test.",
+      "planned_suites": [
+        "DB",
+        "RENDER",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R08"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-048",
+      "original_procedure": "Crash after writing some/all staged files but before DB ready commit. Recovery does not expose partial success, delete accepted media, or strand the request forever.",
+      "original_required_evidence": "E2 + E4-local; failpoint/recovery checks.",
+      "planned_suites": [
+        "DB",
+        "RENDER",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R08"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-049",
+      "original_procedure": "Invalid/overflow/missing-font failures do not automatically retry; eligible transient failures stop at the documented maximum of three total attempts. No infinite loop.",
+      "original_required_evidence": "E2; error-policy/state tests.",
+      "planned_suites": [
+        "DB",
+        "RENDER",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R08",
+        "R10"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-050",
+      "original_procedure": "Repeat a fixed fixture in the same pinned render environment; compare outputs and record the visual tolerance/results. Inspect geometry/crop/text differences instead of blindly updating goldens.",
+      "original_required_evidence": "E2 + visual; diff images/report.",
+      "planned_suites": [
+        "RENDER",
+        "VISUAL"
+      ],
+      "related_findings": [
+        "R10"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-051",
+      "original_procedure": "Final preview requests the exact immutable final JPEGs, not editor screenshots, optimized/re-encoded alternatives, or raw provider/source images.",
+      "original_required_evidence": "E1 + E2; network/body-hash check.",
+      "planned_suites": [
+        "UI",
+        "RENDER"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-052",
+      "original_procedure": "Extract the ZIP and SHA-256 its images. Each equals both the manifest's hash and the final-preview response body for that slide.",
+      "original_required_evidence": "E2; machine-readable hash comparison.",
+      "planned_suites": [
+        "RENDER",
+        "HTTP"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-053",
+      "original_procedure": "Seven-slide export has exactly `01.jpg`–`07.jpg`, `post.txt`, and `manifest.json` in the agreed structure. Ordered slide IDs and visible content match the draft revision.",
+      "original_required_evidence": "E2 + visual; ZIP structure and sequence assertions.",
+      "planned_suites": [
+        "RENDER",
+        "UI",
+        "VISUAL"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-054",
+      "original_procedure": "`post.txt` exactly matches the reviewed revision's title/caption/hashtags, including Unicode; manifest covers its hash/editorial identity.",
+      "original_required_evidence": "E2; text and checksum assertions.",
+      "planned_suites": [
+        "RENDER"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-055",
+      "original_procedure": "Editing after render visibly invalidates current-preview/export readiness. A queued or historical render never silently becomes the new draft's current export.",
+      "original_required_evidence": "E2; stale-state browser test.",
+      "planned_suites": [
+        "UI",
+        "RENDER"
+      ],
+      "related_findings": [
+        "R06"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-056",
+      "original_procedure": "No originals/private metadata/secrets/raw rights files/absolute paths leak into the ZIP. Entries/download filename cannot contain unsafe paths or injected headers.",
+      "original_required_evidence": "E2; content and path scan.",
+      "planned_suites": [
+        "HTTP",
+        "SECURITY"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-057",
+      "original_procedure": "Repeated download reuses ready JPEGs and does not launch a new render. A packaging/storage failure produces a useful error, not a corrupt success download.",
+      "original_required_evidence": "E2; call-count and failure tests.",
+      "planned_suites": [
+        "RENDER",
+        "HTTP"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-058",
+      "original_procedure": "Anonymous/foreign access cannot read final images or ZIPs even with a known artifact ID. A logged-in owner can still download a ready artifact while the worker is stopped.",
+      "original_required_evidence": "E2; route and worker-down tests.",
+      "planned_suites": [
+        "LIFECYCLE",
+        "HTTP"
+      ],
+      "related_findings": [],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-059",
+      "original_procedure": "Execute the complete original seven-slide journey through the UI, including edits, one duplicate/reorder operation, final preview, and export, with no provider credential.",
+      "original_required_evidence": "E2; full browser test and representative ZIP.",
+      "planned_suites": [
+        "UI"
+      ],
+      "related_findings": [
+        "R05"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-060",
+      "original_procedure": "Inspect real app screenshots and final output for readable typography, correct crop/composition, sensible spacing, and helpful error states. Include both canvas presets.",
+      "original_required_evidence": "Visual/keyboard review at recorded build.",
+      "planned_suites": [
+        "VISUAL"
+      ],
+      "related_findings": [
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-061",
+      "original_procedure": "Test at a normal desktop viewport and a narrow viewport; record sizes. Main journey is keyboard-operable; no critical automated accessibility violations remain on those tested screens.",
+      "original_required_evidence": "E2 + manual; screenshots and report.",
+      "planned_suites": [
+        "UI",
+        "VISUAL"
+      ],
+      "related_findings": [
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-062",
+      "original_procedure": "Lint, strict types, deployable build, and all established required test commands run with actual results. A zero-test/discovery failure cannot be reported as success.",
+      "original_required_evidence": "E2; command log/exit codes.",
+      "planned_suites": [
+        "UNIT",
+        "DB",
+        "HTTP",
+        "UI",
+        "RENDER",
+        "LIFECYCLE",
+        "SECURITY",
+        "VISUAL",
+        "DOC"
+      ],
+      "related_findings": [
+        "R01",
+        "R02",
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-063",
+      "original_procedure": "Initial migrations run on an empty database and are safe on a second invocation. Web/worker do not race uncontrolled schema changes.",
+      "original_required_evidence": "E2; migration/checksum assertions.",
+      "planned_suites": [
+        "DB",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R03"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-064",
+      "original_procedure": "Simulate storage unavailable/permission failure or bounded low-space behavior. Saving/rendering failures are visible; existing accepted content is not silently deleted or corrupted.",
+      "original_required_evidence": "E2; failure injection and UI/state evidence.",
+      "planned_suites": [
+        "LIFECYCLE",
+        "HTTP",
+        "UI"
+      ],
+      "related_findings": [
+        "R07",
+        "R09"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-065",
+      "original_procedure": "Secrets/canaries are absent from client bundles, normal logs, generated artifacts, Git diff, and browser-renderer environment. Runtime third-party telemetry/CDN requests are absent in the measured manual journey.",
+      "original_required_evidence": "E1 + E2; scoped scanning/network report.",
+      "planned_suites": [
+        "SECURITY",
+        "DOC"
+      ],
+      "related_findings": [
+        "R04"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-066",
+      "original_procedure": "A new reader can follow README installation/operation/troubleshooting. Document persistent volumes, stopping vs deleting data, running tests, limitations, and worker/host availability.",
+      "original_required_evidence": "E1 + clean-run evidence; do not claim an independent human test unless one occurred.",
+      "planned_suites": [
+        "DOC",
+        "LIFECYCLE"
+      ],
+      "related_findings": [
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-067",
+      "original_procedure": "UI wording/layouts/demo assets are original or properly attributed. Runtime/dependency/font sources/licenses are recorded; existing license is preserved and pending decisions are not silently finalized.",
+      "original_required_evidence": "E1; provenance/dependency records.",
+      "planned_suites": [
+        "DOC"
+      ],
+      "related_findings": [
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-068",
+      "original_procedure": "No unscoped providers, key forms, direct TikTok integration, fake connections/analytics, billing, scheduling, MP4, or marketplace functionality slipped into the patch.",
+      "original_required_evidence": "E1; diff/dependency/navigation inspection.",
+      "planned_suites": [
+        "DOC"
+      ],
+      "related_findings": [
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-069",
+      "original_procedure": "Root state points to the real spec hash, active chapter, base/tested commit, handoff, and evidence. Parent requirement subsets remain partial/unreviewed as appropriate.",
+      "original_required_evidence": "E1; state/traceability check.",
+      "planned_suites": [
+        "DOC"
+      ],
+      "related_findings": [
+        "R02",
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-070",
+      "original_procedure": "Handoff lists all mandatory gates with PASS/FAIL/NOT_RUN, actual implementation/evidence commits, skipped checks, deficiencies, and real artifact locations.",
+      "original_required_evidence": "E1; handoff/result-file consistency.",
+      "planned_suites": [
+        "DOC"
+      ],
+      "related_findings": [
+        "R02",
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-071",
+      "original_procedure": "All public/committed screenshots, traces, logs, and exports use synthetic/local demo data and are sanitized. Artifact hashes correspond to files that actually exist.",
+      "original_required_evidence": "E1 + E2; artifact manifest/scan.",
+      "planned_suites": [
+        "DOC",
+        "SECURITY"
+      ],
+      "related_findings": [
+        "R02",
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    },
+    {
+      "id": "CH001-072",
+      "original_procedure": "No work on the next chapter, public release/tag/deployment, paid API request, account authorization, or public post occurs. Final implementation status is awaiting review, never self-accepted.",
+      "original_required_evidence": "E1; diff, action declaration, state.",
+      "planned_suites": [
+        "DOC"
+      ],
+      "related_findings": [
+        "R11"
+      ],
+      "initial_status": "NOT_RUN",
+      "actual_evidence": [],
+      "note": "Coverage plan only; no new application execution is claimed."
+    }
+  ]
+}
