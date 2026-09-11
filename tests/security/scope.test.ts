@@ -31,4 +31,12 @@ describe("CH-001 security and scope assertions", () => {
     expect(nextConfig).not.toContain("data/media");
     expect(nextConfig).not.toContain("public");
   });
+
+  it("does not pass application secrets into the browser subprocess", async () => {
+    const worker = await read("apps/worker/src/index.ts");
+    expect(worker).toContain("env: browserEnvironment");
+    expect(worker).toContain("RENDER_IMAGE_HASH_MISMATCH");
+    expect(worker).not.toContain("--no-sandbox");
+    expect(worker).not.toContain("DATABASE_URL: process.env.DATABASE_URL");
+  });
 });

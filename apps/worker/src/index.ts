@@ -4,7 +4,7 @@ import { PassThrough } from "node:stream";
 import { and, eq, inArray, lt, or, sql } from "drizzle-orm";
 import archiver from "archiver";
 import { PgBoss } from "pg-boss";
-import { chromium, type Browser } from "playwright";
+import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 import sharp from "sharp";
 import { asset, db, draftRevision, renderArtifact, renderOutbox, renderRequest, workerHeartbeat, pool } from "@oss/db";
 import { assertDocumentAssets, DocumentValidationError, documentContainsImageRequirement, parseDocument } from "@oss/contracts";
@@ -17,8 +17,17 @@ const QUEUE = "oss.render.v1";
 const WORKER_NAME = "render-worker";
 const WORKER_BUILD = process.env.RENDERER_BUILD_ID ?? "oss-renderer-0.1.0";
 const LEASE_MS = 120_000;
+const RENDER_DEADLINE_MS = 120_000;
 let boss: PgBoss | undefined;
 let browser: Browser | undefined;
+
+const browserEnvironment = {
+  PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin",
+  HOME: "/tmp",
+  LANG: "C.UTF-8",
+  LC_ALL: "C.UTF-8",
+  ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {})
+};
 
 type RenderImage = { filename: string; storageKey: string; slideId: string; sha256: string; bytes: number; width: number; height: number; acceptedAssetHashes: string[] };
 
@@ -59,6 +68,15 @@ async function claimRequest(requestId: string): Promise<{ request: typeof render
 function assetDataUrl(mime: string, bytes: Buffer): string { return `data:${mime};base64,${bytes.toString("base64")}`; }
 function digest(data: Buffer): string { return createHash("sha256").update(data).digest("hex"); }
 
+async function withTimeout<T>(operation: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([operation, new Promise<T>((_, reject) => { timer = setTimeout(() => reject(new Error(`RENDER_TIMEOUT: ${label}`)), timeoutMs); })]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 async function zipBuffers(entries: Array<{ name: string; data: Buffer }>): Promise<Buffer> {
   const archive = archiver("zip", { zlib: { level: 9 } });
   const stream = new PassThrough(); const chunks: Buffer[] = [];
@@ -89,8 +107,11 @@ async function renderRequestById(requestId: string): Promise<void> {
   const claimed = await claimRequest(requestId);
   if (!claimed) return;
   const { request, revision } = claimed;
+  let renderContext: BrowserContext | undefined;
+  let page: Page | undefined;
   try {
     const document = parseDocument(revision.document);
+    const deadline = Date.now() + RENDER_DEADLINE_MS;
     const imageIds = document.slides.flatMap((slide) => slide.blocks.filter((block): block is ImageBlock => block.type === "image" && Boolean(block.assetId)).map((block) => block.assetId as string));
     const assetRows = imageIds.length ? await db.select().from(asset).where(and(eq(asset.workspaceId, request.workspaceId), inArray(asset.id, imageIds))) : [];
     const references = new Map<string, AssetReference>(assetRows.map((row) => [row.id, { id: row.id, workspaceId: row.workspaceId, derivativeHash: row.derivativeHash, acceptanceState: row.acceptanceState }]));
@@ -100,28 +121,34 @@ async function renderRequestById(requestId: string): Promise<void> {
       if (!image || !image.assetId) throw new DocumentValidationError([{ code: "custom", path: ["slides", slide.id], message: "This layout needs a selected local image before it can render." }]);
     }
     const sources: Record<string, { src: string; alt: string }> = {};
-    for (const row of assetRows) sources[row.id] = { src: assetDataUrl(row.mime, await readStorageFile(row.derivativeKey)), alt: row.originalName };
-    if (!browser) browser = await chromium.launch({ headless: true, ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {}) });
-    const context = await browser.newContext({ viewport: { width: document.canvas.width, height: document.canvas.height }, deviceScaleFactor: 1, javaScriptEnabled: true, acceptDownloads: false, serviceWorkers: "block" });
-    const page = await context.newPage();
+    for (const row of assetRows) {
+      let derivative: Buffer;
+      try { derivative = await readStorageFile(row.derivativeKey); } catch { throw new Error(`RENDER_IMAGE_MISSING: accepted derivative ${row.id} could not be read.`); }
+      if (digest(derivative) !== row.derivativeHash) throw new Error(`RENDER_IMAGE_HASH_MISMATCH: accepted derivative ${row.id} changed after upload.`);
+      sources[row.id] = { src: assetDataUrl(row.mime, derivative), alt: row.originalName };
+    }
+    if (!browser) browser = await chromium.launch({ headless: true, env: browserEnvironment, ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {}) });
+    renderContext = await browser.newContext({ viewport: { width: document.canvas.width, height: document.canvas.height }, deviceScaleFactor: 1, javaScriptEnabled: true, acceptDownloads: false, serviceWorkers: "block" });
+    page = await renderContext.newPage();
     await page.route("**/*", async (route) => { const url = route.request().url(); if (url.startsWith("data:") || url === "about:blank") await route.continue(); else await route.abort("blockedbyclient"); });
     const fontCss = embeddedFontCss();
     const images: RenderImage[] = [];
     for (const [index, slide] of document.slides.entries()) {
+      if (Date.now() >= deadline) throw new Error("RENDER_TIMEOUT: render deadline exceeded before the next slide.");
       const html = renderSlideHtml(document, slide, sources, fontCss);
       await page.setContent(html, { waitUntil: "domcontentloaded", timeout: 20_000 });
-      const diagnostics = await page.evaluate(async () => {
+      const diagnostics = await withTimeout(page.evaluate(async () => {
         const browserDocument = window.document;
         await browserDocument.fonts.ready;
         const fontChecks = [browserDocument.fonts.check('400 16px "Inter"'), browserDocument.fonts.check('700 16px "Inter"'), browserDocument.fonts.check('400 16px "Source Serif 4"'), browserDocument.fonts.check('700 16px "Source Serif 4"')];
         const imageChecks = Array.from(browserDocument.images).map((image) => ({ complete: image.complete, width: image.naturalWidth, height: image.naturalHeight }));
         const overflow = Array.from(browserDocument.querySelectorAll<HTMLElement>("[data-text-block]")).filter((node) => node.scrollHeight > node.clientHeight + 2).map((node) => node.dataset.textBlock ?? "unknown");
         return { fontChecks, imageChecks, overflow };
-      });
+      }), 10_000, `font/image diagnostics for slide ${index + 1}`);
       if (diagnostics.fontChecks.some((value) => !value)) throw new Error("RENDER_FONT_MISSING: a required local font face did not load.");
       if (diagnostics.imageChecks.some((image) => !image.complete || image.width === 0 || image.height === 0)) throw new Error("RENDER_IMAGE_MISSING: a local derivative did not decode.");
       if (diagnostics.overflow.length) throw new Error(`TEXT_OVERFLOW: ${diagnostics.overflow.join(", ")}`);
-      const jpeg = await page.screenshot({ type: "jpeg", quality: 95, animations: "disabled", clip: { x: 0, y: 0, width: document.canvas.width, height: document.canvas.height } });
+      const jpeg = await page.screenshot({ type: "jpeg", quality: 95, animations: "disabled", timeout: 20_000, clip: { x: 0, y: 0, width: document.canvas.width, height: document.canvas.height } });
       const buffer = Buffer.from(jpeg);
       const metadata = await sharp(buffer).metadata();
       if (metadata.format !== "jpeg" || metadata.width !== document.canvas.width || metadata.height !== document.canvas.height) throw new Error("RENDER_OUTPUT_INVALID: final JPEG dimensions or format did not match the canvas.");
@@ -130,7 +157,6 @@ async function renderRequestById(requestId: string): Promise<void> {
       const acceptedHashes = slide.blocks.filter((block): block is ImageBlock & { assetId: string } => block.type === "image" && typeof block.assetId === "string").map((block) => references.get(block.assetId)?.derivativeHash).filter((value): value is string => Boolean(value));
       images.push({ filename: `${String(index + 1).padStart(2, "0")}.jpg`, storageKey, slideId: slide.id, sha256: digest(buffer), bytes: buffer.byteLength, width: document.canvas.width, height: document.canvas.height, acceptedAssetHashes: acceptedHashes });
     }
-    await page.close(); await context.close();
     const postText = Buffer.from(makePostText(document), "utf8");
     const manifestImages = images.map((image) => ({ filename: image.filename, slideId: image.slideId, sha256: image.sha256, bytes: image.bytes, width: image.width, height: image.height, acceptedAssetHashes: image.acceptedAssetHashes, mime: "image/jpeg" as const }));
     const manifest = makeExportManifest({ document, revisionId: revision.id, revisionHash: revision.contentHash, fontSetVersion: FONT_SET_VERSION, fontSetHash: fontSetHash(), images: manifestImages, postTextSha256: digest(postText) });
@@ -146,9 +172,12 @@ async function renderRequestById(requestId: string): Promise<void> {
     });
     await heartbeat("ready");
   } catch (error) {
-    const permanent = error instanceof DocumentValidationError || (error instanceof Error && /TEXT_OVERFLOW|RENDER_FONT_MISSING|RENDER_IMAGE_MISSING|RENDER_OUTPUT_INVALID|UNSUPPORTED/.test(error.message));
+    const permanent = error instanceof DocumentValidationError || (error instanceof Error && /TEXT_OVERFLOW|RENDER_FONT_MISSING|RENDER_IMAGE_MISSING|RENDER_IMAGE_HASH_MISMATCH|RENDER_OUTPUT_INVALID|UNSUPPORTED/.test(error.message));
     await markFailure(request.id, request.leaseToken, permanent ? "RENDER_VALIDATION_FAILED" : "RENDER_TRANSIENT_FAILED", error instanceof Error ? error.message : "The renderer failed.", !permanent);
     await heartbeat("degraded", error instanceof Error ? error.message.slice(0, 500) : "render failed");
+  } finally {
+    await page?.close().catch(() => undefined);
+    await renderContext?.close().catch(() => undefined);
   }
 }
 
