@@ -1,0 +1,505 @@
+{
+  "chapter": "CH-001-r1",
+  "target_application_version": "0.1.0",
+  "report_kind": "EXECUTED_LOCAL_WITH_UNAVAILABLE_SERVICES",
+  "implementation_commit": "bbe370998016153cdfdee404022bf7007710e9df",
+  "evidence_commit": "documentation commit containing this file",
+  "generatedAt": "2026-09-11T03:26:05.832Z",
+  "reference_environment": {
+    "node": "v20.19.2",
+    "platform": "linux",
+    "arch": "x64",
+    "chrome": "Google Chrome 151.0.7922.169 (system; managed Playwright Chromium unavailable)"
+  },
+  "commands": [
+    {
+      "command": "pnpm lint",
+      "startedAt": "2026-09-11T03:25:46.526Z",
+      "endedAt": "2026-09-11T03:25:48.100Z",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-11T03:25:48.102Z",
+      "endedAt": "2026-09-11T03:25:48.361Z",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm build",
+      "startedAt": "2026-09-11T03:25:48.362Z",
+      "endedAt": "2026-09-11T03:26:02.590Z",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-11T03:26:02.591Z",
+      "endedAt": "2026-09-11T03:26:03.330Z",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-11T03:26:03.330Z",
+      "endedAt": "2026-09-11T03:26:03.963Z",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm test:integration",
+      "startedAt": "2026-09-11T03:26:03.964Z",
+      "endedAt": "2026-09-11T03:26:04.426Z",
+      "exitCode": 2
+    },
+    {
+      "command": "pnpm test:e2e",
+      "startedAt": "2026-09-11T03:26:04.427Z",
+      "endedAt": "2026-09-11T03:26:04.904Z",
+      "exitCode": 2
+    },
+    {
+      "command": "pnpm test:render",
+      "startedAt": "2026-09-11T03:26:04.905Z",
+      "endedAt": "2026-09-11T03:26:05.365Z",
+      "exitCode": 2
+    },
+    {
+      "command": "pnpm test:smoke",
+      "startedAt": "2026-09-11T03:26:05.366Z",
+      "endedAt": "2026-09-11T03:26:05.826Z",
+      "exitCode": 2
+    }
+  ],
+  "gates": [
+    {
+      "id": "CH001-001",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-002",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-003",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-004",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-005",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-006",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-007",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-008",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-009",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-010",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-011",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-012",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-013",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-014",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-015",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-016",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-017",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-018",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-019",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-020",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-021",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-022",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-023",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-024",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-025",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-026",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-027",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-028",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-029",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-030",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-031",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-032",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-033",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-034",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-035",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-036",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-037",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-038",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-039",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-040",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-041",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-042",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-043",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-044",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-045",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-046",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-047",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-048",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-049",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-050",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-051",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-052",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-053",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-054",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-055",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-056",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-057",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-058",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-059",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-060",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-061",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-062",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-063",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-064",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-065",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-066",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-067",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-068",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-069",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-070",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-071",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    },
+    {
+      "id": "CH001-072",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "This aggregate run was not connected to a live disposable Postgres/Compose/browser environment; see command logs."
+    }
+  ]
+}
+
