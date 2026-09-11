@@ -1,0 +1,150 @@
+{
+  "run_id": "r2-20260911-blocked",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "commands": [
+    {
+      "command": "pnpm lint",
+      "startedAt": "2026-09-11T19:33:26.396Z",
+      "endedAt": "2026-09-11T19:33:28.159Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/01-pnpm-lint.log"
+    },
+    {
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-11T19:33:28.162Z",
+      "endedAt": "2026-09-11T19:33:28.428Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/02-pnpm-typecheck.log"
+    },
+    {
+      "command": "pnpm build",
+      "startedAt": "2026-09-11T19:33:28.429Z",
+      "endedAt": "2026-09-11T19:33:42.976Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/03-pnpm-build.log"
+    },
+    {
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-11T19:33:42.977Z",
+      "endedAt": "2026-09-11T19:33:44.197Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/04-pnpm-test-unit.log"
+    },
+    {
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-11T19:33:44.198Z",
+      "endedAt": "2026-09-11T19:33:44.858Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/05-pnpm-test-security.log"
+    },
+    {
+      "command": "pnpm test:integration",
+      "startedAt": "2026-09-11T19:33:44.859Z",
+      "endedAt": "2026-09-11T19:33:45.578Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/06-pnpm-test-integration.log"
+    },
+    {
+      "command": "pnpm test:e2e",
+      "startedAt": "2026-09-11T19:33:45.579Z",
+      "endedAt": "2026-09-11T19:33:46.291Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/07-pnpm-test-e2e.log"
+    },
+    {
+      "command": "pnpm test:render",
+      "startedAt": "2026-09-11T19:33:46.292Z",
+      "endedAt": "2026-09-11T19:33:47.010Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/08-pnpm-test-render.log"
+    },
+    {
+      "command": "pnpm test:smoke",
+      "startedAt": "2026-09-11T19:33:47.012Z",
+      "endedAt": "2026-09-11T19:33:47.763Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/09-pnpm-test-smoke.log"
+    }
+  ],
+  "suites": [
+    {
+      "suite": "integration",
+      "command": "pnpm test:integration",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:45.563Z",
+      "ended_at": "2026-09-11T19:33:45.563Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-integration-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-integration-unavailable.log",
+      "unavailable_reason": "DATABASE_URL is not configured."
+    },
+    {
+      "suite": "e2e",
+      "command": "pnpm test:e2e",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:46.276Z",
+      "ended_at": "2026-09-11T19:33:46.276Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-e2e-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-e2e-unavailable.log",
+      "unavailable_reason": "Pinned Playwright Chromium is unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile."
+    },
+    {
+      "suite": "render",
+      "command": "pnpm test:render",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:46.994Z",
+      "ended_at": "2026-09-11T19:33:46.994Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-render-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-render-unavailable.log",
+      "unavailable_reason": "Pinned Playwright Chromium is unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile."
+    },
+    {
+      "suite": "smoke",
+      "command": "pnpm test:smoke",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:47.749Z",
+      "ended_at": "2026-09-11T19:33:47.749Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.log",
+      "unavailable_reason": "Docker CLI is unavailable or could not start."
+    }
+  ],
+  "exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    2,
+    2,
+    2
+  ]
+}

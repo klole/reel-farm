@@ -1,0 +1,17 @@
+{
+  "run_id": "r2-20260911-blocked",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "host": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v20.19.2",
+    "package_manager": "pnpm@12.3.4"
+  },
+  "prerequisites": {
+    "database_url_configured": false,
+    "docker_cli_checked": true,
+    "browser_override_configured": false,
+    "e2e_base_url_configured": false
+  },
+  "evidence_boundary": "This record reports capability flags and child command outcomes; it contains no credentials or connection strings."
+}

@@ -1,0 +1,7 @@
+{
+  "suite": "render",
+  "run_id": "r2-20260911-blocked",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "status": "NOT_RUN",
+  "reason": "Pinned Playwright Chromium is unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile."
+}

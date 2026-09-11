@@ -1,4 +1,4 @@
-# CH-001 commands and service lifecycle
+# CH-001 / CH-001R-r2 commands and service lifecycle
 
 All commands run from the repository root with Node.js 20.19.x and pnpm 12.3.4.
 
@@ -43,11 +43,15 @@ Run the web and worker in separate terminals. The worker owns browser rendering 
 | `pnpm typecheck` | Strict TypeScript project references | Fails on type errors. |
 | `pnpm build` | Shared packages, Next web, worker | Fails on build errors. |
 | `pnpm test:unit` | Contract/hash/storage unit tests | Must discover and execute tests. |
-| `pnpm test:integration` | Real DB/storage/transaction checks (hook for this checkpoint) | `NOT_RUN`, exit 2 without `DATABASE_URL`/database. |
-| `pnpm test:e2e` | Real authenticated browser journey (hook) | `NOT_RUN`, exit 2 without `E2E_BASE_URL`. |
-| `pnpm test:render` | Real worker/browser render checks (hook) | `NOT_RUN`, exit 2 without `E2E_BASE_URL` and browser worker. |
+| `pnpm test:integration` | Real disposable PostgreSQL transaction, schema, mutation, and local-storage checks | `NOT_RUN`, exit 2 without an explicitly marked `DATABASE_URL`. |
+| `pnpm test:e2e` | Real authenticated Playwright seven-slide journey and export/hash checks | `NOT_RUN`, exit 2 without a pinned/explicit compatible browser and `E2E_BASE_URL`. |
+| `pnpm test:render` | Real Chromium shared-scene corpus and delayed/missing-resource checks | `NOT_RUN`, exit 2 without a pinned/explicit compatible browser. |
 | `pnpm test:security` | Focused static boundary/security regressions | Must discover and execute tests. |
-| `pnpm test:smoke` | Disposable Compose install/restart checks (hook) | `NOT_RUN`, exit 2 without Docker. |
+| `pnpm test:smoke` | Disposable Compose build, migration rerun, worker stop/start, and volume-recreate checks | `NOT_RUN`, exit 2 without Docker. |
 | `pnpm verify:ch001` | Runs all checks, writes raw logs and gate report | Exits nonzero if a required command fails or is `NOT_RUN`; this prevents false acceptance. |
 
 Raw aggregate output is written to the gitignored `artifacts/ch001/local/` directory. The committed sanitized index is [docs/evidence/CH-001/README.md](../../evidence/CH-001/README.md), with the machine-readable gate file beside it.
+
+## CH-001R-r2 execution notes
+
+The follow-up implementation uses `node --import tsx` for the TypeScript runners because the host's `tsx` IPC launcher cannot open its Unix socket under the managed sandbox. `scripts/verify-ch001.ts` runs all nine required root commands, ingests the four suite reports, binds evidence to the implementation commit, checks the original 72 IDs, and exits 1 for any incomplete gate set. Its tracked blocked run is indexed at [docs/evidence/CH-001R-r2/README.md](../../evidence/CH-001R-r2/README.md).

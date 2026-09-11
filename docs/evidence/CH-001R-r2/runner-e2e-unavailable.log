@@ -1,0 +1,1 @@
+NOT_RUN: Pinned Playwright Chromium is unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile.

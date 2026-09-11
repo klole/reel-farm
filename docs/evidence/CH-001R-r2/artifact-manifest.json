@@ -1,0 +1,105 @@
+{
+  "run_id": "r2-20260911-blocked",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "status": "BLOCKED_PENDING_LIVE_EVIDENCE",
+  "files": [
+    {
+      "path": "docs/evidence/CH-001R-r2/01-pnpm-lint.log",
+      "sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/02-pnpm-typecheck.log",
+      "sha256": "09f124dfb170f19e67ad3b55fdb6891868bda5b0d4442c15e1de65e33244837f"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/03-pnpm-build.log",
+      "sha256": "ecc0d3e6cd8874a01d645f5359ad75937182adbc590ff9c08ddd5d1a3b28f898"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/04-pnpm-test-unit.log",
+      "sha256": "14ce41a4c860c74d1bee1800d655e96ff4fea78c504a9a49015425fd44cabce7"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/05-pnpm-test-security.log",
+      "sha256": "92d67c568b79d47691c99c97360baffa91566976d7008d64eb88eaf4887211cf"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/06-pnpm-test-integration.log",
+      "sha256": "bcb41ad3d3fe370bf88ae339dc2092f4b5519557e8cf23c8c354ee3457a17984"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/07-pnpm-test-e2e.log",
+      "sha256": "fb3811bf18f5acdb20ddcab2fc53aaf2824446764a589f4196a20633ccdc8af5"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/08-pnpm-test-render.log",
+      "sha256": "f0e9236640dff842285fb90f3c6de74556525ba6c479d1cba36df11502f5fb50"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/09-pnpm-test-smoke.log",
+      "sha256": "f0197db178d9a3751fab21805966f8095bda7a3f90cb1ee7db7136e4a8aaa199"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/environment.json",
+      "sha256": "7e3cc876867453fa1590b0ff9d74e31ea0bbe0c389d49dbeb8b075eae7321c8b"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-e2e-unavailable.json",
+      "sha256": "f19d42939b886ee1c830e172bbc5c78aae3d3baf4ddd5aa4669dd3cba34894f2"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-e2e-unavailable.log",
+      "sha256": "385005dfca0bdb131d46f79cecbac2d700d5fc44e881164abbfba3bc92edceeb"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-integration-unavailable.json",
+      "sha256": "4fea1920be0b49028430517d05f3cb7dcdceccf2d94ad000276048aabeecce87"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-integration-unavailable.log",
+      "sha256": "54c2a5776254bf4e18a461a984c1822e4af35b62e545f89527a295fded945752"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-render-unavailable.json",
+      "sha256": "639ade6e19df6fd1ebd7f164495075df2fc30d9767017cb50fbf2e933b09e11a"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-render-unavailable.log",
+      "sha256": "385005dfca0bdb131d46f79cecbac2d700d5fc44e881164abbfba3bc92edceeb"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.json",
+      "sha256": "bae03cd5240e952b02db9e514ac2d20321ecff26b0dfdabd58187cfafbea700d"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.log",
+      "sha256": "4b06d0d23596cca9b974121680a98fa96b427f41be313d4600bdc2555c040d9b"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/source-review.md",
+      "sha256": "314084d3e2d92e65ba6d18b7a79a156b40a953f4628bf969b91f0f2ab5b09cb7"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/suite-e2e.json",
+      "sha256": "3a57f511b549080c59211bf24596bc969697f50482b39e31a1d48d8408dfe8c5"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/suite-integration.json",
+      "sha256": "ae4b45ffa39e8b713faee3a949c64758ac930377e50d8755db0b58ac90eec6df"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/suite-render.json",
+      "sha256": "7a437f980b0432f38db7428047171c17646e14f3509acb4a620c0e3e0aaef36b"
+    },
+    {
+      "path": "docs/evidence/CH-001R-r2/suite-smoke.json",
+      "sha256": "4fbe568044518b9aa8b7a255209f7041ca8febdae6cec341490fc7b05142b0fe"
+    }
+  ],
+  "required_live_artifacts_not_present": [
+    "seven-slide ZIP",
+    "screenshots and manual visual inspection",
+    "preview/ZIP byte comparison",
+    "Compose lifecycle"
+  ]
+}

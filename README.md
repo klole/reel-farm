@@ -1,6 +1,6 @@
 # Open Slideshow Studio
 
-Open Slideshow Studio is a private, local-first manual slideshow studio. CH-001-r1 targets v0.1.0: one owner, persisted projects, local image uploads, three manual layouts, 9:16 and 4:5 canvases, local font rendering, immutable revisions, and an ordered JPEG/text/manifest export.
+Open Slideshow Studio is a private, local-first manual slideshow studio. CH-001R-r2 is the bounded v0.1.0 repair continuation: one owner, persisted projects, local image uploads, three manual layouts, 9:16 and 4:5 canvases, local font rendering, immutable revisions, and an ordered JPEG/text/manifest export.
 
 This checkpoint is awaiting review. It is not a complete v1.0 product and it does not call providers, generate content, connect social accounts, publish, schedule, render video, or charge money.
 
@@ -46,7 +46,7 @@ pnpm test:smoke
 pnpm verify:ch001
 ```
 
-The integration, browser, render, and Compose smoke commands require the services described in [docs/chapters/CH-001/COMMANDS.md](docs/chapters/CH-001/COMMANDS.md). They return `NOT_RUN`/exit 2 when their required environment is unavailable; that result must not be reported as a passing substitute.
+The integration, browser, render, and Compose smoke commands are real suites and require the services described in [docs/chapters/CH-001/COMMANDS.md](docs/chapters/CH-001/COMMANDS.md). They return `NOT_RUN`/exit 2 when their required environment is unavailable; that result must not be reported as a passing substitute.
 
 ## What is deliberately out of scope
 
@@ -56,4 +56,4 @@ The current checkpoint uses two bundled local font families, generated/local ima
 
 ## Repository workflow
 
-`architect/` contains the supplied chapter and North Star packets. `handoffs/` contains orchestrator handoffs. The implementation lives at the repository root as this checkpoint is built. Evidence indexes and durable state are under `docs/evidence/CH-001/` and `state/`.
+`architect/` contains the supplied chapter and North Star packets. `handoffs/` contains orchestrator handoffs. The implementation lives at the repository root as this checkpoint is built. Evidence indexes and durable state are under `docs/evidence/CH-001/`, `docs/evidence/CH-001R-r2/`, and `state/`.

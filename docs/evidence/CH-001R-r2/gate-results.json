@@ -1,0 +1,756 @@
+{
+  "chapter": "CH-001R-r2",
+  "target_application_version": "0.1.0",
+  "report_kind": "REPAIR_RUN_WITH_HARNESS_AND_ENVIRONMENT_LIMITATIONS",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "evidence_commit": null,
+  "generatedAt": "2026-09-11T19:33:47.774Z",
+  "commands": [
+    {
+      "command": "pnpm lint",
+      "startedAt": "2026-09-11T19:33:26.396Z",
+      "endedAt": "2026-09-11T19:33:28.159Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/01-pnpm-lint.log"
+    },
+    {
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-11T19:33:28.162Z",
+      "endedAt": "2026-09-11T19:33:28.428Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/02-pnpm-typecheck.log"
+    },
+    {
+      "command": "pnpm build",
+      "startedAt": "2026-09-11T19:33:28.429Z",
+      "endedAt": "2026-09-11T19:33:42.976Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/03-pnpm-build.log"
+    },
+    {
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-11T19:33:42.977Z",
+      "endedAt": "2026-09-11T19:33:44.197Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/04-pnpm-test-unit.log"
+    },
+    {
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-11T19:33:44.198Z",
+      "endedAt": "2026-09-11T19:33:44.858Z",
+      "exitCode": 0,
+      "logPath": "docs/evidence/CH-001R-r2/05-pnpm-test-security.log"
+    },
+    {
+      "command": "pnpm test:integration",
+      "startedAt": "2026-09-11T19:33:44.859Z",
+      "endedAt": "2026-09-11T19:33:45.578Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/06-pnpm-test-integration.log"
+    },
+    {
+      "command": "pnpm test:e2e",
+      "startedAt": "2026-09-11T19:33:45.579Z",
+      "endedAt": "2026-09-11T19:33:46.291Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/07-pnpm-test-e2e.log"
+    },
+    {
+      "command": "pnpm test:render",
+      "startedAt": "2026-09-11T19:33:46.292Z",
+      "endedAt": "2026-09-11T19:33:47.010Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/08-pnpm-test-render.log"
+    },
+    {
+      "command": "pnpm test:smoke",
+      "startedAt": "2026-09-11T19:33:47.012Z",
+      "endedAt": "2026-09-11T19:33:47.763Z",
+      "exitCode": 2,
+      "logPath": "docs/evidence/CH-001R-r2/09-pnpm-test-smoke.log"
+    }
+  ],
+  "suites": [
+    {
+      "suite": "integration",
+      "command": "pnpm test:integration",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:45.563Z",
+      "ended_at": "2026-09-11T19:33:45.563Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-integration-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-integration-unavailable.log",
+      "unavailable_reason": "DATABASE_URL is not configured."
+    },
+    {
+      "suite": "e2e",
+      "command": "pnpm test:e2e",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:46.276Z",
+      "ended_at": "2026-09-11T19:33:46.276Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-e2e-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-e2e-unavailable.log",
+      "unavailable_reason": "Pinned Playwright Chromium is unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile."
+    },
+    {
+      "suite": "render",
+      "command": "pnpm test:render",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:46.994Z",
+      "ended_at": "2026-09-11T19:33:46.994Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-render-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-render-unavailable.log",
+      "unavailable_reason": "Pinned Playwright Chromium is unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile."
+    },
+    {
+      "suite": "smoke",
+      "command": "pnpm test:smoke",
+      "run_id": "r2-20260911-blocked",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "started_at": "2026-09-11T19:33:47.749Z",
+      "ended_at": "2026-09-11T19:33:47.749Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.json",
+      "log_path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.log",
+      "unavailable_reason": "Docker CLI is unavailable or could not start."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CH001-001",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-002",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-003",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-004",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-005",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-006",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-007",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-008",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-009",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-010",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-011",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-012",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-013",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-014",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-015",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-016",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-017",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-018",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-019",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-020",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-021",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-022",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-023",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-024",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-025",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-026",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-027",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-028",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-029",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-030",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-031",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-032",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-033",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-034",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-035",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-036",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-037",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-038",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-039",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-040",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-041",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-042",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-043",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-044",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-045",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-046",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-047",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-048",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-049",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-050",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-051",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-052",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-053",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-054",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-055",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-056",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-057",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-058",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-059",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-060",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-061",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-062",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-063",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-064",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-065",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-066",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-067",
+      "status": "PASS",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [
+        {
+          "path": "docs/evidence/CH-001R-r2/source-review.md",
+          "sha256": "314084d3e2d92e65ba6d18b7a79a156b40a953f4628bf969b91f0f2ab5b09cb7",
+          "kind": "E1",
+          "reference": "source-review:ch001r2",
+          "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f"
+        }
+      ],
+      "reason": "Source-only gate is assessed by the E1 source review at this implementation commit."
+    },
+    {
+      "id": "CH001-068",
+      "status": "PASS",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [
+        {
+          "path": "docs/evidence/CH-001R-r2/source-review.md",
+          "sha256": "314084d3e2d92e65ba6d18b7a79a156b40a953f4628bf969b91f0f2ab5b09cb7",
+          "kind": "E1",
+          "reference": "source-review:ch001r2",
+          "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f"
+        }
+      ],
+      "reason": "Source-only gate is assessed by the E1 source review at this implementation commit."
+    },
+    {
+      "id": "CH001-069",
+      "status": "PASS",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [
+        {
+          "path": "docs/evidence/CH-001R-r2/source-review.md",
+          "sha256": "314084d3e2d92e65ba6d18b7a79a156b40a953f4628bf969b91f0f2ab5b09cb7",
+          "kind": "E1",
+          "reference": "source-review:ch001r2",
+          "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f"
+        }
+      ],
+      "reason": "Source-only gate is assessed by the E1 source review at this implementation commit."
+    },
+    {
+      "id": "CH001-070",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-071",
+      "status": "NOT_RUN",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [],
+      "reason": "Required runtime, browser, lifecycle, visual, or handoff evidence was not produced by this run; see command and suite reports."
+    },
+    {
+      "id": "CH001-072",
+      "status": "PASS",
+      "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+      "actual_evidence": [
+        {
+          "path": "docs/evidence/CH-001R-r2/source-review.md",
+          "sha256": "314084d3e2d92e65ba6d18b7a79a156b40a953f4628bf969b91f0f2ab5b09cb7",
+          "kind": "E1",
+          "reference": "source-review:ch001r2",
+          "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f"
+        }
+      ],
+      "reason": "Source-only gate is assessed by the E1 source review at this implementation commit."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R01",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R02",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R03",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R04",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R05",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R06",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R07",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R08",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R09",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R10",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    },
+    {
+      "id": "R11",
+      "status": "OPEN",
+      "repair_or_disproof": "Scoped repair implemented or harness added; required capable-environment regression evidence remains outstanding.",
+      "test_reference": null
+    }
+  ],
+  "artifact_manifest": {
+    "path": "docs/evidence/CH-001R-r2/artifact-manifest.json",
+    "sha256": "f5d2261efa4598579f1b97460b42e02ba6b2af429d46cbafb40a3b987bde9a1f",
+    "kind": "E1",
+    "reference": "aggregate:artifact-manifest",
+    "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f"
+  }
+}

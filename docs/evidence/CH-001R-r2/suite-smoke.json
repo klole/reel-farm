@@ -1,0 +1,17 @@
+{
+  "suite": "smoke",
+  "command": "pnpm test:smoke",
+  "run_id": "r2-20260911-blocked",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "started_at": "2026-09-11T19:33:47.749Z",
+  "ended_at": "2026-09-11T19:33:47.749Z",
+  "exit_code": 2,
+  "discovered": 0,
+  "executed": 0,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "report_path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.json",
+  "log_path": "docs/evidence/CH-001R-r2/runner-smoke-unavailable.log",
+  "unavailable_reason": "Docker CLI is unavailable or could not start."
+}

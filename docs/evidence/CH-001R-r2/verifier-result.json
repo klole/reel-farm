@@ -1,0 +1,21 @@
+{
+  "ok": false,
+  "errors": [
+    "pnpm test:integration did not pass (exit 2).",
+    "pnpm test:e2e did not pass (exit 2).",
+    "pnpm test:render did not pass (exit 2).",
+    "pnpm test:smoke did not pass (exit 2).",
+    "integration suite did not pass (exit 2).",
+    "integration did not discover and execute assertions.",
+    "e2e suite did not pass (exit 2).",
+    "e2e did not discover and execute assertions.",
+    "render suite did not pass (exit 2).",
+    "render did not discover and execute assertions.",
+    "smoke suite did not pass (exit 2).",
+    "smoke did not discover and execute assertions.",
+    "Every mandatory gate must be PASS before the aggregate can pass."
+  ],
+  "report": "docs/evidence/CH-001R-r2/gate-results.json",
+  "implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "run_id": "r2-20260911-blocked"
+}

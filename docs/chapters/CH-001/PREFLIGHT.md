@@ -35,3 +35,10 @@ The supplied packet was read before implementation. SHA-256 values at activation
 - No `.env` or local database was created during this checkpoint run. The setup script remains idempotent and generates secrets only when a user invokes it.
 
 The host therefore supported static compilation, isolated unit/security checks, and dependency installation, but not the required real PostgreSQL, Compose, authenticated browser, or worker render exercises. Those gates are recorded as `NOT_RUN`; no mock result is promoted to a live-pipeline pass.
+
+## CH-001R-r2 follow-up run
+
+- Follow-up: `CH-001R-r2`, target `v0.1.0`; implementation T: `b516dab843be1b8870d3516185b52905982aec1f`.
+- Host: Debian 13, Linux x86_64, Node `v20.19.2`, pnpm `12.3.4`; Docker, Docker Compose, PostgreSQL client/service, and the pinned Playwright Chromium executable were unavailable.
+- `pnpm install --frozen-lockfile` first encountered restricted-registry DNS while the sandbox retried missing tarballs; the same frozen lockfile then restored all 460 packages through the approved existing package store/network path with no lockfile change.
+- The final aggregate ran all nine required commands. Lint, typecheck, build, unit, and security exited 0; integration, E2E, render, and smoke exited 2 with explicit prerequisite reports. See the fresh tracked evidence under `docs/evidence/CH-001R-r2/`.

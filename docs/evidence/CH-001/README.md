@@ -18,3 +18,5 @@ No database-backed integration log, authenticated browser trace, worker render s
 ## Sanitization and external activity
 
 No password, setup token, cookie, database URL, API key, private user content, or provider response is committed. The only network activity during implementation was package/dependency retrieval and package metadata/license inspection. No provider, publishing, social-account, billing, or public-deployment action occurred.
+
+This directory is historical CH-001-r1 evidence and remains unchanged, including its `0 PASS / 0 FAIL / 72 NOT_RUN` ledger. The bounded continuation is indexed separately at [CH-001R-r2](../CH-001R-r2/README.md).
