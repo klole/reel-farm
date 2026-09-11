@@ -1,0 +1,17 @@
+{
+  "name": "@oss/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "dependencies": {
+    "@oss/contracts": "workspace:*",
+    "@oss/db": "workspace:*",
+    "@oss/storage": "workspace:*",
+    "archiver": "8.0.0"
+  },
+  "devDependencies": { "@types/archiver": "6.0.3" }
+}

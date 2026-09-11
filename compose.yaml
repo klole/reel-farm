@@ -1,0 +1,92 @@
+name: open-slideshow-studio
+
+services:
+  db:
+    image: postgres:16.8-alpine
+    environment:
+      POSTGRES_USER: oss
+      POSTGRES_PASSWORD: oss
+      POSTGRES_DB: oss
+    volumes:
+      - oss_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oss -d oss"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://oss:oss@db:5432/oss
+      MEDIA_ROOT: /data/media
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN}
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      RENDERER_BUILD_ID: ${RENDERER_BUILD_ID:-oss-renderer-0.1.0}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["pnpm", "db:migrate"]
+    restart: "no"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://oss:oss@db:5432/oss
+      MEDIA_ROOT: /data/media
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN}
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      RENDERER_BUILD_ID: ${RENDERER_BUILD_ID:-oss-renderer-0.1.0}
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+    volumes:
+      - oss_media_data:/data/media
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health/live').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 4s
+      retries: 15
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://oss:oss@db:5432/oss
+      MEDIA_ROOT: /data/media
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN}
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      RENDERER_BUILD_ID: ${RENDERER_BUILD_ID:-oss-renderer-0.1.0}
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+    volumes:
+      - oss_media_data:/data/media
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+volumes:
+  oss_db_data:
+  oss_media_data:
