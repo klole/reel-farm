@@ -1,0 +1,44 @@
+{
+  "scope": "DOCUMENT_PACKET_ONLY",
+  "chapter": "CH-001-r1",
+  "target_application_version": "0.1.0",
+  "baseline_revision": "NS-0.2-draft",
+  "baseline_root_sha256": "3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d",
+  "application_tests_run": false,
+  "application_repository_inspected": false,
+  "live_provider_calls": 0,
+  "checks": [
+    {
+      "check": "Required packet files",
+      "passed": true
+    },
+    {
+      "check": "Frozen baseline SHA-256 verification (19 source files)",
+      "passed": true
+    },
+    {
+      "check": "72 unique gates and honest unexecuted reporting template",
+      "passed": true
+    },
+    {
+      "check": "Markdown code fences and relative file/directory links (27 files)",
+      "passed": true
+    },
+    {
+      "check": "Single-file navigation and key baseline identifiers",
+      "passed": true
+    },
+    {
+      "check": "No font binaries distributed",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "counts": {
+    "gates": 72,
+    "baseline_files": 19,
+    "active_instruction_words": 12486,
+    "combined_words": 15780
+  },
+  "result": "PASS"
+}
