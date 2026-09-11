@@ -50,7 +50,7 @@ services:
     volumes:
       - oss_media_data:/data/media
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:${CH001_WEB_PORT:-3000}:3000"
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -61,6 +61,7 @@ services:
       retries: 15
     security_opt:
       - no-new-privileges:true
+    user: node
     restart: unless-stopped
 
   worker:
@@ -79,6 +80,7 @@ services:
     volumes:
       - oss_media_data:/data/media
     command: ["pnpm", "--filter", "@oss/worker", "start"]
+    user: node
     depends_on:
       migrate:
         condition: service_completed_successfully

@@ -6,8 +6,8 @@
   "packageManager": "pnpm@12.3.4",
   "engines": { "node": ">=20.9.0 <21" },
   "scripts": {
-    "setup": "tsx scripts/setup.ts",
-    "db:migrate": "tsx scripts/migrate.ts",
+    "setup": "node --import tsx scripts/setup.ts",
+    "db:migrate": "node --import tsx scripts/migrate.ts",
     "dev": "pnpm --parallel --filter @oss/web --filter @oss/worker dev",
     "dev:web": "pnpm --filter @oss/web dev",
     "dev:worker": "pnpm --filter @oss/worker dev",
@@ -16,12 +16,12 @@
     "lint": "eslint .",
     "typecheck": "tsc -b tsconfig.json",
     "test:unit": "vitest run --config vitest.config.ts tests/unit",
-    "test:integration": "tsx scripts/run-gated-check.ts integration",
-    "test:e2e": "tsx scripts/run-gated-check.ts e2e",
-    "test:render": "tsx scripts/run-gated-check.ts render",
+    "test:integration": "node --import tsx scripts/run-gated-check.ts integration",
+    "test:e2e": "node --import tsx scripts/run-gated-check.ts e2e",
+    "test:render": "node --import tsx scripts/run-gated-check.ts render",
     "test:security": "vitest run --config vitest.config.ts tests/security",
-    "test:smoke": "tsx scripts/run-gated-check.ts smoke",
-    "verify:ch001": "tsx scripts/verify-ch001.ts"
+    "test:smoke": "node --import tsx scripts/run-gated-check.ts smoke",
+    "verify:ch001": "node --import tsx scripts/verify-ch001.ts"
   },
   "dependencies": {
     "@fontsource/inter": "5.3.0",

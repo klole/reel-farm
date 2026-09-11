@@ -11,7 +11,7 @@ import { assertDocumentAssets, DocumentValidationError, documentContainsImageReq
 import type { AssetReference, ImageBlock } from "@oss/contracts";
 import { makeExportManifest, makePostText } from "@oss/core";
 import { embeddedFontCss, fontSetHash, FONT_SET_VERSION, renderSlideHtml } from "@oss/renderer/server";
-import { readStorageFile, writeStorageFile, ensureMediaRoot } from "@oss/storage";
+import { readStorageFile, writeStorageFile, ensureMediaRoot, probeStorage, removeStorageFile } from "@oss/storage";
 
 const QUEUE = "oss.render.v1";
 const WORKER_NAME = "render-worker";
@@ -20,6 +20,8 @@ const LEASE_MS = 120_000;
 const RENDER_DEADLINE_MS = 120_000;
 let boss: PgBoss | undefined;
 let browser: Browser | undefined;
+let runtimeStatus: "starting" | "ready" | "degraded" | "stopped" | "failed" = "starting";
+let runtimeError: string | null = null;
 
 const browserEnvironment = {
   PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin",
@@ -36,7 +38,7 @@ async function heartbeat(status: string, lastError: string | null = null): Promi
 }
 
 async function resetStaleRequests(): Promise<void> {
-  await db.execute(sql`UPDATE render_request SET status = 'queued', lease_token = NULL, lease_expires_at = NULL, error_code = 'WORKER_RECLAIMED', error_message = 'The renderer restarted while this request was active.' WHERE status = 'rendering' AND lease_expires_at < NOW()`);
+  await db.execute(sql`UPDATE render_request SET status = CASE WHEN attempts >= max_attempts THEN 'failed' ELSE 'queued' END, lease_token = NULL, lease_expires_at = NULL, error_code = CASE WHEN attempts >= max_attempts THEN 'RENDER_ATTEMPTS_EXHAUSTED' ELSE 'WORKER_RECLAIMED' END, error_message = CASE WHEN attempts >= max_attempts THEN 'The renderer stopped after reaching the maximum number of attempts.' ELSE 'The renderer restarted while this request was active.' END, completed_at = CASE WHEN attempts >= max_attempts THEN NOW() ELSE NULL END WHERE status = 'rendering' AND lease_expires_at < NOW()`);
   await db.execute(sql`UPDATE render_outbox SET sent_at = NULL, lease_token = NULL, lease_expires_at = NULL, available_at = NOW() WHERE sent_at IS NOT NULL AND render_request_id IN (SELECT id FROM render_request WHERE status = 'queued')`);
 }
 
@@ -50,7 +52,9 @@ async function enqueueOutbox(): Promise<void> {
       await db.execute(sql`UPDATE render_outbox SET sent_at = NOW(), lease_token = NULL, lease_expires_at = NULL, last_error = NULL WHERE id = ${row.id} AND lease_token = ${token}`);
     } catch (error) {
       await db.execute(sql`UPDATE render_outbox SET lease_token = NULL, lease_expires_at = NULL, available_at = NOW() + INTERVAL '2 seconds', last_error = ${error instanceof Error ? error.message.slice(0, 500) : 'queue send failed'} WHERE id = ${row.id} AND lease_token = ${token}`);
-      await heartbeat("degraded", "The durable render queue could not accept a request.");
+      runtimeStatus = "degraded";
+      runtimeError = error instanceof Error ? error.message.slice(0, 500) : "queue send failed";
+      await heartbeat("degraded", runtimeError);
     }
   }
 }
@@ -59,6 +63,11 @@ async function claimRequest(requestId: string): Promise<{ request: typeof render
   return db.transaction(async (tx) => {
     const [row] = await tx.select({ request: renderRequest, revision: draftRevision }).from(renderRequest).innerJoin(draftRevision, eq(draftRevision.id, renderRequest.revisionId)).where(eq(renderRequest.id, requestId)).for("update");
     if (!row || row.request.status === "ready" || row.request.status === "failed") return null;
+    const activeLease = row.request.status === "rendering" && row.request.leaseExpiresAt && row.request.leaseExpiresAt.getTime() > Date.now();
+    if (row.request.attempts >= row.request.maxAttempts && !activeLease) {
+      await tx.update(renderRequest).set({ status: "failed", errorCode: "RENDER_ATTEMPTS_EXHAUSTED", errorMessage: "The renderer stopped after reaching the maximum number of attempts.", leaseToken: null, leaseExpiresAt: null, completedAt: new Date() }).where(eq(renderRequest.id, requestId));
+      return null;
+    }
     const leaseToken = randomUUID();
     const [updated] = await tx.update(renderRequest).set({ status: "rendering", attempts: row.request.attempts + 1, leaseToken, leaseExpiresAt: new Date(Date.now() + LEASE_MS), startedAt: row.request.startedAt ?? new Date(), errorCode: null, errorMessage: null }).where(and(eq(renderRequest.id, requestId), or(eq(renderRequest.status, "queued"), and(eq(renderRequest.status, "rendering"), lt(renderRequest.leaseExpiresAt, new Date()))))).returning();
     return updated ? { request: updated, revision: row.revision } : null;
@@ -75,6 +84,44 @@ async function withTimeout<T>(operation: Promise<T>, timeoutMs: number, label: s
   } finally {
     if (timer) clearTimeout(timer);
   }
+}
+
+function deadlineCheck(deadline: number, label: string): void {
+  if (Date.now() >= deadline) throw new Error(`RENDER_TIMEOUT: ${label}`);
+}
+
+async function assertLease(requestId: string, leaseToken: string, deadline: number): Promise<void> {
+  deadlineCheck(deadline, "render deadline exceeded");
+  const [current] = await db.select({ status: renderRequest.status, leaseToken: renderRequest.leaseToken, leaseExpiresAt: renderRequest.leaseExpiresAt }).from(renderRequest).where(eq(renderRequest.id, requestId));
+  if (!current || current.status !== "rendering" || current.leaseToken !== leaseToken || !current.leaseExpiresAt || current.leaseExpiresAt.getTime() <= Date.now()) throw new Error("RENDER_LEASE_LOST: this worker no longer owns the render attempt.");
+}
+
+async function launchBrowser(): Promise<Browser> {
+  return chromium.launch({
+    headless: true,
+    chromiumSandbox: true,
+    env: browserEnvironment,
+    ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {})
+  });
+}
+
+async function browserCapabilityProbe(): Promise<Browser> {
+  const candidate = await launchBrowser();
+  const probe = await candidate.newPage();
+  try {
+    await probe.setContent("<!doctype html><html><body>renderer probe</body></html>", { waitUntil: "domcontentloaded", timeout: 10_000 });
+    const text = await probe.locator("body").textContent();
+    if (text !== "renderer probe") throw new Error("Browser capability probe returned unexpected content.");
+  } finally {
+    await probe.close().catch(() => undefined);
+  }
+  return candidate;
+}
+
+async function markRuntime(status: typeof runtimeStatus, error: string | null = null): Promise<void> {
+  runtimeStatus = status;
+  runtimeError = error;
+  await heartbeat(status, error);
 }
 
 async function zipBuffers(entries: Array<{ name: string; data: Buffer }>): Promise<Buffer> {
@@ -109,10 +156,14 @@ async function renderRequestById(requestId: string): Promise<void> {
   const { request, revision } = claimed;
   let renderContext: BrowserContext | undefined;
   let page: Page | undefined;
+  const attemptKeys: string[] = [];
+  let artifactAccepted = false;
+  const deadline = Date.now() + RENDER_DEADLINE_MS;
   try {
     const document = parseDocument(revision.document);
-    const deadline = Date.now() + RENDER_DEADLINE_MS;
+    await assertLease(request.id, request.leaseToken as string, deadline);
     const imageIds = document.slides.flatMap((slide) => slide.blocks.filter((block): block is ImageBlock => block.type === "image" && Boolean(block.assetId)).map((block) => block.assetId as string));
+    deadlineCheck(deadline, "render deadline exceeded while loading assets");
     const assetRows = imageIds.length ? await db.select().from(asset).where(and(eq(asset.workspaceId, request.workspaceId), inArray(asset.id, imageIds))) : [];
     const references = new Map<string, AssetReference>(assetRows.map((row) => [row.id, { id: row.id, workspaceId: row.workspaceId, derivativeHash: row.derivativeHash, acceptanceState: row.acceptanceState }]));
     assertDocumentAssets(document, references, request.workspaceId);
@@ -122,29 +173,40 @@ async function renderRequestById(requestId: string): Promise<void> {
     }
     const sources: Record<string, { src: string; alt: string }> = {};
     for (const row of assetRows) {
+      await assertLease(request.id, request.leaseToken as string, deadline);
       let derivative: Buffer;
       try { derivative = await readStorageFile(row.derivativeKey); } catch { throw new Error(`RENDER_IMAGE_MISSING: accepted derivative ${row.id} could not be read.`); }
       if (digest(derivative) !== row.derivativeHash) throw new Error(`RENDER_IMAGE_HASH_MISMATCH: accepted derivative ${row.id} changed after upload.`);
       sources[row.id] = { src: assetDataUrl(row.mime, derivative), alt: row.originalName };
     }
-    if (!browser) browser = await chromium.launch({ headless: true, env: browserEnvironment, ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {}) });
+    if (!browser?.isConnected()) throw new Error("RENDERER_UNAVAILABLE: the sandboxed browser is not connected.");
     renderContext = await browser.newContext({ viewport: { width: document.canvas.width, height: document.canvas.height }, deviceScaleFactor: 1, javaScriptEnabled: true, acceptDownloads: false, serviceWorkers: "block" });
     page = await renderContext.newPage();
     await page.route("**/*", async (route) => { const url = route.request().url(); if (url.startsWith("data:") || url === "about:blank") await route.continue(); else await route.abort("blockedbyclient"); });
     const fontCss = embeddedFontCss();
     const images: RenderImage[] = [];
     for (const [index, slide] of document.slides.entries()) {
-      if (Date.now() >= deadline) throw new Error("RENDER_TIMEOUT: render deadline exceeded before the next slide.");
+      await assertLease(request.id, request.leaseToken as string, deadline);
       const html = renderSlideHtml(document, slide, sources, fontCss);
       await page.setContent(html, { waitUntil: "domcontentloaded", timeout: 20_000 });
       const diagnostics = await withTimeout(page.evaluate(async () => {
         const browserDocument = window.document;
         await browserDocument.fonts.ready;
+        await Promise.all([
+          browserDocument.fonts.load('400 16px "Inter"'),
+          browserDocument.fonts.load('700 16px "Inter"'),
+          browserDocument.fonts.load('400 16px "Source Serif 4"'),
+          browserDocument.fonts.load('700 16px "Source Serif 4"')
+        ]);
         const fontChecks = [browserDocument.fonts.check('400 16px "Inter"'), browserDocument.fonts.check('700 16px "Inter"'), browserDocument.fonts.check('400 16px "Source Serif 4"'), browserDocument.fonts.check('700 16px "Source Serif 4"')];
-        const imageChecks = Array.from(browserDocument.images).map((image) => ({ complete: image.complete, width: image.naturalWidth, height: image.naturalHeight }));
+        const imageChecks = await Promise.all(Array.from(browserDocument.images).map(async (image) => {
+          try { await image.decode(); } catch { /* the final state below records the actionable failure */ }
+          return { complete: image.complete, width: image.naturalWidth, height: image.naturalHeight };
+        }));
         const overflow = Array.from(browserDocument.querySelectorAll<HTMLElement>("[data-text-block]")).filter((node) => node.scrollHeight > node.clientHeight + 2).map((node) => node.dataset.textBlock ?? "unknown");
         return { fontChecks, imageChecks, overflow };
       }), 10_000, `font/image diagnostics for slide ${index + 1}`);
+      deadlineCheck(deadline, `render deadline exceeded after slide ${index + 1} readiness`);
       if (diagnostics.fontChecks.some((value) => !value)) throw new Error("RENDER_FONT_MISSING: a required local font face did not load.");
       if (diagnostics.imageChecks.some((image) => !image.complete || image.width === 0 || image.height === 0)) throw new Error("RENDER_IMAGE_MISSING: a local derivative did not decode.");
       if (diagnostics.overflow.length) throw new Error(`TEXT_OVERFLOW: ${diagnostics.overflow.join(", ")}`);
@@ -154,6 +216,7 @@ async function renderRequestById(requestId: string): Promise<void> {
       if (metadata.format !== "jpeg" || metadata.width !== document.canvas.width || metadata.height !== document.canvas.height) throw new Error("RENDER_OUTPUT_INVALID: final JPEG dimensions or format did not match the canvas.");
       const storageKey = `renders/${request.id}/attempt-${request.attempts}/${String(index + 1).padStart(2, "0")}.jpg`;
       await writeStorageFile(storageKey, buffer);
+      attemptKeys.push(storageKey);
       const acceptedHashes = slide.blocks.filter((block): block is ImageBlock & { assetId: string } => block.type === "image" && typeof block.assetId === "string").map((block) => references.get(block.assetId)?.derivativeHash).filter((value): value is string => Boolean(value));
       images.push({ filename: `${String(index + 1).padStart(2, "0")}.jpg`, storageKey, slideId: slide.id, sha256: digest(buffer), bytes: buffer.byteLength, width: document.canvas.width, height: document.canvas.height, acceptedAssetHashes: acceptedHashes });
     }
@@ -163,21 +226,34 @@ async function renderRequestById(requestId: string): Promise<void> {
     const manifestBytes = Buffer.from(JSON.stringify(manifest, null, 2) + "\n", "utf8");
     const zipKey = `renders/${request.id}/attempt-${request.attempts}/export.zip`;
     const imageEntries = await Promise.all(images.map(async (image) => ({ name: image.filename, data: await readStorageFile(image.storageKey) })));
-    await writeStorageFile(zipKey, await zipBuffers([...imageEntries, { name: "post.txt", data: postText }, { name: "manifest.json", data: manifestBytes }]));
+    await assertLease(request.id, request.leaseToken as string, deadline);
+    const zip = await withTimeout(zipBuffers([...imageEntries, { name: "post.txt", data: postText }, { name: "manifest.json", data: manifestBytes }]), Math.max(1, deadline - Date.now()), "export archive");
+    await assertLease(request.id, request.leaseToken as string, deadline);
+    await writeStorageFile(zipKey, zip);
+    attemptKeys.push(zipKey);
+    await assertLease(request.id, request.leaseToken as string, deadline);
     await db.transaction(async (tx) => {
       const [current] = await tx.select().from(renderRequest).where(eq(renderRequest.id, request.id)).for("update");
       if (!current || current.leaseToken !== request.leaseToken || current.status === "ready") return;
       const [artifact] = await tx.insert(renderArtifact).values({ renderRequestId: request.id, revisionId: revision.id, revisionHash: revision.contentHash, rendererBuildId: WORKER_BUILD, fontSetHash: manifest.fontSetHash, canvasWidth: document.canvas.width, canvasHeight: document.canvas.height, images, manifest, zipKey }).onConflictDoNothing().returning();
-      if (artifact) await tx.update(renderRequest).set({ status: "ready", leaseToken: null, leaseExpiresAt: null, completedAt: new Date(), errorCode: null, errorMessage: null }).where(eq(renderRequest.id, request.id));
+      if (artifact) {
+        artifactAccepted = true;
+        await tx.update(renderRequest).set({ status: "ready", leaseToken: null, leaseExpiresAt: null, completedAt: new Date(), errorCode: null, errorMessage: null }).where(eq(renderRequest.id, request.id));
+      }
     });
-    await heartbeat("ready");
+    if (!artifactAccepted) throw new Error("RENDER_LEASE_LOST: the render attempt was fenced before finalization.");
+    await heartbeat(runtimeStatus, runtimeError);
   } catch (error) {
     const permanent = error instanceof DocumentValidationError || (error instanceof Error && /TEXT_OVERFLOW|RENDER_FONT_MISSING|RENDER_IMAGE_MISSING|RENDER_IMAGE_HASH_MISMATCH|RENDER_OUTPUT_INVALID|UNSUPPORTED/.test(error.message));
     await markFailure(request.id, request.leaseToken, permanent ? "RENDER_VALIDATION_FAILED" : "RENDER_TRANSIENT_FAILED", error instanceof Error ? error.message : "The renderer failed.", !permanent);
-    await heartbeat("degraded", error instanceof Error ? error.message.slice(0, 500) : "render failed");
+    // A bad document or one transient request must not make a healthy browser
+    // look unavailable to the editor. The request carries the error state;
+    // the heartbeat describes process/capability readiness.
+    await heartbeat(runtimeStatus === "ready" ? "ready" : runtimeStatus, error instanceof Error ? error.message.slice(0, 500) : "render failed");
   } finally {
     await page?.close().catch(() => undefined);
     await renderContext?.close().catch(() => undefined);
+    if (!artifactAccepted) await Promise.all(attemptKeys.map((key) => removeStorageFile(key).catch(() => undefined)));
   }
 }
 
@@ -185,16 +261,24 @@ async function main(): Promise<void> {
   await ensureMediaRoot();
   const databaseUrl = process.env.DATABASE_URL;
   if (!databaseUrl) throw new Error("DATABASE_URL is required for the render worker.");
+  await db.execute(sql`SELECT 1`);
+  await probeStorage();
+  browser = await browserCapabilityProbe();
   boss = new PgBoss({ connectionString: databaseUrl });
   await boss.start();
   await boss.createQueue(QUEUE);
-  await heartbeat("ready");
   await resetStaleRequests();
+  await markRuntime("ready");
   await boss.work<{ renderRequestId: string }>(QUEUE, async (jobs) => { for (const job of jobs) if (job.data.renderRequestId) await renderRequestById(job.data.renderRequestId); });
-  const interval = setInterval(() => { void enqueueOutbox().catch((error) => { void heartbeat("degraded", error instanceof Error ? error.message.slice(0, 500) : "outbox failure"); }); void resetStaleRequests().catch(() => undefined); void heartbeat("ready").catch(() => undefined); }, 2_000);
-  const shutdown = async () => { clearInterval(interval); await heartbeat("stopped").catch(() => undefined); if (browser) await browser.close().catch(() => undefined); if (boss) await boss.stop().catch(() => undefined); await pool.end().catch(() => undefined); process.exit(0); };
+  const interval = setInterval(() => {
+    if (!browser?.isConnected()) { runtimeStatus = "degraded"; runtimeError = "The sandboxed browser process is no longer connected."; }
+    void enqueueOutbox().catch((error) => { runtimeStatus = "degraded"; runtimeError = error instanceof Error ? error.message.slice(0, 500) : "outbox failure"; });
+    void resetStaleRequests().catch((error) => { runtimeStatus = "degraded"; runtimeError = error instanceof Error ? error.message.slice(0, 500) : "recovery failure"; });
+    void heartbeat(runtimeStatus, runtimeError).catch(() => undefined);
+  }, 2_000);
+  const shutdown = async () => { clearInterval(interval); runtimeStatus = "stopped"; await heartbeat("stopped").catch(() => undefined); if (browser) await browser.close().catch(() => undefined); if (boss) await boss.stop().catch(() => undefined); await pool.end().catch(() => undefined); process.exit(0); };
   process.once("SIGTERM", () => void shutdown()); process.once("SIGINT", () => void shutdown());
   console.log(`render-worker ready (${WORKER_BUILD})`);
 }
 
-main().catch(async (error) => { console.error("worker_start_failed", error instanceof Error ? error.message : "unknown"); await heartbeat("failed", error instanceof Error ? error.message.slice(0, 500) : "unknown").catch(() => undefined); await pool.end().catch(() => undefined); process.exit(1); });
+main().catch(async (error) => { runtimeStatus = "failed"; runtimeError = error instanceof Error ? error.message.slice(0, 500) : "unknown"; console.error("worker_start_failed", runtimeError); await heartbeat("failed", runtimeError).catch(() => undefined); if (browser) await browser.close().catch(() => undefined); await pool.end().catch(() => undefined); process.exit(1); });

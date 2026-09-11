@@ -1,10 +1,11 @@
 import { createHash } from "node:crypto";
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { db, asset, draft, draftRevision, project, renderArtifact, renderOutbox, renderRequest, saveMutation, workerHeartbeat } from "@oss/db";
 import type { ImageBlock, SlideDocument } from "@oss/contracts";
 import { assertDocumentAssets, CANONICALIZATION_VERSION, DocumentValidationError, parseDocument, RENDERER_BUILD_ID } from "@oss/contracts";
 import { createDefaultDocument } from "@oss/contracts";
 import { hashDocument } from "@oss/core";
+import { probeStorage } from "@oss/storage";
 import { HttpError } from "./request";
 
 export function payloadHash(value: string): string { return createHash("sha256").update(value).digest("hex"); }
@@ -60,21 +61,21 @@ export async function saveDraft(input: { workspaceId: string; userId: string; pr
       if (existingMutation[0].payloadHash !== contentHash) throw new HttpError(409, "MUTATION_REUSED", "That save identity was already used for different content.");
       const [revision] = await tx.select().from(draftRevision).where(eq(draftRevision.id, existingMutation[0].revisionId));
       if (!revision) throw new Error("Idempotent save revision is missing.");
-      return { revision, conflict: false, idempotent: true };
+      return { revision, headRevisionId: owned.draft.headRevisionId, conflict: false, idempotent: true };
     }
     if (owned.draft.headRevisionId !== input.expectedHeadRevisionId) throw new HttpError(409, "REVISION_CONFLICT", "This draft changed in another tab. Your local edit is still available; reload only after preserving it.");
     const [current] = await tx.select().from(draftRevision).where(eq(draftRevision.id, owned.draft.headRevisionId));
     if (!current) throw new Error("Draft head revision is missing.");
     if (current.contentHash === contentHash) {
       await tx.insert(saveMutation).values({ draftId: owned.draft.id, actorUserId: input.userId, mutationId: input.mutationId, payloadHash: contentHash, revisionId: current.id });
-      return { revision: current, conflict: false, idempotent: false };
+      return { revision: current, headRevisionId: current.id, conflict: false, idempotent: false };
     }
     const [revision] = await tx.insert(draftRevision).values({ draftId: owned.draft.id, revisionNumber: current.revisionNumber + 1, document, contentHash, canonicalizationVersion: CANONICALIZATION_VERSION, createdBy: input.userId }).returning();
     if (!revision) throw new Error("Revision insert returned no row.");
     await tx.update(draft).set({ headRevisionId: revision.id, updatedAt: new Date() }).where(eq(draft.id, owned.draft.id));
     await tx.update(project).set({ lastSavedAt: new Date(), updatedAt: new Date() }).where(eq(project.id, input.projectId));
     await tx.insert(saveMutation).values({ draftId: owned.draft.id, actorUserId: input.userId, mutationId: input.mutationId, payloadHash: contentHash, revisionId: revision.id });
-    return { revision, conflict: false, idempotent: false };
+    return { revision, headRevisionId: revision.id, conflict: false, idempotent: false };
   });
 }
 
@@ -105,7 +106,26 @@ export async function getRenderForOwner(workspaceId: string, requestId: string) 
 }
 
 export async function workerStatus() {
-  const [heartbeat] = await db.select().from(workerHeartbeat).where(eq(workerHeartbeat.workerName, "render-worker"));
-  const alive = Boolean(heartbeat && Date.now() - heartbeat.lastSeenAt.getTime() < 12_000);
-  return { database: "ready" as const, storage: "ready" as const, renderer: alive ? "ready" as const : "offline" as const, worker: alive ? "ready" as const : "offline" as const, heartbeat: heartbeat ? { ...heartbeat, lastSeenAt: heartbeat.lastSeenAt.toISOString() } : null };
+  let database: "ready" | "unavailable" = "ready";
+  let storage: "ready" | "unavailable" = "ready";
+  try { await db.execute(sql`SELECT 1`); } catch { database = "unavailable"; }
+  try { await probeStorage(); } catch { storage = "unavailable"; }
+
+  let heartbeat: (typeof workerHeartbeat.$inferSelect) | undefined;
+  try {
+    [heartbeat] = await db.select().from(workerHeartbeat).where(eq(workerHeartbeat.workerName, "render-worker"));
+  } catch {
+    heartbeat = undefined;
+  }
+  const heartbeatFresh = Boolean(heartbeat && Date.now() - heartbeat.lastSeenAt.getTime() < 12_000);
+  const processAlive = heartbeatFresh && heartbeat?.status !== "stopped" && heartbeat?.status !== "failed";
+  const rendererReady = processAlive && heartbeat?.status === "ready" && database === "ready" && storage === "ready";
+  const workerState = processAlive ? (heartbeat?.status === "ready" && database === "ready" && storage === "ready" ? "ready" : "degraded") : "offline";
+  return {
+    database,
+    storage,
+    renderer: rendererReady ? "ready" as const : processAlive ? "degraded" as const : "offline" as const,
+    worker: workerState as "ready" | "degraded" | "offline",
+    heartbeat: heartbeat ? { ...heartbeat, lastSeenAt: heartbeat.lastSeenAt.toISOString() } : null
+  };
 }

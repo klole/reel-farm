@@ -12,6 +12,8 @@ type Bundle = { project: { id: string; name: string }; draft: { id: string; head
 type SaveState = "loading" | "saved" | "unsaved" | "saving" | "failed" | "conflict";
 type RenderArtifact = { revisionId: string; images: Array<{ filename: string; sha256: string }>; manifest: unknown };
 type RenderState = { requestId: string; status: string; artifact?: RenderArtifact } | null;
+type SaveOperation = { snapshot: SlideDocument; version: number; mutationId: string; generation: number };
+type HealthDetails = { renderer: "ready" | "degraded" | "offline"; heartbeat: { lastSeenAt: string } | null };
 
 function blockFor(slide: Slide | undefined, blockId: string | null): TextBlock | ImageBlock | undefined { return slide?.blocks.find((block) => block.id === blockId); }
 function cloneSlide(slide: Slide): Slide { const copy = JSON.parse(JSON.stringify(slide)) as Slide; copy.id = newId(); copy.blocks = copy.blocks.map((block) => ({ ...block, id: newId() })); return copy; }
@@ -35,15 +37,58 @@ export default function EditorView({ projectId, initialProjectName }: { projectI
   const [rightsConfirmed, setRightsConfirmed] = useState(false);
   const documentRef = useRef<SlideDocument | null>(null);
   const latestVersion = useRef(0);
+  const acknowledgedHeadRef = useRef<string | null>(null);
   const saveQueue = useRef(Promise.resolve());
+  const pendingSaveRef = useRef<SaveOperation | null>(null);
+  const uncertainSaveRef = useRef<SaveOperation | null>(null);
+  const loadGenerationRef = useRef(0);
   const ready = Boolean(bundle && document);
 
   const load = useCallback(async () => {
+    const generation = loadGenerationRef.current + 1;
+    loadGenerationRef.current = generation;
     const data = await apiFetch<Bundle>(`/api/projects/${projectId}`);
-    setBundle(data); if (data.revision) { setDocument(data.revision.document); setSelectedSlideId(data.revision.document.slides[0]?.id ?? null); setSelectedBlockId(data.revision.document.slides[0]?.blocks.find((block) => block.type === "text")?.id ?? null); setSaveState("saved"); } else setSaveState("failed");
+    if (generation !== loadGenerationRef.current) return;
+    setBundle(data);
+    acknowledgedHeadRef.current = data.draft.headRevisionId;
+    uncertainSaveRef.current = null;
+    pendingSaveRef.current = null;
+    if (data.revision) {
+      documentRef.current = data.revision.document;
+      latestVersion.current = 0;
+      setVersion(0);
+      setDocument(data.revision.document);
+      setSelectedSlideId(data.revision.document.slides[0]?.id ?? null);
+      setSelectedBlockId(data.revision.document.slides[0]?.blocks.find((block) => block.type === "text")?.id ?? null);
+      setUndoStack([]);
+      setRedoStack([]);
+      setConflict(false);
+      setSaveState("saved");
+    } else setSaveState("failed");
   }, [projectId]);
   useEffect(() => { void load().catch((err) => setError(err instanceof Error ? err.message : "Project could not be loaded.")); }, [load]);
   useEffect(() => { documentRef.current = document; }, [document]);
+
+  const refreshAssets = useCallback(async () => {
+    const data = await apiFetch<Bundle>(`/api/projects/${projectId}`);
+    // Asset refresh is deliberately separate from draft replacement. Uploads
+    // may complete while a local edit or save response is in flight.
+    setBundle((current) => current ? { ...current, assets: data.assets, worker: data.worker } : current);
+  }, [projectId]);
+
+  const refreshStatus = useCallback(async () => {
+    try {
+      const status = await apiFetch<HealthDetails>("/api/health/details");
+      setBundle((current) => current ? { ...current, worker: { status: status.renderer, lastSeenAt: status.heartbeat?.lastSeenAt ?? new Date(0).toISOString() } } : current);
+    } catch {
+      setBundle((current) => current ? { ...current, worker: { status: "offline", lastSeenAt: new Date(0).toISOString() } } : current);
+    }
+  }, []);
+  useEffect(() => {
+    if (!ready) return;
+    const timer = window.setInterval(() => { void refreshStatus(); }, 5_000);
+    return () => window.clearInterval(timer);
+  }, [ready, refreshStatus]);
 
   const commit = useCallback((next: SlideDocument | ((current: SlideDocument) => SlideDocument)) => {
     setDocument((current) => {
@@ -57,27 +102,52 @@ export default function EditorView({ projectId, initialProjectName }: { projectI
 
   const saveLatest = useCallback((force = false): Promise<string | null> => {
     const snapshot = documentRef.current;
-    const expectedHead = bundle?.draft.headRevisionId;
     const saveVersion = latestVersion.current;
-    if (!snapshot || !expectedHead) return Promise.resolve(null);
+    const generation = loadGenerationRef.current;
+    if (!snapshot || !acknowledgedHeadRef.current) return Promise.resolve(null);
+    const previousUncertain = uncertainSaveRef.current;
+    const previousPending = pendingSaveRef.current;
+    const operation = previousUncertain && previousUncertain.generation === generation && previousUncertain.version === saveVersion && JSON.stringify(previousUncertain.snapshot) === JSON.stringify(snapshot)
+      ? previousUncertain
+      : previousPending && previousPending.generation === generation && previousPending.version === saveVersion && JSON.stringify(previousPending.snapshot) === JSON.stringify(snapshot)
+        ? previousPending
+        : { snapshot: cloneDocument(snapshot), version: saveVersion, mutationId: newClientId(), generation };
+    const recovery = previousUncertain && previousUncertain !== operation && previousUncertain.generation === generation && previousUncertain.version < saveVersion ? previousUncertain : null;
+    pendingSaveRef.current = operation;
     const task = saveQueue.current.then(async () => {
-      if (!force && saveVersion !== latestVersion.current) return bundle?.draft.headRevisionId ?? null;
-      setSaveState("saving");
-      try {
-        const result = await apiFetch<{ revision: { id: string; contentHash: string } }>(`/api/projects/${projectId}/draft`, { method: "POST", body: JSON.stringify({ expectedHeadRevisionId: expectedHead, mutationId: newClientId(), document: snapshot }) });
-        setBundle((current) => current ? { ...current, draft: { ...current.draft, headRevisionId: result.revision.id }, revision: current.revision ? { ...current.revision, id: result.revision.id, contentHash: result.revision.contentHash, document: snapshot } : null } : current);
-        if (saveVersion === latestVersion.current) { setSaveState("saved"); setConflict(false); }
-        return result.revision.id;
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Save failed.";
-        setError(message);
-        if (message.includes("another tab") || message.includes("changed in another")) { setConflict(true); setSaveState("conflict"); } else setSaveState("failed");
-        return null;
+      if (generation !== loadGenerationRef.current) return null;
+      async function persist(candidate: SaveOperation): Promise<string | null> {
+        setSaveState("saving");
+        try {
+          const expectedHead = acknowledgedHeadRef.current;
+          if (!expectedHead) return null;
+          const result = await apiFetch<{ revision: { id: string; contentHash: string }; headRevisionId?: string }>(`/api/projects/${projectId}/draft`, { method: "POST", body: JSON.stringify({ expectedHeadRevisionId: expectedHead, mutationId: candidate.mutationId, document: candidate.snapshot }) });
+          acknowledgedHeadRef.current = result.headRevisionId ?? result.revision.id;
+          if (uncertainSaveRef.current === candidate) uncertainSaveRef.current = null;
+          setBundle((current) => current ? { ...current, draft: { ...current.draft, headRevisionId: acknowledgedHeadRef.current }, revision: candidate.version === latestVersion.current && current.revision ? { ...current.revision, id: result.revision.id, contentHash: result.revision.contentHash, document: candidate.snapshot } : current.revision } : current);
+          if (candidate.version === latestVersion.current) { setSaveState("saved"); setConflict(false); }
+          return result.revision.id;
+        } catch (err) {
+          const message = err instanceof Error ? err.message : "Save failed.";
+          setError(message);
+          if (message.includes("another tab") || message.includes("changed in another")) { setConflict(true); setSaveState("conflict"); } else setSaveState("failed");
+          // A transport failure is ambiguous: the server may have committed
+          // before the response was lost. Keep the exact payload and mutation
+          // identity so a later retry is idempotent. An older uncertain save
+          // is retried before a newer local snapshot is dispatched.
+          if (!message.includes("another tab") && !message.includes("changed in another") && !message.includes("already used")) uncertainSaveRef.current = candidate;
+          return null;
+        }
       }
+      if (!force && !recovery && operation.version !== latestVersion.current) return acknowledgedHeadRef.current;
+      if (recovery && !(await persist(recovery))) return null;
+      return persist(operation);
+    }).finally(() => {
+      if (pendingSaveRef.current === operation) pendingSaveRef.current = null;
     });
     saveQueue.current = task.then(() => undefined, () => undefined);
     return task;
-  }, [bundle?.draft.headRevisionId, projectId]);
+  }, [projectId]);
 
   useEffect(() => {
     if (!ready || version === 0) return;
@@ -107,7 +177,7 @@ export default function EditorView({ projectId, initialProjectName }: { projectI
   function changeImage(field: keyof ImageBlock | "assetId", value: string | number | null | { x: number; y: number }) { const slide = selectedSlide(); if (!document || !slide || !selectedBlockId) return; commit((current) => ({ ...current, slides: current.slides.map((item) => item.id !== slide.id ? item : { ...item, blocks: item.blocks.map((block) => { if (block.id !== selectedBlockId || block.type !== "image") return block; if (field === "assetId") { const asset = bundle?.assets.find((candidate) => candidate.id === value); return { ...block, assetId: typeof value === "string" ? value : null, expectedDerivativeHash: asset?.derivativeHash ?? null }; } return { ...block, [field]: value }; }) }) })); }
   function changePost(field: "title" | "caption" | "hashtags", value: string) { if (!document) return; commit((current) => ({ ...current, post: field === "hashtags" ? { ...current.post, hashtags: value.split(/[\s,]+/).filter(Boolean).map((tag) => tag.startsWith("#") ? tag : `#${tag}`).slice(0, 20) } : { ...current.post, [field]: value } })); }
 
-  async function upload(event: ChangeEvent<HTMLInputElement>) { const files = event.target.files; if (!files?.length) return; setError(""); const form = new FormData(); Array.from(files).forEach((file) => form.append("files", file)); form.append("rightsAssertion", String(rightsConfirmed)); try { const result = await apiFetch<{ results: Array<{ ok: boolean; message?: string }> }>("/api/assets", { method: "POST", body: form }); const failed = result.results.filter((item) => !item.ok); if (failed.length) setError(failed.map((item) => item.message).filter(Boolean).join(" ")); await load(); } catch (err) { setError(err instanceof Error ? err.message : "Upload failed."); } finally { event.target.value = ""; } }
+  async function upload(event: ChangeEvent<HTMLInputElement>) { const files = event.target.files; if (!files?.length) return; setError(""); const form = new FormData(); Array.from(files).forEach((file) => form.append("files", file)); form.append("rightsAssertion", String(rightsConfirmed)); try { const result = await apiFetch<{ results: Array<{ ok: boolean; message?: string }> }>("/api/assets", { method: "POST", body: form }); const failed = result.results.filter((item) => !item.ok); if (failed.length) setError(failed.map((item) => item.message).filter(Boolean).join(" ")); await refreshAssets(); } catch (err) { setError(err instanceof Error ? err.message : "Upload failed."); } finally { event.target.value = ""; } }
 
   async function preview() { if (!document || !bundle?.draft.headRevisionId) return; setRenderError(""); const revisionId = await saveLatest(true); if (!revisionId) return; try { const result = await apiFetch<{ request: { id: string; status: string } }>(`/api/projects/${projectId}/render`, { method: "POST", body: JSON.stringify({ revisionId, clientRequestId: newClientId() }) }); setRender({ requestId: result.request.id, status: result.request.status }); setPreviewIndex(0); } catch (err) { setRenderError(err instanceof Error ? err.message : "Render request failed."); } }
   useEffect(() => { if (!render || render.status === "ready" || render.status === "failed") return; const timer = window.setInterval(() => { void apiFetch<{ request: { status: string; errorMessage?: string }; artifact?: RenderArtifact }>(`/api/render-requests/${render.requestId}`).then((result) => { setRender(result.artifact ? { requestId: render.requestId, status: result.request.status, artifact: result.artifact } : { requestId: render.requestId, status: result.request.status }); if (result.request.status === "failed") setRenderError(result.request.errorMessage ?? "The renderer could not complete this export."); }).catch((err) => setRenderError(err instanceof Error ? err.message : "Render status could not be read.")); }, 1000); return () => window.clearInterval(timer); }, [render]);

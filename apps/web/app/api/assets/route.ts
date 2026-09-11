@@ -7,6 +7,42 @@ import { assertMutationRequest, jsonError, requireOwner } from "../../../src/lib
 export const runtime = "nodejs";
 const MAX_BATCH_FILES = 20;
 const MAX_BATCH_BYTES = 100 * 1024 * 1024;
+// Multipart metadata is bounded separately from image bytes. The stream
+// guard runs before request.formData(), so a missing or dishonest
+// Content-Length cannot cause an unbounded multipart parse.
+const MAX_MULTIPART_OVERHEAD = 2 * 1024 * 1024;
+const MAX_REQUEST_BYTES = MAX_BATCH_BYTES + MAX_MULTIPART_OVERHEAD;
+
+class UploadRequestTooLarge extends Error {
+  constructor() { super("The upload request exceeds the safe multipart limit."); this.name = "UploadRequestTooLarge"; }
+}
+
+function boundedBodyRequest(request: Request): Request {
+  const declaredLength = request.headers.get("content-length");
+  if (declaredLength && (!/^\d+$/.test(declaredLength) || Number(declaredLength) > MAX_REQUEST_BYTES)) throw new UploadRequestTooLarge();
+  if (!request.body) return request;
+  const reader = request.body.getReader();
+  let received = 0;
+  const stream = new ReadableStream<Uint8Array>({
+    async pull(controller) {
+      try {
+        const chunk = await reader.read();
+        if (chunk.done) { controller.close(); return; }
+        received += chunk.value.byteLength;
+        if (received > MAX_REQUEST_BYTES) {
+          await reader.cancel("multipart request limit exceeded");
+          controller.error(new UploadRequestTooLarge());
+          return;
+        }
+        controller.enqueue(chunk.value);
+      } catch (error) {
+        controller.error(error);
+      }
+    },
+    async cancel(reason) { await reader.cancel(reason); }
+  });
+  return new Request(request, { body: stream, duplex: "half" } as RequestInit);
+}
 
 function displayName(name: string): string {
   return Array.from(name, (character) => {
@@ -23,7 +59,7 @@ export async function POST(request: Request) {
   try {
     await assertMutationRequest(request);
     const owner = await requireOwner(request);
-    const form = await request.formData();
+    const form = await boundedBodyRequest(request).formData();
     const values = form.getAll("files").filter((value): value is File => value instanceof File);
     const rightsAssertion = form.get("rightsAssertion") === "true";
     if (!rightsAssertion) return NextResponse.json({ error: { code: "RIGHTS_ASSERTION_REQUIRED", message: "Confirm that you own or have permission to use each image." } }, { status: 400 });
@@ -47,5 +83,8 @@ export async function POST(request: Request) {
       }
     }
     return NextResponse.json({ results }, { status: results.some((result) => result.ok) ? 201 : 422 });
-  } catch (error) { return jsonError(error); }
+  } catch (error) {
+    if (error instanceof UploadRequestTooLarge) return NextResponse.json({ error: { code: "UPLOAD_LIMIT", message: error.message } }, { status: 413 });
+    return jsonError(error);
+  }
 }

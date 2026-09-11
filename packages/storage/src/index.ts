@@ -51,6 +51,25 @@ export async function ensureMediaRoot(): Promise<void> {
   await mkdir(mediaRoot(), { recursive: true, mode: 0o750 });
 }
 
+/**
+ * Verify that the configured media root is usable without leaving a durable
+ * probe behind. This is intentionally a bounded write/read/delete probe: a
+ * directory existing is not enough to claim that accepted media can be
+ * persisted.
+ */
+export async function probeStorage(): Promise<void> {
+  await ensureMediaRoot();
+  const key = `health/${randomUUID()}.probe`;
+  const payload = Buffer.from("open-slideshow-studio-storage-probe\n", "utf8");
+  try {
+    await writeStorageFile(key, payload);
+    const readBack = await readStorageFile(key);
+    if (!readBack.equals(payload)) throw new Error("Storage probe returned different bytes.");
+  } finally {
+    await removeStorageFile(key).catch(() => undefined);
+  }
+}
+
 function digest(data: Buffer): string {
   return createHash("sha256").update(data).digest("hex");
 }

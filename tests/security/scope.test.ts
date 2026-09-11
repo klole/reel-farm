@@ -8,12 +8,13 @@ const read = (relativePath: string) => readFile(resolve(root, relativePath), "ut
 describe("CH-001 security and scope assertions", () => {
   it("keeps the host surface loopback-only and does not publish the database or worker", async () => {
     const compose = await read("compose.yaml");
-    expect(compose).toContain('127.0.0.1:3000:3000');
+    expect(compose).toMatch(/127\.0\.0\.1:\$\{CH001_WEB_PORT:-3000\}:3000/);
     expect(compose).not.toMatch(/5432:\\d/);
     expect(compose).not.toMatch(/worker:\\s*[\\r\\n\\s-]*ports:/);
     expect(compose).toContain('command: ["pnpm", "--filter", "@oss/worker", "start"]');
     expect(compose).toContain("cap_drop:");
     expect(compose).toContain("- ALL");
+    expect(compose).toContain("user: node");
   });
 
   it("keeps signup behind the private bootstrap path and avoids provider/publishing scope", async () => {
@@ -36,6 +37,7 @@ describe("CH-001 security and scope assertions", () => {
   it("does not pass application secrets into the browser subprocess", async () => {
     const worker = await read("apps/worker/src/index.ts");
     expect(worker).toContain("env: browserEnvironment");
+    expect(worker).toContain("chromiumSandbox: true");
     expect(worker).toContain("RENDER_IMAGE_HASH_MISMATCH");
     expect(worker).not.toContain("--no-sandbox");
     expect(worker).not.toContain("DATABASE_URL: process.env.DATABASE_URL");

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": { "dev": "tsx src/index.ts", "build": "tsc -p tsconfig.json", "start": "node dist/index.js" },
+  "scripts": { "dev": "node --import tsx src/index.ts", "build": "tsc -p tsconfig.json", "start": "node dist/index.js" },
   "dependencies": {
     "@oss/contracts": "workspace:*",
     "@oss/core": "workspace:*",

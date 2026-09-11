@@ -136,15 +136,44 @@ export type SlideDocument = z.infer<typeof DocumentSchema>;
 export class DocumentValidationError extends Error {
   readonly issues: z.ZodIssue[];
   constructor(issues: z.ZodIssue[]) {
-    super("The slideshow document is invalid.");
+    super(issues.length ? issues.map((issue) => issue.message).join("; ") : "The slideshow document is invalid.");
     this.name = "DocumentValidationError";
     this.issues = issues;
   }
 }
 
+// The bundled font set is deliberately a Latin/Latin-extended corpus for
+// v0.1.0. Rejecting other scripts here makes the limitation explicit instead
+// of allowing Chromium to substitute a missing glyph during export.
+function isSupportedSlideCodePoint(codePoint: number): boolean {
+  return codePoint === 0x09 || codePoint === 0x0a || codePoint === 0x0d
+    || (codePoint >= 0x20 && codePoint <= 0x7e)
+    || (codePoint >= 0xa0 && codePoint <= 0x24f)
+    || (codePoint >= 0x300 && codePoint <= 0x36f)
+    || (codePoint >= 0x1e00 && codePoint <= 0x1eff)
+    || (codePoint >= 0x2000 && codePoint <= 0x206f)
+    || (codePoint >= 0x20a0 && codePoint <= 0x20cf);
+}
+
+export type UnsupportedSlideGlyph = { slideId: string; blockId: string; glyph: string; codePoint: number };
+
+export function unsupportedSlideGlyphs(document: SlideDocument): UnsupportedSlideGlyph[] {
+  const unsupported: UnsupportedSlideGlyph[] = [];
+  for (const slide of document.slides) for (const block of slide.blocks) {
+    if (block.type !== "text") continue;
+    for (const glyph of Array.from(block.text)) {
+      const codePoint = glyph.codePointAt(0);
+      if (codePoint !== undefined && !isSupportedSlideCodePoint(codePoint) && !unsupported.some((item) => item.slideId === slide.id && item.blockId === block.id && item.codePoint === codePoint)) unsupported.push({ slideId: slide.id, blockId: block.id, glyph, codePoint });
+    }
+  }
+  return unsupported;
+}
+
 export function parseDocument(input: unknown): SlideDocument {
   const result = DocumentSchema.safeParse(input);
   if (!result.success) throw new DocumentValidationError(result.error.issues);
+  const unsupported = unsupportedSlideGlyphs(result.data);
+  if (unsupported.length) throw new DocumentValidationError(unsupported.map((item) => ({ code: "custom", path: ["slides", item.slideId, item.blockId, "text"], message: `Unsupported glyph U+${item.codePoint.toString(16).toUpperCase().padStart(4, "0")}; v0.1.0 supports the bundled Latin/Latin-extended text corpus only.` })));
   return result.data;
 }
 

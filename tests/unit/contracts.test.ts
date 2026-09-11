@@ -74,4 +74,13 @@ describe("slide document contracts", () => {
   it("formats Unicode post text without losing hashtags", () => {
     expect(formatPostText({ title: "Café", caption: "A résumé — mañana.", hashtags: ["#local", "#制作"] })).toBe("Title: Café\nCaption: A résumé — mañana.\nHashtags: #local #制作");
   });
+
+  it("rejects unsupported slide glyphs with an explicit v0.1.0 limitation", () => {
+    const document = createDefaultDocument();
+    const slide = document.slides[0];
+    const headline = slide?.blocks.find((block) => block.type === "text" && block.slot === "headline");
+    if (!headline || headline.type !== "text") throw new Error("default headline missing");
+    headline.text = "日本語";
+    expect(() => parseDocument(document)).toThrow(/Latin\/Latin-extended/);
+  });
 });
