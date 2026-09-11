@@ -7,7 +7,7 @@ Recorded 2026-09-11 UTC for CH-001-r1 / target v0.1.0.
 - Repository: `reel-farm`; branch: `main`.
 - Remote: `origin` points to the authorized GitHub repository; no credential-bearing URL is recorded here.
 - Required starting base: `ce17fdf5cade9b91b46da86af943a8be651289f5`.
-- Implementation commits: `a74cc83` introduced the application, `9afb7a2` fixed executable gate scripts, and final hardened implementation commit is `bbe370998016153cdfdee404022bf7007710e9df`.
+- Implementation commits: `a74cc83` introduced the application, `9afb7a2` fixed executable gate scripts, `bbe3709` hardened the renderer, and final tested implementation commit is `bdd6540b90f2d59b7ef11215cd0ceb631fc6336a`.
 - The starting commit was verified exactly. At activation the repository had no application implementation. Two pre-existing untracked user paths were preserved untouched: `handoffs/luna-ch001-dispatch.md` and `logs/luna-ch001.jsonl`.
 - Generated TypeScript build-info files are ignored and are not part of the implementation commit.
 

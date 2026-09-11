@@ -1,6 +1,6 @@
 # CH-001 evidence index
 
-Checkpoint: CH-001-r1 / target v0.1.0. Implementation code was tested at `bbe370998016153cdfdee404022bf7007710e9df`; the final documentation/evidence commit is the commit containing this file and the handoff files. Repository state remains `awaiting_review`.
+Checkpoint: CH-001-r1 / target v0.1.0. Implementation code was tested at `bdd6540b90f2d59b7ef11215cd0ceb631fc6336a`; the final documentation/evidence commit is the commit containing this file and the handoff files. Repository state remains `awaiting_review`.
 
 ## Available evidence
 

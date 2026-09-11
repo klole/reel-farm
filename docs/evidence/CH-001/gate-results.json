@@ -2,9 +2,9 @@
   "chapter": "CH-001-r1",
   "target_application_version": "0.1.0",
   "report_kind": "EXECUTED_LOCAL_WITH_UNAVAILABLE_SERVICES",
-  "implementation_commit": "bbe370998016153cdfdee404022bf7007710e9df",
+  "implementation_commit": "bdd6540b90f2d59b7ef11215cd0ceb631fc6336a",
   "evidence_commit": "documentation commit containing this file",
-  "generatedAt": "2026-09-11T03:26:05.832Z",
+  "generatedAt": "2026-09-11T03:32:04.265Z",
   "reference_environment": {
     "node": "v20.19.2",
     "platform": "linux",
@@ -14,56 +14,56 @@
   "commands": [
     {
       "command": "pnpm lint",
-      "startedAt": "2026-09-11T03:25:46.526Z",
-      "endedAt": "2026-09-11T03:25:48.100Z",
+      "startedAt": "2026-09-11T03:31:44.509Z",
+      "endedAt": "2026-09-11T03:31:46.037Z",
       "exitCode": 0
     },
     {
       "command": "pnpm typecheck",
-      "startedAt": "2026-09-11T03:25:48.102Z",
-      "endedAt": "2026-09-11T03:25:48.361Z",
+      "startedAt": "2026-09-11T03:31:46.039Z",
+      "endedAt": "2026-09-11T03:31:46.313Z",
       "exitCode": 0
     },
     {
       "command": "pnpm build",
-      "startedAt": "2026-09-11T03:25:48.362Z",
-      "endedAt": "2026-09-11T03:26:02.590Z",
+      "startedAt": "2026-09-11T03:31:46.314Z",
+      "endedAt": "2026-09-11T03:32:00.929Z",
       "exitCode": 0
     },
     {
       "command": "pnpm test:unit",
-      "startedAt": "2026-09-11T03:26:02.591Z",
-      "endedAt": "2026-09-11T03:26:03.330Z",
+      "startedAt": "2026-09-11T03:32:00.929Z",
+      "endedAt": "2026-09-11T03:32:01.693Z",
       "exitCode": 0
     },
     {
       "command": "pnpm test:security",
-      "startedAt": "2026-09-11T03:26:03.330Z",
-      "endedAt": "2026-09-11T03:26:03.963Z",
+      "startedAt": "2026-09-11T03:32:01.694Z",
+      "endedAt": "2026-09-11T03:32:02.343Z",
       "exitCode": 0
     },
     {
       "command": "pnpm test:integration",
-      "startedAt": "2026-09-11T03:26:03.964Z",
-      "endedAt": "2026-09-11T03:26:04.426Z",
+      "startedAt": "2026-09-11T03:32:02.343Z",
+      "endedAt": "2026-09-11T03:32:02.815Z",
       "exitCode": 2
     },
     {
       "command": "pnpm test:e2e",
-      "startedAt": "2026-09-11T03:26:04.427Z",
-      "endedAt": "2026-09-11T03:26:04.904Z",
+      "startedAt": "2026-09-11T03:32:02.816Z",
+      "endedAt": "2026-09-11T03:32:03.287Z",
       "exitCode": 2
     },
     {
       "command": "pnpm test:render",
-      "startedAt": "2026-09-11T03:26:04.905Z",
-      "endedAt": "2026-09-11T03:26:05.365Z",
+      "startedAt": "2026-09-11T03:32:03.289Z",
+      "endedAt": "2026-09-11T03:32:03.787Z",
       "exitCode": 2
     },
     {
       "command": "pnpm test:smoke",
-      "startedAt": "2026-09-11T03:26:05.366Z",
-      "endedAt": "2026-09-11T03:26:05.826Z",
+      "startedAt": "2026-09-11T03:32:03.787Z",
+      "endedAt": "2026-09-11T03:32:04.259Z",
       "exitCode": 2
     }
   ],

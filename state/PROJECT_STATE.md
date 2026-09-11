@@ -10,7 +10,7 @@
 - Active chapter: `CH-001-r1` against NS-0.2.
 - North Star baseline: `architect/Luna_CH001_v0.1.0_Pack/reference/north-star/NORTH_STAR.md` SHA-256 `3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d`.
 - Starting base commit: `ce17fdf5cade9b91b46da86af943a8be651289f5`.
-- Implementation commits: `a74cc83` (initial application), `9afb7a2` (gate-script execution), `bbe370998016153cdfdee404022bf7007710e9df` (final renderer hardening and tested implementation).
+- Implementation commits: `a74cc83` (initial application), `9afb7a2` (gate-script execution), `bbe3709` (renderer hardening), `bdd6540b90f2d59b7ef11215cd0ceb631fc6336a` (final Compose worker correction and tested implementation).
 - Handoff: [`handoffs/CH-001.md`](../handoffs/CH-001.md) and [`state/handoffs/CH-001.md`](handoffs/CH-001.md).
 - Evidence index: [`docs/evidence/CH-001/README.md`](../docs/evidence/CH-001/README.md).
 - Accepted application version: none. This checkpoint is not architect-accepted.
