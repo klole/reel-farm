@@ -1,0 +1,192 @@
+{
+  "record_kind": "UNEXECUTED_TEMPLATE",
+  "phase": "CH-001R-r6",
+  "implementation_commit": null,
+  "evidence_commit": null,
+  "run_id": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "gates_replaced": false,
+  "checks": [
+    {
+      "id": "R6-T01",
+      "evidence_class": "local_regression",
+      "requirement": "Resolve and identify pinned managed executable",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T02",
+      "evidence_class": "local_regression",
+      "requirement": "Reject unsafe paths, symlink escapes and injection",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T03",
+      "evidence_class": "local_regression",
+      "requirement": "Reject identity, pin and executable drift",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T04",
+      "evidence_class": "local_regression",
+      "requirement": "Generate exact scoped AppArmor profile",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T05",
+      "evidence_class": "local_regression",
+      "requirement": "Guard privileged setup to approved hosted context",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T06",
+      "evidence_class": "local_regression",
+      "requirement": "Avoid unnecessary policy and classify failures honestly",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T07",
+      "evidence_class": "local_regression",
+      "requirement": "Preserve colliding resources and track partial ownership",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T08",
+      "evidence_class": "local_regression",
+      "requirement": "Remove only owned unchanged resources idempotently",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T09",
+      "evidence_class": "local_regression",
+      "requirement": "Distinguish requested, launched and observed sandbox",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T10",
+      "evidence_class": "local_regression",
+      "requirement": "Align actual managed launch targets across proof callers",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T11",
+      "evidence_class": "local_regression",
+      "requirement": "Preserve all prior directory-boundary regressions",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T12",
+      "evidence_class": "local_regression",
+      "requirement": "Preserve nullable exits and primary failure semantics",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T13",
+      "evidence_class": "source_and_regression",
+      "requirement": "Preserve pins, scope and security defaults",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T14",
+      "evidence_class": "executed_commands",
+      "requirement": "Pass actual local command/regression checks",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T15",
+      "evidence_class": "hosted_runtime",
+      "requirement": "Measure and qualify the sandboxed host browser",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T16",
+      "evidence_class": "hosted_runtime",
+      "requirement": "Prove owned cleanup and unchanged global restrictions",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T17",
+      "evidence_class": "hosted_runtime",
+      "requirement": "Qualify the shipped worker browser separately",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T18",
+      "evidence_class": "hosted_application",
+      "requirement": "Execute the existing bounded slideshow proof",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T19",
+      "evidence_class": "router_receipt",
+      "requirement": "Independently retrieve and verify new hosted artifact",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    },
+    {
+      "id": "R6-T20",
+      "evidence_class": "state_and_scope",
+      "requirement": "Preserve awaiting review and nonacceptance",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template only; no T6 execution has occurred."
+    }
+  ]
+}

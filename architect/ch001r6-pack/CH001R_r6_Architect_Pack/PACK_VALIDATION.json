@@ -1,0 +1,111 @@
+{
+  "validation_kind": "DOCUMENT_AND_HISTORICAL_ARTIFACT_INTEGRITY_ONLY",
+  "application_tests_executed": false,
+  "new_sandbox_policy_executed": false,
+  "new_workflow_dispatched": false,
+  "check_count": 20,
+  "pass_count": 20,
+  "failure_count": 0,
+  "checks": [
+    {
+      "name": "required_files_exist",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "markdown_utf8_and_nonempty",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "internal_links_resolve",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "twenty_unique_r6_checklist_ids",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "test_table_matches_template",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "template_not_claiming_execution",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "template_preserves_nonacceptance",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "historical_archive_size_and_hash",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "archive_paths_unique_and_safe",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "historical_archive_has_39_file_entries",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "artifact_identities_match_review",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "actual_blocked_result_retained",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "all_72_historical_gate_ids_preserved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "historical_gate_counts_match",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "four_source_only_passes_identified",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "all_25_manifest_payload_hashes_match",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "archived_reports_match_pinned_git_blob_ids",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "review_declares_no_app_execution",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "primary_source_register_present",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "dispatch_uses_new_unassigned_T6",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}
