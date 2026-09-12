@@ -1,0 +1,46 @@
+{
+  "record_kind": "ARCHITECT_R7_SOURCE_REVIEW",
+  "reviewed_implementation": "e0ea57665d00a643a8c392dfb9f6a84a723729af",
+  "reviewed_evidence": "a4d6e7a0149d6852bf348d6277c4200720320f9c",
+  "main_at_read": "a4d6e7a0149d6852bf348d6277c4200720320f9c",
+  "e6_parent": "e0ea57665d00a643a8c392dfb9f6a84a723729af",
+  "workflow_blob_t6": "f1ddbbfc0cbaa4602663428d569b61dbf12bd068",
+  "workflow_blob_e6": "f1ddbbfc0cbaa4602663428d569b61dbf12bd068",
+  "workflow_sha256_reported": "e1e4f6e5ebfa61f2aae3c04bcf985d12407a8f921dfeaa34dae01d103d01af85",
+  "workflow_sha256_independently_recomputed": false,
+  "confirmed_source_defect": {
+    "path": ".github/workflows/ch001-live-proof.yml",
+    "line": 39,
+    "context": "jobs.live-proof.env",
+    "invalid_reference": "runner.temp"
+  },
+  "router_reported_manual_dispatch": {
+    "outcome": "REJECTED_BEFORE_RUN",
+    "raw_http_status": null,
+    "live_proof_run_id": null,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "artifact_id": null
+  },
+  "independently_observed_validation_record": {
+    "id": 34675672523,
+    "event": "push",
+    "head_sha": "a4d6e7a0149d6852bf348d6277c4200720320f9c",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs": 0
+  },
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "executed_by_architect": {
+    "repository_writes": false,
+    "workflow_dispatch": false,
+    "workflow_reruns": false,
+    "sandbox_changes": false,
+    "application_tests": false,
+    "actionlint": false,
+    "reference_shell_checks": 9
+  },
+  "next_authorized_scope": "CH-001R-r7 definition/validation repair; conditional one fresh T7 router dispatch"
+}

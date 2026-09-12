@@ -1,0 +1,11 @@
+# Intentionally invalid GitHub Actions context placement; negative fixture only.
+name: R7 negative context fixture
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    env:
+      CH001_SANDBOX_STATE_DIR: ${{ runner.temp }}/ch001r6/${{ github.run_id }}-${{ github.run_attempt }}/sandbox
+    steps:
+      - run: printf '%s\n' 'This workflow should be rejected before execution.'

@@ -1,0 +1,81 @@
+{
+  "record_kind": "PACKET_DOCUMENT_VALIDATION_ONLY",
+  "generated_at": "2026-09-12T05:47:34.025524+00:00",
+  "checks": [
+    {
+      "name": "all canonical documents exist and are nonempty",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "relative file links resolve",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "all packet text files decode as UTF-8",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "actual shell diagnostic has nine passes and no failures",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "diagnostics do not claim application or Actions execution",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "manual dispatch and push validation record remain separate",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "acceptance is explicitly false with no accepted version",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "checklist has exactly R7-T01 through R7-T16",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "unexecuted checklist stays unexecuted with no invented commits",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "every checklist ID occurs once in contract table",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "combined copy internal navigation resolves",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "starting prompt matches canonical packet copy",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "reference shell parses in Bash",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "counts": {
+    "PASS": 13,
+    "FAIL": 0
+  },
+  "not_tested": [
+    "Full workflow in actionlint",
+    "GitHub hosted dispatch",
+    "Chromium/AppArmor",
+    "Application functionality"
+  ]
+}

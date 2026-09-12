@@ -1,0 +1,72 @@
+{
+  "report_kind": "ARCHITECT_REFERENCE_SNIPPET_DIAGNOSTICS",
+  "generated_at": "2026-09-12T05:42:37.432826+00:00",
+  "tests": [
+    {
+      "name": "absolute path with spaces transfers unchanged to both consumers",
+      "status": "PASS",
+      "subject_exit_code": 0,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "different run attempt yields distinct path",
+      "status": "PASS",
+      "subject_exit_code": 0,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "shell-looking path is data, not executed",
+      "status": "PASS",
+      "subject_exit_code": 0,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "missing RUNNER_TEMP rejects before env write",
+      "status": "PASS",
+      "subject_exit_code": 1,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "missing GITHUB_ENV rejects",
+      "status": "PASS",
+      "subject_exit_code": 1,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "relative temp path rejects",
+      "status": "PASS",
+      "subject_exit_code": 1,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "newline temp path rejects",
+      "status": "PASS",
+      "subject_exit_code": 1,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "invalid run ID rejects",
+      "status": "PASS",
+      "subject_exit_code": 1,
+      "boundary": "isolated reference shell; not the repository workflow"
+    },
+    {
+      "name": "attempt zero rejects",
+      "status": "PASS",
+      "subject_exit_code": 1,
+      "boundary": "isolated reference shell; not the repository workflow"
+    }
+  ],
+  "counts": {
+    "PASS": 9,
+    "FAIL": 0
+  },
+  "application_tests_executed": false,
+  "github_workflow_executed": false,
+  "actionlint_executed": false,
+  "sandbox_policy_changes": false,
+  "limitations": [
+    "Only the included reference shell snippet was executed.",
+    "No claim of GitHub workflow grammar validation or application acceptance."
+  ]
+}

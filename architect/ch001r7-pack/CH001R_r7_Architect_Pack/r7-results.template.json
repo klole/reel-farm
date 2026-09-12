@@ -1,0 +1,106 @@
+{
+  "record_kind": "R7_REPAIR_CHECKLIST_TEMPLATE",
+  "implementation_commit": null,
+  "evidence_commit": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "checks": [
+    {
+      "id": "R7-T01",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T02",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T03",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T04",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T05",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T06",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T07",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T08",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T09",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T10",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T11",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T12",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "luna_or_router"
+    },
+    {
+      "id": "R7-T13",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "router"
+    },
+    {
+      "id": "R7-T14",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "router"
+    },
+    {
+      "id": "R7-T15",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "router"
+    },
+    {
+      "id": "R7-T16",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "execution_owner": "router"
+    }
+  ],
+  "warning": "Template only; not executed gate results and not the original CH001 ledger."
+}
