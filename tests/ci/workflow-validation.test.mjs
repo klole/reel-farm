@@ -132,6 +132,12 @@ test("R7-T03 fails closed for missing tools, tool failures, zero inputs, and mal
     const missing = await runWrapper(["--file", validFixture], { ACTIONLINT_BIN: resolve(directory, "missing-actionlint") });
     assert.equal(missing.status, 2);
 
+    const wrongVersionTool = resolve(directory, "actionlint-wrong-version");
+    await writeFile(wrongVersionTool, "#!/bin/sh\nif [ \"$1\" = \"-version\" ]; then printf '%s\\n' '1.7.6'; else exit 0; fi\n");
+    await chmod(wrongVersionTool, 0o755);
+    const wrongVersion = await runWrapper(["--file", validFixture], { ACTIONLINT_BIN: wrongVersionTool });
+    assert.equal(wrongVersion.status, 2);
+
     const failingTool = resolve(directory, "actionlint-fails");
     await writeFile(failingTool, "#!/bin/sh\nif [ \"$1\" = \"-version\" ]; then printf '%s\\n' '1.7.7'; else printf '%s\\n' 'intentional validator failure' >&2; exit 17; fi\n");
     await chmod(failingTool, 0o755);
