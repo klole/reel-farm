@@ -1,0 +1,78 @@
+{
+  "kind": "DOCUMENT_STRUCTURAL_VALIDATION_ONLY",
+  "application_tests_run": false,
+  "checks": [
+    {
+      "check": "Original contract has 72 unique IDs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Original contract blob identity matches connected GitHub read",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Coverage contains every exact original description and evidence requirement",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Reported historical gate totals sum to 72",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "No new executed gate results claimed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Original product acceptance kept separate",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Workflow declares manual dispatch and read-only contents",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Workflow does not reference secrets or deploy/publish commands",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Workflow and new command are labeled unexecuted/proposed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Every U finding appears in review and handoff",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "No font files or binary originals included",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Packet internal file links resolve",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "Standalone Markdown and prompt exist",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Workflow blueprint parses as YAML",
+      "status": "PASS",
+      "detail": "Syntax only, not Actions execution."
+    }
+  ],
+  "passed": 14,
+  "failed": 0
+}

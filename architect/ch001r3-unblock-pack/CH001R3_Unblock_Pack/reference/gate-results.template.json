@@ -1,0 +1,587 @@
+{
+  "chapter": "CH-001-r1",
+  "target_application_version": "0.1.0",
+  "report_kind": "UNEXECUTED_TEMPLATE",
+  "implementation_commit": null,
+  "evidence_commit": null,
+  "reference_environment": null,
+  "application_tests_executed_by_packet_author": false,
+  "gates": [
+    {
+      "id": "CH001-001",
+      "status": "NOT_RUN",
+      "description": "From a clean checkout/disposable environment, follow the written setup and Compose instructions. Reach first-owner setup without undeclared manual fixes.",
+      "required_evidence": "E2 + E4-local; setup log and environment record.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-002",
+      "status": "NOT_RUN",
+      "description": "Repeat setup/start. Existing generated secrets, owner, database records, and media remain intact; no silent reseed or reset.",
+      "required_evidence": "E2 + E4-local; before/after record/hash checks.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-003",
+      "status": "NOT_RUN",
+      "description": "Inspect and exercise network binding. Only the web surface is host-published on loopback; database and worker are not publicly bound.",
+      "required_evidence": "E1 + E2; sanitized Compose config/assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-004",
+      "status": "NOT_RUN",
+      "description": "With provider credentials absent and external runtime requests denied/monitored, complete the manual workflow. Dependency/image pulls are outside this runtime observation window.",
+      "required_evidence": "E2; network assertions/log summary and export.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-005",
+      "status": "NOT_RUN",
+      "description": "Stop the worker. The editor/save/local media remain usable; status becomes degraded and a requested render honestly waits. Restart restores readiness.",
+      "required_evidence": "E2 + E4-local; state transitions/screenshots.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-006",
+      "status": "NOT_RUN",
+      "description": "Stop and recreate the app/worker/database containers without deleting volumes. Login, projects, revision IDs, accepted media hashes, and ready exports remain valid.",
+      "required_evidence": "E4-local; before/after verification.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-007",
+      "status": "NOT_RUN",
+      "description": "Missing/invalid setup token cannot create an owner. Two simultaneous valid setup attempts create exactly one owner/workspace; reused bootstrap is closed.",
+      "required_evidence": "E2; database assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-008",
+      "status": "NOT_RUN",
+      "description": "Correct login works; wrong credentials fail; basic rate limiting operates; logout and finite expiry invalidate protected access.",
+      "required_evidence": "E2; real session requests/browser test.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-009",
+      "status": "NOT_RUN",
+      "description": "Inspect cookie flags and execute cross-origin state-changing attempts, including multipart upload. Unsafe host/origin/CSRF requests fail. The loopback HTTP exception is explicit.",
+      "required_evidence": "E1 + E2; sanitized header assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-010",
+      "status": "NOT_RUN",
+      "description": "Unauthenticated requests cannot read/mutate projects, drafts, assets, thumbnails, render details, final images, exports, or owner-only status.",
+      "required_evidence": "E2; route matrix.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-011",
+      "status": "NOT_RUN",
+      "description": "Controlled second-workspace fixtures cannot access another workspace's resources by guessing IDs or supplying foreign asset references.",
+      "required_evidence": "E2; command and HTTP authorization checks.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-012",
+      "status": "NOT_RUN",
+      "description": "Passwords/setup tokens/session secrets are absent from ordinary logs, URLs, committed config, browser bundles, output manifests, screenshots, and export files. Auth bypass/signup shortcuts are absent.",
+      "required_evidence": "E1 + E2; scoped scan/report.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-013",
+      "status": "NOT_RUN",
+      "description": "Create, list, rename, reopen, and switch between two projects with independent persisted drafts.",
+      "required_evidence": "E2; browser journey/database reads.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-014",
+      "status": "NOT_RUN",
+      "description": "Save a valid document, inspect its immutable revision/hash, save an edit, and prove the earlier revision was not mutated.",
+      "required_evidence": "E2; database invariants.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-015",
+      "status": "NOT_RUN",
+      "description": "Reject unsupported schema versions/layout/font IDs, bad slide/block IDs, duplicate IDs, illegal counts/boxes, foreign assets, arbitrary URLs, and invalid numeric values.",
+      "required_evidence": "E2; parameterized contract/command tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-016",
+      "status": "NOT_RUN",
+      "description": "Semantically identical documents with different object-key insertion order hash consistently under the declared canonicalizer; array order/content changes alter the hash.",
+      "required_evidence": "E2; deterministic unit tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-017",
+      "status": "NOT_RUN",
+      "description": "Autosave reports unsaved/saving/saved correctly, flush-before-preview waits for acknowledgment, and browser close/reopen retrieves the saved deck.",
+      "required_evidence": "E2; browser test with controlled responses.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-018",
+      "status": "NOT_RUN",
+      "description": "Two tabs edit the same base revision. The second stale save is rejected; its local buffer survives; explicit safe reload does not silently discard unacknowledged work.",
+      "required_evidence": "E2; two independent browser pages.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-019",
+      "status": "NOT_RUN",
+      "description": "Delay/drop/reorder save responses and temporarily fail a save. A late response cannot clobber newer text or show false saved state; retry/reconciliation does not overwrite a later revision.",
+      "required_evidence": "E2; network fault tests and head assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-020",
+      "status": "NOT_RUN",
+      "description": "Title, caption, hashtags, slide content and order are bound to one saved revision. Concurrent later editing cannot change a render/export already requested for that revision.",
+      "required_evidence": "E2; immutable snapshot test.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-021",
+      "status": "NOT_RUN",
+      "description": "Upload valid JPEG, PNG, and static WebP in a batch. Each has a durable accepted record, image dimensions/hash, thumbnail, and selectable local asset.",
+      "required_evidence": "E2; real decoder/storage/browser.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-022",
+      "status": "NOT_RUN",
+      "description": "Mix valid and invalid files in a batch. Per-file errors are useful; accepted files remain available and are not rolled back unnecessarily.",
+      "required_evidence": "E2; batch test.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-023",
+      "status": "NOT_RUN",
+      "description": "Reject disguised HTML/SVG, corrupt/truncated data, animation, unsupported formats, and mismatched content. Do not trust extension/MIME alone.",
+      "required_evidence": "E2; signature/decode tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-024",
+      "status": "NOT_RUN",
+      "description": "Enforce byte, decoded-pixel, edge, frame, batch, and execution limits. Oversized inputs cannot bypass streaming limits by lying about content length.",
+      "required_evidence": "E2; safely bounded adversarial fixtures.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-025",
+      "status": "NOT_RUN",
+      "description": "EXIF orientation displays/exports correctly. Transparent-image handling is intentional. Public/render/export derivatives omit private EXIF/GPS metadata.",
+      "required_evidence": "E2 + visual; decoded metadata/output checks.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-026",
+      "status": "NOT_RUN",
+      "description": "Traversal-like and header-injection filenames cannot escape storage or alter download headers. Media is not anonymously exposed through static paths.",
+      "required_evidence": "E2; storage and HTTP tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-027",
+      "status": "NOT_RUN",
+      "description": "Retain source/upload time/user assertion and original/derivative hashes. Identical bytes do not erase distinct source records; no cross-workspace deduplication leak.",
+      "required_evidence": "E2; record assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-028",
+      "status": "NOT_RUN",
+      "description": "Inject decode/storage/DB commit failure. No accepted asset points to missing bytes; failed staging is safely tracked/cleaned. Missing/corrupt referenced media later blocks render without deleting the draft.",
+      "required_evidence": "E2; failure boundaries and hash checks.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-029",
+      "status": "NOT_RUN",
+      "description": "Add, duplicate, remove, and reorder slides using non-drag controls. IDs remain stable on reorder and are fresh on duplication. Minimum/maximum slide bounds are enforced.",
+      "required_evidence": "E2; interaction/state tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-030",
+      "status": "NOT_RUN",
+      "description": "All three layouts work, can be mixed, and preserve text through switching. Hiding/replacing an image does not delete its accepted local original.",
+      "required_evidence": "E2 + visual; editor and output.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-031",
+      "status": "NOT_RUN",
+      "description": "Changing 9:16/4:5 updates every slide's trusted geometry and resulting dimensions without stretching the source or losing text.",
+      "required_evidence": "E2 + visual; both-ratio corpus.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-032",
+      "status": "NOT_RUN",
+      "description": "Every exposed text/font/weight/size/line-height/alignment/color/panel/placement control changes stored data and final rendering as intended. No decorative controls.",
+      "required_evidence": "E2; focused control tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-033",
+      "status": "NOT_RUN",
+      "description": "Cover/contain, focal reposition, reset, and replacement are nondestructive and match final output. Use off-center and landscape fixtures.",
+      "required_evidence": "E2 + visual; crop-marker assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-034",
+      "status": "NOT_RUN",
+      "description": "At least 50 logical session edits support sensible undo/redo. New edits clear redo; text editing does not double-apply app/browser keyboard undo.",
+      "required_evidence": "E2; grouped edit and shortcut tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-035",
+      "status": "NOT_RUN",
+      "description": "Long text/newlines/unbroken tokens produce measured wrapping or an explicit overflow error. No silent clipping or minimum-font-size violation.",
+      "required_evidence": "E2 + visual; text corpus.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-036",
+      "status": "NOT_RUN",
+      "description": "Empty/loading/error/saved/conflict states are understandable; main actions have labels/focus and keyboard access. Desktop and narrow layouts do not hide essential actions.",
+      "required_evidence": "E2 accessibility checks + visual/keyboard review.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-037",
+      "status": "NOT_RUN",
+      "description": "A render request references an exact immutable saved revision. A queued job renders that snapshot even after the live draft changes.",
+      "required_evidence": "E2; real worker/database test.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-038",
+      "status": "NOT_RUN",
+      "description": "Application intent and pg-boss enqueue share a tested transaction, or an exercised outbox/reconciliation mechanism prevents lost work. Simulated handoff failure cannot lose acknowledged intent.",
+      "required_evidence": "E2; failure/transaction assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-039",
+      "status": "NOT_RUN",
+      "description": "Replay the same render command with the same client request ID/payload: one logical request. Same key/different payload: conflict.",
+      "required_evidence": "E2; command concurrency tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-040",
+      "status": "NOT_RUN",
+      "description": "Render all layouts at both canvas presets using the pinned browser and local assets. Output JPEG dimensions/count/decode validity match the document.",
+      "required_evidence": "E2; real corpus render.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-041",
+      "status": "NOT_RUN",
+      "description": "Delay required fonts/images. Capture waits for actual font faces/image decode. Missing resources fail with actionable diagnostics; no silent fallback success.",
+      "required_evidence": "E2; controlled missing/delayed resource fixtures.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-042",
+      "status": "NOT_RUN",
+      "description": "Editor and worker use the shared trusted scene/layout implementation. Overflow, missing media, and unsupported glyph conditions prevent a ready artifact.",
+      "required_evidence": "E1 + E2; architecture inspection and validation failures.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-043",
+      "status": "NOT_RUN",
+      "description": "User script-like strings render as text. Rejected URLs/CSS/HTML cannot execute, read local files, or make outbound requests.",
+      "required_evidence": "E2; containment tests with network/file sentinels.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-044",
+      "status": "NOT_RUN",
+      "description": "Shipped renderer runs non-root with verified sandbox configuration and a minimal browser subprocess environment. No auth cookies, DB secrets, privileged container, broad host mounts, or Docker socket access.",
+      "required_evidence": "E1 + E2; launch/config assertions and canary tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-045",
+      "status": "NOT_RUN",
+      "description": "Render execution timeout terminates the affected attempt, leaves an honest failure/retry state, and does not hang the entire worker indefinitely.",
+      "required_evidence": "E2; deterministic hang/failure fixture.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-046",
+      "status": "NOT_RUN",
+      "description": "Kill/restart a worker during a render. The accepted request becomes recoverable, retains revision identity, respects attempt limits, and eventually succeeds or explicitly fails.",
+      "required_evidence": "E4-local; process lifecycle log and DB checks.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-047",
+      "status": "NOT_RUN",
+      "description": "Duplicate/reclaimed job deliveries cannot finalize competing outputs for one request. A stale attempt cannot overwrite the accepted newer success.",
+      "required_evidence": "E2; fencing/unique-finalization test.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-048",
+      "status": "NOT_RUN",
+      "description": "Crash after writing some/all staged files but before DB ready commit. Recovery does not expose partial success, delete accepted media, or strand the request forever.",
+      "required_evidence": "E2 + E4-local; failpoint/recovery checks.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-049",
+      "status": "NOT_RUN",
+      "description": "Invalid/overflow/missing-font failures do not automatically retry; eligible transient failures stop at the documented maximum of three total attempts. No infinite loop.",
+      "required_evidence": "E2; error-policy/state tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-050",
+      "status": "NOT_RUN",
+      "description": "Repeat a fixed fixture in the same pinned render environment; compare outputs and record the visual tolerance/results. Inspect geometry/crop/text differences instead of blindly updating goldens.",
+      "required_evidence": "E2 + visual; diff images/report.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-051",
+      "status": "NOT_RUN",
+      "description": "Final preview requests the exact immutable final JPEGs, not editor screenshots, optimized/re-encoded alternatives, or raw provider/source images.",
+      "required_evidence": "E1 + E2; network/body-hash check.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-052",
+      "status": "NOT_RUN",
+      "description": "Extract the ZIP and SHA-256 its images. Each equals both the manifest's hash and the final-preview response body for that slide.",
+      "required_evidence": "E2; machine-readable hash comparison.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-053",
+      "status": "NOT_RUN",
+      "description": "Seven-slide export has exactly `01.jpg`–`07.jpg`, `post.txt`, and `manifest.json` in the agreed structure. Ordered slide IDs and visible content match the draft revision.",
+      "required_evidence": "E2 + visual; ZIP structure and sequence assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-054",
+      "status": "NOT_RUN",
+      "description": "`post.txt` exactly matches the reviewed revision's title/caption/hashtags, including Unicode; manifest covers its hash/editorial identity.",
+      "required_evidence": "E2; text and checksum assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-055",
+      "status": "NOT_RUN",
+      "description": "Editing after render visibly invalidates current-preview/export readiness. A queued or historical render never silently becomes the new draft's current export.",
+      "required_evidence": "E2; stale-state browser test.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-056",
+      "status": "NOT_RUN",
+      "description": "No originals/private metadata/secrets/raw rights files/absolute paths leak into the ZIP. Entries/download filename cannot contain unsafe paths or injected headers.",
+      "required_evidence": "E2; content and path scan.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-057",
+      "status": "NOT_RUN",
+      "description": "Repeated download reuses ready JPEGs and does not launch a new render. A packaging/storage failure produces a useful error, not a corrupt success download.",
+      "required_evidence": "E2; call-count and failure tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-058",
+      "status": "NOT_RUN",
+      "description": "Anonymous/foreign access cannot read final images or ZIPs even with a known artifact ID. A logged-in owner can still download a ready artifact while the worker is stopped.",
+      "required_evidence": "E2; route and worker-down tests.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-059",
+      "status": "NOT_RUN",
+      "description": "Execute the complete original seven-slide journey through the UI, including edits, one duplicate/reorder operation, final preview, and export, with no provider credential.",
+      "required_evidence": "E2; full browser test and representative ZIP.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-060",
+      "status": "NOT_RUN",
+      "description": "Inspect real app screenshots and final output for readable typography, correct crop/composition, sensible spacing, and helpful error states. Include both canvas presets.",
+      "required_evidence": "Visual/keyboard review at recorded build.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-061",
+      "status": "NOT_RUN",
+      "description": "Test at a normal desktop viewport and a narrow viewport; record sizes. Main journey is keyboard-operable; no critical automated accessibility violations remain on those tested screens.",
+      "required_evidence": "E2 + manual; screenshots and report.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-062",
+      "status": "NOT_RUN",
+      "description": "Lint, strict types, deployable build, and all established required test commands run with actual results. A zero-test/discovery failure cannot be reported as success.",
+      "required_evidence": "E2; command log/exit codes.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-063",
+      "status": "NOT_RUN",
+      "description": "Initial migrations run on an empty database and are safe on a second invocation. Web/worker do not race uncontrolled schema changes.",
+      "required_evidence": "E2; migration/checksum assertions.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-064",
+      "status": "NOT_RUN",
+      "description": "Simulate storage unavailable/permission failure or bounded low-space behavior. Saving/rendering failures are visible; existing accepted content is not silently deleted or corrupted.",
+      "required_evidence": "E2; failure injection and UI/state evidence.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-065",
+      "status": "NOT_RUN",
+      "description": "Secrets/canaries are absent from client bundles, normal logs, generated artifacts, Git diff, and browser-renderer environment. Runtime third-party telemetry/CDN requests are absent in the measured manual journey.",
+      "required_evidence": "E1 + E2; scoped scanning/network report.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-066",
+      "status": "NOT_RUN",
+      "description": "A new reader can follow README installation/operation/troubleshooting. Document persistent volumes, stopping vs deleting data, running tests, limitations, and worker/host availability.",
+      "required_evidence": "E1 + clean-run evidence; do not claim an independent human test unless one occurred.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-067",
+      "status": "NOT_RUN",
+      "description": "UI wording/layouts/demo assets are original or properly attributed. Runtime/dependency/font sources/licenses are recorded; existing license is preserved and pending decisions are not silently finalized.",
+      "required_evidence": "E1; provenance/dependency records.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-068",
+      "status": "NOT_RUN",
+      "description": "No unscoped providers, key forms, direct TikTok integration, fake connections/analytics, billing, scheduling, MP4, or marketplace functionality slipped into the patch.",
+      "required_evidence": "E1; diff/dependency/navigation inspection.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-069",
+      "status": "NOT_RUN",
+      "description": "Root state points to the real spec hash, active chapter, base/tested commit, handoff, and evidence. Parent requirement subsets remain partial/unreviewed as appropriate.",
+      "required_evidence": "E1; state/traceability check.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-070",
+      "status": "NOT_RUN",
+      "description": "Handoff lists all mandatory gates with PASS/FAIL/NOT_RUN, actual implementation/evidence commits, skipped checks, deficiencies, and real artifact locations.",
+      "required_evidence": "E1; handoff/result-file consistency.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-071",
+      "status": "NOT_RUN",
+      "description": "All public/committed screenshots, traces, logs, and exports use synthetic/local demo data and are sanitized. Artifact hashes correspond to files that actually exist.",
+      "required_evidence": "E1 + E2; artifact manifest/scan.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    },
+    {
+      "id": "CH001-072",
+      "status": "NOT_RUN",
+      "description": "No work on the next chapter, public release/tag/deployment, paid API request, account authorization, or public post occurs. Final implementation status is awaiting review, never self-accepted.",
+      "required_evidence": "E1; diff, action declaration, state.",
+      "actual_evidence": [],
+      "reason": "Not executed: reporting template only."
+    }
+  ]
+}

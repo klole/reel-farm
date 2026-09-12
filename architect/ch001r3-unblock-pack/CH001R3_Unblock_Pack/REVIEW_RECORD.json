@@ -1,0 +1,59 @@
+{
+  "packet": "CH-001R-r3",
+  "created_on": "2026-09-11",
+  "repository": "klole/reel-farm",
+  "reviewed_implementation_commit": "b516dab843be1b8870d3516185b52905982aec1f",
+  "reviewed_evidence_commit": "5a931feb01ed8da16eb9f0079a380c61f5459792",
+  "reviewed_prior_base": "c05ac9c8753fc4237188f9f8b5c5b7250a5fce78",
+  "north_star_sha256": "3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d",
+  "original_gate_template_git_blob": "ff0f5df2888779d7226b3f79f1fd8c8bef8ce3a2",
+  "submitted_status": "BLOCKED",
+  "submitted_counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NOT_RUN": 68
+  },
+  "submitted_pass_scope": "E1 source-only, reported historical results; not independent runtime acceptance",
+  "architect_verdict": "NOT_ACCEPTED",
+  "accepted_application_version": null,
+  "next_assignment_scope": "runner bootstrap and first live proof; full original acceptance contract unchanged",
+  "application_tests_executed_by_packet_author": false,
+  "repository_writes_by_packet_author": false,
+  "ci_dispatched_by_packet_author": false,
+  "new_runtime_gate_results_created": false,
+  "review_findings": [
+    {
+      "id": "U01",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U02",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U03",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U04",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U05",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U06",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U07",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    },
+    {
+      "id": "U08",
+      "classification": "source review; see review for exact fact/inference and required reproduction"
+    }
+  ],
+  "workflow_example_executed": false
+}

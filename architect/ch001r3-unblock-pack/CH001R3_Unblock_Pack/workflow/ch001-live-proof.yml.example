@@ -1,0 +1,86 @@
+# DESIGN BLUEPRINT, NOT A VERIFIED WORKFLOW.
+# Luna must implement proof:ch001 and resolve official action tags to immutable
+# commit SHAs before activating this file. Do not paste it in as a claim that
+# the reviewed application already passes. No provider/repository secrets needed.
+name: CH-001 live proof — NOT release acceptance
+
+on:
+  workflow_dispatch:
+    inputs:
+      implementation_sha:
+        description: Approved new full implementation SHA to exercise
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ch001-live-proof-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  live-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      REQUESTED_SHA: ${{ inputs.implementation_sha }}
+      CI: "true"
+      CH001_RUN_ID: r3-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Validate dispatch and runner class assumptions
+        env:
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: |
+          set -euo pipefail
+          [[ "$REQUESTED_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "A full approved SHA is required." >&2; exit 1; }
+          [[ "$REPOSITORY_PRIVATE" == "false" ]] || { echo "Review runner budget/policy before executing on a private repository." >&2; exit 1; }
+      - name: Checkout approved implementation
+        uses: actions/checkout@v6 # Resolve to reviewed immutable SHA before activation.
+        with:
+          ref: ${{ inputs.implementation_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Record real checkout
+        run: |
+          set -euo pipefail
+          [[ "$(git rev-parse HEAD)" == "$REQUESTED_SHA" ]]
+          test -z "$(git status --porcelain --untracked-files=no)"
+          echo "CH001_IMPLEMENTATION_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "CH001_EVIDENCE_DIR=$GITHUB_WORKSPACE/artifacts/ch001r3/$CH001_RUN_ID" >> "$GITHUB_ENV"
+          mkdir -p "artifacts/ch001r3/$CH001_RUN_ID/public"
+          printf 'Limited CH-001R-r3 proof; not v0.1 acceptance.\nImplementation: %s\nWorkflow: %s\n' "$REQUESTED_SHA" "$GITHUB_WORKFLOW_SHA" > "artifacts/ch001r3/$CH001_RUN_ID/public/dispatch.txt"
+      - name: Set up project-pinned Node
+        uses: actions/setup-node@v6 # Resolve to reviewed immutable SHA before activation.
+        with:
+          node-version-file: .nvmrc
+      - name: Install frozen project and browser dependencies
+        run: |
+          set -euo pipefail
+          corepack enable
+          pnpm --version
+          pnpm install --frozen-lockfile
+          pnpm exec playwright install --with-deps chromium
+      - name: Probe Docker capability
+        run: |
+          set -euo pipefail
+          docker version
+          docker info >/dev/null
+          docker compose version
+      - name: Execute bounded live proof
+        run: |
+          set -euo pipefail
+          node -e 'const p=require("./package.json"); if(!p.scripts?.["proof:ch001"]) { console.error("Luna must implement proof:ch001 before this workflow can run."); process.exit(1); }'
+          pnpm proof:ch001
+      - name: Upload sanitized evidence on success or failure
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v5 # Resolve to reviewed immutable SHA before activation.
+        with:
+          name: ch001-live-proof-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/ch001r3/r3-${{ github.run_id }}-${{ github.run_attempt }}/public/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: State limited scope
+        if: ${{ always() }}
+        run: |
+          echo "This job tests CH-001R-r3 live proof only. No release/v0.1 acceptance is granted by a green job." >> "$GITHUB_STEP_SUMMARY"
