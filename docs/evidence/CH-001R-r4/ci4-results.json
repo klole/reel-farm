@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "packet": "CH-001R-r4",
+  "implementation_commit": "69b784526260e3e5acf133da8d1a2fb33447d20f",
+  "evidence_kind": "local_source_and_helper_checks",
+  "hosted_run": null,
+  "counts": {
+    "PASS": 17,
+    "FAIL": 0,
+    "NOT_RUN": 7
+  },
+  "checks": [
+    { "id": "CI4-001", "status": "PASS", "evidence": "T4 is directly based on P4; allowed seven-file execution diff and preserved acceptance references are recorded in source-review.md." },
+    { "id": "CI4-002", "status": "PASS", "evidence": "scripts/ci/pnpm-native-release.json binds packageManager pnpm@12.3.4 to the official Linux archive and checked-in SHA-256; real local archive verification passed." },
+    { "id": "CI4-003", "status": "PASS", "evidence": "Dependency-free tests reject wrong digest, traversal, absolute/non-normalized names, symlink metadata, special metadata, and unexpected members before extraction." },
+    { "id": "CI4-004", "status": "PASS", "evidence": "Real local native archive bootstrap succeeded without project dependencies and a repeat reused the matching attestation." },
+    { "id": "CI4-005", "status": "PASS", "evidence": "Local helper check confirmed GITHUB_PATH de-duplication, executable-first PATH, command resolution, and pnpm 12.3.4." },
+    { "id": "CI4-006", "status": "PASS", "evidence": "Node 20.19.2, pnpm 12.3.4, dependency pins, and lockfile were preserved; lint and security checks passed; no insecure flags were added." },
+    { "id": "CI4-007", "status": "NOT_RUN", "evidence": "A local native frozen install passed, but the required clean hosted installation result is not available before router dispatch." },
+    { "id": "CI4-008", "status": "NOT_RUN", "evidence": "Managed Playwright Chromium installation and qualification require the hosted runner; the editing host lacks the executable." },
+    { "id": "CI4-009", "status": "NOT_RUN", "evidence": "Docker CLI/daemon/Compose are unavailable locally; no shipped image or runtime network-disabled probe was executed." },
+    { "id": "CI4-010", "status": "PASS", "evidence": "Executed formatter tests assert literal hostile summary data is retained without a marker side effect." },
+    { "id": "CI4-011", "status": "PASS", "evidence": "Executed absent-proof fixture asserts proof_invoked=false, nullable proof exit, and nonzero CI_BOOTSTRAP_FAILURE." },
+    { "id": "CI4-012", "status": "PASS", "evidence": "Executed classifier fixture retains invoked proof exit 1 as LIVE_PROOF_FAILED." },
+    { "id": "CI4-013", "status": "PASS", "evidence": "Executed classifier fixture retains invoked proof exit 2 as BLOCKED_ENVIRONMENT, distinct from absent proof." },
+    { "id": "CI4-014", "status": "PASS", "evidence": "Executed missing, malformed, stale, and wrong-identity exit-0 proof fixtures; all fail as EVIDENCE_INVALID." },
+    { "id": "CI4-015", "status": "PASS", "evidence": "Executed summary hostile-value fixture with backticks, dollar substitutions, percent signs, and spaces." },
+    { "id": "CI4-016", "status": "PASS", "evidence": "Focused tests and both CI helpers execute with Node standard-library imports only; no npm-installed project module is required." },
+    { "id": "CI4-017", "status": "NOT_RUN", "evidence": "Hosted artifact allowlist and downloaded archive path inspection require a new Actions artifact." },
+    { "id": "CI4-018", "status": "NOT_RUN", "evidence": "No hosted artifact ID, archive digest, or download receipt exists before router dispatch." },
+    { "id": "CI4-019", "status": "NOT_RUN", "evidence": "No hosted dispatch occurred; router must create a fresh run with implementation_sha=T4." },
+    { "id": "CI4-020", "status": "NOT_RUN", "evidence": "The local T4 coordinator returned explicit BLOCKED_ENVIRONMENT before live assertions; no passing hosted suites or runtime artifacts are claimed." },
+    { "id": "CI4-021", "status": "PASS", "evidence": "The local T4 coordinator generated exactly the original 72 IDs with 4 PASS / 0 FAIL / 68 NOT_RUN; historical ledgers remain separate and unchanged." },
+    { "id": "CI4-022", "status": "PASS", "evidence": "Handoff and run instructions retain workflow-capable publication and manual dispatch as router-only actions; no credential was transferred." },
+    { "id": "CI4-023", "status": "PASS", "evidence": "T4 diff contains no provider, publishing, billing, feature, release, deployment, video, or v0.2 work." },
+    { "id": "CI4-024", "status": "PASS", "evidence": "R4 handoff/state/index identify actual T4/local results and preserve awaiting_review, application_acceptance=false, and accepted version none." }
+  ],
+  "local_parent_ledger": {
+    "run_id": "r4-local-t4-preflight",
+    "status": "BLOCKED_ENVIRONMENT",
+    "exit_code": 2,
+    "counts": { "PASS": 4, "FAIL": 0, "NOT_RUN": 68 },
+    "proof_result_sha256": "cb50136e5d752deb731caeea61c75542cde43f0c5f58e4fd67b1f32862aaa8f7",
+    "gate_results_sha256": "eb20e14df937109fdb08ccadd20d321ce98a0296e593eb38b395b9a195e070fe",
+    "public_artifact_manifest_sha256": "30f695e1db0a7920c7cc06ca8c0ab30172810428d62cec9b53a1687f00bbefb1"
+  },
+  "historical_contract": {
+    "original_gate_counts": { "PASS": 0, "FAIL": 0, "NOT_RUN": 72 },
+    "application_acceptance": false,
+    "accepted_application_version": "none",
+    "root_state": "awaiting_review"
+  }
+}

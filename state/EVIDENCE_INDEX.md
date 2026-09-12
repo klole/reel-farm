@@ -21,3 +21,15 @@
 | Handoff | [handoffs/CH-001R.md](../handoffs/CH-001R.md) | Awaiting architect review |
 
 No artifact path in this index is a promise of a future CI run or external attachment. Missing live artifacts are disclosed rather than represented by placeholder screenshots or exports.
+
+## CH-001R-r4 CI repair
+
+| Evidence | Location | State |
+|---|---|---|
+| T4 source identity and allowed-scope review | [r4 source review](../docs/evidence/CH-001R-r4/source-review.md) | Recorded; local checks only |
+| CI4 repair checklist | [ci4-results.json](../docs/evidence/CH-001R-r4/ci4-results.json) | 17 PASS, 0 FAIL, 7 NOT_RUN |
+| Fresh bounded T4 parent ledger and sanitized reports | `artifacts/ch001r4/r4-local-t4-preflight/proof/public/` | Local/gitignored; 4 PASS, 0 FAIL, 68 NOT_RUN; environment-blocked |
+| Hosted T4 workflow run and artifact | Not available | Router publication and one fresh dispatch required |
+| Handoff | [handoffs/CH-001R-r4.md](../handoffs/CH-001R-r4.md) | Ready for router publication; awaiting architect review |
+
+This r4 repair does not alter the historical r3 records or the original CH-001 `0 PASS / 0 FAIL / 72 NOT_RUN` ledger. A green bounded proof, if later produced by the router, remains separate from v0.1 application acceptance.
