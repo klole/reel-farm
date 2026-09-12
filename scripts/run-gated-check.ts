@@ -1,7 +1,8 @@
-import { access, constants, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { relative, resolve } from "node:path";
 import { spawn } from "node:child_process";
 import { chromium } from "playwright";
+import { resolveManagedBrowserExecutable } from "./ch001-sandbox.mjs";
 import { REQUIRED_GATED_COMMANDS, type SuiteReport, writeJson } from "./ch001-harness.js";
 
 type Check = (typeof REQUIRED_GATED_COMMANDS)[number];
@@ -26,10 +27,6 @@ async function gitCommit(): Promise<string> {
     child.on("close", () => resolveCommit(output.trim() || "working-tree"));
     child.on("error", () => resolveCommit("working-tree"));
   });
-}
-
-async function executable(path: string): Promise<boolean> {
-  try { await access(path, constants.X_OK); return true; } catch { return false; }
 }
 
 async function run(command: string, args: string[], env: NodeJS.ProcessEnv = process.env): Promise<ProcessResult> {
@@ -61,13 +58,17 @@ async function unavailable(suite: Check, reason: string): Promise<never> {
 
 async function requireBrowser(suite: Check): Promise<string> {
   const configured = process.env.BROWSER_EXECUTABLE_PATH;
-  if (configured) {
-    if (await executable(configured)) return configured;
-    await unavailable(suite, `BROWSER_EXECUTABLE_PATH is not executable: ${configured}`);
-  }
   const managed = chromium.executablePath();
-  if (!(await executable(managed))) await unavailable(suite, `Pinned Playwright Chromium is unavailable at ${managed}; set BROWSER_EXECUTABLE_PATH only for an explicitly documented compatible diagnostic profile.`);
-  return managed;
+  try {
+    const resolution = await resolveManagedBrowserExecutable({
+      playwrightExecutablePath: managed,
+      selectedExecutablePath: configured ?? managed,
+      browsersPath: process.env.PLAYWRIGHT_BROWSERS_PATH
+    });
+    return resolution.path;
+  } catch (error) {
+    await unavailable(suite, `Pinned managed Chromium qualification failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
 }
 
 function vitestCounts(value: unknown): { discovered: number; executed: number; passed: number; failed: number; skipped: number } {

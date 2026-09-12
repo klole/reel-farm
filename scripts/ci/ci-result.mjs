@@ -16,8 +16,10 @@ const EXPECTED_STAGES = [
   ["native-pnpm-bootstrap", true],
   ["project-install", true],
   ["browser-install", true],
+  ["sandbox-qualification", false],
   ["docker-preflight", false],
-  ["bounded-proof", false]
+  ["bounded-proof", false],
+  ["sandbox-cleanup", false]
 ];
 
 function now() { return new Date().toISOString(); }
@@ -78,6 +80,8 @@ export function formatSummary(values = {}) {
     `Workflow blob: \`${markdownCode(report.workflow_blob_sha)}\``,
     `Run: \`${markdownCode(report.run_id)}\` attempt \`${markdownCode(report.run_attempt)}\``,
     `Bootstrap status: \`${markdownCode(report.bootstrap_status)}\``,
+    `Sandbox qualification: \`${markdownCode(report.stages?.find((stage) => stage.name === "sandbox-qualification")?.status, "not-run")}\``,
+    `Sandbox cleanup: \`${markdownCode(report.stages?.find((stage) => stage.name === "sandbox-cleanup")?.status, "not-run")}\``,
     `Proof invoked: \`${markdownCode(report.proof_invoked, "false")}\``,
     `Coordinator exit: \`${markdownCode(proofExit)}\``,
     `Final classification: \`${markdownCode(result.classification ?? report.classification)}\``,
@@ -89,6 +93,8 @@ export function formatSummary(values = {}) {
 
 function stageClassification(name, detailClassification = null) {
   if (detailClassification === "BLOCKED_DEPENDENCY_COMPATIBILITY") return detailClassification;
+  if (name === "sandbox-qualification") return "BLOCKED_ENVIRONMENT";
+  if (name === "sandbox-cleanup") return "SANDBOX_CLEANUP_FAILURE";
   if (name === "docker-preflight") return "DOCKER_PREREQUISITE_UNAVAILABLE";
   if (name === "bounded-proof") return "LIVE_PROOF_FAILED";
   return "CI_BOOTSTRAP_FAILURE";
@@ -210,7 +216,21 @@ function safeDetail(detail) {
     executable: safeText(value.executable),
     executable_version: safeText(value.executable_version),
     bin_dir: safeText(value.bin_dir),
-    path_updated: typeof value.path_updated === "boolean" ? value.path_updated : null
+    path_updated: typeof value.path_updated === "boolean" ? value.path_updated : null,
+    selected_executable: value.selected_executable && typeof value.selected_executable === "object" ? {
+      path: safeText(value.selected_executable.path),
+      sha256: /^[0-9a-f]{64}$/.test(String(value.selected_executable.sha256 ?? "")) ? value.selected_executable.sha256 : null,
+      revision: safeText(value.selected_executable.revision),
+      mode: safeText(value.selected_executable.mode),
+      uid: safeInteger(value.selected_executable.uid),
+      gid: safeInteger(value.selected_executable.gid)
+    } : null,
+    policy_decision: safeText(value.policy?.decision),
+    policy_loaded: typeof value.policy?.loaded === "boolean" ? value.policy.loaded : null,
+    sandbox_requested: typeof value.default_probe?.sandbox_requested === "boolean" ? value.default_probe.sandbox_requested : null,
+    sandbox_observed: typeof value.qualified_probe?.sandbox_observed === "boolean" ? value.qualified_probe.sandbox_observed : null,
+    cleanup_status: safeText(value.cleanup?.status),
+    owned_resources_removed: typeof value.cleanup?.owned_resources_removed === "boolean" ? value.cleanup.owned_resources_removed : null
   };
 }
 
@@ -302,8 +322,10 @@ async function captureRunnerOutcomes(options) {
     ["CI_NATIVE_BOOTSTRAP_OUTCOME", "native-pnpm-bootstrap", true],
     ["CI_PROJECT_INSTALL_OUTCOME", "project-install", true],
     ["CI_BROWSER_INSTALL_OUTCOME", "browser-install", true],
+    ["CI_SANDBOX_QUALIFICATION_OUTCOME", "sandbox-qualification", false],
     ["CI_DOCKER_PROBE_OUTCOME", "docker-preflight", false],
-    ["CI_PROOF_OUTCOME", "bounded-proof", false]
+    ["CI_PROOF_OUTCOME", "bounded-proof", false],
+    ["CI_SANDBOX_CLEANUP_OUTCOME", "sandbox-cleanup", false]
   ];
   for (const [environmentKey, name, blocking] of mappings) {
     const status = outcomeStatus(process.env[environmentKey]);
@@ -344,9 +366,15 @@ export function classifyResult({ report, proofReport = null } = {}) {
   let primaryStage = failedStage?.name ?? null;
   let finalExit = failedStage?.exit_code && failedStage.exit_code > 0 ? failedStage.exit_code : failedStage ? 1 : 0;
   let proofValidation = null;
+  const sandboxQualification = currentStage(report, "sandbox-qualification");
+  const sandboxCleanup = currentStage(report, "sandbox-cleanup");
 
   if (failedStage) {
     classification = failedStage.error_classification === "BLOCKED_DEPENDENCY_COMPATIBILITY" ? "BLOCKED_DEPENDENCY_COMPATIBILITY" : "CI_BOOTSTRAP_FAILURE";
+  } else if (sandboxQualification?.status === "FAIL") {
+    classification = "BLOCKED_ENVIRONMENT";
+    primaryStage = "sandbox-qualification";
+    finalExit = 2;
   } else if (!report.proof_invoked) {
     classification = "CI_BOOTSTRAP_FAILURE";
     primaryStage = "bounded-proof";
@@ -385,6 +413,13 @@ export function classifyResult({ report, proofReport = null } = {}) {
   }
 
   if (report.artifact_delivery?.status === "FAIL" && classification !== "ARTIFACT_DELIVERY_FAILURE") secondaryFailures.push("ARTIFACT_DELIVERY_FAILURE");
+  if (sandboxCleanup?.status === "FAIL") {
+    if (classification === "LIVE_PROOF_READY_FOR_REVIEW") {
+      classification = "SANDBOX_CLEANUP_FAILURE";
+      primaryStage = "sandbox-cleanup";
+      finalExit = 1;
+    } else secondaryFailures.push("SANDBOX_CLEANUP_FAILURE");
+  }
   if (report.summary_exit_code !== null && report.summary_exit_code !== undefined && report.summary_exit_code !== 0) {
     secondaryFailures.push("CI_REPORTING_FAILURE");
     if (classification === "LIVE_PROOF_READY_FOR_REVIEW") {

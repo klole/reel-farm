@@ -100,8 +100,7 @@ async function launchBrowser(): Promise<Browser> {
   return chromium.launch({
     headless: true,
     chromiumSandbox: true,
-    env: browserEnvironment,
-    ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {})
+    env: browserEnvironment
   });
 }
 

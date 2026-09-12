@@ -17,6 +17,7 @@ import {
 import { freeLoopbackPort, makeComposeProject, waitForCondition, waitForHttp, type CommandResult, type ComposeProject } from "./ch001-compose.js";
 import { readZipEntries } from "../tests/helpers/zip.ts";
 import { assertValidProofRunId, prepareProofEvidenceDirectories, resolveProofEvidenceRoot, writeCoordinatorFailureReport } from "./ch001-proof-boundary.mjs";
+import { assertManagedBrowserIdentity, resolveManagedBrowserExecutable, type ManagedBrowserResolution } from "./ch001-sandbox.mjs";
 
 type ProcessResult = CommandResult & { invocationId: string };
 type ProofStatus = "PASS" | "FAIL" | "NOT_RUN";
@@ -59,6 +60,8 @@ let integrationDatabase = "";
 let integrationDatabaseCreated = false;
 let loopbackPortReady = true;
 let evidenceOwned = false;
+let browserResolution: ManagedBrowserResolution | null = null;
+let browserIdentityOptions: { playwrightExecutablePath: string; selectedExecutablePath: string; browsersPath?: string } | null = null;
 
 browserPath = process.env.BROWSER_EXECUTABLE_PATH ?? chromium.executablePath();
 
@@ -254,14 +257,19 @@ async function fetchJson(url: string): Promise<JsonResponse> {
 async function hostFacts(): Promise<Record<string, unknown>> {
   const pnpm = await runProcess("pnpm", ["--version"], envWithoutNormalDotenv());
   let browserVersion: string | null = null;
-  try {
-    const browser = await chromium.launch({ headless: true, chromiumSandbox: true, executablePath: browserPath, env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", HOME: "/tmp", LANG: "C.UTF-8", LC_ALL: "C.UTF-8", ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}) } });
-    browserVersion = browser.version();
-    await browser.close();
-  } catch (error) {
-    environmentFailures.push(`Pinned Chromium could not launch with sandbox: ${error instanceof Error ? error.message : String(error)}`);
+  if (browserResolution && browserIdentityOptions) {
+    try {
+      await assertManagedBrowserIdentity({ resolution: browserResolution, ...browserIdentityOptions });
+      const browser = await chromium.launch({ headless: true, chromiumSandbox: true, executablePath: browserResolution.path, env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", HOME: "/tmp", LANG: "C.UTF-8", LC_ALL: "C.UTF-8", ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}) } });
+      browserVersion = browser.version();
+      await browser.close();
+    } catch (error) {
+      environmentFailures.push(`Pinned Chromium could not launch with sandbox: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  } else {
+    environmentFailures.push("Pinned Chromium identity was not qualified; no browser launch was attempted.");
   }
-  return { platform: process.platform, arch: process.arch, node: process.version, pnpm: pnpm.output.trim(), playwright: "1.63.0", browser: { executable: browserPath, version: browserVersion, sandbox: true } };
+  return { platform: process.platform, arch: process.arch, node: process.version, pnpm: pnpm.output.trim(), playwright: "1.63.0", browser: { executable: browserResolution?.path ?? browserPath, identity: browserResolution, version: browserVersion, sandbox_requested: true, sandbox_qualification_ready: process.env.CH001_SANDBOX_READY ?? null } };
 }
 
 async function prepareRun(): Promise<{ composeEnv: NodeJS.ProcessEnv; childEnv: NodeJS.ProcessEnv }> {
@@ -312,15 +320,24 @@ async function preflight(childEnv: NodeJS.ProcessEnv): Promise<{ dockerReady: bo
   if (!dockerReady) environmentFailures.push("Docker daemon/Compose is unavailable or denied on this host.");
   const managedBrowser = chromium.executablePath();
   browserPath = process.env.BROWSER_EXECUTABLE_PATH ?? managedBrowser;
-  const browserReady = await executable(browserPath);
+  browserIdentityOptions = { playwrightExecutablePath: managedBrowser, selectedExecutablePath: browserPath, ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { browsersPath: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}) };
+  try {
+    browserResolution = await resolveManagedBrowserExecutable(browserIdentityOptions);
+    browserPath = browserResolution.path;
+  } catch (error) {
+    browserResolution = null;
+    environmentFailures.push(`Pinned managed Chromium identity could not be qualified: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  const browserReady = browserResolution !== null && await executable(browserPath);
   if (!browserReady) environmentFailures.push(`Pinned Playwright Chromium is not executable at ${browserPath}.`);
-  if (process.env.BROWSER_EXECUTABLE_PATH && resolve(process.env.BROWSER_EXECUTABLE_PATH) !== resolve(managedBrowser) && process.env.CH001_ALLOW_EXTERNAL_BROWSER !== "1") environmentFailures.push("An external browser override requires CH001_ALLOW_EXTERNAL_BROWSER=1 and is diagnostic only.");
-  const host = { platform: process.platform, arch: process.arch, node: process.version, package_manager: "pnpm@12.3.4", implementation_commit: implementationCommit, implementation_tree: tree, tracked_tree_clean: trackedStatus.length === 0, workflow_sha: workflowSha, docker: { cli: dockerVersion.result.output.trim(), daemon: dockerInfo.result.output.trim(), compose: composeVersion.result.output.trim() }, browser: { managed_path: managedBrowser, selected_path: browserPath, executable: browserReady } };
+  const sandboxReady = process.env.GITHUB_ACTIONS !== "true" || process.env.CH001_SANDBOX_READY === "1";
+  if (!sandboxReady) environmentFailures.push("Hosted sandbox qualification did not produce CH001_SANDBOX_READY=1; application browser gates remain NOT_RUN.");
+  const host = { platform: process.platform, arch: process.arch, node: process.version, package_manager: "pnpm@12.3.4", implementation_commit: implementationCommit, implementation_tree: tree, tracked_tree_clean: trackedStatus.length === 0, workflow_sha: workflowSha, docker: { cli: dockerVersion.result.output.trim(), daemon: dockerInfo.result.output.trim(), compose: composeVersion.result.output.trim() }, browser: { managed_path: managedBrowser, selected_path: browserPath, executable: browserReady, identity: browserResolution, sandbox_qualification_ready: process.env.CH001_SANDBOX_READY ?? null } };
   const measured = await hostFacts();
   const measuredBrowser = measured.browser as { version?: unknown } | undefined;
   const browserLaunched = typeof measuredBrowser?.version === "string" && measuredBrowser.version.length > 0;
   if (!browserLaunched) environmentFailures.push("Pinned Chromium executable was found but did not complete a sandboxed launch probe.");
-  return { dockerReady: dockerReady && identityStatus && trackedStatus.length === 0 && loopbackPortReady, browserReady: browserReady && browserLaunched && identityStatus && loopbackPortReady, host: { ...host, measured } };
+  return { dockerReady: dockerReady && identityStatus && trackedStatus.length === 0 && loopbackPortReady, browserReady: browserReady && browserLaunched && sandboxReady && identityStatus && loopbackPortReady, host: { ...host, measured } };
 }
 
 async function staticChecks(childEnv: NodeJS.ProcessEnv): Promise<void> {

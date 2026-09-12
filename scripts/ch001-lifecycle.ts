@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
+import { resolveManagedBrowserExecutable } from "./ch001-sandbox.mjs";
 
 const baseUrl = process.env.E2E_BASE_URL;
 const email = process.env.CH001_OWNER_EMAIL;
@@ -76,7 +77,12 @@ async function waitForWorkerReady(page: Page, timeoutMs = 180_000): Promise<Heal
 }
 
 async function launch(): Promise<{ browser: Browser; page: Page }> {
-  const executablePath = process.env.BROWSER_EXECUTABLE_PATH || chromium.executablePath();
+  const playwrightExecutablePath = chromium.executablePath();
+  const executablePath = (await resolveManagedBrowserExecutable({
+    playwrightExecutablePath,
+    selectedExecutablePath: process.env.BROWSER_EXECUTABLE_PATH ?? playwrightExecutablePath,
+    browsersPath: process.env.PLAYWRIGHT_BROWSERS_PATH
+  })).path;
   const browser = await chromium.launch({
     headless: true,
     chromiumSandbox: true,

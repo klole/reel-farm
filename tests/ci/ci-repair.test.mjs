@@ -77,6 +77,19 @@ test("proof exits 1 and 2 remain distinct from bootstrap failure", () => {
   assert.equal(blocked.final_exit_code, 2);
 });
 
+test("sandbox qualification and cleanup failures remain visible without erasing the primary result", () => {
+  const qualificationBlocked = classifyResult({ report: report({ proof_invoked: true, proof_exit_code: 2, stages: [{ name: "sandbox-qualification", status: "FAIL", blocking: false, exit_code: 2 }] }) });
+  assert.equal(qualificationBlocked.classification, "BLOCKED_ENVIRONMENT");
+  assert.equal(qualificationBlocked.primary_stage, "sandbox-qualification");
+  const cleanupFailed = classifyResult({ report: report({ stages: [{ name: "sandbox-cleanup", status: "FAIL", blocking: false, exit_code: 1 }] }), proofReport: validProof() });
+  assert.equal(cleanupFailed.classification, "SANDBOX_CLEANUP_FAILURE");
+  assert.equal(cleanupFailed.primary_stage, "sandbox-cleanup");
+  assert.equal(cleanupFailed.final_exit_code, 1);
+  const proofFailure = classifyResult({ report: report({ proof_exit_code: 1, stages: [{ name: "sandbox-cleanup", status: "FAIL", blocking: false, exit_code: 1 }] }), proofReport: validProof({ exit_code: 1, status: "TEST_FAILURE" }) });
+  assert.equal(proofFailure.classification, "LIVE_PROOF_FAILED");
+  assert.deepEqual(proofFailure.secondary_failures, ["SANDBOX_CLEANUP_FAILURE"]);
+});
+
 test("exit 0 requires a fresh, identity-matching proof report and delivered artifact", () => {
   const ready = classifyResult({ report: report(), proofReport: validProof() });
   const missing = classifyResult({ report: report(), proofReport: null });

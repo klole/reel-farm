@@ -7,6 +7,11 @@ on:
         description: Approved new full implementation SHA to exercise
         required: true
         type: string
+      sandbox_qualification:
+        description: Explicitly permit the bounded exact-executable AppArmor userns qualification on the standard hosted Ubuntu runner
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -21,6 +26,8 @@ jobs:
     timeout-minutes: 60
     env:
       REQUESTED_SHA: ${{ inputs.implementation_sha }}
+      REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+      CH001_SANDBOX_OPT_IN: ${{ inputs.sandbox_qualification }}
       CI: "true"
       CH001_RUN_ID: r4-${{ github.run_id }}-${{ github.run_attempt }}
       CH001_WORKFLOW_SHA: ${{ github.workflow_sha }}
@@ -28,6 +35,8 @@ jobs:
       CI_BOOTSTRAP_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/bootstrap-result.json
       CI_RESULT_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/ci-result.json
       CI_PROOF_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/proof/public/proof-result.json
+      CH001_SANDBOX_REPORT: ${{ github.workspace }}/artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/sandbox-qualification.json
+      CH001_SANDBOX_STATE_DIR: ${{ runner.temp }}/ch001r6/${{ github.run_id }}-${{ github.run_attempt }}/sandbox
     steps:
       - name: Validate dispatch and runner class assumptions
         id: validate_dispatch
@@ -201,6 +210,24 @@ jobs:
           rm -f "$stage_log"
           exit "$stage_exit"
 
+      - name: Qualify pinned Chromium sandbox (explicit hosted opt-in)
+        id: sandbox_qualification
+        if: ${{ success() }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r6-sandbox-qualification.log"
+          set +e
+          node scripts/ch001-sandbox.mjs qualify 2>&1 | tee "$stage_log"
+          stage_exit=${PIPESTATUS[0]}
+          set +e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name sandbox-qualification --blocking false --exit-code "$stage_exit" --detail-file "$CH001_SANDBOX_REPORT" --log-file "$stage_log"
+          record_exit=$?
+          set -e
+          rm -f "$stage_log"
+          if [[ "$stage_exit" -eq 0 && "$record_exit" -ne 0 ]]; then stage_exit=1; fi
+          exit "$stage_exit"
+
       - name: Probe Docker daemon and Compose
         id: docker_probe
         if: ${{ success() }}
@@ -238,6 +265,26 @@ jobs:
           rm -f "$stage_log"
           exit 0
 
+      - name: Remove run-owned sandbox policy
+        id: sandbox_cleanup
+        if: ${{ always() }}
+        continue-on-error: true
+        run: |
+          set +e
+          stage_log="$RUNNER_TEMP/ch001r6-sandbox-cleanup.log"
+          cleanup_exit=1
+          if [[ -f scripts/ch001-sandbox.mjs && -f "$CI_BOOTSTRAP_REPORT" ]]; then
+            node scripts/ch001-sandbox.mjs cleanup 2>&1 | tee "$stage_log"
+            cleanup_exit=${PIPESTATUS[0]}
+            node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name sandbox-cleanup --blocking false --exit-code "$cleanup_exit" --log-file "$stage_log"
+            record_exit=$?
+            if [[ "$cleanup_exit" -eq 0 && "$record_exit" -ne 0 ]]; then cleanup_exit=1; fi
+          else
+            echo 'Sandbox helper or bootstrap report was unavailable; owned-policy cleanup could not be measured.' | tee "$stage_log"
+          fi
+          rm -f "$stage_log"
+          exit "$cleanup_exit"
+
       - name: Finalize dependency-free CI result
         id: finalize
         if: ${{ always() }}
@@ -249,8 +296,10 @@ jobs:
           CI_NATIVE_BOOTSTRAP_OUTCOME: ${{ steps.bootstrap.outcome }}
           CI_PROJECT_INSTALL_OUTCOME: ${{ steps.project_install.outcome }}
           CI_BROWSER_INSTALL_OUTCOME: ${{ steps.browser_install.outcome }}
+          CI_SANDBOX_QUALIFICATION_OUTCOME: ${{ steps.sandbox_qualification.outcome }}
           CI_DOCKER_PROBE_OUTCOME: ${{ steps.docker_probe.outcome }}
           CI_PROOF_OUTCOME: ${{ steps.proof.outcome }}
+          CI_SANDBOX_CLEANUP_OUTCOME: ${{ steps.sandbox_cleanup.outcome }}
         run: |
           set +e
           finalizer_exit=0
