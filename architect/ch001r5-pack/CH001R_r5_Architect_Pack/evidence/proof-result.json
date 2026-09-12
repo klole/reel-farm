@@ -1,0 +1,16 @@
+{
+  "profile": "CH-001R-r3 bounded live proof",
+  "status": "TEST_FAILURE",
+  "exit_code": 1,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "run_id": "r4-34669975078-1",
+  "implementation_commit": "69b784526260e3e5acf133da8d1a2fb33447d20f",
+  "workflow_sha": "2dd7737aedb60dcb2536ded77a2e64dc56545a9d",
+  "failures": [
+    "Coordinator: Evidence run directory already exists and is non-empty: /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/proof. Use a new CH001_RUN_ID; proof resumption is not implicit."
+  ],
+  "environment_failures": [],
+  "steps": [],
+  "scope": "Coordinator failed before all bounded proof steps completed; see command logs."
+}

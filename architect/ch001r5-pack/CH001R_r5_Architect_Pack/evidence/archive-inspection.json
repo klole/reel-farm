@@ -1,0 +1,78 @@
+{
+  "kind": "ARCHITECT_ARTIFACT_INSPECTION_NOT_APPLICATION_TEST",
+  "run_id": 34669975078,
+  "attempt": 1,
+  "job_id": 103489379533,
+  "artifact_id": 10290367825,
+  "archive_bytes": 9894,
+  "archive_sha256": "af14a46a2a85825cb784387b60e6da353b0ff93591607a000b98baf66fb1001d",
+  "hash_matches_GitHub_metadata": true,
+  "members_count": 12,
+  "members": [
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 6062,
+      "sha256": "5a54da1ba6395698625be2b8722d032a0e2bd99bd7b5f19a1de55beaeaba8cbb"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/ci-result.json",
+      "bytes": 1313,
+      "sha256": "110d9f802cd969c9ed5b0a09947c7f2c9862873e362b10cb07391e0a0444c6ec"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/commands/bounded-proof.log",
+      "bytes": 194,
+      "sha256": "e72b4505def618ce2907cba11adb0af1253e35cea2b825206e1c1163904844b8"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/commands/browser-install.log",
+      "bytes": 8641,
+      "sha256": "7da09f9851d165c096e8094c40764a9e4ddfd355354775516210080ec1394158"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/commands/ci-helper-regressions.log",
+      "bytes": 1975,
+      "sha256": "2758787a4855f1d6fbbfec9ad05895bc21a9e1a9a273a505b38797cf206105ea"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/commands/docker-preflight.log",
+      "bytes": 801,
+      "sha256": "476d4c5355b46da29728d7ebaf3ae0b0d98665464077995c38a6c67a74fd4956"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/commands/project-install.log",
+      "bytes": 1757,
+      "sha256": "bd304e26aaa076861de0b2a893c2decb10e8ab8afa2b9fe2c001ce0be3509b9c"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/bootstrap/public/dispatch.txt",
+      "bytes": 249,
+      "sha256": "481440612367c80a914ebd71d87dcebd49b843bd6200f96ce388014bed28ed36"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/proof/public/proof-result.json",
+      "bytes": 709,
+      "sha256": "35aebb623c0e9c647d002623c0fa7b72dcdfb6d2eeba275249dc911a04961c4b"
+    },
+    {
+      "archive_member": "reel-farm/reel-farm/artifacts/ch001r4/r4-34669975078-1/proof/public/source-review.md",
+      "bytes": 780,
+      "sha256": "1513fe77a56f0cf65a7d980df6b53a57c9e12ca4dd0b9a5a64ed67aff9452f7f"
+    },
+    {
+      "archive_member": "_temp/ch001r4/r4-34669975078-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 689,
+      "sha256": "99e0b8cf39bc4cd4eb73ed6deef4778bfca814989129796b1f17bf7a26830da5"
+    },
+    {
+      "archive_member": "_temp/ch001r4/r4-34669975078-1/bootstrap/public/dispatch.txt",
+      "bytes": 193,
+      "sha256": "5138a54ff1e555d5efe294a0928886b8a8c946cdd2633c30980a6b15494f0665"
+    }
+  ],
+  "proof_report_git_blob_sha": "d578278bb2e88c255b5c39a2a7bc7202cf431ba3",
+  "matches_committed_proof_blob": true,
+  "hosted_gate_ledger_present": false,
+  "hosted_gate_counts": null,
+  "application_tests_executed_by_architect": false
+}

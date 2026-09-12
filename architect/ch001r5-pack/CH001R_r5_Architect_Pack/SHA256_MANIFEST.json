@@ -1,0 +1,69 @@
+{
+  "scope": "all pack files except this manifest; no self-hash",
+  "files": {
+    "01_ARCHITECT_REVIEW.md": {
+      "bytes": 8209,
+      "sha256": "194e3b5ca4a070584db6450821ce17c3b44575a0a97755482de5e1318701a077"
+    },
+    "02_LUNA_ASSIGNMENT.md": {
+      "bytes": 10039,
+      "sha256": "4d8790ed0f5a1483221cc592a52a75a3e91d71996e98dad007126b1946b56c73"
+    },
+    "03_ROUTER_AND_EVIDENCE.md": {
+      "bytes": 5220,
+      "sha256": "55472245c4f33e77e72af101ee79a80786c6edce68cc39c751be9b209a221a6b"
+    },
+    "04_START_PROMPT.md": {
+      "bytes": 1747,
+      "sha256": "ce3b0d7323d66ed4ba609ce02f62d587a16719c6bc745720a2209a52bfb865b7"
+    },
+    "README.md": {
+      "bytes": 1263,
+      "sha256": "2dea83f7b3f4c2ffc4bbcaa3a2150cf54f235c15db93c7d11fe537c408cd2b2d"
+    },
+    "SOURCES.md": {
+      "bytes": 3262,
+      "sha256": "f200a9dd71e807cf051e0d39c26072a5ae85479ad8a19afaacc787262799de26"
+    },
+    "VALIDATION_REPORT.json": {
+      "bytes": 1258,
+      "sha256": "0b6fc7eb081bf1dfd9056a160d686aca88c1bd7ec20b57ec9012457b1e8a581d"
+    },
+    "evidence/T4-hosted-artifact.zip": {
+      "bytes": 9894,
+      "sha256": "af14a46a2a85825cb784387b60e6da353b0ff93591607a000b98baf66fb1001d"
+    },
+    "evidence/archive-inspection.json": {
+      "bytes": 3394,
+      "sha256": "e0bb6eeca06bf2182e558d372abd8fd9ef7a79345ac02595957a34a23113ddf1"
+    },
+    "evidence/bootstrap-result.json": {
+      "bytes": 6062,
+      "sha256": "5a54da1ba6395698625be2b8722d032a0e2bd99bd7b5f19a1de55beaeaba8cbb"
+    },
+    "evidence/ci-helper-regressions.log": {
+      "bytes": 1975,
+      "sha256": "2758787a4855f1d6fbbfec9ad05895bc21a9e1a9a273a505b38797cf206105ea"
+    },
+    "evidence/ci-result.json": {
+      "bytes": 1313,
+      "sha256": "110d9f802cd969c9ed5b0a09947c7f2c9862873e362b10cb07391e0a0444c6ec"
+    },
+    "evidence/filesystem-observation.json": {
+      "bytes": 458,
+      "sha256": "9a062562fabb9b8027cb994bb55ab432c3d7286f507219e8a0c4f2c7f87a5a01"
+    },
+    "evidence/proof-result.json": {
+      "bytes": 709,
+      "sha256": "35aebb623c0e9c647d002623c0fa7b72dcdfb6d2eeba275249dc911a04961c4b"
+    },
+    "evidence/run-receipt.json": {
+      "bytes": 1738,
+      "sha256": "c4e9838674a43f396378116fea00fc7df700a31558de7f79d109b21719db9aa7"
+    },
+    "evidence/source-review.md": {
+      "bytes": 780,
+      "sha256": "1513fe77a56f0cf65a7d980df6b53a57c9e12ca4dd0b9a5a64ed67aff9452f7f"
+    }
+  }
+}

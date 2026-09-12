@@ -1,0 +1,14 @@
+{
+  "kind": "FILESYSTEM_MODEL_ONLY_NOT_REPOSITORY_TEST",
+  "old_workflow_then_coordinator": {
+    "proof_entries": [
+      "public"
+    ],
+    "nonempty_guard_rejects": true
+  },
+  "bootstrap_sibling_only_control": {
+    "proof_entries": [],
+    "nonempty_guard_rejects": false
+  },
+  "limitations": "Python filesystem reproduction of the published source operations only. No TypeScript, app, database, Chromium, Docker, or Actions workflow was executed."
+}

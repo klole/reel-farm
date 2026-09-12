@@ -1,0 +1,67 @@
+{
+  "kind": "PACK_CHECKS_ONLY_NOT_APPLICATION_TESTS",
+  "checks": [
+    {
+      "check": "required_documents",
+      "pass": true
+    },
+    {
+      "check": "T4_identity",
+      "pass": true
+    },
+    {
+      "check": "hosted_failure_not_assumed_pass",
+      "pass": true
+    },
+    {
+      "check": "no_live_steps_in_observed_report",
+      "pass": true
+    },
+    {
+      "check": "no_invented_gate_counts",
+      "pass": true
+    },
+    {
+      "check": "new_ids_unassigned",
+      "pass": true
+    },
+    {
+      "check": "actual_archive_digest",
+      "pass": true
+    },
+    {
+      "check": "review_baseline_is_later_artifact_commit",
+      "pass": true
+    },
+    {
+      "check": "bounded_scope_not_full_acceptance",
+      "pass": true
+    },
+    {
+      "check": "no_external_send_claim",
+      "pass": true
+    },
+    {
+      "check": "twelve_regression_requirements",
+      "pass": true
+    },
+    {
+      "check": "historic_retry_prohibition",
+      "pass": true
+    },
+    {
+      "check": "local_document_links",
+      "pass": true
+    },
+    {
+      "check": "original_workflow_fragment_documented",
+      "pass": true
+    },
+    {
+      "check": "refused_evidence_protection",
+      "pass": true
+    }
+  ],
+  "passed": 15,
+  "failed": 0
+}
