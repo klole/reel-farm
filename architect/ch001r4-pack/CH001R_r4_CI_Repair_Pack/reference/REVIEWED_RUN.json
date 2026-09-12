@@ -1,0 +1,76 @@
+{
+  "record_kind": "ARCHITECT_REVIEW_OF_EXISTING_RUN_NOT_NEW_PROOF",
+  "repository": "klole/reel-farm",
+  "phase": "CH-001R-r4",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "reviewed_implementation_sha": "0b79ed07a25a618ab4da2bf56a2fed6047398cb5",
+  "reviewed_evidence_sha": "4cf020317cfc2e8755f35ee6da10f7397c8676f2",
+  "observed_main_sha": "4cf020317cfc2e8755f35ee6da10f7397c8676f2",
+  "failed_ci": {
+    "run_id": 34665615514,
+    "attempt": 1,
+    "job_id": 103476773609,
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "failure",
+    "head_sha": "4cf020317cfc2e8755f35ee6da10f7397c8676f2",
+    "workflow_definition_sha": "4cf020317cfc2e8755f35ee6da10f7397c8676f2",
+    "requested_implementation_sha": "0b79ed07a25a618ab4da2bf56a2fed6047398cb5",
+    "checked_out_sha": "0b79ed07a25a618ab4da2bf56a2fed6047398cb5",
+    "created_at_utc_from_github": "2026-09-12T01:42:40Z",
+    "url": "https://github.com/klole/reel-farm/actions/runs/34665615514",
+    "failed_step": "Install frozen project and pinned browser dependencies",
+    "failed_command": "pnpm --version invoked through Corepack",
+    "bootstrap_exit_code": 1,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "summary_step_exit_code": 2,
+    "summary_note": "Backticks caused shell command substitution; the step also defaulted an absent proof exit to 2. This is not a coordinator result.",
+    "docker_steps": "SKIPPED",
+    "application_suites": "NOT_RUN"
+  },
+  "artifact": {
+    "id": 10289206189,
+    "name": "ch001-live-proof-34665615514-1",
+    "bytes": 295,
+    "sha256": "6286efa33c131379a7855b87890a9450ad11f9a704ec4ee68b50128b5f9188a2",
+    "digest_verified_against_github_metadata": true,
+    "members": [
+      "dispatch.txt"
+    ],
+    "independently_downloaded_and_inspected": true,
+    "contains_application_export": false,
+    "contains_proof_result": false
+  },
+  "historical_local_preflight": {
+    "run_id": "r3-local-t3-preflight",
+    "implementation_sha": "0b79ed07a25a618ab4da2bf56a2fed6047398cb5",
+    "status": "BLOCKED_ENVIRONMENT",
+    "exit_code": 2,
+    "gate_counts": {
+      "PASS": 4,
+      "FAIL": 0,
+      "NOT_RUN": 68
+    },
+    "passing_gate_ids": [
+      "CH001-067",
+      "CH001-068",
+      "CH001-069",
+      "CH001-072"
+    ],
+    "evidence_basis": "E3 committed handoff and evidence index; local raw suite files not independently rerun by this architect",
+    "reported_unit_count": 20,
+    "reported_security_count": 4
+  },
+  "architect_actions": {
+    "repository_modified": false,
+    "workflow_dispatched": false,
+    "application_started": false,
+    "application_tests_run": false,
+    "provider_calls": false,
+    "artifact_inspected": true
+  },
+  "observed_time_note": "GitHub timestamps are preserved verbatim; no claim that this review generated the run."
+}

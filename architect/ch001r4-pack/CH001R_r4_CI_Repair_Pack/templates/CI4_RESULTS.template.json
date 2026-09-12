@@ -1,0 +1,201 @@
+{
+  "record_kind": "TEMPLATE_NOT_EXECUTION",
+  "phase": "CH-001R-r4",
+  "application_acceptance": false,
+  "implementation_sha": null,
+  "run_id": null,
+  "checks": [
+    {
+      "id": "CI4-001",
+      "requirement": "Correct base, original acceptance contract preserved, allowed-scope diff",
+      "required_evidence": "Actual base/T4/tree; diff and original reference hash",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-002",
+      "requirement": "Pnpm pin and official platform artifact are bound to the project pin",
+      "required_evidence": "Manifest, upstream provenance, pin-drift rejection test",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-003",
+      "requirement": "Wrong digest / unsafe archive / unsupported target rejected before execution",
+      "required_evidence": "Executable negative helper tests; no execution side effect",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-004",
+      "requirement": "Bootstrap works without project dependencies or usable Corepack and is idempotent",
+      "required_evidence": "Fresh owned-directory install log and repeat-install check",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-005",
+      "requirement": "Current and subsequent shells use the verified native executable",
+      "required_evidence": "Resolved path, version, executable metadata, PATH test",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-006",
+      "requirement": "Node/pnpm/dependency intent unchanged; no insecure flags or hidden fallback",
+      "required_evidence": "Node/pnpm output; package/lockfile diff; policy assertions",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-007",
+      "requirement": "Hosted frozen project installation succeeds with no tracked dependency mutation",
+      "required_evidence": "Real hosted step log/exit and before/after lock hash",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-008",
+      "requirement": "Project-pinned managed Playwright browser installation and qualification run",
+      "required_evidence": "Real version/path/launch report, not system-Chrome substitution",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-009",
+      "requirement": "Final Docker image builds and native pnpm works non-root without network bootstrap",
+      "required_evidence": "Actual image identity, user, network-disabled version probe; shipped-image result",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-010",
+      "requirement": "Successful summary prints exact literal identities without evaluating them",
+      "required_evidence": "Executed writer test with stdout/stderr/result assertions",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-011",
+      "requirement": "Bootstrap failure before proof yields actual failure, invocation false, proof exit null",
+      "required_evidence": "Dependency-free fixture test and hosted evidence on real failure when applicable",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-012",
+      "requirement": "Invoked proof exit 1 is retained and final verdict fails",
+      "required_evidence": "Executed result-classifier test",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-013",
+      "requirement": "Invoked proof exit 2 is distinguished from proof never invoked",
+      "required_evidence": "Executed classifier test; actual prerequisite detail if used live",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-014",
+      "requirement": "Exit 0 plus missing/malformed/stale/wrong-identity proof report is rejected",
+      "required_evidence": "Negative report-validation tests; nonzero terminal verdict",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-015",
+      "requirement": "Summary treats backticks, dollar substitutions, percent signs and spaces as data",
+      "required_evidence": "Executed hostile-value fixture with no command/marker side effect",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-016",
+      "requirement": "Early diagnostics need no npm-installed dependency and survive bootstrap failure",
+      "required_evidence": "Run with project modules absent; valid explicit outer JSON record",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-017",
+      "requirement": "Only sanitized public evidence is selected; private paths/credentials excluded",
+      "required_evidence": "Artifact allowlist/path tests and actual downloaded archive inspection",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-018",
+      "requirement": "Uploaded evidence is retrievable and its archive/payload hashes are checked",
+      "required_evidence": "Actual run/attempt/job/artifact IDs, download record and digest comparison",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-019",
+      "requirement": "New run explicitly requests and checks out T4; workflow identity is also recorded",
+      "required_evidence": "Actual dispatch/bootstrap/proof identity chain and workflow blob/hash",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-020",
+      "requirement": "Existing bounded proof executes its real suites and produces its required runtime artifacts, or returns an explicit failure",
+      "required_evidence": "Actual discovered/executed/skipped counts, exits, ZIPs/images/hashes/lifecycle data; do not mark PASS on a failure",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-021",
+      "requirement": "New gate records derive only from fresh evidence; historical local and hosted records stay separate",
+      "required_evidence": "Fresh ledger with exactly 72 original IDs when coordinator produced it; unchanged historical files",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-022",
+      "requirement": "Workflow-capable publication and manual dispatch remain router-only",
+      "required_evidence": "Handoff/action declaration; no credentials transferred or embedded",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-023",
+      "requirement": "No providers, publishing, billing, feature expansion, release, or v0.2 changes",
+      "required_evidence": "Diff and external-action record",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    },
+    {
+      "id": "CI4-024",
+      "requirement": "Handoff identifies actual commits/results and keeps awaiting_review / none",
+      "required_evidence": "Handoff/state/index consistency; no invented CI identities",
+      "status": "NOT_RUN",
+      "actual_evidence": [],
+      "reason": "Template only; no Luna r4 implementation executed by packet author."
+    }
+  ]
+}

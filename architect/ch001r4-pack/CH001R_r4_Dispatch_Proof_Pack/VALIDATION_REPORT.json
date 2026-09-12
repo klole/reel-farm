@@ -1,0 +1,70 @@
+{
+  "kind": "DOCUMENT_PACKET_VALIDATION_NOT_APPLICATION_EVIDENCE",
+  "checks": [
+    {
+      "check": "Required packet files exist",
+      "passed": true,
+      "detail": "9 required files"
+    },
+    {
+      "check": "Local document links resolve",
+      "passed": true,
+      "detail": "Every local linked file exists"
+    },
+    {
+      "check": "Markdown fences are balanced",
+      "passed": true,
+      "detail": "All Markdown documents"
+    },
+    {
+      "check": "Embedded Bash snippets pass syntax checks",
+      "passed": true,
+      "detail": "11 snippets; syntax only, no commands executed"
+    },
+    {
+      "check": "Frozen identity formats are valid",
+      "passed": true,
+      "detail": "Six Git identities and one recorded SHA-256"
+    },
+    {
+      "check": "T3/E3 constants present in execution documents",
+      "passed": true,
+      "detail": "Exact full SHAs, not abbreviated test targets"
+    },
+    {
+      "check": "No fabricated new run identity",
+      "passed": true,
+      "detail": "New run/job/artifact identifiers intentionally unset"
+    },
+    {
+      "check": "Acceptance is explicitly false",
+      "passed": true,
+      "detail": "No application acceptance assigned"
+    },
+    {
+      "check": "Reported historical gate counts reconcile",
+      "passed": true,
+      "detail": "Reported 4 / 0 / 68; not independently executed"
+    },
+    {
+      "check": "Isolated shell reproduction accurately labeled",
+      "passed": true,
+      "detail": "Observed blank summary fields and shell diagnostics; not a CI execution"
+    },
+    {
+      "check": "All packet JSON parses",
+      "passed": true,
+      "detail": "Planning, shell-reproduction and syntax-report JSON"
+    },
+    {
+      "check": "No font or application-export files included",
+      "passed": true,
+      "detail": "Document packet only; no sample export claimed"
+    }
+  ],
+  "passed": 12,
+  "failed": 0,
+  "repository_writes_executed": false,
+  "workflow_dispatch_executed": false,
+  "application_tests_executed": false
+}

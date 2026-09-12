@@ -1,0 +1,131 @@
+{
+  "kind": "DOCUMENT_AND_FORMATTING_EXAMPLE_VALIDATION_ONLY",
+  "application_tests_run": false,
+  "workflow_dispatched": false,
+  "structural_and_example_checks": [
+    {
+      "name": "Required instruction files exist",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "UTF-8 and nonempty instruction files",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Local Markdown links resolve",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Exactly 24 unique CI4 repair checks",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Template is unexecuted, nonaccepting and all NOT_RUN",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reviewed source and workflow identities are distinguished",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Old CI bootstrap failure is not a coordinator exit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Historical local ledger preserves 4/0/68",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Downloaded old artifact hash and member inventory verified",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Native-release pins are syntactically valid and provenance-labeled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CI and Docker build/runtime bootstrap both covered",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "New implementation dispatch instead of old rerun required",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Router credential/publication boundary retained",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Original gates and full verification preserved",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Core excluded providers and next-version scope explicit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No application tests claimed by author",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Illustrative summary passes Bash syntax",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Illustrative summary behavioral fixtures pass",
+      "passed": true,
+      "detail": "3 formatter-only fixtures"
+    },
+    {
+      "name": "Standalone navigation anchors resolve",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All instruction Markdown fences are balanced",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "illustrative_formatter_cases": [
+    {
+      "case": "ordinary",
+      "passed": true,
+      "exit_code": 0,
+      "scope": "Packet formatting illustration only, not production workflow or app"
+    },
+    {
+      "case": "absent-proof",
+      "passed": true,
+      "exit_code": 0,
+      "scope": "Packet formatting illustration only, not production workflow or app"
+    },
+    {
+      "case": "literal-hostile",
+      "passed": true,
+      "exit_code": 0,
+      "scope": "Packet formatting illustration only, not production workflow or app"
+    }
+  ],
+  "passed": 20,
+  "failed": 0,
+  "authored_instruction_word_count": 7987,
+  "complete_word_count": 9458
+}

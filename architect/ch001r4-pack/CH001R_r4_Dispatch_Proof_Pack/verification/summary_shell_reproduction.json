@@ -1,0 +1,7 @@
+{
+  "kind": "ISOLATED_SHELL_REPRODUCTION_NOT_APPLICATION_TEST",
+  "source": "T3 workflow summary excerpt; synthetic run identifier; no workflow dispatched",
+  "exit_code": 0,
+  "stdout": "Implementation: \nRun: \nCoordinator exit: \nApplication acceptance: \n",
+  "stderr": "bash: line 5: 0b79ed07a25a618ab4da2bf56a2fed6047398cb5: command not found\nbash: line 6: r3-example-1: command not found\nbash: line 7: 0: command not found\n"
+}

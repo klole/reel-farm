@@ -1,0 +1,19 @@
+{
+  "packet_id": "CH-001R-r4",
+  "packet_status": "COMPLETE",
+  "next_action": "SAVE_PACKET_AND_START_LUNA_MAX",
+  "repository": "klole/reel-farm",
+  "reviewed_main_sha": "4cf020317cfc2e8755f35ee6da10f7397c8676f2",
+  "effort": "MAX",
+  "entrypoint": "LUNA_START_PROMPT.md",
+  "application_acceptance": false,
+  "root_state": "awaiting_review",
+  "accepted_application_version": "none",
+  "router_only_actions": [
+    "workflow-capable publication",
+    "manual fresh T4 dispatch"
+  ],
+  "implementation_commit": null,
+  "evidence_commit": null,
+  "new_run_id": null
+}

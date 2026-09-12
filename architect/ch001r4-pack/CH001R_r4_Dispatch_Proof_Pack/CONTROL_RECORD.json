@@ -1,0 +1,76 @@
+{
+  "record_kind": "ARCHITECT_OPERATIONAL_PACKET_NOT_TEST_EVIDENCE",
+  "packet": "CH-001R-r4",
+  "target_application_version": "0.1.0",
+  "application_accepted": false,
+  "root_state": "awaiting_review",
+  "accepted_version": null,
+  "input_handoff_status": "NEEDS_WORKFLOW_DISPATCH",
+  "immediate_prerequisite": "PUBLISH_REVIEWED_WORKFLOW_ON_DEFAULT_BRANCH",
+  "repository": "klole/reel-farm",
+  "snapshot": {
+    "main_sha": "a5afe2d8d1bc7741a0276513f3f1111d3ff587ae",
+    "t3_readable_by_sha": true,
+    "e3_readable_by_sha": true,
+    "workflow_present_at_observed_main": false,
+    "workflow_dispatch_run_count_returned": 0,
+    "snapshot_not_permanent": true
+  },
+  "identities": {
+    "implementation_sha": "0b79ed07a25a618ab4da2bf56a2fed6047398cb5",
+    "evidence_sha": "4cf020317cfc2e8755f35ee6da10f7397c8676f2",
+    "implementation_parent": "a5afe2d8d1bc7741a0276513f3f1111d3ff587ae",
+    "packet_base": "04b85402c03404fc9f707983594cb796525f6563",
+    "implementation_tree": "2852c9a96595e9aca234aa30f449ec615a4b43bd",
+    "workflow_path": ".github/workflows/ch001-live-proof.yml",
+    "workflow_git_blob": "4a1b045e4771901713a2ad00705a0a84c9ff1dab",
+    "workflow_recorded_sha256": "c94526b66f6f21f2d4228491854f8df1e2b666796816f3d3b18e7da6c8313f1d"
+  },
+  "reported_local_results": {
+    "source": "E3 handoff; not independently rerun",
+    "run_id": "r3-local-t3-preflight",
+    "status": "BLOCKED_ENVIRONMENT",
+    "exit_code": 2,
+    "unit_tests_passed": 20,
+    "security_tests_passed": 4,
+    "gates": {
+      "PASS": 4,
+      "FAIL": 0,
+      "NOT_RUN": 68
+    },
+    "pass_ids": [
+      "CH001-067",
+      "CH001-068",
+      "CH001-069",
+      "CH001-072"
+    ]
+  },
+  "new_hosted_evidence": {
+    "workflow_definition_sha": null,
+    "github_run_id": null,
+    "run_attempt": null,
+    "job_ids": [],
+    "artifact_ids": [],
+    "coordinator_exit_code": null,
+    "application_tests_executed_by_packet_author": false
+  },
+  "authority": {
+    "frozen_implementation": true,
+    "product_code_changes_allowed": false,
+    "workflow_changes_allowed": false,
+    "initial_dispatch_limit": 1,
+    "reuse_existing_matching_run_first": true,
+    "force_push_allowed": false,
+    "credential_escalation_by_agent_allowed": false,
+    "provider_calls_allowed": false,
+    "public_deployment_allowed": false,
+    "v0_2_work_allowed": false,
+    "bounded_proof_is_full_acceptance": false
+  },
+  "known_reporting_defect": {
+    "description": "Unescaped shell backticks in workflow summary echo arguments",
+    "isolated_reproduction": "verification/summary_shell_reproduction.json",
+    "application_runtime_reproduced": false,
+    "block_first_diagnostic_dispatch": false
+  }
+}
