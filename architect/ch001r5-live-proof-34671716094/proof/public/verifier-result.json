@@ -1,0 +1,12 @@
+{
+  "ok": false,
+  "strict_acceptance": false,
+  "report": "artifacts/ch001r4/r4-34671716094-1/proof/public/gate-results.json",
+  "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+  "run_id": "r4-34671716094-1",
+  "gate_counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NOT_RUN": 68
+  }
+}

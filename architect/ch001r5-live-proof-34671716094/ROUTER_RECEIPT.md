@@ -1,0 +1,22 @@
+# Router receipt — CH-001R-r5 live proof
+
+- Run: https://github.com/klole/reel-farm/actions/runs/34671716094
+- Attempt: 1
+- Job: 103494183389
+- Artifact: `ch001-live-proof-34671716094-1` id `10290953048`
+- Artifact ZIP SHA-256: `89d18eebcbd629c7a504151c85a558610039052447baf21d82d00595227f96bb`
+- Artifact bytes: 50693
+- Requested implementation_sha (T5): `6849b39f4e3c7a03b5f132418b1d33cc84c98d51`
+- Actual checkout: `6849b39f4e3c7a03b5f132418b1d33cc84c98d51`
+- Workflow definition on dispatch head: `a27bb4bbae78cd618e2ccf6c14a6593df7f83554` (E5)
+- Workflow blob: `50774746e3ead4922b265af6652a942302743062`
+- Bootstrap: PASS
+- Proof invoked: true
+- Proof exit: 2
+- CI classification: `BLOCKED_ENVIRONMENT`
+- Proof status: `BLOCKED_ENVIRONMENT`
+- Gate counts: {'PASS': 4, 'FAIL': 0, 'NOT_RUN': 68}
+- application_acceptance: false
+- Old nonempty evidence-dir collision: **resolved** (prepareRun succeeded; proof ran)
+- Hosted blocker: pinned Chromium sandboxed launch failed on GitHub-hosted runner (AppArmor/userns). Docker/Compose available. Compose lifecycle NOT_RUN because browser prerequisite failed.
+- Do not rerun T3/T4; do not claim v0.1 acceptance.

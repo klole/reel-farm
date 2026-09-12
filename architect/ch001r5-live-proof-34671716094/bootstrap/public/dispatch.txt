@@ -1,0 +1,5 @@
+Bounded CH-001R-r4 live proof; not v0.1 acceptance.
+Implementation: 6849b39f4e3c7a03b5f132418b1d33cc84c98d51
+Workflow definition: a27bb4bbae78cd618e2ccf6c14a6593df7f83554
+Workflow blob: 50774746e3ead4922b265af6652a942302743062
+Run: r4-34671716094-1

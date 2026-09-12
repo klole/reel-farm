@@ -1,0 +1,9 @@
+{
+  "profile": "CH-001R-r3 bounded live proof",
+  "run_id": "r4-34671716094-1",
+  "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+  "workflow_sha": "a27bb4bbae78cd618e2ccf6c14a6593df7f83554",
+  "compose_project": "oss-ch001-r4-34671716094-1",
+  "base_url": "http://127.0.0.1:40549",
+  "scope": "local synthetic owner, local synthetic image fixtures, no providers or publishing"
+}

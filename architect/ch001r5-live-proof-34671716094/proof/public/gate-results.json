@@ -1,0 +1,750 @@
+{
+  "chapter": "CH-001R-r3",
+  "target_application_version": "0.1.0",
+  "report_kind": "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE",
+  "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+  "evidence_commit": null,
+  "generatedAt": "2026-09-12T03:58:41.437Z",
+  "commands": [
+    {
+      "command": "docker version --format {{.Server.Version}}",
+      "startedAt": "2026-09-12T03:58:09.275Z",
+      "endedAt": "2026-09-12T03:58:09.291Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/001-docker-version.log"
+    },
+    {
+      "command": "docker info --format {{.ServerVersion}}",
+      "startedAt": "2026-09-12T03:58:09.292Z",
+      "endedAt": "2026-09-12T03:58:09.347Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/002-docker-info.log"
+    },
+    {
+      "command": "docker compose version --short",
+      "startedAt": "2026-09-12T03:58:09.348Z",
+      "endedAt": "2026-09-12T03:58:09.402Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/003-compose-version.log"
+    },
+    {
+      "command": "pnpm lint",
+      "startedAt": "2026-09-12T03:58:09.890Z",
+      "endedAt": "2026-09-12T03:58:11.868Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/004-host-lint.log"
+    },
+    {
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-12T03:58:11.869Z",
+      "endedAt": "2026-09-12T03:58:19.706Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/005-host-typecheck.log"
+    },
+    {
+      "command": "pnpm build",
+      "startedAt": "2026-09-12T03:58:19.707Z",
+      "endedAt": "2026-09-12T03:58:39.385Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/006-host-build.log"
+    },
+    {
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-12T03:58:39.386Z",
+      "endedAt": "2026-09-12T03:58:40.962Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/007-host-unit.log",
+      "reportPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/unit-results.json"
+    },
+    {
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-12T03:58:40.964Z",
+      "endedAt": "2026-09-12T03:58:41.409Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/008-host-security.log",
+      "reportPath": "artifacts/ch001r4/r4-34671716094-1/proof/public/security-results.json"
+    }
+  ],
+  "suites": [
+    {
+      "suite": "smoke",
+      "command": "pnpm proof:ch001 (owned Compose smoke/lifecycle)",
+      "run_id": "r4-34671716094-1",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "started_at": "2026-09-12T03:58:09.257Z",
+      "ended_at": "2026-09-12T03:58:41.413Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/smoke-results.json",
+      "log_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/compose.log"
+    },
+    {
+      "suite": "integration",
+      "command": "pnpm test:integration",
+      "run_id": "r4-34671716094-1",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "started_at": "2026-09-12T03:58:09.257Z",
+      "ended_at": "2026-09-12T03:58:41.414Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-integration.json",
+      "log_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-integration-unavailable.log",
+      "unavailable_reason": "Pinned Chromium could not launch with sandbox: browserType.launch: Target page, context or browser has been closed\nBrowser logs:\nChromium sandboxing failed!\n================================\nTo avoid the sandboxing issue, do either of the following:\n  - (preferred): Configure your environment to support sandboxing\n  - (alternative): Launch Chromium without sandbox using 'chromiumSandbox: false' option\n================================\n\nCall log:\n  - <launching> /home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --user-data-dir=/tmp/playwright_chromiumdev_profile-J94gOn --remote-debugging-pipe --no-startup-window\n  - <launched> pid=3283\n  - [pid=3283][err] [3283:3283:0912/035809.723526:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n  - [pid=3283][err] Received signal 6\n  - [pid=3283][err] #0 0x5561c7dc4bc3 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n  - [pid=3283][err] #1 0x5561cca8a494 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n  - [pid=3283][err] #2 0x7f8b4ac45330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n  - [pid=3283][err] #3 0x7f8b4ac4527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n  - [pid=3283][err] #4 0x7f8b4ac288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n  - [pid=3283][err] #5 0x5561cca81385 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n  - [pid=3283][err] #6 0x5561cca4114d (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n  - [pid=3283][err] #7 0x5561cca410de (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n  - [pid=3283][err] #8 0x5561c7b8b603 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n  - [pid=3283][err] #9 0x5561c68241f9 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n  - [pid=3283][err] #10 0x5561c7c0728b (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n  - [pid=3283][err] #11 0x5561cbcdfd01 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n  - [pid=3283][err] #12 0x5561c72f8687 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n  - [pid=3283][err] #13 0x5561c72f7b00 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n  - [pid=3283][err] #14 0x7f8b4ac2a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n  - [pid=3283][err] #15 0x7f8b4ac2a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n  - [pid=3283][err] #16 0x5561c808735a (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  - [pid=3283][err]   r8: 00001ef8000cc263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n  - [pid=3283][err]  r12: 0000000000000006 r13: 00001ef8000cc000 r14: 0000000000000016 r15: 00007ffda8b33a98\n  - [pid=3283][err]   di: 0000000000000cd3  si: 0000000000000cd3  bp: 00007ffda8b33410  bx: 0000000000000cd3\n  - [pid=3283][err]   dx: 0000000000000006  ax: 0000000000000000  cx: 00007f8b4ac9ec0c  sp: 00007ffda8b333d0\n  - [pid=3283][err]   ip: 00007f8b4ac9ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n  - [pid=3283][err]  trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n  - [pid=3283][err] [end of stack trace]\n  - [pid=3283] <gracefully close start>\n  - [pid=3283] <kill>\n  - [pid=3283] <will force kill>\n  - [pid=3283] <process did exit: exitCode=null, signal=SIGABRT>\n  - [pid=3283] starting temporary directories cleanup\n  - [pid=3283] finished temporary directories cleanup\n  - [pid=3283] <gracefully close end>\n Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    {
+      "suite": "e2e",
+      "command": "pnpm test:e2e",
+      "run_id": "r4-34671716094-1",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "started_at": "2026-09-12T03:58:09.257Z",
+      "ended_at": "2026-09-12T03:58:41.415Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-e2e.json",
+      "log_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-e2e-unavailable.log",
+      "unavailable_reason": "Pinned Chromium could not launch with sandbox: browserType.launch: Target page, context or browser has been closed\nBrowser logs:\nChromium sandboxing failed!\n================================\nTo avoid the sandboxing issue, do either of the following:\n  - (preferred): Configure your environment to support sandboxing\n  - (alternative): Launch Chromium without sandbox using 'chromiumSandbox: false' option\n================================\n\nCall log:\n  - <launching> /home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --user-data-dir=/tmp/playwright_chromiumdev_profile-J94gOn --remote-debugging-pipe --no-startup-window\n  - <launched> pid=3283\n  - [pid=3283][err] [3283:3283:0912/035809.723526:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n  - [pid=3283][err] Received signal 6\n  - [pid=3283][err] #0 0x5561c7dc4bc3 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n  - [pid=3283][err] #1 0x5561cca8a494 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n  - [pid=3283][err] #2 0x7f8b4ac45330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n  - [pid=3283][err] #3 0x7f8b4ac4527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n  - [pid=3283][err] #4 0x7f8b4ac288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n  - [pid=3283][err] #5 0x5561cca81385 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n  - [pid=3283][err] #6 0x5561cca4114d (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n  - [pid=3283][err] #7 0x5561cca410de (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n  - [pid=3283][err] #8 0x5561c7b8b603 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n  - [pid=3283][err] #9 0x5561c68241f9 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n  - [pid=3283][err] #10 0x5561c7c0728b (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n  - [pid=3283][err] #11 0x5561cbcdfd01 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n  - [pid=3283][err] #12 0x5561c72f8687 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n  - [pid=3283][err] #13 0x5561c72f7b00 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n  - [pid=3283][err] #14 0x7f8b4ac2a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n  - [pid=3283][err] #15 0x7f8b4ac2a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n  - [pid=3283][err] #16 0x5561c808735a (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  - [pid=3283][err]   r8: 00001ef8000cc263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n  - [pid=3283][err]  r12: 0000000000000006 r13: 00001ef8000cc000 r14: 0000000000000016 r15: 00007ffda8b33a98\n  - [pid=3283][err]   di: 0000000000000cd3  si: 0000000000000cd3  bp: 00007ffda8b33410  bx: 0000000000000cd3\n  - [pid=3283][err]   dx: 0000000000000006  ax: 0000000000000000  cx: 00007f8b4ac9ec0c  sp: 00007ffda8b333d0\n  - [pid=3283][err]   ip: 00007f8b4ac9ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n  - [pid=3283][err]  trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n  - [pid=3283][err] [end of stack trace]\n  - [pid=3283] <gracefully close start>\n  - [pid=3283] <kill>\n  - [pid=3283] <will force kill>\n  - [pid=3283] <process did exit: exitCode=null, signal=SIGABRT>\n  - [pid=3283] starting temporary directories cleanup\n  - [pid=3283] finished temporary directories cleanup\n  - [pid=3283] <gracefully close end>\n Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    {
+      "suite": "render",
+      "command": "pnpm test:render",
+      "run_id": "r4-34671716094-1",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "started_at": "2026-09-12T03:58:09.257Z",
+      "ended_at": "2026-09-12T03:58:41.416Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-render.json",
+      "log_path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-render-unavailable.log",
+      "unavailable_reason": "Pinned Chromium could not launch with sandbox: browserType.launch: Target page, context or browser has been closed\nBrowser logs:\nChromium sandboxing failed!\n================================\nTo avoid the sandboxing issue, do either of the following:\n  - (preferred): Configure your environment to support sandboxing\n  - (alternative): Launch Chromium without sandbox using 'chromiumSandbox: false' option\n================================\n\nCall log:\n  - <launching> /home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --user-data-dir=/tmp/playwright_chromiumdev_profile-J94gOn --remote-debugging-pipe --no-startup-window\n  - <launched> pid=3283\n  - [pid=3283][err] [3283:3283:0912/035809.723526:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n  - [pid=3283][err] Received signal 6\n  - [pid=3283][err] #0 0x5561c7dc4bc3 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n  - [pid=3283][err] #1 0x5561cca8a494 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n  - [pid=3283][err] #2 0x7f8b4ac45330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n  - [pid=3283][err] #3 0x7f8b4ac4527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n  - [pid=3283][err] #4 0x7f8b4ac288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n  - [pid=3283][err] #5 0x5561cca81385 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n  - [pid=3283][err] #6 0x5561cca4114d (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n  - [pid=3283][err] #7 0x5561cca410de (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n  - [pid=3283][err] #8 0x5561c7b8b603 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n  - [pid=3283][err] #9 0x5561c68241f9 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n  - [pid=3283][err] #10 0x5561c7c0728b (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n  - [pid=3283][err] #11 0x5561cbcdfd01 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n  - [pid=3283][err] #12 0x5561c72f8687 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n  - [pid=3283][err] #13 0x5561c72f7b00 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n  - [pid=3283][err] #14 0x7f8b4ac2a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n  - [pid=3283][err] #15 0x7f8b4ac2a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n  - [pid=3283][err] #16 0x5561c808735a (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  - [pid=3283][err]   r8: 00001ef8000cc263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n  - [pid=3283][err]  r12: 0000000000000006 r13: 00001ef8000cc000 r14: 0000000000000016 r15: 00007ffda8b33a98\n  - [pid=3283][err]   di: 0000000000000cd3  si: 0000000000000cd3  bp: 00007ffda8b33410  bx: 0000000000000cd3\n  - [pid=3283][err]   dx: 0000000000000006  ax: 0000000000000000  cx: 00007f8b4ac9ec0c  sp: 00007ffda8b333d0\n  - [pid=3283][err]   ip: 00007f8b4ac9ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n  - [pid=3283][err]  trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n  - [pid=3283][err] [end of stack trace]\n  - [pid=3283] <gracefully close start>\n  - [pid=3283] <kill>\n  - [pid=3283] <will force kill>\n  - [pid=3283] <process did exit: exitCode=null, signal=SIGABRT>\n  - [pid=3283] starting temporary directories cleanup\n  - [pid=3283] finished temporary directories cleanup\n  - [pid=3283] <gracefully close end>\n Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CH001-001",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-002",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-003",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-004",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-005",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-006",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-007",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-008",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-009",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-010",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-011",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-012",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-013",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-014",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-015",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-016",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-017",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-018",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-019",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-020",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-021",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-022",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-023",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-024",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-025",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-026",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-027",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-028",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-029",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-030",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-031",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-032",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-033",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-034",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-035",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-036",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-037",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-038",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-039",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-040",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-041",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-042",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-043",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-044",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-045",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-046",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-047",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-048",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-049",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-050",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-051",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-052",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-053",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-054",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-055",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-056",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-057",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-058",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-059",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-060",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-061",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-062",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-063",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-064",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-065",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-066",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-067",
+      "status": "PASS",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/source-review.md",
+          "sha256": "0eebcff4ae5640fde55afcfe2316cb3e10a03762220815c02634720a8b9a8d05",
+          "kind": "E1",
+          "reference": "source-review:ch001r3",
+          "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r3 source review."
+    },
+    {
+      "id": "CH001-068",
+      "status": "PASS",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/source-review.md",
+          "sha256": "0eebcff4ae5640fde55afcfe2316cb3e10a03762220815c02634720a8b9a8d05",
+          "kind": "E1",
+          "reference": "source-review:ch001r3",
+          "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r3 source review."
+    },
+    {
+      "id": "CH001-069",
+      "status": "PASS",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/source-review.md",
+          "sha256": "0eebcff4ae5640fde55afcfe2316cb3e10a03762220815c02634720a8b9a8d05",
+          "kind": "E1",
+          "reference": "source-review:ch001r3",
+          "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r3 source review."
+    },
+    {
+      "id": "CH001-070",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-071",
+      "status": "NOT_RUN",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r3 live-proof profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-072",
+      "status": "PASS",
+      "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/source-review.md",
+          "sha256": "0eebcff4ae5640fde55afcfe2316cb3e10a03762220815c02634720a8b9a8d05",
+          "kind": "E1",
+          "reference": "source-review:ch001r3",
+          "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r3 source review."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R01",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R02",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R03",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R04",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R05",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R06",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R07",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R08",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R09",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R10",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R11",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    }
+  ],
+  "artifact_manifest": {
+    "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/artifact-manifest.json",
+    "sha256": "71fc73aa83ae009c3306b6245f567da16cee67491c15cb478702912013fcc7dc",
+    "kind": "E1",
+    "reference": "aggregate:artifact-manifest",
+    "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51"
+  }
+}

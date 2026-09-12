@@ -1,0 +1,17 @@
+{
+  "run_id": "r4-34671716094-1",
+  "status": "sanitized",
+  "redactions": [
+    "synthetic bootstrap token",
+    "synthetic auth secret",
+    "synthetic owner password",
+    "PostgreSQL connection strings"
+  ],
+  "excluded": [
+    "private/",
+    "*.env",
+    "cookies",
+    "auth storage state"
+  ],
+  "public_root": "artifacts/ch001r4/r4-34671716094-1/proof/public"
+}

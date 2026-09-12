@@ -1,0 +1,133 @@
+{
+  "run_id": "r4-34671716094-1",
+  "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+  "status": "LIVE_PROOF_INCOMPLETE",
+  "files": [
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/command-report.json",
+      "sha256": "eca9954e147dc6d828fdbf289f193adb9fa1dd1e5f1df807ae06a6eab5cf8d5f",
+      "bytes": 24013
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/001-docker-version.log",
+      "sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d",
+      "bytes": 7
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/002-docker-info.log",
+      "sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d",
+      "bytes": 7
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/003-compose-version.log",
+      "sha256": "278ec87a75ab3da08b3b34c6d9e678df7a3c71298d2f3ea3880f078e1b71b1e3",
+      "bytes": 7
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/004-host-lint.log",
+      "sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1",
+      "bytes": 11
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/005-host-typecheck.log",
+      "sha256": "f6e04c1d444f9763504feca2dbbdf170e0f84adc9fd976d9e449a6146b533b4f",
+      "bytes": 62
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/006-host-build.log",
+      "sha256": "7eb5ab6af36bf52b9ac737e8490e7ccc1b128e3f5f499cf95e9b6b23afdd258e",
+      "bytes": 2154
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/007-host-unit.log",
+      "sha256": "6c5bb6b72176c51b096893ecda3857b65f104fb7c652f34143c5d4406a6d7280",
+      "bytes": 842
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/008-host-security.log",
+      "sha256": "fbacb67b984153a52bef18b58b69448588165f0687eafcafac6322352c4c41be",
+      "bytes": 639
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/commands/compose.log",
+      "sha256": "f3663014902590b2b6210e548f27ea03e0e70f4b1f3d50bf938a79ae265a3e3f",
+      "bytes": 58
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/dispatch.json",
+      "sha256": "19cb9ac40623476af6bb4edde0505a8d3da19cfd1938f5bc917e6383a2252664",
+      "bytes": 401
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/environment.json",
+      "sha256": "a5a06feb0268b72844c9d74ec632e96323c5ad6e38d793815fa6edd684e54697",
+      "bytes": 7440
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/finding-dispositions.json",
+      "sha256": "7be3ce3eda661522209fb59b30eae2c0f77a2c5fd8a83f0048eace9001952e0b",
+      "bytes": 4423
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/sanitization.json",
+      "sha256": "6eb18d043890339d376d7239c652800656a03bf98ebff8383b8d7b2cbe3be48e",
+      "bytes": 371
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/security-results.json",
+      "sha256": "60c7d6a0a92d94413b079f62745ecca390b94d716133844b37dc93aaf9e1d8de",
+      "bytes": 2140
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/smoke-results.json",
+      "sha256": "f2d91a706e3f4a076e26a3eb90ac24f338d151ac66f54dff7fb9dda9189261fd",
+      "bytes": 165
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/source-review.md",
+      "sha256": "0eebcff4ae5640fde55afcfe2316cb3e10a03762220815c02634720a8b9a8d05",
+      "bytes": 780
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-e2e-unavailable.log",
+      "sha256": "bb252c4de10f05f0529334c47e0fca23cbb6551c782d2612f1ab1b28223b7ebd",
+      "bytes": 5804
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-e2e.json",
+      "sha256": "859a1561c36356a6874473d717f0c1effaca133f4502ac554610bbdfdaf4ded0",
+      "bytes": 6381
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-integration-unavailable.log",
+      "sha256": "bb252c4de10f05f0529334c47e0fca23cbb6551c782d2612f1ab1b28223b7ebd",
+      "bytes": 5804
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-integration.json",
+      "sha256": "fa080d1973e69677db82474434d6c24ead6f44f9889f29a9f3c42c99ef7f5714",
+      "bytes": 6413
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-render-unavailable.log",
+      "sha256": "bb252c4de10f05f0529334c47e0fca23cbb6551c782d2612f1ab1b28223b7ebd",
+      "bytes": 5804
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-render.json",
+      "sha256": "44720eedd4cbbadfbcf3d6cf37ac58d099e61efe2ea9684bf64e53ef5cbd824f",
+      "bytes": 6393
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/suite-smoke.json",
+      "sha256": "4ae0eba3fa47e6b735b4fa632d91da9cca9334240d13758ddf4ad9465904592d",
+      "bytes": 550
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34671716094-1/proof/public/unit-results.json",
+      "sha256": "079497c65ac230c52358f87a751140fd67ebfaf2b63b66a43cea6cd9cd39ce1c",
+      "bytes": 7226
+    }
+  ],
+  "exclusion": "private raw logs, env files, credentials, cookies, auth storage, gate-results.json, proof-result.json, verifier-result.json and manifest self-reference are excluded"
+}
