@@ -1,0 +1,92 @@
+{
+  "record_kind": "ARCHITECT_HISTORICAL_ARTIFACT_INSPECTION",
+  "repository": "klole/reel-farm",
+  "run_id": 34678495442,
+  "attempt": 1,
+  "job_id": 103512556268,
+  "T7": "6b02857401a9b1e81e1bd36d5a4418f90903adcb",
+  "T7_tree": "fdbe7da15964659d4e2514580f6606f5731790ce",
+  "E7_and_workflow_definition": "6e4f9b3d288b7177ebfc8b49ff3c833610640060",
+  "workflow_blob": "2070e80be5355537631a7b2cf833eeb0a6cf28cb",
+  "workflow_sha256": "98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51",
+  "artifact_id": 10293345418,
+  "artifact_name": "ch001-live-proof-34678495442-1",
+  "bytes": 7505,
+  "sha256": "c623cdbadeee57182434cc360c8a098bac56a1ad0db0cdc17219c837b3c7c37a",
+  "github_digest_matches": true,
+  "zip_crc_valid": true,
+  "expires_at_as_reported_by_GitHub": "2026-09-26T06:34:59Z",
+  "files": [
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34678495442-1/bootstrap/public/ci-result.json",
+      "bytes": 1344,
+      "sha256": "8b646f8a4c910ea530e95c4ebda6ee130b1e277f0076dd90153cd2acab4641e9"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34678495442-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 9305,
+      "sha256": "d516c22affbb19061ec67311d97d9d92a34898bbd2942959f49b6fe8622511ad"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34678495442-1/bootstrap/public/commands/ci-helper-regressions.log",
+      "bytes": 6001,
+      "sha256": "a5c2acb2d72e0235af02e8d6921596a3acf4860f1c9f9f7f9641c7100136dd9c"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34678495442-1/bootstrap/public/commands/sandbox-cleanup.log",
+      "bytes": 53,
+      "sha256": "7a061ed3fbc0f807e57447d18c1b82d4fc9cbd49da0256717d14192ad7fe1b4e"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34678495442-1/bootstrap/public/dispatch.txt",
+      "bytes": 249,
+      "sha256": "dd4e444e778e3e85d2b1831639668a1eea66320f4261fc8894f7b406410e10ef"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34678495442-1/bootstrap/public/sandbox-qualification.json",
+      "bytes": 2697,
+      "sha256": "f356af3870733a3de305d31bd248a361dcf2a66a66160b9f873ae3bd52064697"
+    },
+    {
+      "path": "_temp/ch001r4/r4-34678495442-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 689,
+      "sha256": "4a33233435063aec5d59b8644f74189368e8757981676b70f438d473bad20276"
+    },
+    {
+      "path": "_temp/ch001r4/r4-34678495442-1/bootstrap/public/dispatch.txt",
+      "bytes": 193,
+      "sha256": "83a4b82ecafd090625edb12ad5347e28adaa26cd7ea4cfd8523ec95ca1e0fa89"
+    }
+  ],
+  "classification": "CI_BOOTSTRAP_FAILURE",
+  "primary_stage": "ci-helper-regressions",
+  "bootstrap_exit_code": 1,
+  "proof_invoked": false,
+  "proof_exit_code": null,
+  "hosted_application_gate_counts": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "ci_helper_counts_from_downloaded_job_log": {
+    "tests": 50,
+    "pass": 45,
+    "fail": 5,
+    "skipped": 0
+  },
+  "failing_case_ids_from_job_log": [
+    "R7-T01",
+    "R7-T02",
+    "R7-T03",
+    "R7-T04",
+    "R7-T07"
+  ],
+  "counts_source": "GitHub job log read via connector, not independently rerun by architect",
+  "sandbox_qualification_stage": "SKIPPED",
+  "cleanup_observation": "no owned policy record; not a policy-removal qualification",
+  "artifact_delivery_note": "Archived CI report predates upload receipt and retains PENDING. Independent GitHub artifact metadata and downloaded digest prove delivery; original bytes remain unchanged.",
+  "review_environment_limits": [
+    "No repository/application test suite run by architect",
+    "No live-proof workflow dispatch",
+    "No AppArmor policy operation",
+    "Container GitHub DNS unavailable; no real actionlint installation/validation performed here"
+  ]
+}

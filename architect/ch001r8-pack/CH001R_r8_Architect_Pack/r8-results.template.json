@@ -1,0 +1,109 @@
+{
+  "record_kind": "R8_RESULTS_TEMPLATE_NOT_EXECUTED",
+  "phase": "CH-001R-r8",
+  "base": null,
+  "T8": null,
+  "E8": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "checks": [
+    {
+      "id": "R8-T01",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T02",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T03",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T04",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T05",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T06",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T07",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T08",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T09",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T10",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T11",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T12",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T13",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "R8-T14",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "record_kind": "DOCUMENT_AND_HISTORICAL_ARTIFACT_CHECKS_ONLY",
+  "application_tests_executed": false,
+  "actionlint_executed": false,
+  "hosted_workflow_dispatched": false,
+  "checks": [
+    {
+      "name": "required_files",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "all_json_parses",
+      "result": "PASS",
+      "details": "7 files"
+    },
+    {
+      "name": "historical_zip_hash_size",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "historical_zip_crc_inventory",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "extracted_payload_hashes",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "no_historical_proof_invented",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "all_14_repair_ids",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "template_has_no_pass_claims",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "acceptance_false",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "standalone_copy_identical",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "local_markdown_links",
+      "result": "PASS",
+      "details": "[]"
+    },
+    {
+      "name": "five_isolated_diagnostics_repeated",
+      "result": "PASS",
+      "details": "Node v22.16.0 isolated reference; not application tests"
+    },
+    {
+      "name": "scope_and_both_fixes",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "dispatch_and_no_rerun",
+      "result": "PASS",
+      "details": ""
+    },
+    {
+      "name": "no_font_files",
+      "result": "PASS",
+      "details": ""
+    }
+  ],
+  "passed": 15,
+  "failed": 0
+}

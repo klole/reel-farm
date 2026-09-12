@@ -1,0 +1,51 @@
+{
+  "kind": "ARCHITECT_ISOLATED_ENVIRONMENT_DIAGNOSTIC",
+  "node": "v22.16.0",
+  "platform": "linux",
+  "initializer_git_blob": "0e4dd049b5a7d77382ae05cd0a3710812d184b87",
+  "repository_tests_executed": false,
+  "hosted_proof_executed": false,
+  "application_acceptance": false,
+  "results": [
+    {
+      "case": "RUNNER_TEMP/t7-remerge",
+      "diagnostic_assertions": "PASS",
+      "helper_exit": 0,
+      "deleted_key_reintroduced": true,
+      "synthetic_parent_env_modified": false,
+      "synthetic_fixture_env_modified": true
+    },
+    {
+      "case": "RUNNER_TEMP/exact-environment",
+      "diagnostic_assertions": "PASS",
+      "helper_exit": 1,
+      "deleted_key_reintroduced": false,
+      "synthetic_parent_env_modified": false,
+      "synthetic_fixture_env_modified": false
+    },
+    {
+      "case": "GITHUB_ENV/t7-remerge",
+      "diagnostic_assertions": "PASS",
+      "helper_exit": 0,
+      "deleted_key_reintroduced": true,
+      "synthetic_parent_env_modified": true,
+      "synthetic_fixture_env_modified": false
+    },
+    {
+      "case": "GITHUB_ENV/exact-environment",
+      "diagnostic_assertions": "PASS",
+      "helper_exit": 1,
+      "deleted_key_reintroduced": false,
+      "synthetic_parent_env_modified": false,
+      "synthetic_fixture_env_modified": false
+    },
+    {
+      "case": "exact-environment/positive-literal-path",
+      "diagnostic_assertions": "PASS",
+      "helper_exit": 0,
+      "created_state_directory": false
+    }
+  ],
+  "passed": 5,
+  "failed": 0
+}
