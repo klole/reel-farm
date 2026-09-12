@@ -1,0 +1,53 @@
+CH-001R-r8 final T8 command record
+Recorded: 2026-09-12 UTC
+Implementation: 0144f6c41ae4c6143a2dc46fe22d59d453ce8763
+Implementation tree: f16f32465b37439774369ddf002a22063c104088
+Workflow blob: fb4d3e4ee58eff81e43395fa6df99c53b65de417
+Workflow SHA-256: 0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c
+
+Historical hosted observation (read from the P8 packet; not rerun):
+  run=34678495442 attempt=1 job=103512556268 checkout=T7
+  node-tests=50 pass=45 fail=5 skipped=0 proof_invoked=false
+  classification=CI_BOOTSTRAP_FAILURE primary_stage=ci-helper-regressions
+
+Pinned prerequisites:
+  node --check scripts/ci/actionlint-bootstrap.mjs                                      exit=0
+  node --check scripts/ci/ci-result.mjs                                                  exit=0
+  node --check tests/ci/actionlint-bootstrap.test.mjs                                    exit=0
+  node --check tests/ci/workflow-validation.test.mjs                                    exit=0
+  node --check tests/ci/ci-repair.test.mjs                                              exit=0
+  bash -n scripts/ci/initialize-sandbox-state.sh                                         exit=0
+  actionlint bootstrap clean prefix run=800000016 started=2026-09-12T07:42:14.525Z ended=2026-09-12T07:42:14.960Z exit=0
+  actionlint bootstrap hosted-like prefix run=800000017 started=2026-09-12T07:42:48.519Z ended=2026-09-12T07:42:49.024Z exit=0
+  actionlint archive_sha256=023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+  actionlint executable_sha256=9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c
+  actionlint version=1.7.7 platform=linux/amd64
+
+Final timestamped scoped command run (UTC; each command used project-pinned pnpm where applicable):
+  2026-09-12T07:44:52Z..2026-09-12T07:44:52Z  pnpm install --frozen-lockfile --reporter=silent  exit=0
+  2026-09-12T07:44:52Z..2026-09-12T07:44:52Z  pnpm lint:workflow  exit=0
+  2026-09-12T07:44:52Z..2026-09-12T07:44:54Z  pnpm test:ci  exit=0; file_tests=5 pass=5 fail=0 skipped=0
+  2026-09-12T07:44:54Z..2026-09-12T07:44:56Z  pnpm lint  exit=0
+  2026-09-12T07:44:56Z..2026-09-12T07:44:58Z  pnpm typecheck  exit=0
+  2026-09-12T07:44:58Z..2026-09-12T07:45:13Z  pnpm build  exit=0
+  2026-09-12T07:45:13Z..2026-09-12T07:45:14Z  pnpm test:unit  exit=0; files=3 pass=3 tests=20 pass=20
+  2026-09-12T07:45:14Z..2026-09-12T07:45:15Z  pnpm test:security  exit=0; files=1 pass=1 tests=4 pass=4
+  2026-09-12T07:45:15Z..2026-09-12T07:45:15Z  git diff --check  exit=0
+
+Prefix sequence, run once per mode from an env -i shell with an independent checkout:
+  test exact HEAD/tree; test no node_modules; test node --version=v20.19.2
+  node scripts/ci/actionlint-bootstrap.mjs --report <prefix-evidence>/actionlint-bootstrap.json --print-bin
+  export ACTIONLINT_BIN=<reported absolute executable>
+  node scripts/ci/lint-workflow.mjs
+  node --test tests/ci
+  compare command-file sentinels; only GITHUB_ENV may change
+  clean mode: RUNNER_TEMP=<clean runner>, run=800000016
+  hosted-like mode: RUNNER_TEMP=<hosted runner>, run=800000017, inherited CH001_SANDBOX_STATE_DIR
+
+Focused final test output:
+  workflow-validation.test.mjs: 13 tests, 13 pass, 0 fail, 0 skipped, exit=0
+  actionlint-bootstrap.test.mjs: 4 tests, 4 pass, 0 fail, 0 skipped, exit=0
+  ci-repair.test.mjs: 11 tests, 11 pass, 0 fail, 0 skipped, exit=0
+  each no-node_modules prefix: 58 tests, 58 pass, 0 fail, 0 skipped, exit=0
+
+No hosted workflow was rerun or dispatched.

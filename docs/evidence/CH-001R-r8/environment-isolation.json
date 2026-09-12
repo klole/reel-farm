@@ -1,0 +1,81 @@
+{
+  "record_kind": "CH001R_R8_ENVIRONMENT_ISOLATION",
+  "phase": "CH-001R-r8",
+  "test_command": "node tests/ci/workflow-validation.test.mjs",
+  "test_counts": {
+    "discovered": 13,
+    "executed": 13,
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0
+  },
+  "hosted_like_parent": {
+    "valid_parent_keys": [
+      "RUNNER_TEMP",
+      "GITHUB_ENV",
+      "GITHUB_PATH",
+      "GITHUB_STEP_SUMMARY",
+      "GITHUB_OUTPUT",
+      "GITHUB_RUN_ID",
+      "GITHUB_RUN_ATTEMPT",
+      "CH001_SANDBOX_STATE_DIR"
+    ],
+    "fixture_environment_is_exact_child_environment": true,
+    "process_environment_mutated": false
+  },
+  "cases": [
+    {
+      "id": "R8-T06",
+      "missing_key": "RUNNER_TEMP",
+      "child_observed_missing": true,
+      "child_observed_github_env_present": true,
+      "initializer_exit": "nonzero",
+      "fixture_env_byte_preserved": true,
+      "parent_env_byte_preserved": true
+    },
+    {
+      "id": "R8-T07",
+      "missing_key": "GITHUB_ENV",
+      "child_observed_missing": true,
+      "child_observed_runner_temp_present": true,
+      "initializer_exit": "nonzero",
+      "fixture_env_byte_preserved": true,
+      "parent_env_byte_preserved": true
+    },
+    {
+      "id": "R8-T08",
+      "invalid_inputs": [
+        "relative RUNNER_TEMP",
+        "newline RUNNER_TEMP",
+        "invalid GITHUB_RUN_ID",
+        "zero GITHUB_RUN_ATTEMPT",
+        "directory GITHUB_ENV target"
+      ],
+      "each_exit": "nonzero",
+      "fixture_and_parent_env_byte_preserved": true,
+      "literal_shell_looking_path_case": "PASS",
+      "proof_or_policy_tree_created": false
+    },
+    {
+      "id": "R8-T09",
+      "legacy_second_merge": "reproduced and caught",
+      "missing_keys_reintroduced_by_legacy_merge": ["RUNNER_TEMP", "GITHUB_ENV"],
+      "legacy_child_observed_keys_present": true,
+      "legacy_initializer_exit": 0,
+      "legacy_contamination": {
+        "missing_RUNNER_TEMP_wrote_fixture_env": true,
+        "missing_GITHUB_ENV_wrote_parent_env": true
+      }
+    },
+    {
+      "id": "R7-T05/R7-T08",
+      "run_owned_path_transfer_and_no_proof_policy_tree": "PASS",
+      "prior_evidence_preserved": true
+    }
+  ],
+  "command_files": {
+    "synthetic_parent_and_fixture_files": "unchanged in exact-environment cases",
+    "no_environment_file_sourced_or_evaluated": true
+  }
+}

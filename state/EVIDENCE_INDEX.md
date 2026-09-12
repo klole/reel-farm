@@ -77,3 +77,21 @@ This r6 continuation preserves all historical r5/original evidence. It keeps `ap
 | Handoff | [CH-001R-r7.md](../handoffs/CH-001R-r7.md) | Ready for router publication; application remains unaccepted |
 
 This r7 record changes only the bounded workflow validation/dispatch repair surface and evidence/state documentation. It does not replace original CH-001 gates or promote static validation to hosted runtime qualification or v0.1 acceptance.
+
+## CH-001R-r8 bounded CI helper and environment re-merge repair
+
+| Evidence | Location | State |
+|---|---|---|
+| T8 implementation/source identity | `0144f6c41ae4c6143a2dc46fe22d59d453ce8763` / tree `f16f32465b37439774369ddf002a22063c104088` | Local committed implementation; unpublished |
+| Actionlint prerequisite attestation | [actionlint-bootstrap.json](../docs/evidence/CH-001R-r8/actionlint-bootstrap.json) | Official Linux/amd64 v1.7.7 archive; archive/executable digests and version matched in both prefixes |
+| Current workflow validation | [workflow-validation.json](../docs/evidence/CH-001R-r8/workflow-validation.json) and [workflow-validation.log](../docs/evidence/CH-001R-r8/workflow-validation.log) | Real actionlint accepted the one current tracked workflow; semantic negative fixtures passed |
+| Clean prefix rehearsal | [clean-prefix.json](../docs/evidence/CH-001R-r8/clean-prefix.json) and [clean-prefix.log](../docs/evidence/CH-001R-r8/clean-prefix.log) | No `node_modules`; 58/58 CI tests passed; parent command-file sentinels preserved |
+| Hosted-like prefix rehearsal | [hosted-like-prefix.json](../docs/evidence/CH-001R-r8/hosted-like-prefix.json) and [hosted-like-prefix.log](../docs/evidence/CH-001R-r8/hosted-like-prefix.log) | Inherited runner/sandbox variables; no `node_modules`; 58/58 CI tests passed; sentinels preserved |
+| Exact-environment regressions | [environment-isolation.json](../docs/evidence/CH-001R-r8/environment-isolation.json) | R8-T06 through R8-T09 pass; missing keys remain absent and legacy contamination is caught |
+| Native pinned install | [pnpm-bootstrap.json](../docs/evidence/CH-001R-r8/pnpm-bootstrap.json) | pnpm 12.3.4 bootstrap and frozen install passed |
+| Outer reporter propagation | [ci-result-cli.json](../docs/evidence/CH-001R-r8/ci-result-cli.json) | New prerequisite stages/attestation fields retained; uninvoked proof remains nullable |
+| Pin/scope comparison | [pin-scope-comparison.json](../docs/evidence/CH-001R-r8/pin-scope-comparison.json) | Frozen pins, app, sandbox design, and 72-gate contract unchanged |
+| R8 checklist | [r8-results.json](../docs/evidence/CH-001R-r8/r8-results.json) | R8-T01..T12 PASS; router-owned R8-T13/T14 NOT_RUN |
+| Handoff | [CH-001R-r8.md](../handoffs/CH-001R-r8.md) | Ready for router publication; application remains unaccepted |
+
+This r8 record preserves the historical hosted run `34678495442` as a read-only 45/5 CI-helper failure observation. It does not rerun that job, create application artifacts, replace the original 72-gate ledger, or claim hosted proof. `application_acceptance=false`, accepted version `none`, and root state `awaiting_review` remain in force.

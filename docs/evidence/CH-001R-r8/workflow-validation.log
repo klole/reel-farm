@@ -1,0 +1,27 @@
+CH-001R-r8 workflow validation log
+Implementation: 0144f6c41ae4c6143a2dc46fe22d59d453ce8763
+Validator: official actionlint 1.7.7 Linux/amd64
+Executable SHA-256: 9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c
+Workflow: .github/workflows/ch001-live-proof.yml
+Workflow SHA-256: 0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c
+Workflow blob: fb4d3e4ee58eff81e43395fa6df99c53b65de417
+Tracked workflow inputs: 1
+
+Positive result:
+  ACTIONLINT_BIN=<verified absolute path> node scripts/ci/lint-workflow.mjs
+  exit=0
+
+Semantic and boundary regressions (real validator where applicable):
+  R7-T01 complete frozen T6 workflow rejection: PASS
+  R7-T02 current tracked workflow acceptance: PASS
+  R7-T03 missing/wrong-version/nonzero/zero-input/malformed fail-closed cases: PASS
+  R7-T04 missing-step semantic rejection and supported runtime acceptance: PASS
+  R8-T06 missing RUNNER_TEMP exact environment: PASS
+  R8-T07 missing GITHUB_ENV exact environment: PASS
+  R8-T08 invalid-input and preservation cases: PASS
+  R8-T09 legacy second-merge contamination reproduction: PASS
+  R7-T08 no proof/policy tree and prior-evidence preservation: PASS
+  R7-T09 workflow ordering and preserved sandbox wiring: PASS
+  R7-T11 frozen pin/scope comparison: PASS
+
+Direct test result: 13 tests, 13 pass, 0 fail, 0 skipped, exit=0.

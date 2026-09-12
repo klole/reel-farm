@@ -1,6 +1,6 @@
 # Requirement status — CH-001 checkpoint
 
-Statuses below are chapter evidence statuses, not acceptance of the full North Star. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff. CH-001R-r2 static repairs and harnesses are committed, but the real database/browser/Compose environment was unavailable.
+Statuses below are chapter evidence statuses, not acceptance of the full North Star. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff. CH-001R-r8 CI repair evidence is local and awaiting router publication; no hosted/application acceptance is claimed.
 
 | Requirement subset | CH-001 status | Evidence / boundary |
 |---|---|---|

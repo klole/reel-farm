@@ -1,0 +1,25 @@
+{
+  "record_kind": "PNPM_NATIVE_BOOTSTRAP",
+  "phase": "CH-001R-r4",
+  "status": "PASS",
+  "package_manager": "pnpm@12.3.4",
+  "version": "12.3.4",
+  "target": "linux-x64-glibc",
+  "asset": {
+    "name": "pnpm-linux-x64.tar.gz",
+    "url": "https://github.com/pnpm/pnpm/releases/download/v12.3.4/pnpm-linux-x64.tar.gz",
+    "sha256": "9705e5704b4679fb503c963a18d1ac4f105e39aafafca8a2ed346facdf820cd0"
+  },
+  "archive_source": "downloaded_archive",
+  "archive_sha256": "9705e5704b4679fb503c963a18d1ac4f105e39aafafca8a2ed346facdf820cd0",
+  "download_attempts": 1,
+  "archive_member": "pnpm",
+  "runtime_directory": "dist",
+  "destination": "/tmp/ch001r8-pnpm-A4gD7i/install",
+  "bin_dir": "/tmp/ch001r8-pnpm-A4gD7i/install/bin",
+  "executable_version": "12.3.4",
+  "path_updated": true,
+  "started_at": "2026-09-12T07:27:35.772Z",
+  "ended_at": "2026-09-12T07:27:37.417Z",
+  "frozen_install_exit_code": 0
+}

@@ -1,4 +1,4 @@
-# Project state — CH-001R-r7 checkpoint
+# Project state — CH-001R-r8 checkpoint
 
 **Last updated:** 2026-09-12 UTC
 **State:** `awaiting_review`
@@ -7,11 +7,13 @@
 
 ## Authority and traceability
 
-- Active chapter: `CH-001R-r7` workflow validation and dispatch repair; target remains the unchanged v0.1.0 bounded-proof contract, not full acceptance.
-- Current packet P7: `9fb748ef6b22a21ed24a8a5fa66e4ec1463a049a`; tree `ea70e7e6b11cc2c44c7e4213fe06c369d2fea9dc`.
-- Current T7 implementation: `6b02857401a9b1e81e1bd36d5a4418f90903adcb`; tree `fdbe7da15964659d4e2514580f6606f5731790ce`; descendant of P7/T6/E6.
-- Current T7 workflow: blob `2070e80be5355537631a7b2cf833eeb0a6cf28cb`; file SHA-256 `98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51`.
-- E7 is the evidence/state-only commit containing the r7 handoff and records; its full SHA is returned externally after commit and is not embedded self-referentially.
+- Active chapter: `CH-001R-r8` bounded actionlint provisioning and exact-environment repair; target remains the unchanged v0.1.0 bounded-proof contract, not full acceptance.
+- Current packet P8: `f2d6baa075af14fbe74e836240198a90ea5d4fd1`; tree `a832532aad3956687c169c57c3c6e5c8adff51a1`.
+- Current T8 implementation: `0144f6c41ae4c6143a2dc46fe22d59d453ce8763`; tree `f16f32465b37439774369ddf002a22063c104088`; direct child of P8.
+- Prior T7 implementation: `6b02857401a9b1e81e1bd36d5a4418f90903adcb`; tree `fdbe7da15964659d4e2514580f6606f5731790ce`.
+- Prior E7 is the evidence/state-only commit `6e4f9b3d288b7177ebfc8b49ff3c833610640060`; it remains preserved unchanged.
+- Current T8 workflow: blob `fb4d3e4ee58eff81e43395fa6df99c53b65de417`; file SHA-256 `0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c`.
+- E8 is the evidence/state-only commit containing this r8 handoff and records; its full SHA is returned externally after commit and is not embedded self-referentially.
 - North Star baseline: `architect/Luna_CH001_v0.1.0_Pack/reference/north-star/NORTH_STAR.md` SHA-256 `3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d`.
 - Starting source / packet P4: `a86c3ace9ad8bf1ec941565ce7dbc4e4d734b4e2` (P4 is based on prior E3 `4cf020317cfc2e8755f35ee6da10f7397c8676f2`).
 - T4 implementation: `69b784526260e3e5acf133da8d1a2fb33447d20f`; tree `55fdf4fc16f1d07498f6fb447cddc64e5261be2c`.
@@ -20,6 +22,15 @@
 - Historical r2 implementation/evidence commits remain `b516dab843be1b8870d3516185b52905982aec1f` / `5a931feb01ed8da16eb9f0079a380c61f5459792`; older records remain available.
 - Workflow at T4: blob `65f1ae428e925b4747fea03f6c228a8af4acf15b`, file SHA-256 `e41c6ce267c8dacfe759f83c873c0f53ebca90e2c56f19e6d17202267b06b896`.
 - Accepted application version: none. This checkpoint is not architect-accepted.
+
+## CH-001R-r8 bounded CI helper and environment repair
+
+- The failed hosted run `34678495442` was read from the P8 packet and not rerun. Its T7 helper result was `50` tests / `45` pass / `5` fail / `0` skipped, `CI_BOOTSTRAP_FAILURE`, `proof_invoked=false`; no application gate count was inferred.
+- T8 provisions and verifies the checked-in official actionlint `1.7.7` Linux/amd64 archive before semantic workflow validation and before the complete CI suite. The archive SHA-256 is `023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757`; the executable SHA-256 is `9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c`.
+- T8 separates complete child environments from override maps. Independent missing-`RUNNER_TEMP` and missing-`GITHUB_ENV` hosted-like cases keep the key absent, return a nonzero initializer result, and preserve both synthetic environment files. The legacy second-merge reproduction is retained and demonstrates the contamination.
+- Final clean and hosted-like no-`node_modules` prefixes checked out T8 under Node `20.19.2`; each ran the real validator and `node --test tests/ci` with `58` pass / `0` fail / `0` skipped. Frozen install, workflow lint, lint, typecheck, build, unit (`20/20`), security (`4/4`), syntax, and diff checks passed.
+- `origin/main` remains at P8 in this workspace; T8 and E8 are local and unpublished. Luna did not dispatch a hosted workflow. R8-T13/T14 remain router-owned `NOT_RUN`.
+- Application acceptance remains `false`; accepted application version remains `none`; providers, publishing, release, deployment, and v0.2 work remain out of scope.
 
 ## CH-001R-r7 workflow validation and dispatch repair
 

@@ -1,0 +1,16 @@
+{
+  "record_kind": "CH001R_R8_CI_RESULT_REPORTER_CHECK",
+  "status": "PASS",
+  "implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "actionlint_attestation_flattened": {
+    "archive_measured_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "executable_measured_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "bootstrap_status": "PASS",
+  "expected_no_proof_classification": "CI_BOOTSTRAP_FAILURE",
+  "proof_invoked": false,
+  "proof_exit_code": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "result": "The outer reporter retained the new prerequisite stage and attestation fields, finalized all expected stages, and kept an uninvoked proof nullable rather than inventing a proof result."
+}

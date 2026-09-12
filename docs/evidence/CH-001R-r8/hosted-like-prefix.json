@@ -1,0 +1,56 @@
+{
+  "record_kind": "CH001R_R8_PREFIX_REHEARSAL",
+  "mode": "hosted-like",
+  "status": "PASS",
+  "run_id": "800000017",
+  "run_attempt": "1",
+  "implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "implementation_tree": "f16f32465b37439774369ddf002a22063c104088",
+  "checkout": "/tmp/ch001r8-final2-prefix-X4f1mg/checkout",
+  "node": "v20.19.2",
+  "node_modules_present_before_install": false,
+  "inherited_parent_values": [
+    "RUNNER_TEMP",
+    "GITHUB_ENV",
+    "GITHUB_PATH",
+    "GITHUB_STEP_SUMMARY",
+    "GITHUB_OUTPUT",
+    "GITHUB_RUN_ID",
+    "GITHUB_RUN_ATTEMPT",
+    "CH001_SANDBOX_STATE_DIR"
+  ],
+  "actionlint": {
+    "version": "1.7.7",
+    "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "path": "/tmp/ch001r8-final2-prefix-X4f1mg/hosted-runner/ch001r8-actionlint-800000017-1-D4tE4s/actionlint",
+    "download_attempts": 1,
+    "path_updated": true
+  },
+  "workflow_validation": {
+    "status": "PASS",
+    "exit_code": 0,
+    "workflow_sha256": "0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c"
+  },
+  "ci_suite": {
+    "command": "node --test tests/ci",
+    "discovered": 58,
+    "executed": 58,
+    "passed": 58,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0
+  },
+  "environment": {
+    "parent": "hosted-like env -i prefix",
+    "inherited_sandbox_state": "/tmp/ch001r8-final2-prefix-X4f1mg/hosted-sandbox/inherited-state",
+    "github_env": "appended exactly one ACTIONLINT_BIN entry and preserved prior sentinel",
+    "github_path": "byte-preserved",
+    "github_step_summary": "byte-preserved",
+    "github_output": "byte-preserved",
+    "proof_tree_created": false,
+    "policy_tree_created": false
+  },
+  "started_at": "2026-09-12T07:42:48.519Z",
+  "ended_at": "2026-09-12T07:42:49.024Z"
+}

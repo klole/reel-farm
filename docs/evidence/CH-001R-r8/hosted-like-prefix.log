@@ -1,0 +1,15 @@
+CH-001R-r8 hosted-like no-node_modules prefix
+run=800000017 attempt=1
+checkout=/tmp/ch001r8-final2-prefix-X4f1mg/checkout
+implementation=0144f6c41ae4c6143a2dc46fe22d59d453ce8763
+tree=f16f32465b37439774369ddf002a22063c104088
+node=v20.19.2
+node_modules=absent
+parent=hosted-like; inherited CH001_SANDBOX_STATE_DIR=/tmp/ch001r8-final2-prefix-X4f1mg/hosted-sandbox/inherited-state
+actionlint=1.7.7
+actionlint_sha256=9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c
+archive_sha256=023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+workflow_validation=PASS exit=0
+command_files=GITHUB_ENV appended only; GITHUB_PATH/GITHUB_STEP_SUMMARY/GITHUB_OUTPUT byte-preserved
+ci_command=node --test tests/ci
+ci_tests=58 pass=58 fail=0 skipped=0 exit=0

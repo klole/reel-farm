@@ -1,0 +1,51 @@
+{
+  "record_kind": "CH001R_R8_PIN_SCOPE_COMPARISON",
+  "baseline": {
+    "packet": "f2d6baa075af14fbe74e836240198a90ea5d4fd1",
+    "tree": "a832532aad3956687c169c57c3c6e5c8adff51a1"
+  },
+  "implementation": {
+    "commit": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+    "tree": "f16f32465b37439774369ddf002a22063c104088"
+  },
+  "changed_paths": [
+    ".github/workflows/ch001-live-proof.yml",
+    "architect/ch001r8-pack/CH001R_r8_Architect_Pack/reference/reproduce-environment-boundary.mjs",
+    "scripts/ci/actionlint-bootstrap.mjs",
+    "scripts/ci/ci-result.mjs",
+    "tests/ci/actionlint-bootstrap.test.mjs",
+    "tests/ci/ci-repair.test.mjs",
+    "tests/ci/workflow-validation.test.mjs"
+  ],
+  "changed_path_disposition": {
+    "architect/ch001r8-pack/CH001R_r8_Architect_Pack/reference/reproduce-environment-boundary.mjs": "ESLint declaration only; diagnostic behavior unchanged",
+    "all_other_changed_paths": "bounded actionlint prerequisite, reporter wiring, and exact-environment regressions"
+  },
+  "frozen_surfaces": {
+    "package.json": {"sha256": "4150f4a4cfb483a287b7d0d5e4238e6dc2544edf099b294362f29f95e6804ab5", "unchanged": true},
+    "pnpm-lock.yaml": {"sha256": "9c49bf356bdd523623b79cf6096df83de51f06b358bffa88391700a4c5719d70", "unchanged": true},
+    "scripts/ci/pnpm-native-release.json": {"sha256": "fb6212a43173722f565a4101c311b23b54b7204f4828e0c62e9b9f7af1a8bd6d", "unchanged": true},
+    ".nvmrc": {"sha256": "4500e8d9dd80dba8f66ec54b39b8dce1d0dcbd3d8b2a93e9960a19cfd7d25f40", "unchanged": true},
+    "pnpm-workspace.yaml": {"sha256": "86514fa5603ea1d1bb5a7e5770fb0a370a5741a92ec4ccc241ae90981d3c8206", "unchanged": true},
+    "Dockerfile": {"sha256": "2dbc57859851533903a758cb7f904a13d17a3a2a585b806cc693c57884d8d7b8", "unchanged": true},
+    "compose.yaml": {"sha256": "41e078d39e0535492a4bc2d8b26c49ee6bfdccc50afcc8c0625720f197e61e35", "unchanged": true},
+    "playwright.config.ts": {"sha256": "aadc1ea0b1e13c6916fb5a3d76b96f27b614db7a569ae8673d725c930fe93693", "unchanged": true}
+  },
+  "pins": {
+    "node": "20.19.2",
+    "pnpm": "12.3.4",
+    "actionlint": "1.7.7",
+    "actionlint_archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "actionlint_executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "scope": {
+    "application_code_changed": false,
+    "dependency_pins_changed": false,
+    "native_pins_changed": false,
+    "sandbox_design_changed": false,
+    "original_72_gate_contract_changed": false,
+    "providers": false,
+    "publishing": false,
+    "v0_2_work": false
+  }
+}

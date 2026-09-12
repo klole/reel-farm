@@ -1,0 +1,64 @@
+{
+  "record_kind": "CH001R_R8_ACTIONLINT_BOOTSTRAP_EVIDENCE",
+  "phase": "CH-001R-r8",
+  "implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "workflow_blob_sha": "fb4d3e4ee58eff81e43395fa6df99c53b65de417",
+  "workflow_file_sha256": "0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c",
+  "provenance": {
+    "version": "1.7.7",
+    "platform": "linux/amd64",
+    "archive": "actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_url": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_expected_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "executable_expected_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "official_download_attestations": [
+    {
+      "mode": "clean-no-node_modules",
+      "run_id": "800000016",
+      "run_attempt": "1",
+      "status": "PASS",
+      "started_at": "2026-09-12T07:42:14.525Z",
+      "ended_at": "2026-09-12T07:42:14.960Z",
+      "archive_source": "downloaded_archive",
+      "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+      "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+      "observed_version": "1.7.7",
+      "executable": "/tmp/ch001r8-final2-prefix-X4f1mg/clean-runner/ch001r8-actionlint-800000016-1-KdEQXJ/actionlint",
+      "path_updated": true,
+      "checkout_identity": {
+        "requested_implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+        "actual_checkout_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+        "workflow_definition_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+        "workflow_blob_sha": "fb4d3e4ee58eff81e43395fa6df99c53b65de417",
+        "workflow_file_sha256": "0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c",
+        "repository": "klole/reel-farm"
+      }
+    },
+    {
+      "mode": "hosted-like-no-node_modules",
+      "run_id": "800000017",
+      "run_attempt": "1",
+      "status": "PASS",
+      "started_at": "2026-09-12T07:42:48.519Z",
+      "ended_at": "2026-09-12T07:42:49.024Z",
+      "archive_source": "downloaded_archive",
+      "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+      "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+      "observed_version": "1.7.7",
+      "executable": "/tmp/ch001r8-final2-prefix-X4f1mg/hosted-runner/ch001r8-actionlint-800000017-1-D4tE4s/actionlint",
+      "path_updated": true,
+      "checkout_identity": {
+        "requested_implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+        "actual_checkout_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+        "workflow_definition_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+        "workflow_blob_sha": "fb4d3e4ee58eff81e43395fa6df99c53b65de417",
+        "workflow_file_sha256": "0ca1701d63be141fccff778c03e199cd3a55c5502d186000adf0e4bd545eac6c",
+        "repository": "klole/reel-farm"
+      }
+    }
+  ],
+  "proof_invoked": false,
+  "application_acceptance": false,
+  "accepted_application_version": "none"
+}

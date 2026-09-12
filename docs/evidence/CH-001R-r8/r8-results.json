@@ -1,0 +1,48 @@
+{
+  "record_kind": "CH-001R-R8_CHECKLIST",
+  "phase": "CH-001R-r8",
+  "implementation_commit": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "implementation_tree": "f16f32465b37439774369ddf002a22063c104088",
+  "parent_packet": "f2d6baa075af14fbe74e836240198a90ea5d4fd1",
+  "evidence_commit": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "checks": [
+    {"id":"R8-T01","status":"PASS","actual_evidence":["README.md","pin-scope-comparison.json","../../../architect/ch001r8-pack/CH001R_r8_Architect_Pack/evidence/HOSTED_LOG_OBSERVATIONS.md"],"reason":"The packet's real hosted 45/5 CI-helper failure and unchanged T7/E7 identities are preserved; both causal defects are mapped to the repair."},
+    {"id":"R8-T02","status":"PASS","actual_evidence":["actionlint-bootstrap.json","clean-prefix.json","hosted-like-prefix.json"],"reason":"Final T8 clean and hosted-like prefixes downloaded the official pinned Linux/amd64 archive before workflow validation or CI tests and matched both archive and executable digests."},
+    {"id":"R8-T03","status":"PASS","actual_evidence":["../../../tests/ci/actionlint-bootstrap.test.mjs","commands.log"],"reason":"Wrong archive digest, wrong executable/version, unsupported target, unsafe archive member, and bounded download failure cases failed closed; no proof was invoked."},
+    {"id":"R8-T04","status":"PASS","actual_evidence":["clean-prefix.json","hosted-like-prefix.json","../../../tests/ci/actionlint-bootstrap.test.mjs"],"reason":"The verified absolute path was exported to subsequent validator/test processes, prior GITHUB_ENV data was preserved, and no proof or sandbox tree was created."},
+    {"id":"R8-T05","status":"PASS","actual_evidence":["workflow-validation.json","workflow-validation.log","../../../tests/ci/workflow-validation.test.mjs"],"reason":"Real actionlint rejected the complete frozen T6 workflow and semantic-invalid fixtures and accepted the current tracked workflow set."},
+    {"id":"R8-T06","status":"PASS","actual_evidence":["environment-isolation.json","../../../tests/ci/workflow-validation.test.mjs"],"reason":"Under a valid hosted-like parent, a child observed RUNNER_TEMP absent; the initializer returned nonzero and both synthetic environment files were unchanged."},
+    {"id":"R8-T07","status":"PASS","actual_evidence":["environment-isolation.json","../../../tests/ci/workflow-validation.test.mjs"],"reason":"Independently, a child observed GITHUB_ENV absent; the initializer returned nonzero and both synthetic environment files were unchanged."},
+    {"id":"R8-T08","status":"PASS","actual_evidence":["environment-isolation.json","../../../tests/ci/workflow-validation.test.mjs"],"reason":"Invalid paths, newline, run ID, attempt, directory target, literal shell-looking values, inherited-state handling, and no-tree preservation cases passed."},
+    {"id":"R8-T09","status":"PASS","actual_evidence":["environment-isolation.json","../../../tests/ci/workflow-validation.test.mjs"],"reason":"The real legacy second merge reintroduced each missing key, returned zero, and contaminated the wrong environment file; the exact implementation rejects it."},
+    {"id":"R8-T10","status":"PASS","actual_evidence":["clean-prefix.json","hosted-like-prefix.json","clean-prefix.log","hosted-like-prefix.log"],"reason":"Both independent no-node_modules prefixes used Node 20.19.2 and real actionlint; each discovered/executed/passed 58 CI tests with zero failures/skips and preserved parent sentinels."},
+    {"id":"R8-T11","status":"PASS","actual_evidence":["ci-result-cli.json","../../../tests/ci/ci-repair.test.mjs"],"reason":"New prerequisite/workflow stages are carried through the outer reporter; a skipped proof remains uninvoked with a null proof exit and CI bootstrap classification."},
+    {"id":"R8-T12","status":"PASS","actual_evidence":["commands.log","pin-scope-comparison.json","pnpm-bootstrap.json"],"reason":"Frozen install and all required scoped commands passed, syntax/diff checks passed, and frozen pins/application/sandbox/72-gate surfaces remained unchanged."},
+    {"id":"R8-T13","status":"NOT_RUN","actual_evidence":[],"execution_owner":"router","reason":"Publication-tree revalidation and workflow-capable publication are router-owned."},
+    {"id":"R8-T14","status":"NOT_RUN","actual_evidence":[],"execution_owner":"router","reason":"No fresh hosted T8 dispatch was submitted from Luna; no hosted run/job/artifact/proof receipt exists."}
+  ],
+  "hosted": {
+    "historical_run_read_only": 34678495442,
+    "publication_verified": "NOT_RUN",
+    "workflow_dispatch_submitted": false,
+    "run_id": null,
+    "run_attempt": null,
+    "job_id": null,
+    "artifact_id": null,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "application_acceptance": false
+  },
+  "scope": {
+    "providers": false,
+    "publishing": false,
+    "application_rewrite": false,
+    "v0_2_work": false,
+    "sandbox_policy_relaxation": false,
+    "historical_workflow_rerun": false,
+    "fresh_dispatch_count": 0
+  }
+}
