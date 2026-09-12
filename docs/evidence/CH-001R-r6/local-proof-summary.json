@@ -1,0 +1,20 @@
+{
+  "record_kind": "LOCAL_BOUNDED_PROOF_SUMMARY",
+  "phase": "CH-001R-r6",
+  "run_id": "r6-local-001",
+  "implementation_commit": "e0ea57665d00a643a8c392dfb9f6a84a723729af",
+  "status": "BLOCKED_ENVIRONMENT",
+  "exit_code": 2,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "gate_counts": { "PASS": 4, "FAIL": 0, "NOT_RUN": 68 },
+  "static_inside_proof": { "lint": { "exit_code": 0 }, "typecheck": { "exit_code": 0 }, "build": { "exit_code": 0 }, "unit": { "exit_code": 0, "tests_passed": 20 }, "security": { "exit_code": 0, "tests_passed": 4 } },
+  "live_suites": { "integration": { "status": "NOT_RUN", "discovered": 0, "executed": 0, "exit_code": 2 }, "e2e": { "status": "NOT_RUN", "discovered": 0, "executed": 0, "exit_code": 2 }, "render": { "status": "NOT_RUN", "discovered": 0, "executed": 0, "exit_code": 2 }, "smoke": { "status": "NOT_RUN", "discovered": 0, "executed": 0, "exit_code": 1 } },
+  "environment_failures": [
+    "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1",
+    "Docker daemon/Compose is unavailable or denied on this host.",
+    "Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome'",
+    "Pinned Chromium identity was not qualified; no browser launch was attempted."
+  ],
+  "raw_report_reference": "artifacts/ch001r6/r6-local-001/proof/public/proof-result.json (gitignored local evidence)"
+}

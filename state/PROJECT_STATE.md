@@ -1,4 +1,4 @@
-# Project state — CH-001R-r4 checkpoint
+# Project state — CH-001R-r6 checkpoint
 
 **Last updated:** 2026-09-12 UTC
 **State:** `awaiting_review`
@@ -7,7 +7,11 @@
 
 ## Authority and traceability
 
-- Active chapter: `CH-001R-r4` CI bootstrap repair and bounded live-proof redispatch preparation; continuation of `CH-001R-r3` against the unchanged v0.1.0 contract.
+- Active chapter: `CH-001R-r6` hosted Chromium sandbox qualification continuation; target remains the unchanged v0.1.0 bounded-proof contract, not full acceptance.
+- Current packet P6: `8fa06ddae978eb6ca8f946e77459810a7bc68cb3`; tree `c444fe48b83f6aee962c7fccb8a16562a2a3cf56`.
+- Current T6 implementation: `e0ea57665d00a643a8c392dfb9f6a84a723729af`; tree `7a5ada37e8ee88a1617ff19039fa116ced44e9c5`; parent P6.
+- Current T6 workflow: blob `f1ddbbfc0cbaa4602663428d569b61dbf12bd068`; file SHA-256 `e1e4f6e5ebfa61f2aae3c04bcf985d12407a8f921dfeaa34dae01d103d01af85`.
+- Current E6 evidence/handoff is being prepared against T6; it must remain evidence/state-only and must not alter the implementation identity.
 - North Star baseline: `architect/Luna_CH001_v0.1.0_Pack/reference/north-star/NORTH_STAR.md` SHA-256 `3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d`.
 - Starting source / packet P4: `a86c3ace9ad8bf1ec941565ce7dbc4e4d734b4e2` (P4 is based on prior E3 `4cf020317cfc2e8755f35ee6da10f7397c8676f2`).
 - T4 implementation: `69b784526260e3e5acf133da8d1a2fb33447d20f`; tree `55fdf4fc16f1d07498f6fb447cddc64e5261be2c`.
@@ -26,6 +30,10 @@
 
 ## Implemented checkpoint
 
+The current r6 implementation adds measured host Chromium sandbox qualification around the existing bounded proof. It uses the exact installed managed executable and digest, keeps `chromiumSandbox=true`, collects AppArmor/user-namespace/process/denial facts, allows only the packet's explicit temporary exact-path AppArmor `userns` exception on the opted-in hosted job, and removes only this run's owned unchanged profile. The worker remains separately containerized and non-root; no application feature or original gate changed.
+
+## Historical implementation checkpoints (retained)
+
 The application implementation and strict 72-gate acceptance contract remain as recorded through r3. T4 is limited to CI repair: a shared pinned/checksummed native pnpm bootstrap for Actions and Docker, dependency-free outer CI/bootstrap reports, literal summary formatting, nullable absent-proof classification, early failure evidence, and focused positive/negative regressions. Node `20.19.2`, pnpm `12.3.4`, the lockfile, application dependency pins, existing bounded coordinator, and original acceptance references remain unchanged.
 
 ## Evidence state
@@ -40,10 +48,18 @@ The application implementation and strict 72-gate acceptance contract remain as 
 - Fresh T5 boundary regressions: R5-T01 through R5-T12 passed; existing CI helper cases passed 9/9. The aggregate `pnpm test:ci` command returned 0 and reported 2/2 file-level tests on Node `20.19.2`.
 - Fresh T5 bounded proof `r5-local-t5-boundary` prepared the coordinator-owned root and returned `2` / `BLOCKED_ENVIRONMENT`; loopback `EPERM`, Docker/Compose `ENOENT`, and unavailable pinned Chromium prevented live application checks. Its ledger is `4 PASS / 0 FAIL / 68 NOT_RUN`, source-only evidence only.
 
-## Fixed boundaries and next action
+## Historical fixed boundaries and next actions (retained)
 
 The future ScrapeCreators Pinterest boundary, one-key fal.ai model boundary, and no-direct-official-TikTok-Content-Posting-API decision are preserved as deferred design commitments; no provider implementation began. Billing, scheduling, MP4/video, public deployment, and v0.2.0 work did not begin.
 
 The prepared workflow is `.github/workflows/ch001-live-proof.yml` at T4. Luna did not push or dispatch; local `main` is one commit ahead of `origin/main`, which remains P4. The next authorized action is for the router to publish the preserved T4 and E4 through an already-authorized workflow-capable repository path, verify the workflow identity, manually dispatch one fresh run with T4, and inspect its actual artifact. Do not rerun failed hosted run `34665615514`, dispatch T3, or mark this state accepted without architect review.
 
 The r5 execution commit is now published at T5. The next authorized action is the existing workflow-capable router’s single fresh dispatch with `implementation_sha=6849b39f4e3c7a03b5f132418b1d33cc84c98d51`, followed by settled artifact inspection. No dispatch occurred from the editing box; root state remains `awaiting_review`, application acceptance remains `false`, and accepted version remains `none`.
+
+## CH-001R-r6 current status
+
+- T6 local implementation checks passed: both changed `.mjs` syntax checks, `pnpm test:ci`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm test:unit`, `pnpm test:security`, and `git diff --check`. The CI suite includes all twelve R5 boundary cases and 18 focused r6 sandbox cases; unit/security counts were 20/20 and 4/4.
+- One fresh local bounded proof `r6-local-001` was run against T6 and exited `2` as `BLOCKED_ENVIRONMENT`: loopback listen `EPERM`, Docker/Compose `ENOENT`, and the pinned Playwright Chromium executable was absent. Its ledger is `4 PASS / 0 FAIL / 68 NOT_RUN`; no application, worker, ZIP, screenshot, or lifecycle claim was made.
+- A direct read-only local sandbox host snapshot measured Debian 13, unavailable AppArmor/parser and two requested sysctls (`null` with reasons), `user.max_user_namespaces=2147483647`, and no denial tied to the absent browser. This is editing-host evidence, not hosted qualification.
+- Hosted R6-T15/T16/T17/T18/T19 and the router artifact receipt remain `NOT_RUN` until publication and one fresh manually dispatched standard GitHub-hosted Ubuntu job with the explicit `sandbox_qualification=true` input. No workflow was dispatched from the editing box.
+- Application acceptance remains `false`; accepted application version remains `none`; root remains `awaiting_review`. Providers, publishing, deployment, release, video, and v0.2 work remain out of scope.

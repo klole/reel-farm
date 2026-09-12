@@ -46,3 +46,19 @@ This r4 repair does not alter the historical r3 records or the original CH-001 `
 | Handoff | [handoffs/CH-001R-r5.md](../handoffs/CH-001R-r5.md) | Ready for router dispatch; awaiting architect review |
 
 This r5 continuation preserves the historical r4 artifact and the original CH-001 ledger. It changes no application acceptance state and authorizes no providers, publishing, releases, deployment, or v0.2 work.
+
+## CH-001R-r6 hosted Chromium sandbox qualification
+
+| Evidence | Location | State |
+|---|---|---|
+| T6 implementation/source identity | `e0ea57665d00a643a8c392dfb9f6a84a723729af` / tree `7a5ada37e8ee88a1617ff19039fa116ced44e9c5` | Local committed implementation; unpublished |
+| r6 checklist | [r6-results.json](../docs/evidence/CH-001R-r6/r6-results.json) | T01-T14 local PASS; T15-T19 NOT_RUN; T20 state/scope PASS |
+| r6 source/scope review | [source-review.md](../docs/evidence/CH-001R-r6/source-review.md) | Recorded; local only |
+| Timestamped local commands | [commands.log](../docs/evidence/CH-001R-r6/commands.log) | Recorded; all required local checks exit 0 |
+| Direct local host sandbox facts | [sandbox-local-host-snapshot.json](../docs/evidence/CH-001R-r6/sandbox-local-host-snapshot.json) | Editing host only; AppArmor/parser unavailable; no policy operation |
+| Fresh local bounded proof | [local-proof-summary.json](../docs/evidence/CH-001R-r6/local-proof-summary.json) and gitignored `artifacts/ch001r6/r6-local-001/proof/public/` | Exit 2 `BLOCKED_ENVIRONMENT`; 4 PASS / 0 FAIL / 68 NOT_RUN |
+| Hosted R6 qualification and cleanup | Not available | Router must publish/dispatch once; no hosted claim made |
+| Hosted worker/application artifacts and router receipt | Not available | T17-T19 NOT_RUN; no artifact or receipt exists |
+| Handoff | [handoffs/CH-001R-r6.md](../handoffs/CH-001R-r6.md) | Ready for router publication/dispatch; awaiting architect review |
+
+This r6 continuation preserves all historical r5/original evidence. It keeps `application_acceptance=false`, accepted version `none`, and root `awaiting_review`; a bounded hosted outcome, even if successful, is not full v0.1 acceptance.

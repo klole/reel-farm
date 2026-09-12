@@ -1,0 +1,19 @@
+{
+  "record_kind": "LOCAL_READ_ONLY_SANDBOX_HOST_SNAPSHOT",
+  "phase": "CH-001R-r6",
+  "environment": "restricted editing host; not approved hosted runner",
+  "selected_executable_candidate": "/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+  "captured_start": "2026-09-12T05:16:32Z",
+  "captured_end": "2026-09-12T05:16:32Z",
+  "launch_attempted": false,
+  "reason": "The candidate pinned executable was absent; this command collected read-only host facts only.",
+  "os_release": { "available": true, "id": "debian", "version_id": "13", "pretty_name": "Debian GNU/Linux 13 (trixie)" },
+  "kernel": "Linux 6.12.94+ #1 SMP PREEMPT_DYNAMIC Sat Sep  5 04:29:10 UTC 2026 x86_64\n",
+  "uid": 1000,
+  "gid": 1000,
+  "sysctls": { "apparmor_restrict_unprivileged_userns": null, "unprivileged_userns_clone": null, "max_user_namespaces": 2147483647 },
+  "sysctl_reasons": { "apparmor_restrict_unprivileged_userns": "unavailable", "unprivileged_userns_clone": "unavailable" },
+  "apparmor": { "enabled": null, "enabled_reason": "unavailable", "parser": { "available": false, "path": null, "version": null, "exit_code": null }, "status_command": { "available": false, "enabled_exit_code": null, "enabled": null }, "profiles": { "available": false, "relevant": [], "reason": "unavailable" } },
+  "process_facts": { "available": true, "processes": [], "reason": null },
+  "kernel_denials": { "available": true, "results": [{ "command": "dmesg", "exit_code": 0, "available": true, "error": null }, { "command": "journalctl", "exit_code": 1, "available": false, "error": "spawn journalctl ENOENT" }], "matched": [], "tied_to_probe": false, "started_at": null, "interpretation": "No bounded denial tied to the selected browser probe was readable; absence is not evidence that no denial occurred." }
+}
