@@ -33,3 +33,16 @@ No artifact path in this index is a promise of a future CI run or external attac
 | Handoff | [handoffs/CH-001R-r4.md](../handoffs/CH-001R-r4.md) | Ready for router publication; awaiting architect review |
 
 This r4 repair does not alter the historical r3 records or the original CH-001 `0 PASS / 0 FAIL / 72 NOT_RUN` ledger. A green bounded proof, if later produced by the router, remains separate from v0.1 application acceptance.
+
+## CH-001R-r5 proof-directory boundary repair
+
+| Evidence | Location | State |
+|---|---|---|
+| T5 source and boundary review | [r5 source review](../docs/evidence/CH-001R-r5/source-review.md) | Recorded; local checks only |
+| Focused R5-T01..R5-T12 results | [r5 results](../docs/evidence/CH-001R-r5/r5-results.json) and [regression log](../docs/evidence/CH-001R-r5/focused-regressions.log) | 12 PASS, 0 FAIL, 0 SKIPPED |
+| Existing CI helper regressions | [r5 evidence index](../docs/evidence/CH-001R-r5/README.md) | 9 direct cases PASS; aggregate command exit 0 |
+| Fresh bounded T5 local proof | `artifacts/ch001r5/r5-local-t5-boundary/proof/public/` | Ignored/local; 4 PASS, 0 FAIL, 68 NOT_RUN; environment-blocked |
+| Hosted T5 proof/artifact | Not available | Router must dispatch once with T5 |
+| Handoff | [handoffs/CH-001R-r5.md](../handoffs/CH-001R-r5.md) | Ready for router dispatch; awaiting architect review |
+
+This r5 continuation preserves the historical r4 artifact and the original CH-001 ledger. It changes no application acceptance state and authorizes no providers, publishing, releases, deployment, or v0.2 work.

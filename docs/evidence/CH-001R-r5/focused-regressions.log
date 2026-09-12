@@ -1,0 +1,28 @@
+$ node -e 'import("./tests/ci/ci-repair.test.mjs")'
+TAP version 13
+1..9
+# tests 9
+# pass 9
+# fail 0
+# skipped 0
+
+$ node -e 'import("./tests/ci/proof-boundary.test.mjs")'
+TAP version 13
+1..12
+# tests 12
+# pass 12
+# fail 0
+# skipped 0
+
+$ pnpm test:ci
+$ node --test tests/ci
+TAP version 13
+# Subtest: /workspace/projects/reel-farm/tests/ci/ci-repair.test.mjs
+ok 1 - /workspace/projects/reel-farm/tests/ci/ci-repair.test.mjs
+# Subtest: /workspace/projects/reel-farm/tests/ci/proof-boundary.test.mjs
+ok 2 - /workspace/projects/reel-farm/tests/ci/proof-boundary.test.mjs
+1..2
+# tests 2
+# pass 2
+# fail 0
+# skipped 0

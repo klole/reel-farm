@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "packet": "CH-001R-r5",
+  "evidence_kind": "local workflow/coordinator boundary repair",
+  "starting_baseline": "df008ff64d02ada64b8e91578143709ea7b98b89",
+  "packet_p5": "53f7786fdd728140c94bd82e3855cd7e97c96cf5",
+  "t5": {
+    "commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+    "tree": "85ea5ab159c6f6bd5babf63246cd16c8c50b8655",
+    "parent": "53f7786fdd728140c94bd82e3855cd7e97c96cf5",
+    "workflow_blob": "50774746e3ead4922b265af6652a942302743062",
+    "workflow_sha256": "a9f2a8b3901a86bf3d5fa8f392cc02188785dde8d3e6785bd6243f3f1f6af4ef"
+  },
+  "e5": {
+    "convention": "documentation/evidence-only commit containing this record and handoff; full SHA is returned outside the self-referential file"
+  },
+  "changed_files": [
+    ".github/workflows/ch001-live-proof.yml",
+    "scripts/ch001-proof-boundary.d.mts",
+    "scripts/ch001-proof-boundary.mjs",
+    "scripts/ch001-proof.ts",
+    "tests/ci/proof-boundary.test.mjs"
+  ],
+  "boundary_regressions": {
+    "command": "node -e 'import(\"./tests/ci/proof-boundary.test.mjs\")'",
+    "exit_code": 0,
+    "discovered": 12,
+    "executed": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "R5-T01", "R5-T02", "R5-T03", "R5-T04", "R5-T05", "R5-T06",
+      "R5-T07", "R5-T08", "R5-T09", "R5-T10", "R5-T11", "R5-T12"
+    ]
+  },
+  "existing_ci_regressions": {
+    "command": "node -e 'import(\"./tests/ci/ci-repair.test.mjs\")'",
+    "exit_code": 0,
+    "discovered": 9,
+    "executed": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0
+  },
+  "aggregate_ci_command": {
+    "command": "pnpm test:ci",
+    "exit_code": 0,
+    "runner_reported_file_tests": 2,
+    "runner_reported_passed": 2,
+    "runner_reported_failed": 0,
+    "underlying_node_test_cases": 21
+  },
+  "scoped_checks": [
+    { "command": "node --check scripts/ch001-proof-boundary.mjs && node --check tests/ci/proof-boundary.test.mjs", "exit_code": 0 },
+    { "command": "pnpm lint", "exit_code": 0 },
+    { "command": "pnpm typecheck", "exit_code": 0 },
+    { "command": "pnpm build", "exit_code": 0 },
+    { "command": "pnpm test:unit", "exit_code": 0, "test_files": 3, "tests_passed": 20 },
+    { "command": "pnpm test:security", "exit_code": 0, "test_files": 1, "tests_passed": 4 },
+    { "command": "git diff --check", "exit_code": 0 }
+  ],
+  "local_bounded_proof": {
+    "command": "CH001_RUN_ID=r5-local-t5-boundary CH001_EVIDENCE_ROOT=artifacts/ch001r5/r5-local-t5-boundary/proof pnpm proof:ch001",
+    "exit_code": 2,
+    "status": "BLOCKED_ENVIRONMENT",
+    "run_id": "r5-local-t5-boundary",
+    "implementation_commit": "6849b39f4e3c7a03b5f132418b1d33cc84c98d51",
+    "implementation_tree": "85ea5ab159c6f6bd5babf63246cd16c8c50b8655",
+    "gate_counts": { "PASS": 4, "FAIL": 0, "NOT_RUN": 68 },
+    "source_only_pass_ids": ["CH001-067", "CH001-068", "CH001-069", "CH001-072"],
+    "environment_failures": [
+      "Loopback port allocation was denied: listen EPERM on 127.0.0.1",
+      "Docker daemon/Compose unavailable: spawn docker ENOENT",
+      "Pinned Playwright Chromium unavailable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome"
+    ],
+    "evidence_root": "artifacts/ch001r5/r5-local-t5-boundary/proof/public",
+    "hashes": {
+      "proof-result.json": "6ace27aecd04197ae18876c2866ed090a330ce57695c689290f9faa64e36aae8",
+      "gate-results.json": "d583843dd7693530002bb251b734f325ead419d3168073d8d0680e4dfe163073",
+      "artifact-manifest.json": "4cf7242e995436e2ec346ef757dd87235536a4f22e789a76c3d5353a64663d8b",
+      "environment.json": "94c83f6642f7aea53fc84a2f79c2f93c4f63928b20ceab190fed39a6ccb32b4e"
+    }
+  },
+  "preserved_pins": {
+    "node": "20.19.2",
+    "pnpm": "12.3.4",
+    "lockfile_sha256": "9c49bf356bdd523623b79cf6096df83de51f06b358bffa88391700a4c5719d70",
+    "package_json_sha256": "cb1e1a5c2ec11ecc7d397c9aa7700d76841cede38615656e3e273f34b140dbd0",
+    "native_release_manifest_sha256": "fb6212a43173722f565a4101c311b23b54b7204f4828e0c62e9b9f7af1a8bd6d"
+  },
+  "external_actions": {
+    "git_push": "success: origin/main advanced from P5 to T5",
+    "workflow_dispatch_count": 0,
+    "external_luna_or_router_send": false,
+    "providers_publishing_deployment_release": false
+  },
+  "state": {
+    "root": "awaiting_review",
+    "application_acceptance": false,
+    "accepted_application_version": "none"
+  }
+}

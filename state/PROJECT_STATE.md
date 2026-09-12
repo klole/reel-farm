@@ -17,6 +17,13 @@
 - Workflow at T4: blob `65f1ae428e925b4747fea03f6c228a8af4acf15b`, file SHA-256 `e41c6ce267c8dacfe759f83c873c0f53ebca90e2c56f19e6d17202267b06b896`.
 - Accepted application version: none. This checkpoint is not architect-accepted.
 
+## CH-001R-r5 continuation
+
+- Review baseline / packet P5: `df008ff64d02ada64b8e91578143709ea7b98b89` / `53f7786fdd728140c94bd82e3855cd7e97c96cf5`.
+- T5 workflow/coordinator boundary repair: `6849b39f4e3c7a03b5f132418b1d33cc84c98d51`; tree `85ea5ab159c6f6bd5babf63246cd16c8c50b8655`.
+- T5 changes are limited to workflow bootstrap-output ownership, the shared proof-directory initializer/refusal writer, and focused boundary regressions. Node `20.19.2`, pnpm `12.3.4`, lockfile, app, renderer, Dockerfile, native bootstrap, strict gate contract, and r3 bounded assertions remain unchanged.
+- Published state: `origin/main` was observed at T5 after a successful push. E5 is the documentation/evidence-only commit containing the r5 handoff and records.
+
 ## Implemented checkpoint
 
 The application implementation and strict 72-gate acceptance contract remain as recorded through r3. T4 is limited to CI repair: a shared pinned/checksummed native pnpm bootstrap for Actions and Docker, dependency-free outer CI/bootstrap reports, literal summary formatting, nullable absent-proof classification, early failure evidence, and focused positive/negative regressions. Node `20.19.2`, pnpm `12.3.4`, the lockfile, application dependency pins, existing bounded coordinator, and original acceptance references remain unchanged.
@@ -30,8 +37,13 @@ The application implementation and strict 72-gate acceptance contract remain as 
 - Historical CH-001 ledger is preserved unchanged at `docs/evidence/CH-001/gate-results.json` with 0 PASS / 0 FAIL / 72 NOT_RUN.
 - External provider calls, paid calls, account authorization, publishing, deployment, release/tagging, and public posts: none.
 
+- Fresh T5 boundary regressions: R5-T01 through R5-T12 passed; existing CI helper cases passed 9/9. The aggregate `pnpm test:ci` command returned 0 and reported 2/2 file-level tests on Node `20.19.2`.
+- Fresh T5 bounded proof `r5-local-t5-boundary` prepared the coordinator-owned root and returned `2` / `BLOCKED_ENVIRONMENT`; loopback `EPERM`, Docker/Compose `ENOENT`, and unavailable pinned Chromium prevented live application checks. Its ledger is `4 PASS / 0 FAIL / 68 NOT_RUN`, source-only evidence only.
+
 ## Fixed boundaries and next action
 
 The future ScrapeCreators Pinterest boundary, one-key fal.ai model boundary, and no-direct-official-TikTok-Content-Posting-API decision are preserved as deferred design commitments; no provider implementation began. Billing, scheduling, MP4/video, public deployment, and v0.2.0 work did not begin.
 
 The prepared workflow is `.github/workflows/ch001-live-proof.yml` at T4. Luna did not push or dispatch; local `main` is one commit ahead of `origin/main`, which remains P4. The next authorized action is for the router to publish the preserved T4 and E4 through an already-authorized workflow-capable repository path, verify the workflow identity, manually dispatch one fresh run with T4, and inspect its actual artifact. Do not rerun failed hosted run `34665615514`, dispatch T3, or mark this state accepted without architect review.
+
+The r5 execution commit is now published at T5. The next authorized action is the existing workflow-capable router’s single fresh dispatch with `implementation_sha=6849b39f4e3c7a03b5f132418b1d33cc84c98d51`, followed by settled artifact inspection. No dispatch occurred from the editing box; root state remains `awaiting_review`, application acceptance remains `false`, and accepted version remains `none`.
