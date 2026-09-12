@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { access, constants, mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
-import { dirname, isAbsolute, relative, resolve } from "node:path";
+import { dirname, relative, resolve } from "node:path";
 import { chromium } from "playwright";
 import {
   EXPECTED_GATE_IDS,
@@ -16,6 +16,7 @@ import {
 } from "./ch001-harness.js";
 import { freeLoopbackPort, makeComposeProject, waitForCondition, waitForHttp, type CommandResult, type ComposeProject } from "./ch001-compose.js";
 import { readZipEntries } from "../tests/helpers/zip.ts";
+import { assertValidProofRunId, prepareProofEvidenceDirectories, resolveProofEvidenceRoot, writeCoordinatorFailureReport } from "./ch001-proof-boundary.mjs";
 
 type ProcessResult = CommandResult & { invocationId: string };
 type ProofStatus = "PASS" | "FAIL" | "NOT_RUN";
@@ -28,11 +29,9 @@ type HealthDetails = { renderer?: string; database?: string; storage?: string; w
 const root = resolve(process.cwd());
 const generatedAt = new Date();
 const runId = process.env.CH001_RUN_ID ?? `r3-local-${generatedAt.toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}`;
-if (!/^[a-z0-9][a-z0-9-]{2,47}$/.test(runId)) throw new Error("CH001_RUN_ID must be a short lowercase run-owned identifier.");
+assertValidProofRunId(runId);
 
-const evidenceRoot = resolve(process.env.CH001_EVIDENCE_ROOT ?? `artifacts/ch001r3/${runId}`);
-const evidenceRelative = relative(root, evidenceRoot);
-if (!evidenceRelative || evidenceRelative.startsWith("..") || isAbsolute(evidenceRelative)) throw new Error(`CH001_EVIDENCE_ROOT must remain inside the repository: ${evidenceRoot}`);
+const evidenceRoot = resolveProofEvidenceRoot(root, process.env.CH001_EVIDENCE_ROOT, runId);
 const privateDir = resolve(evidenceRoot, "private");
 const publicDir = resolve(evidenceRoot, "public");
 const privateCommandDir = resolve(privateDir, "commands");
@@ -59,6 +58,7 @@ let projectName = "";
 let integrationDatabase = "";
 let integrationDatabaseCreated = false;
 let loopbackPortReady = true;
+let evidenceOwned = false;
 
 browserPath = process.env.BROWSER_EXECUTABLE_PATH ?? chromium.executablePath();
 
@@ -265,12 +265,9 @@ async function hostFacts(): Promise<Record<string, unknown>> {
 }
 
 async function prepareRun(): Promise<{ composeEnv: NodeJS.ProcessEnv; childEnv: NodeJS.ProcessEnv }> {
-  let entries: string[] = [];
-  try { entries = await readdir(evidenceRoot); } catch { /* new run */ }
-  if (entries.length > 0) throw new Error(`Evidence run directory already exists and is non-empty: ${evidenceRoot}. Use a new CH001_RUN_ID; proof resumption is not implicit.`);
-  await mkdir(privateCommandDir, { recursive: true, mode: 0o700 });
-  await mkdir(publicCommandDir, { recursive: true, mode: 0o750 });
-  emptyEnvPath = resolve(privateDir, "empty.env");
+  const directories = await prepareProofEvidenceDirectories(evidenceRoot);
+  evidenceOwned = true;
+  emptyEnvPath = directories.emptyEnvPath;
   await writeText(emptyEnvPath, "# CH-001 child processes receive all runtime values explicitly.\n", 0o600);
   try { port = await freeLoopbackPort(); }
   catch (error) {
@@ -641,7 +638,6 @@ async function cleanup(): Promise<void> {
   }
 }
 
-await mkdir(evidenceRoot, { recursive: true });
 let exitCode: number;
 try {
   const prepared = await prepareRun();
@@ -660,8 +656,9 @@ try {
 } catch (error) {
   const detail = error instanceof Error ? error.message : String(error);
   failures.push(`Coordinator: ${detail}`);
-  await sourceReview().catch(() => undefined);
-  await writeJson(resolve(publicDir, "proof-result.json"), { profile: "CH-001R-r3 bounded live proof", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." }).catch(() => undefined);
+  if (evidenceOwned) await sourceReview().catch(() => undefined);
+  await writeCoordinatorFailureReport({ publicDir, ownsEvidence: evidenceOwned, report: { profile: "CH-001R-r3 bounded live proof", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." } }).catch(() => undefined);
+  console.error(`CH-001R-r3 coordinator error: ${detail}`);
   exitCode = environmentFailures.length > 0 ? 2 : 1;
 } finally {
   await cleanup();

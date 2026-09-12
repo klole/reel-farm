@@ -95,7 +95,7 @@ jobs:
           workflow_blob_sha="$(git rev-parse "$CH001_WORKFLOW_SHA:.github/workflows/ch001-live-proof.yml")"
           workflow_file_sha256="$(sha256sum .github/workflows/ch001-live-proof.yml | awk '{print $1}')"
 
-          mkdir -p "$(dirname "$CI_BOOTSTRAP_REPORT")" "$CH001_EVIDENCE_ROOT/public"
+          mkdir -p "$(dirname "$CI_BOOTSTRAP_REPORT")"
           export CH001_IMPLEMENTATION_COMMIT="$actual_sha"
           export CH001_WORKFLOW_BLOB_SHA="$workflow_blob_sha"
           export CH001_WORKFLOW_FILE_SHA256="$workflow_file_sha256"
