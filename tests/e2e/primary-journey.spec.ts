@@ -1,13 +1,13 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import sharp from "sharp";
 import { createSyntheticFixtureDirectory } from "../helpers/fixtures.ts";
 import { readZipEntries } from "../helpers/zip.ts";
 import { recordGateEvidence } from "../helpers/gates.ts";
 
-const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? "artifacts/ch001r2/local");
+const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? "artifacts/ch001r3/local");
 const demoCopy = [
   ["Make room for one thing", "An original demo about arranging a small workspace."],
   ["Start with the surface", "Move the items you are not using into a tray."],
@@ -17,24 +17,136 @@ const demoCopy = [
   ["Choose your next step", "Write one small task before adding more."],
   ["Make it your own", "Replace these slides with your own images and words."]
 ] as const;
-const layouts = ["Photo caption", "Editorial card", "Statement", "Editorial card", "Statement", "Photo caption", "Statement"] as const;
+const layouts = ["Photo caption", "Editorial card", "Photo caption", "Editorial card", "Statement", "Photo caption", "Statement"] as const;
+const roles = ["hook", "body", "body", "body", "body", "body", "cta"] as const;
+const expectedEntries = ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg", "manifest.json", "post.txt"];
+const postText = "Title: A little room to focus\nCaption: A seven-slide example created entirely with local images and manual text.\nHashtags: #workspace #slideshow\n";
+
+type RenderRequest = { id: string; status: string; revisionId?: string };
+type RenderResponse = { request: RenderRequest };
+type ManifestImage = { filename: string; slideId: string; sha256: string; bytes: number; width: number; height: number };
+type ExportManifest = { revisionId: string; images: ManifestImage[]; postTextSha256: string; canvas: { width: number; height: number } };
+type ExportCheck = { requestId: string; revisionId: string; zipSha256: string; postTextSha256: string; entries: Array<Record<string, unknown>>; bytes: number };
 
 function sha256(data: Buffer): string { return createHash("sha256").update(data).digest("hex"); }
 
-async function fillSelectedSlide(page: import("@playwright/test").Page, headline: string, body: string): Promise<void> {
+async function fillSelectedSlide(page: Page, headline: string, body: string): Promise<void> {
   await page.getByRole("button", { name: "headline", exact: true }).click();
   await page.getByLabel("Headline").fill(headline);
   await page.getByRole("button", { name: "body", exact: true }).click();
   await page.getByLabel("Supporting text").fill(body);
 }
 
-async function selectLayout(page: import("@playwright/test").Page, layout: string): Promise<void> {
+async function selectLayout(page: Page, layout: string): Promise<void> {
   await page.getByRole("button", { name: layout, exact: true }).click();
+}
+
+async function setFocalPoint(page: Page, x: string, y: string): Promise<void> {
+  for (const [id, value] of [["focal-x", x], ["focal-y", y]] as const) {
+    await page.locator(`#${id}`).evaluate((element, nextValue) => {
+      const input = element as HTMLInputElement;
+      input.value = nextValue;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    }, value);
+  }
+}
+
+async function requestPreview(page: Page): Promise<RenderRequest> {
+  const responsePromise = page.waitForResponse((response) => {
+    const pathname = new URL(response.url()).pathname;
+    return response.request().method() === "POST" && /^\/api\/projects\/[^/]+\/render$/.test(pathname);
+  });
+  await page.getByRole("button", { name: "Preview & export" }).click();
+  const response = await responsePromise;
+  expect(response.status()).toBeGreaterThanOrEqual(200);
+  expect(response.status()).toBeLessThan(300);
+  expect(response.headers()["content-type"] ?? "").toContain("application/json");
+  const payload = await response.json() as RenderResponse;
+  expect(payload.request.id).toMatch(/^[0-9a-f-]{36}$/);
+  return payload.request;
+}
+
+async function saveDownload(page: Page, target: string): Promise<Buffer> {
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Download ordered ZIP" }).click();
+  const download = await downloadPromise;
+  await download.saveAs(target);
+  return readFile(target);
+}
+
+async function inspectExport(page: Page, requestId: string, zipPath: string, expectedRevisionId: string | undefined, width: number, height: number): Promise<ExportCheck> {
+  const zip = await readFile(zipPath);
+  const entries = readZipEntries(zip);
+  expect([...entries.keys()].sort()).toEqual([...expectedEntries].sort());
+  const manifest = JSON.parse(entries.get("manifest.json")?.data.toString("utf8") ?? "null") as ExportManifest;
+  const post = entries.get("post.txt")?.data;
+  if (!post) throw new Error("Export did not include post.txt.");
+  expect(post.toString("utf8")).toBe(postText);
+  expect(sha256(post)).toBe(manifest.postTextSha256);
+  expect(manifest.images).toHaveLength(7);
+  expect(manifest.canvas).toEqual({ width, height });
+  if (expectedRevisionId) expect(manifest.revisionId).toBe(expectedRevisionId);
+
+  const imageChecks: Array<Record<string, unknown>> = [];
+  for (let index = 0; index < 7; index += 1) {
+    const filename = `${String(index + 1).padStart(2, "0")}.jpg`;
+    const entry = entries.get(filename);
+    if (!entry) throw new Error(`Missing ${filename} in export.`);
+    const metadata = await sharp(entry.data).metadata();
+    expect(metadata.format).toBe("jpeg");
+    expect(metadata.width).toBe(width);
+    expect(metadata.height).toBe(height);
+    const item = manifest.images[index];
+    if (!item) throw new Error(`Manifest is missing ${filename}.`);
+    expect(item.filename).toBe(filename);
+    expect(item.width).toBe(width);
+    expect(item.height).toBe(height);
+    expect(item.bytes).toBe(entry.data.byteLength);
+    expect(sha256(entry.data)).toBe(item.sha256);
+    const preview = await page.evaluate(async (path) => {
+      const response = await fetch(path, { credentials: "same-origin", cache: "no-store" });
+      return { status: response.status, contentType: response.headers.get("content-type"), bytes: Array.from(new Uint8Array(await response.arrayBuffer())) };
+    }, `/api/render-requests/${requestId}/images/${index}`);
+    expect(preview.status).toBe(200);
+    expect(preview.contentType ?? "").toContain("image/jpeg");
+    const previewBytes = Buffer.from(preview.bytes);
+    expect(sha256(previewBytes)).toBe(item.sha256);
+    expect(previewBytes.equals(entry.data)).toBe(true);
+    imageChecks.push({ filename, slideId: item.slideId, zipSha256: sha256(entry.data), previewSha256: sha256(previewBytes), bytes: entry.data.byteLength, width: metadata.width, height: metadata.height });
+  }
+  return { requestId, revisionId: manifest.revisionId, zipSha256: sha256(zip), postTextSha256: manifest.postTextSha256, entries: imageChecks, bytes: zip.byteLength };
+}
+
+async function holdNextSave(page: Page): Promise<{ seen: Promise<void>; release: () => void; stop: () => Promise<void> }> {
+  let seenResolve!: () => void;
+  let releaseResolve!: () => void;
+  const seen = new Promise<void>((resolveSeen) => { seenResolve = resolveSeen; });
+  const released = new Promise<void>((resolveReleased) => { releaseResolve = resolveReleased; });
+  let held = false;
+  const pattern = "**/api/projects/*/draft";
+  await page.route(pattern, async (route) => {
+    if (held || route.request().method() !== "POST") return route.continue();
+    held = true;
+    const response = await route.fetch();
+    seenResolve();
+    await released;
+    await route.fulfill({ response });
+  });
+  return { seen, release: releaseResolve, stop: () => page.unroute(pattern) };
+}
+
+async function projectBundle(page: Page, projectId: string): Promise<{ project: { id: string }; draft: { headRevisionId: string | null }; revision: { id: string; contentHash: string } | null; assets: Array<{ id: string; derivativeHash: string }> }> {
+  return page.evaluate(async (path) => {
+    const response = await fetch(path, { credentials: "same-origin", cache: "no-store" });
+    if (!response.ok) throw new Error(`Project bundle failed with ${response.status}.`);
+    return response.json();
+  }, `/api/projects/${projectId}`) as Promise<{ project: { id: string }; draft: { headRevisionId: string | null }; revision: { id: string; contentHash: string } | null; assets: Array<{ id: string; derivativeHash: string }> }>;
 }
 
 test("completes the seven-slide local UI journey and verifies exact preview/export bytes", async ({ page }) => {
   await mkdir(evidenceDir, { recursive: true });
-  const fixtures = await createSyntheticFixtureDirectory();
+  const fixtures = await createSyntheticFixtureDirectory(resolve(evidenceDir, "fixtures"));
 
   if (process.env.CH001_E2E_SETUP === "1") {
     await page.goto("/setup");
@@ -56,42 +168,62 @@ test("completes the seven-slide local UI journey and verifies exact preview/expo
   await page.getByLabel("New project name").fill("A little room to focus");
   await page.getByRole("button", { name: "Create project" }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+$/);
+  const projectId = new URL(page.url()).pathname.split("/").filter(Boolean).pop();
+  if (!projectId) throw new Error("The created project URL did not expose a project identity.");
   await expect(page.getByText("Saved to local database")).toBeVisible();
   await page.getByLabel("Post title").fill("A little room to focus");
   await page.getByLabel("Caption").fill("A seven-slide example created entirely with local images and manual text.");
   await page.getByLabel("Hashtags").fill("#workspace #slideshow");
 
   await selectLayout(page, layouts[0]);
+  await page.locator("#slide-role").selectOption(roles[0]);
   await page.getByRole("button", { name: "image", exact: true }).click();
   await page.locator("input[type=checkbox]").check();
   await page.locator("#asset-upload").setInputFiles(fixtures.portrait);
   await expect(page.locator(".asset-choice")).toHaveCount(1);
   await page.locator(".asset-choice").first().click();
-  await fillSelectedSlide(page, demoCopy[0][0], demoCopy[0][1]);
-  // Upload while the editor has unsaved text. The asset refresh must not
-  // replace the local document, selection, or session history.
-  await page.locator("#asset-upload").setInputFiles(fixtures.landscape);
-  await expect(page.locator(".asset-choice")).toHaveCount(2);
-  await expect(page.getByLabel("Headline")).toHaveValue(demoCopy[0][0]);
-  await expect(page.getByRole("button", { name: "body", exact: true })).toHaveClass(/active/);
-  await expect(page.getByRole("button", { name: "Undo" })).toBeEnabled();
-  await page.getByRole("button", { name: "Undo" }).click();
-  await page.getByRole("button", { name: "Redo" }).click();
-  await expect(page.getByLabel("Headline")).toHaveValue(demoCopy[0][0]);
+  await setFocalPoint(page, "0.78", "0.36");
+  await expect(page.getByText("78%")).toBeVisible();
+
+  const heldSave = await holdNextSave(page);
+  try {
+    await fillSelectedSlide(page, demoCopy[0][0], demoCopy[0][1]);
+    await page.locator(".canvas-caption").click();
+    await page.keyboard.press("Control+s");
+    await heldSave.seen;
+    await page.getByRole("button", { name: "image", exact: true }).click();
+    await page.locator("#asset-upload").setInputFiles(fixtures.landscape);
+    await expect(page.locator(".asset-choice")).toHaveCount(2);
+    await page.getByRole("button", { name: "body", exact: true }).click();
+    await expect(page.getByLabel("Headline")).toHaveValue(demoCopy[0][0]);
+    await expect(page.getByRole("button", { name: "body", exact: true })).toHaveClass(/active/);
+    await expect(page.getByRole("button", { name: "Undo" })).toBeEnabled();
+    await page.getByRole("button", { name: "Undo" }).click();
+    await page.getByRole("button", { name: "Redo" }).click();
+    await expect(page.getByLabel("Headline")).toHaveValue(demoCopy[0][0]);
+    heldSave.release();
+    await expect(page.getByText("Saved to local database")).toBeVisible({ timeout: 15_000 });
+  } finally {
+    heldSave.release();
+    await heldSave.stop();
+  }
 
   for (let index = 1; index < demoCopy.length; index += 1) {
+    const copy = demoCopy[index];
+    const layout = layouts[index];
+    const role = roles[index];
+    if (!copy || !layout || !role) throw new Error(`Canonical slide fixture ${index + 1} is incomplete.`);
     await page.getByRole("button", { name: "Add slide" }).click();
     await expect(page.locator(".slide-thumb")).toHaveCount(index + 1);
-    await selectLayout(page, layouts[index]);
-    if (layouts[index] !== "Statement") {
+    await selectLayout(page, layout);
+    await page.locator("#slide-role").selectOption(role);
+    if (layout !== "Statement") {
       await page.getByRole("button", { name: "image", exact: true }).click();
       await page.locator(".asset-choice").first().click();
     }
-    await fillSelectedSlide(page, demoCopy[index][0], demoCopy[index][1]);
+    await fillSelectedSlide(page, copy[0], copy[1]);
   }
 
-  // Exercise the required non-drag structural operation while returning to
-  // the original seven-slide deck for the final export.
   await page.getByRole("button", { name: "Duplicate selected" }).click();
   await expect(page.locator(".slide-thumb")).toHaveCount(8);
   await page.getByRole("button", { name: "Move earlier" }).click();
@@ -109,6 +241,16 @@ test("completes the seven-slide local UI journey and verifies exact preview/expo
   await expect(page.getByText("4:5 feed · 7/20 slides")).toBeVisible();
   await expect(page.getByText("Saved to local database")).toBeVisible({ timeout: 15_000 });
   await page.screenshot({ path: resolve(evidenceDir, "editor-alternate-feed.png"), fullPage: true });
+  const alternateRequest = await requestPreview(page);
+  const alternateDialog = page.getByRole("dialog", { name: "Final preview" });
+  await expect(alternateDialog.getByText("Ready to hand off")).toBeVisible({ timeout: 180_000 });
+  await page.screenshot({ path: resolve(evidenceDir, "alternate-preview.png"), fullPage: true });
+  const alternateZipPath = resolve(evidenceDir, "alternate-4x5.zip");
+  const alternateZip = await saveDownload(page, alternateZipPath);
+  const alternateCheck = await inspectExport(page, alternateRequest.id, alternateZipPath, alternateRequest.revisionId, 1080, 1350);
+  await writeFile(resolve(evidenceDir, "alternate-format.json"), JSON.stringify({ preset: "feed", width: 1080, height: 1350, requestId: alternateCheck.requestId, revisionId: alternateCheck.revisionId, zipSha256: alternateCheck.zipSha256, entries: alternateCheck.entries, screenshot: "alternate-preview.png" }, null, 2) + "\n", { mode: 0o640 });
+  await alternateDialog.getByRole("button", { name: "Close" }).click();
+
   await page.getByRole("button", { name: "9:16 portrait", exact: true }).click();
   await expect(page.getByText("9:16 portrait · 7/20 slides")).toBeVisible();
   await expect(page.getByText("Saved to local database")).toBeVisible({ timeout: 15_000 });
@@ -116,84 +258,56 @@ test("completes the seven-slide local UI journey and verifies exact preview/expo
   const projectCard = page.locator(".project-card").filter({ hasText: "A little room to focus" });
   await projectCard.getByRole("link", { name: "Open studio" }).click();
   await expect(page.getByLabel("Headline")).toHaveValue(demoCopy[0][0], { timeout: 15_000 });
-
   await page.keyboard.press("Control+s");
   await expect(page.getByText("Saved to local database")).toBeVisible({ timeout: 15_000 });
-  await page.getByRole("button", { name: "Preview & export" }).click();
+
+  const reopened = await projectBundle(page, projectId);
+  const canonicalRequest = await requestPreview(page);
   const dialog = page.getByRole("dialog", { name: "Final preview" });
   await expect(dialog).toBeVisible();
   await expect(dialog.getByText("Ready to hand off")).toBeVisible({ timeout: 180_000 });
   await page.screenshot({ path: resolve(evidenceDir, "final-preview.png"), fullPage: true });
-
-  const requestLabel = await dialog.locator(".preview-meta").first().textContent();
-  const requestMatch = requestLabel?.match(/Request ([0-9a-f-]+)/i);
-  if (!requestMatch?.[1]) throw new Error("The final preview did not expose a render request identity.");
-  const requestId = requestMatch[1];
-  const downloadPromise = page.waitForEvent("download");
-  await dialog.getByRole("link", { name: "Download ordered ZIP" }).click();
-  const download = await downloadPromise;
   const zipPath = resolve(evidenceDir, "a-little-room-to-focus.zip");
-  await download.saveAs(zipPath);
-  const zip = await readFile(zipPath);
-  const entries = readZipEntries(zip);
-  expect([...entries.keys()].sort()).toEqual(["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg", "manifest.json", "post.txt"]);
-  const manifest = JSON.parse(entries.get("manifest.json")?.data.toString("utf8") ?? "null") as { revisionId: string; images: Array<{ filename: string; slideId: string; sha256: string; bytes: number; width: number; height: number }>; postTextSha256: string };
-  const post = entries.get("post.txt")?.data;
-  if (!post) throw new Error("Export did not include post.txt.");
-  expect(sha256(post)).toBe(manifest.postTextSha256);
-  expect(post.toString("utf8")).toBe("Title: A little room to focus\nCaption: A seven-slide example created entirely with local images and manual text.\nHashtags: #workspace #slideshow\n");
-  expect(manifest.images).toHaveLength(7);
+  const zip = await saveDownload(page, zipPath);
+  const canonicalCheck = await inspectExport(page, canonicalRequest.id, zipPath, canonicalRequest.revisionId, 1080, 1920);
+  expect(reopened.revision?.id).toBe(canonicalCheck.revisionId);
+  expect(reopened.draft.headRevisionId).toBe(canonicalCheck.revisionId);
 
-  const imageChecks: Array<Record<string, unknown>> = [];
-  for (let index = 0; index < 7; index += 1) {
-    const filename = `${String(index + 1).padStart(2, "0")}.jpg`;
-    const entry = entries.get(filename);
-    if (!entry) throw new Error(`Missing ${filename} in export.`);
-    const preview = await page.evaluate(async (path) => Array.from(new Uint8Array(await (await fetch(path)).arrayBuffer())), `/api/render-requests/${requestId}/images/${index}`);
-    const previewBytes = Buffer.from(preview);
-    const metadata = await sharp(entry.data).metadata();
-    const item = manifest.images[index];
-    if (!item) throw new Error(`Manifest is missing ${filename}.`);
-    expect(sha256(entry.data)).toBe(item.sha256);
-    expect(sha256(previewBytes)).toBe(item.sha256);
-    expect(previewBytes.equals(entry.data)).toBe(true);
-    expect(item.filename).toBe(filename);
-    imageChecks.push({ filename, slideId: item.slideId, zipSha256: sha256(entry.data), previewSha256: sha256(previewBytes), bytes: entry.data.byteLength, width: metadata.width, height: metadata.height });
-  }
   const hashReportPath = resolve(evidenceDir, "journey-hashes.json");
-  await writeFile(hashReportPath, JSON.stringify({ scope: "real authenticated seven-slide UI journey", projectTitle: "A little room to focus", requestId, revisionId: manifest.revisionId, postTextSha256: manifest.postTextSha256, zipSha256: sha256(zip), entries: imageChecks }, null, 2) + "\n", { mode: 0o640 });
+  await writeFile(hashReportPath, JSON.stringify({
+    scope: "real authenticated seven-slide UI journey",
+    projectTitle: "A little room to focus",
+    projectId,
+    headRevisionId: reopened.draft.headRevisionId,
+    revisionId: canonicalCheck.revisionId,
+    acceptedAssetHashes: reopened.assets.map((asset) => ({ id: asset.id, derivativeHash: asset.derivativeHash })),
+    renderRequestId: canonicalCheck.requestId,
+    canonicalCanvas: { width: 1080, height: 1920 },
+    postTextSha256: canonicalCheck.postTextSha256,
+    zipSha256: canonicalCheck.zipSha256,
+    zipBytes: zip.byteLength,
+    entries: canonicalCheck.entries,
+    alternate: { requestId: alternateCheck.requestId, revisionId: alternateCheck.revisionId, zipSha256: alternateCheck.zipSha256, zipBytes: alternateZip.byteLength, canvas: { width: 1080, height: 1350 } }
+  }, null, 2) + "\n", { mode: 0o640 });
   await dialog.getByRole("button", { name: "Close" }).click();
+
   const desktopViewport = page.viewportSize();
   await page.setViewportSize({ width: 390, height: 844 });
   const accessibility = await page.evaluate(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>("button, a, input, textarea, select"));
     const unlabeled = elements.filter((element) => {
-      const label = element.getAttribute("aria-label")
-        || element.getAttribute("title")
-        || element.textContent?.trim()
-        || (element.id && document.querySelector(`label[for="${element.id}"]`)?.textContent?.trim());
+      const label = element.getAttribute("aria-label") || element.getAttribute("title") || element.textContent?.trim() || (element.id && document.querySelector(`label[for="${element.id}"]`)?.textContent?.trim());
       return !label;
     }).map((element) => element.outerHTML.slice(0, 160));
-    return {
-      viewport: { width: window.innerWidth, height: window.innerHeight },
-      documentWidth: document.documentElement.scrollWidth,
-      unlabeled
-    };
+    return { viewport: { width: window.innerWidth, height: window.innerHeight }, documentWidth: document.documentElement.scrollWidth, unlabeled };
   });
   expect(accessibility.unlabeled).toEqual([]);
   await expect(page.getByRole("button", { name: "Preview & export" })).toBeVisible();
   await page.screenshot({ path: resolve(evidenceDir, "editor-narrow.png"), fullPage: true });
   await page.setViewportSize({ width: desktopViewport?.width ?? 1280, height: desktopViewport?.height ?? 900 });
-  await writeFile(resolve(evidenceDir, "accessibility-report.json"), JSON.stringify({
-    scope: "authenticated editor screens",
-    desktopViewport,
-    narrowViewport: accessibility.viewport,
-    narrowDocumentWidth: accessibility.documentWidth,
-    unlabeledInteractiveElements: accessibility.unlabeled,
-    keyboard: ["Enter on Add slide", "Enter on Remove selected", "Control+s"]
-  }, null, 2) + "\n", { mode: 0o640 });
+  await writeFile(resolve(evidenceDir, "accessibility-report.json"), JSON.stringify({ scope: "authenticated editor screens", desktopViewport, narrowViewport: accessibility.viewport, narrowDocumentWidth: accessibility.documentWidth, unlabeledInteractiveElements: accessibility.unlabeled, keyboard: ["Enter on Add slide", "Enter on Remove selected", "Control+s"] }, null, 2) + "\n", { mode: 0o640 });
   await recordGateEvidence([
-    ...["CH001-051", "CH001-052", "CH001-053", "CH001-054", "CH001-059"].map((id) => ({ id, path: hashReportPath, kind: "E2" as const, reference: "e2e:primary-journey" })),
+    ...["CH001-051", "CH001-052", "CH001-054", "CH001-059"].map((id) => ({ id, path: hashReportPath, kind: "E2" as const, reference: "e2e:primary-journey" })),
     { id: "CH001-061", path: resolve(evidenceDir, "accessibility-report.json"), kind: "E2" as const, reference: "e2e:primary-journey" }
   ]);
 });

@@ -14,13 +14,14 @@
     "build": "pnpm --filter @oss/contracts build && pnpm --filter @oss/db build && pnpm --filter @oss/storage build && pnpm --filter @oss/renderer build && pnpm --filter @oss/core build && pnpm --filter @oss/web build && pnpm --filter @oss/worker build",
     "start": "pnpm --filter @oss/web start",
     "lint": "eslint .",
-    "typecheck": "tsc -b tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json && tsc -p tests/tsconfig.json --noEmit",
     "test:unit": "vitest run --config vitest.config.ts tests/unit",
     "test:integration": "node --import tsx scripts/run-gated-check.ts integration",
     "test:e2e": "node --import tsx scripts/run-gated-check.ts e2e",
     "test:render": "node --import tsx scripts/run-gated-check.ts render",
     "test:security": "vitest run --config vitest.config.ts tests/security",
     "test:smoke": "node --import tsx scripts/run-gated-check.ts smoke",
+    "proof:ch001": "node --import tsx scripts/ch001-proof.ts",
     "verify:ch001": "node --import tsx scripts/verify-ch001.ts"
   },
   "dependencies": {

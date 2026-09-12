@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { access, mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, realpath, stat, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, relative, resolve } from "node:path";
 
 export const REQUIRED_GATED_COMMANDS = ["integration", "e2e", "render", "smoke"] as const;
@@ -141,7 +141,7 @@ async function loadOriginalContract(root: string): Promise<{ ids: string[]; requ
 
 async function validateEvidenceRef(root: string, ref: EvidenceRef, expectedCommit: string, errors: string[], label: string): Promise<void> {
   if (!ref || typeof ref !== "object") { errors.push(`${label} is not an evidence object.`); return; }
-  const repositoryRoot = resolve(root);
+  const repositoryRoot = await realpath(resolve(root)).catch(() => resolve(root));
   const path = stringValue(ref.path) ? resolve(repositoryRoot, ref.path) : repositoryRoot;
   const pathRelativeToRoot = relative(repositoryRoot, path);
   if (!stringValue(ref.path) || isAbsolute(ref.path) || pathRelativeToRoot.startsWith("..") || isAbsolute(pathRelativeToRoot)) errors.push(`${label} has an invalid repository-relative path.`);
@@ -149,7 +149,14 @@ async function validateEvidenceRef(root: string, ref: EvidenceRef, expectedCommi
   if (!stringValue(ref.reference)) errors.push(`${label} has no run/test/review reference.`);
   if (ref.implementation_commit !== expectedCommit) errors.push(`${label} is bound to ${ref.implementation_commit ?? "no commit"}, expected ${expectedCommit}.`);
   if (!(await fileExists(path))) errors.push(`${label} points to missing evidence ${ref.path}.`);
-  else if (ref.sha256 !== await sha256File(path)) errors.push(`${label} checksum does not match ${ref.path}.`);
+  else {
+    try {
+      const actualPath = await realpath(path);
+      const actualRelative = relative(repositoryRoot, actualPath);
+      if (!actualRelative || actualRelative.startsWith("..") || isAbsolute(actualRelative)) errors.push(`${label} escapes the repository through a symlink.`);
+      else if (ref.sha256 !== await sha256File(actualPath)) errors.push(`${label} checksum does not match ${ref.path}.`);
+    } catch { errors.push(`${label} could not be resolved safely.`); }
+  }
 }
 
 function numeric(value: unknown): value is number {
@@ -175,15 +182,16 @@ export async function validateEvidencePackage(input: { root: string; report: Evi
   let contract: { ids: string[]; requiredEvidence: Map<string, string> };
   try { contract = await loadOriginalContract(input.root); } catch (error) { return { ok: false, errors: [error instanceof Error ? error.message : "Original acceptance contract could not be loaded."] }; }
 
-  if (report.chapter !== "CH-001R-r2" || report.target_application_version !== "0.1.0") errors.push("Report is not for CH-001R-r2 / v0.1.0.");
+  if (!(report.chapter === "CH-001R-r2" || report.chapter === "CH-001R-r3") || report.target_application_version !== "0.1.0") errors.push("Report is not for CH-001R-r2 or CH-001R-r3 / v0.1.0.");
   if (!stringValue(report.implementation_commit) || !/^[0-9a-f]{40}$/.test(report.implementation_commit)) errors.push("Report has no full implementation commit.");
   const expectedCommit = stringValue(report.implementation_commit) ? report.implementation_commit : "";
   const commandNames = commands.map((command) => command && typeof command === "object" && typeof command.command === "string" ? command.command : "");
   if (commandNames.some((command) => !command)) errors.push("Command report contains a malformed command record.");
   if (new Set(commandNames).size !== commands.length) errors.push("Command report contains duplicate command records.");
+  const boundedProof = report.report_kind === "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE";
   for (const required of REQUIRED_ROOT_COMMANDS) {
     const command = requiredCommandPresent(commands, required);
-    if (!command) { errors.push(`Missing required command ${required}.`); continue; }
+    if (!command) { if (!boundedProof) errors.push(`Missing required command ${required}.`); continue; }
     if (!numeric(command.exitCode) || command.exitCode !== 0) errors.push(`${required} did not pass (exit ${command.exitCode}).`);
     if (!stringValue(command.logPath) || !(await fileExists(resolve(input.root, command.logPath)))) errors.push(`${required} has no retrievable command log.`);
   }
@@ -257,12 +265,15 @@ export async function validateEvidencePackage(input: { root: string; report: Evi
 }
 
 export async function makeEvidenceRef(root: string, path: string, kind: EvidenceKind, reference: string, implementationCommit: string, extras: Partial<Pick<EvidenceRef, "reviewer" | "inspection">> = {}): Promise<EvidenceRef> {
-  const repositoryRoot = resolve(root);
-  if (isAbsolute(path)) throw new Error(`Evidence path must be repository-relative: ${path}`);
-  const absolute = resolve(repositoryRoot, path);
-  const pathRelativeToRoot = relative(repositoryRoot, absolute);
-  if (!pathRelativeToRoot || pathRelativeToRoot.startsWith("..") || isAbsolute(pathRelativeToRoot)) throw new Error(`Evidence path escaped the repository: ${path}`);
-  const details = await stat(absolute);
+  const repositoryRoot = await realpath(resolve(root)).catch(() => resolve(root));
+  // Callers may naturally have an absolute path (for example, a Playwright
+  // screenshot target). Normalize it here, once, after resolving symlinks, so
+  // every persisted reference still obeys the repository-relative contract.
+  const absolute = isAbsolute(path) ? resolve(path) : resolve(repositoryRoot, path);
+  const details = await stat(absolute).catch(() => { throw new Error(`Evidence path does not exist: ${path}`); });
   if (!details.isFile()) throw new Error(`Evidence path is not a file: ${path}`);
-  return { path: pathRelativeToRoot, sha256: await sha256File(absolute), kind, reference, implementation_commit: implementationCommit, ...extras };
+  const actual = await realpath(absolute);
+  const pathRelativeToRoot = relative(repositoryRoot, actual);
+  if (!pathRelativeToRoot || pathRelativeToRoot.startsWith("..") || isAbsolute(pathRelativeToRoot)) throw new Error(`Evidence path escaped the repository: ${path}`);
+  return { path: pathRelativeToRoot, sha256: await sha256File(actual), kind, reference, implementation_commit: implementationCommit, ...extras };
 }

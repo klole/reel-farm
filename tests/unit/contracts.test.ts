@@ -49,7 +49,9 @@ describe("slide document contracts", () => {
     firstSlide.layoutVersion = "statement/999";
     expect(() => parseDocument(invalid)).toThrow(DocumentValidationError);
     const duplicate = createDefaultDocument();
-    duplicate.slides.push(structuredClone(duplicate.slides[0]));
+    const duplicateSlide = duplicate.slides[0];
+    if (!duplicateSlide) throw new Error("default slide missing");
+    duplicate.slides.push(structuredClone(duplicateSlide));
     expect(() => parseDocument(duplicate)).toThrow(DocumentValidationError);
   });
 
@@ -65,7 +67,9 @@ describe("slide document contracts", () => {
       focalPoint: { x: 0.5, y: 0.5 },
       backgroundColor: "#D8D2C8"
     };
-    const withImage = { ...document, slides: [{ ...document.slides[0], blocks: [image] }] };
+    const firstSlide = document.slides[0];
+    if (!firstSlide) throw new Error("default slide missing");
+    const withImage = { ...document, slides: [{ ...firstSlide, blocks: [image] }] } as SlideDocument;
     expect(() => assertDocumentAssets(withImage, new Map(), "workspace-a")).toThrow(DocumentValidationError);
     expect(() => assertDocumentAssets(withImage, new Map([[image.assetId ?? "", { id: image.assetId ?? "", workspaceId: "workspace-b", derivativeHash: "a".repeat(64), acceptanceState: "accepted" }]]), "workspace-a")).toThrow(DocumentValidationError);
     expect(() => assertDocumentAssets(withImage, new Map([[image.assetId ?? "", { id: image.assetId ?? "", workspaceId: "workspace-a", derivativeHash: "b".repeat(64), acceptanceState: "accepted" }]]), "workspace-a")).toThrow(DocumentValidationError);

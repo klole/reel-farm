@@ -1,7 +1,8 @@
 import { defineConfig } from "@playwright/test";
 import { resolve } from "node:path";
 
-const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? "artifacts/ch001r2/local");
+const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? "artifacts/ch001r3/local");
+const playwrightOutputDir = resolve(process.env.CH001_PLAYWRIGHT_OUTPUT_DIR ?? resolve(evidenceDir, "playwright-output"));
 const jsonReport = process.env.CH001_PLAYWRIGHT_REPORT;
 
 export default defineConfig({
@@ -12,7 +13,7 @@ export default defineConfig({
   workers: 1,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
-  outputDir: resolve(evidenceDir, "playwright-output"),
+  outputDir: playwrightOutputDir,
   reporter: jsonReport ? [["line"], ["json", { outputFile: jsonReport }]] : [["list"]],
   use: {
     baseURL: process.env.E2E_BASE_URL,

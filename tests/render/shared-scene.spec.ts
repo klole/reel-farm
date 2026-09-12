@@ -7,7 +7,7 @@ import { createDefaultDocument, makeCanvas, newId, reflowSlide, type ImageBlock,
 import { renderSlideHtml, sceneStyles } from "../../packages/renderer/src/index.ts";
 import { embeddedFontCss } from "../../packages/renderer/src/fonts.ts";
 
-const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? "artifacts/ch001r2/local");
+const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? "artifacts/ch001r3/local");
 
 test("shared renderer covers every layout and canvas preset in a real Chromium page", async ({ page }) => {
   await mkdir(evidenceDir, { recursive: true });
@@ -29,10 +29,11 @@ test("shared renderer covers every layout and canvas preset in a real Chromium p
       await page.setViewportSize({ width: canvas.width, height: canvas.height });
       await page.setContent(renderSlideHtml(document, slide, source, embeddedFontCss()), { waitUntil: "domcontentloaded" });
       const diagnostics = await page.evaluate(async () => {
-        await document.fonts.ready;
-        await Promise.all([document.fonts.load('400 16px "Inter"'), document.fonts.load('700 16px "Inter"'), document.fonts.load('400 16px "Source Serif 4"'), document.fonts.load('700 16px "Source Serif 4"')]);
-        const images = await Promise.all(Array.from(document.images).map(async (item) => { try { await item.decode(); } catch { /* state below remains false */ } return { complete: item.complete, width: item.naturalWidth, height: item.naturalHeight }; }));
-        return { fonts: [document.fonts.check('400 16px "Inter"'), document.fonts.check('700 16px "Inter"'), document.fonts.check('400 16px "Source Serif 4"'), document.fonts.check('700 16px "Source Serif 4"')], images, overflow: Array.from(document.querySelectorAll<HTMLElement>("[data-text-block]")).filter((node) => node.scrollHeight > node.clientHeight + 2).map((node) => node.dataset.textBlock) };
+        const browserDocument = window.document;
+        await browserDocument.fonts.ready;
+        await Promise.all([browserDocument.fonts.load('400 16px "Inter"'), browserDocument.fonts.load('700 16px "Inter"'), browserDocument.fonts.load('400 16px "Source Serif 4"'), browserDocument.fonts.load('700 16px "Source Serif 4"')]);
+        const images = await Promise.all(Array.from(browserDocument.images).map(async (item) => { try { await item.decode(); } catch { /* state below remains false */ } return { complete: item.complete, width: item.naturalWidth, height: item.naturalHeight }; }));
+        return { fonts: [browserDocument.fonts.check('400 16px "Inter"'), browserDocument.fonts.check('700 16px "Inter"'), browserDocument.fonts.check('400 16px "Source Serif 4"'), browserDocument.fonts.check('700 16px "Source Serif 4"')], images, overflow: Array.from(browserDocument.querySelectorAll<HTMLElement>("[data-text-block]")).filter((node) => node.scrollHeight > node.clientHeight + 2).map((node) => node.dataset.textBlock) };
       });
       expect(diagnostics.fonts.every(Boolean)).toBe(true);
       expect(diagnostics.images.every((item) => item.complete && item.width > 0 && item.height > 0)).toBe(true);

@@ -10,8 +10,13 @@ type ProcessResult = { exitCode: number; output: string; startedAt: string; ende
 const check = process.argv[2] as Check | undefined;
 const root = resolve(process.cwd());
 const runId = process.env.CH001_RUN_ID ?? "unscoped";
-const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? `artifacts/ch001r2/${runId}`);
-const implementationCommit = process.env.CH001_IMPLEMENTATION_COMMIT ?? await gitCommit();
+const evidenceDir = resolve(process.env.CH001_EVIDENCE_DIR ?? `artifacts/ch001r3/${runId}`);
+const actualImplementationCommit = await gitCommit();
+const implementationCommit = process.env.CH001_IMPLEMENTATION_COMMIT ?? actualImplementationCommit;
+
+if (!/^[0-9a-f]{40}$/.test(actualImplementationCommit) || !/^[0-9a-f]{40}$/.test(implementationCommit) || actualImplementationCommit !== implementationCommit) {
+  throw new Error(`CH-001 suite identity mismatch: checked out ${actualImplementationCommit}, requested ${implementationCommit}.`);
+}
 
 async function gitCommit(): Promise<string> {
   return new Promise((resolveCommit) => {

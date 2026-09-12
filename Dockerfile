@@ -6,6 +6,7 @@ COPY package.json pnpm-workspace.yaml pnpm-lock.yaml .npmrc tsconfig.json tsconf
 COPY apps ./apps
 COPY packages ./packages
 COPY scripts ./scripts
+COPY tests ./tests
 COPY migrations ./migrations
 RUN pnpm install --frozen-lockfile
 RUN mkdir -p /ms-playwright

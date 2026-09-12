@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { mkdtemp, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { Pool } from "pg";
 import sharp from "sharp";
 
@@ -22,9 +22,10 @@ describe("CH-001 disposable PostgreSQL integration", () => {
 
   it("keeps render intent and its outbox row in one committed transaction", async () => {
     const client = await pool.connect();
-    const ids = { user: `ch001-test-${randomUUID()}`, workspace: randomUUID(), project: randomUUID(), draft: randomUUID(), revision: randomUUID(), request: randomUUID(), outbox: randomUUID() };
+    const ids = { user: `ch001-test-${randomUUID()}`, sentinelUser: `ch001-sentinel-${randomUUID()}`, workspace: randomUUID(), project: randomUUID(), draft: randomUUID(), revision: randomUUID(), request: randomUUID(), outbox: randomUUID() };
     try {
       await client.query("BEGIN");
+      await client.query("INSERT INTO \"user\" (id, name, email) VALUES ($1, 'Synthetic Cleanup Owner', $2)", [ids.sentinelUser, `${ids.sentinelUser}@invalid.test`]);
       await client.query("INSERT INTO \"user\" (id, name, email) VALUES ($1, 'Synthetic Integration Owner', $2)", [ids.user, `${ids.user}@invalid.test`]);
       await client.query("INSERT INTO workspace (id, singleton_key, owner_user_id) VALUES ($1, $2, $3)", [ids.workspace, `ch001-${ids.workspace}`, ids.user]);
       await client.query("INSERT INTO project (id, workspace_id, name) VALUES ($1, $2, 'Synthetic integration project')", [ids.project, ids.workspace]);
@@ -42,10 +43,15 @@ describe("CH-001 disposable PostgreSQL integration", () => {
       const replay = await client.query("INSERT INTO save_mutation (draft_id, actor_user_id, mutation_id, payload_hash, revision_id) VALUES ($1, $2, $3, $4, $5) RETURNING mutation_id", [ids.draft, ids.user, `mutation-${ids.request}`, "c".repeat(64), ids.revision]);
       expect(replay.rows[0].mutation_id).toBe(`mutation-${ids.request}`);
       await expect(client.query("INSERT INTO save_mutation (draft_id, actor_user_id, mutation_id, payload_hash, revision_id) VALUES ($1, $2, $3, $4, $5)", [ids.draft, ids.user, `mutation-${ids.request}`, "c".repeat(64), ids.revision])).rejects.toThrow();
+      await client.query("BEGIN");
+      // workspace.owner_user_id is intentionally RESTRICT, so move ownership
+      // to a disposable sentinel before cascading the committed fixture.
+      await client.query("UPDATE workspace SET owner_user_id = $1 WHERE id = $2", [ids.sentinelUser, ids.workspace]);
+      await client.query("DELETE FROM workspace WHERE id = $1", [ids.workspace]);
+      await client.query("DELETE FROM \"user\" WHERE id IN ($1, $2)", [ids.user, ids.sentinelUser]);
+      await client.query("COMMIT");
     } finally {
       await client.query("ROLLBACK").catch(() => undefined);
-      await client.query("DELETE FROM workspace WHERE id = $1", [ids.workspace]).catch(() => undefined);
-      await client.query("DELETE FROM \"user\" WHERE id = $1", [ids.user]).catch(() => undefined);
       client.release();
     }
   });

@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, symlink, writeFile } from "node:fs/promises";
 import { mkdtemp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
@@ -31,16 +31,26 @@ describe("CH-001 fail-closed evidence validator", () => {
     await expect(validateEvidencePackage({ root, report })).resolves.toEqual({ ok: true, errors: [] });
   });
 
+  it("accepts an absolute inside-root writer path but rejects a symlink escape", async () => {
+    const { root } = await fixture();
+    const absolute = await makeEvidenceRef(root, resolve(root, "evidence.txt"), "E2", "unit:absolute-writer-path", testCommit);
+    expect(absolute.path).toBe("evidence.txt");
+    const outside = await mkdtemp(resolve(tmpdir(), "oss-ch001-evidence-outside-"));
+    await writeFile(resolve(outside, "outside.txt"), "outside evidence\n");
+    await symlink(resolve(outside, "outside.txt"), resolve(root, "escape.txt"));
+    await expect(makeEvidenceRef(root, "escape.txt", "E2", "unit:symlink-escape", testCommit)).rejects.toThrow(/escaped/i);
+  });
+
   it.each([
     ["71 gates", (report: EvidencePackage) => { report.gates = report.gates.slice(0, 71); }],
-    ["duplicate gate", (report: EvidencePackage) => { report.gates[1] = { ...report.gates[0], id: report.gates[0].id }; }],
-    ["unknown gate", (report: EvidencePackage) => { report.gates[0] = { ...report.gates[0], id: "CH001-999" }; }],
-    ["NOT_RUN gate", (report: EvidencePackage) => { report.gates[0] = { ...report.gates[0], status: "NOT_RUN", actual_evidence: [], reason: "not executed" }; }],
-    ["zero-test suite", (report: EvidencePackage) => { report.suites[0] = { ...report.suites[0], discovered: 0, executed: 0 }; }],
-    ["failing child command", (report: EvidencePackage) => { report.commands[0] = { ...report.commands[0], exitCode: 1 }; }],
-    ["stale suite", (report: EvidencePackage) => { report.suites[0] = { ...report.suites[0], implementation_commit: "b".repeat(40) }; }],
-    ["unclosed finding", (report: EvidencePackage) => { report.findings[0] = { ...report.findings[0], status: "OPEN" }; }],
-    ["missing visual inspection", (report: EvidencePackage) => { report.gates[59] = { ...report.gates[59], actual_evidence: [report.gates[59].actual_evidence[0]] }; }],
+    ["duplicate gate", (report: EvidencePackage) => { const first = report.gates[0]; if (!first) throw new Error("missing gate"); report.gates[1] = { ...first, id: first.id }; }],
+    ["unknown gate", (report: EvidencePackage) => { const first = report.gates[0]; if (!first) throw new Error("missing gate"); report.gates[0] = { ...first, id: "CH001-999" }; }],
+    ["NOT_RUN gate", (report: EvidencePackage) => { const first = report.gates[0]; if (!first) throw new Error("missing gate"); report.gates[0] = { ...first, status: "NOT_RUN", actual_evidence: [], reason: "not executed" }; }],
+    ["zero-test suite", (report: EvidencePackage) => { const first = report.suites[0]; if (!first) throw new Error("missing suite"); report.suites[0] = { ...first, discovered: 0, executed: 0 }; }],
+    ["failing child command", (report: EvidencePackage) => { const first = report.commands[0]; if (!first) throw new Error("missing command"); report.commands[0] = { ...first, exitCode: 1 }; }],
+    ["stale suite", (report: EvidencePackage) => { const first = report.suites[0]; if (!first) throw new Error("missing suite"); report.suites[0] = { ...first, implementation_commit: "b".repeat(40) }; }],
+    ["unclosed finding", (report: EvidencePackage) => { const first = report.findings[0]; if (!first) throw new Error("missing finding"); report.findings[0] = { ...first, status: "OPEN" }; }],
+    ["missing visual inspection", (report: EvidencePackage) => { const gate = report.gates[59]; if (!gate) throw new Error("missing gate"); const evidence = gate.actual_evidence[0]; if (!evidence) throw new Error("missing evidence"); report.gates[59] = { ...gate, actual_evidence: [evidence] }; }],
     ["malformed report arrays", (report: EvidencePackage) => { report.commands = null as unknown as EvidencePackage["commands"]; report.suites = [null as unknown as EvidencePackage["suites"][number]]; report.gates = [null as unknown as EvidencePackage["gates"][number]]; report.findings = [null as unknown as EvidencePackage["findings"][number]]; }]
   ])("rejects %s", async (_name, mutate) => {
     const { root, report } = await fixture();
