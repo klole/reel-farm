@@ -20,6 +20,7 @@
     "test:e2e": "node --import tsx scripts/run-gated-check.ts e2e",
     "test:render": "node --import tsx scripts/run-gated-check.ts render",
     "test:security": "vitest run --config vitest.config.ts tests/security",
+    "test:ci": "node --test tests/ci",
     "test:smoke": "node --import tsx scripts/run-gated-check.ts smoke",
     "proof:ch001": "node --import tsx scripts/ch001-proof.ts",
     "verify:ch001": "node --import tsx scripts/verify-ch001.ts"

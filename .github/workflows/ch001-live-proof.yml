@@ -22,9 +22,15 @@ jobs:
     env:
       REQUESTED_SHA: ${{ inputs.implementation_sha }}
       CI: "true"
-      CH001_RUN_ID: r3-${{ github.run_id }}-${{ github.run_attempt }}
+      CH001_RUN_ID: r4-${{ github.run_id }}-${{ github.run_attempt }}
+      CH001_WORKFLOW_SHA: ${{ github.workflow_sha }}
+      CH001_EVIDENCE_ROOT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/proof
+      CI_BOOTSTRAP_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/bootstrap-result.json
+      CI_RESULT_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/ci-result.json
+      CI_PROOF_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/proof/public/proof-result.json
     steps:
       - name: Validate dispatch and runner class assumptions
+        id: validate_dispatch
         env:
           REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
         run: |
@@ -32,7 +38,44 @@ jobs:
           [[ "$REPOSITORY_PRIVATE" == "false" ]] || { echo "This proof is approved only for the public standard-runner path." >&2; exit 1; }
           [[ "$REQUESTED_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "A full approved implementation SHA is required." >&2; exit 1; }
 
+          fallback_public="$RUNNER_TEMP/ch001r4/$CH001_RUN_ID/bootstrap/public"
+          mkdir -p "$fallback_public"
+          if command -v node >/dev/null 2>&1; then
+            node -e '
+              const fs = require("node:fs");
+              const isSha = (value) => /^[0-9a-f]{40}$/.test(value ?? "");
+              const isNumber = (value) => /^\d+$/.test(value ?? "");
+              const report = {
+                schema_version: 1,
+                record_kind: "CI_BOOTSTRAP_OBSERVATION",
+                phase: "CH-001R-r4",
+                repository: process.env.GITHUB_REPOSITORY ?? "klole/reel-farm",
+                run_id: isNumber(process.env.GITHUB_RUN_ID) ? Number(process.env.GITHUB_RUN_ID) : null,
+                run_attempt: isNumber(process.env.GITHUB_RUN_ATTEMPT) ? Number(process.env.GITHUB_RUN_ATTEMPT) : null,
+                run_key: process.env.CH001_RUN_ID ?? null,
+                requested_implementation_sha: isSha(process.env.REQUESTED_SHA) ? process.env.REQUESTED_SHA : null,
+                actual_checkout_sha: null,
+                workflow_definition_sha: isSha(process.env.CH001_WORKFLOW_SHA) ? process.env.CH001_WORKFLOW_SHA : null,
+                bootstrap_status: "NOT_RUN",
+                failed_stage: null,
+                bootstrap_exit_code: null,
+                proof_invoked: false,
+                proof_exit_code: null,
+                application_acceptance: false,
+                accepted_application_version: "none",
+                stages: [],
+                started_at: new Date().toISOString(),
+                ended_at: null
+              };
+              fs.writeFileSync(process.argv[1], `${JSON.stringify(report, null, 2)}\n`, { mode: 0o640 });
+            ' "$fallback_public/bootstrap-result.json"
+          else
+            printf '%s\n' '{"schema_version":1,"record_kind":"CI_BOOTSTRAP_OBSERVATION","phase":"CH-001R-r4","repository":"klole/reel-farm","run_id":null,"run_attempt":null,"run_key":null,"requested_implementation_sha":null,"actual_checkout_sha":null,"workflow_definition_sha":null,"bootstrap_status":"NOT_RUN","failed_stage":null,"bootstrap_exit_code":null,"proof_invoked":false,"proof_exit_code":null,"application_acceptance":false,"accepted_application_version":"none","stages":[],"started_at":null,"ended_at":null}' > "$fallback_public/bootstrap-result.json"
+          fi
+          printf 'Bounded CH-001R-r4 live proof; not v0.1 acceptance.\nImplementation: %s\nWorkflow definition: %s\nRun: %s\n' "$REQUESTED_SHA" "$CH001_WORKFLOW_SHA" "$CH001_RUN_ID" > "$fallback_public/dispatch.txt"
+
       - name: Checkout approved implementation
+        id: checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: klole/reel-farm
@@ -40,71 +83,263 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Confirm exact committed source identity
+      - name: Confirm exact committed source identity and initialize evidence
+        id: identity
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$REQUESTED_SHA"
+          actual_sha="$(git rev-parse HEAD)"
+          test "$actual_sha" = "$REQUESTED_SHA"
           git cat-file -e "$REQUESTED_SHA^{commit}"
           git merge-base --is-ancestor "$REQUESTED_SHA" origin/main
           test -z "$(git status --porcelain --untracked-files=no)"
-          echo "CH001_IMPLEMENTATION_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-          echo "CH001_WORKFLOW_SHA=${{ github.workflow_sha }}" >> "$GITHUB_ENV"
-          mkdir -p "artifacts/ch001r3/$CH001_RUN_ID/public"
-          printf 'Bounded CH-001R-r3 live proof; not v0.1 acceptance.\nImplementation: %s\nWorkflow definition: %s\nRun: %s\n' "$REQUESTED_SHA" "${{ github.workflow_sha }}" "$CH001_RUN_ID" > "artifacts/ch001r3/$CH001_RUN_ID/public/dispatch.txt"
+          workflow_blob_sha="$(git rev-parse "$CH001_WORKFLOW_SHA:.github/workflows/ch001-live-proof.yml")"
+          workflow_file_sha256="$(sha256sum .github/workflows/ch001-live-proof.yml | awk '{print $1}')"
+
+          mkdir -p "$(dirname "$CI_BOOTSTRAP_REPORT")" "$CH001_EVIDENCE_ROOT/public"
+          export CH001_IMPLEMENTATION_COMMIT="$actual_sha"
+          export CH001_WORKFLOW_BLOB_SHA="$workflow_blob_sha"
+          export CH001_WORKFLOW_FILE_SHA256="$workflow_file_sha256"
+          node scripts/ci/ci-result.mjs init --report "$CI_BOOTSTRAP_REPORT"
+          printf 'Bounded CH-001R-r4 live proof; not v0.1 acceptance.\nImplementation: %s\nWorkflow definition: %s\nWorkflow blob: %s\nRun: %s\n' "$REQUESTED_SHA" "$CH001_WORKFLOW_SHA" "$workflow_blob_sha" "$CH001_RUN_ID" > "$(dirname "$CI_BOOTSTRAP_REPORT")/dispatch.txt"
+
+          {
+            printf 'CH001_IMPLEMENTATION_COMMIT=%s\n' "$actual_sha"
+            printf 'CH001_WORKFLOW_BLOB_SHA=%s\n' "$workflow_blob_sha"
+            printf 'CH001_WORKFLOW_FILE_SHA256=%s\n' "$workflow_file_sha256"
+          } >> "$GITHUB_ENV"
 
       - name: Set up project-pinned Node
+        id: setup_node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: .nvmrc
 
-      - name: Install frozen project and pinned browser dependencies
+      - name: Run dependency-free CI repair regressions
+        id: ci_helper_tests
+        if: ${{ success() }}
         run: |
           set -euo pipefail
-          corepack enable
-          test "$(pnpm --version)" = "12.3.4"
-          pnpm install --frozen-lockfile
-          pnpm exec playwright install --with-deps chromium
+          stage_log="$RUNNER_TEMP/ch001r4-ci-helper-regressions.log"
+          set +e
+          node --test tests/ci 2>&1 | tee "$stage_log"
+          stage_exit=${PIPESTATUS[0]}
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name ci-helper-regressions --exit-code "$stage_exit" --log-file "$stage_log"
+          rm -f "$stage_log"
+          exit "$stage_exit"
+
+      - name: Bootstrap checked native pnpm
+        id: bootstrap
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r4-native-pnpm.log"
+          stage_report="$RUNNER_TEMP/ch001r4-native-pnpm.json"
+          native_destination="$RUNNER_TEMP/ch001r4-pnpm/$CH001_RUN_ID"
+          set +e
+          native_bin_dir="$(node scripts/ci/pnpm-bootstrap.mjs --destination "$native_destination" --report "$stage_report" --print-bin-dir 2>"$stage_log")"
+          stage_exit=$?
+          resolved_path=""
+          native_version=""
+          node_version="$(node --version 2>>"$stage_log")"
+          if [[ "$stage_exit" -eq 0 ]]; then
+            export PATH="$native_bin_dir:$PATH"
+            hash -r
+            resolved_path="$(command -v pnpm 2>>"$stage_log")"
+            if [[ "$resolved_path" != "$native_bin_dir/pnpm" ]]; then
+              printf 'Expected verified native pnpm first on PATH; resolved %s\n' "$resolved_path" >> "$stage_log"
+              stage_exit=1
+            fi
+            native_version="$(pnpm --version 2>>"$stage_log")"
+            version_exit=$?
+            if [[ "$version_exit" -ne 0 || "$native_version" != "12.3.4" ]]; then
+              printf 'Verified pnpm version check failed: %s (exit %s)\n' "$native_version" "$version_exit" >> "$stage_log"
+              stage_exit=1
+            fi
+          fi
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name native-pnpm-bootstrap --exit-code "$stage_exit" --detail-file "$stage_report" --log-file "$stage_log" --meta pnpm_path="$resolved_path" --meta pnpm_version="$native_version" --meta node_version="$node_version"
+          rm -f "$stage_log" "$stage_report"
+          exit "$stage_exit"
+
+      - name: Install frozen project dependencies
+        id: project_install
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r4-project-install.log"
+          lock_before="$(sha256sum pnpm-lock.yaml | awk '{print $1}')"
+          set +e
+          pnpm install --frozen-lockfile 2>&1 | tee "$stage_log"
+          stage_exit=${PIPESTATUS[0]}
+          lock_after="$(sha256sum pnpm-lock.yaml | awk '{print $1}')"
+          tracked_after="$(git status --porcelain --untracked-files=no)"
+          if [[ "$lock_before" != "$lock_after" ]]; then
+            printf 'Frozen install changed pnpm-lock.yaml; before=%s after=%s\n' "$lock_before" "$lock_after" >> "$stage_log"
+            if [[ "$stage_exit" -eq 0 ]]; then stage_exit=1; fi
+          fi
+          if [[ -n "$tracked_after" ]]; then
+            printf 'Frozen install changed tracked files:\n%s\n' "$tracked_after" >> "$stage_log"
+            if [[ "$stage_exit" -eq 0 ]]; then stage_exit=1; fi
+          fi
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name project-install --exit-code "$stage_exit" --log-file "$stage_log" --meta lockfile_sha_before="$lock_before" --meta lockfile_sha_after="$lock_after"
+          rm -f "$stage_log"
+          exit "$stage_exit"
+
+      - name: Install project-pinned managed Chromium
+        id: browser_install
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r4-browser-install.log"
+          set +e
+          pnpm exec playwright install --with-deps chromium 2>&1 | tee "$stage_log"
+          stage_exit=${PIPESTATUS[0]}
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name browser-install --exit-code "$stage_exit" --log-file "$stage_log"
+          rm -f "$stage_log"
+          exit "$stage_exit"
 
       - name: Probe Docker daemon and Compose
+        id: docker_probe
+        if: ${{ success() }}
         continue-on-error: true
         run: |
           set -euo pipefail
-          docker version
-          docker info >/dev/null
-          docker compose version
+          stage_log="$RUNNER_TEMP/ch001r4-docker-probe.log"
+          probe_exit=0
+          set +e
+          docker version 2>&1 | tee "$stage_log"
+          command_exit=${PIPESTATUS[0]}
+          if [[ "$command_exit" -ne 0 && "$probe_exit" -eq 0 ]]; then probe_exit="$command_exit"; fi
+          docker info >/dev/null 2> >(tee -a "$stage_log" >&2)
+          command_exit=$?
+          if [[ "$command_exit" -ne 0 && "$probe_exit" -eq 0 ]]; then probe_exit="$command_exit"; fi
+          docker compose version 2>&1 | tee -a "$stage_log"
+          command_exit=${PIPESTATUS[0]}
+          if [[ "$command_exit" -ne 0 && "$probe_exit" -eq 0 ]]; then probe_exit="$command_exit"; fi
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name docker-preflight --blocking false --exit-code "$probe_exit" --log-file "$stage_log"
+          rm -f "$stage_log"
+          exit "$probe_exit"
 
       - name: Execute bounded live proof
         id: proof
+        if: ${{ always() && steps.ci_helper_tests.outcome == 'success' && steps.bootstrap.outcome == 'success' && steps.project_install.outcome == 'success' && steps.browser_install.outcome == 'success' }}
         run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r4-proof-coordinator.log"
           set +e
-          pnpm proof:ch001
-          proof_exit=$?
-          echo "exit_code=$proof_exit" >> "$GITHUB_OUTPUT"
+          pnpm proof:ch001 2>&1 | tee "$stage_log"
+          proof_exit=${PIPESTATUS[0]}
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name bounded-proof --blocking false --proof-invoked true --proof-report "$CI_PROOF_REPORT" --exit-code "$proof_exit" --log-file "$stage_log"
+          rm -f "$stage_log"
           exit 0
 
-      - name: Upload sanitized evidence on success or failure
+      - name: Finalize dependency-free CI result
+        id: finalize
+        if: ${{ always() }}
+        env:
+          CI_CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
+          CI_IDENTITY_OUTCOME: ${{ steps.identity.outcome }}
+          CI_NODE_SETUP_OUTCOME: ${{ steps.setup_node.outcome }}
+          CI_HELPER_TESTS_OUTCOME: ${{ steps.ci_helper_tests.outcome }}
+          CI_NATIVE_BOOTSTRAP_OUTCOME: ${{ steps.bootstrap.outcome }}
+          CI_PROJECT_INSTALL_OUTCOME: ${{ steps.project_install.outcome }}
+          CI_BROWSER_INSTALL_OUTCOME: ${{ steps.browser_install.outcome }}
+          CI_DOCKER_PROBE_OUTCOME: ${{ steps.docker_probe.outcome }}
+          CI_PROOF_OUTCOME: ${{ steps.proof.outcome }}
+        run: |
+          set +e
+          finalizer_exit=0
+          if [[ -f scripts/ci/ci-result.mjs && -f "$CI_BOOTSTRAP_REPORT" ]]; then
+            node scripts/ci/ci-result.mjs capture-outcomes --report "$CI_BOOTSTRAP_REPORT"
+            capture_exit=$?
+            node scripts/ci/ci-result.mjs finalize --report "$CI_BOOTSTRAP_REPORT"
+            finalize_exit=$?
+            if [[ "$capture_exit" -ne 0 || "$finalize_exit" -ne 0 ]]; then finalizer_exit=1; fi
+          else
+            echo 'CI result helper or checked-out bootstrap report was unavailable.' >&2
+            finalizer_exit=1
+          fi
+          printf 'CI_FINALIZE_EXIT=%s\n' "$finalizer_exit" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Upload sanitized public evidence
+        id: upload_evidence
         if: ${{ always() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ch001-live-proof-${{ github.run_id }}-${{ github.run_attempt }}
-          path: artifacts/ch001r3/r3-${{ github.run_id }}-${{ github.run_attempt }}/public/
+          path: |
+            artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/
+            artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/proof/public/
+            ${{ runner.temp }}/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Publish bounded-proof summary and preserve exit semantics
+      - name: Record artifact delivery outcome
+        id: record_artifact
+        if: ${{ always() }}
+        env:
+          ARTIFACT_UPLOAD_OUTCOME: ${{ steps.upload_evidence.outcome }}
+          ARTIFACT_ID: ${{ steps.upload_evidence.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.upload_evidence.outputs.artifact-digest }}
+          ARTIFACT_URL: ${{ steps.upload_evidence.outputs.artifact-url }}
+          ARTIFACT_NAME: ch001-live-proof-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set +e
+          record_exit=0
+          if [[ -f scripts/ci/ci-result.mjs && -f "$CI_BOOTSTRAP_REPORT" ]]; then
+            node scripts/ci/ci-result.mjs record-artifact --report "$CI_BOOTSTRAP_REPORT"
+            record_exit=$?
+          else
+            record_exit=1
+          fi
+          printf 'CI_ARTIFACT_RECORD_EXIT=%s\n' "$record_exit" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Publish bounded-proof summary
+        id: summary
         if: ${{ always() }}
         run: |
-          set -euo pipefail
-          proof_exit='${{ steps.proof.outputs.exit_code }}'
-          proof_exit="${proof_exit:-2}"
-          {
-            echo "## CH-001R-r3 bounded live proof"
-            echo
-            echo "Implementation: `$REQUESTED_SHA`"
-            echo "Workflow definition: `${{ github.workflow_sha }}`"
-            echo "Run: `$CH001_RUN_ID`"
-            echo "Coordinator exit: `$proof_exit`"
-            echo "Application acceptance: `false`"
-            echo "Scope excludes providers, publishing, release, and v0.2."
-          } >> "$GITHUB_STEP_SUMMARY"
-          [[ "$proof_exit" == "0" ]] || exit "$proof_exit"
+          set +e
+          summary_exit=1
+          if [[ -f scripts/ci/ci-result.mjs && -f "$CI_BOOTSTRAP_REPORT" && -f "$CI_RESULT_REPORT" ]]; then
+            node scripts/ci/ci-result.mjs summary --report "$CI_BOOTSTRAP_REPORT"
+            summary_exit=$?
+            node scripts/ci/ci-result.mjs record-summary --report "$CI_BOOTSTRAP_REPORT" --exit-code "$summary_exit"
+            record_exit=$?
+          else
+            {
+              printf '%s\n\n' '## CH-001R-r4 bounded CI proof'
+              printf 'Implementation: `%s`\n' "${REQUESTED_SHA:-unknown}"
+              printf 'Workflow definition: `%s`\n' "${CH001_WORKFLOW_SHA:-unknown}"
+              printf 'Run: `%s`\n' "${CH001_RUN_ID:-unknown}"
+              printf 'Proof invoked: `%s`\n' 'false'
+              printf 'Coordinator exit: `%s`\n' 'not-run'
+              printf 'Application acceptance: `%s`\n' 'false'
+            } >> "$GITHUB_STEP_SUMMARY"
+            record_exit=1
+          fi
+          printf 'CI_SUMMARY_RECORD_EXIT=%s\n' "${record_exit:-1}" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Enforce captured bounded result
+        id: verdict
+        if: ${{ always() }}
+        run: |
+          set +e
+          verdict_exit=1
+          if [[ -f scripts/ci/ci-result.mjs && -f "$CI_BOOTSTRAP_REPORT" && -f "$CI_RESULT_REPORT" ]]; then
+            node scripts/ci/ci-result.mjs verdict --report "$CI_BOOTSTRAP_REPORT"
+            verdict_exit=$?
+          else
+            echo 'No complete dependency-free CI result exists; failing closed.' >&2
+          fi
+          if [[ "${CI_FINALIZE_EXIT:-1}" != "0" || "${CI_ARTIFACT_RECORD_EXIT:-1}" != "0" || "${CI_SUMMARY_RECORD_EXIT:-1}" != "0" ]]; then
+            verdict_exit=1
+          fi
+          exit "$verdict_exit"
