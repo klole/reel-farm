@@ -1,0 +1,49 @@
+CH-001R-r7 workflow validation — final T7 source
+T7: 6b02857401a9b1e81e1bd36d5a4418f90903adcb
+T7 tree: fdbe7da15964659d4e2514580f6606f5731790ce
+Workflow blob: 2070e80be5355537631a7b2cf833eeb0a6cf28cb
+Workflow SHA-256: 98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51
+Validator: actionlint 1.7.7
+Executable SHA-256: 9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c
+Archive SHA-256: 023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+Flags: -shellcheck= -pyflakes=
+
+== R7-T01 complete frozen T6 negative control ==
+Source: git show e0ea57665d00a643a8c392dfb9f6a84a723729af:.github/workflows/ch001-live-proof.yml
+Input SHA-256: e1e4f6e5ebfa61f2aae3c04bcf985d12407a8f921dfeaa34dae01d103d01af85
+Command: ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint node scripts/ci/lint-workflow.mjs --file <temporary git-show T6 workflow>
+Started: 2026-09-12T06:17:30Z
+Ended: 2026-09-12T06:17:30Z
+Exit: 1 (expected; semantic validation rejected the historical definition)
+Diagnostic: line 39:36: context "runner" is not allowed here. Available contexts were github, inputs, matrix, needs, secrets, strategy, vars.
+Historical expression: CH001_SANDBOX_STATE_DIR: ${{ runner.temp }}/ch001r6/${{ github.run_id }}-${{ github.run_attempt }}/sandbox
+
+== R7-T02 complete repaired workflow ==
+Command: ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint pnpm lint:workflow
+Started: 2026-09-12T06:16:32.010Z
+Ended: 2026-09-12T06:16:32.205Z
+Exit: 0
+Input: .github/workflows/ch001-live-proof.yml
+Input SHA-256: 98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51
+
+== R7-T04 semantic fixtures ==
+Command: ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint node scripts/ci/lint-workflow.mjs --file tests/fixtures/workflow-validation/invalid-steps.yml
+Input SHA-256: d9e46dc2bc0c8a58ab8f48004ea78d6c01fb9053f9b600febe829142d2f4630f
+Exit: 1 (expected)
+Diagnostic: line 10:24: property "missing" is not defined in object type; nonexistent steps.missing was rejected.
+
+Command: ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint node scripts/ci/lint-workflow.mjs --file tests/fixtures/workflow-validation/valid-runtime.yml
+Input SHA-256: d00480daac04778f913214bd5442207f58912a02d1f46e7c7fb63e8eb58d42ce
+Exit: 0
+
+Command: ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint node scripts/ci/lint-workflow.mjs --file tests/fixtures/workflow-validation/invalid-yaml.yml
+Input SHA-256: 2f4e03d41ee4194b6bde26799a212a3f2cfe18125df5f4dfd61a1e91b48ee67d
+Exit: 1 (expected)
+Diagnostic: line 1:0: could not parse as YAML: did not find expected ',' or ']'.
+
+== Validator regression command ==
+Command: ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint node tests/ci/workflow-validation.test.mjs
+Exit: 0
+Cases: 10/10 individual R7 validation cases passed, including missing tool, wrong version, nonzero validator, zero input, invalid YAML, T6 negative control, repaired workflow, runtime transfer, literal data, and pin/wiring checks.
+
+The validator's nonzero negative-control exits are expected subject outcomes; they are not application or hosted-proof failures.

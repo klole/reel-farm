@@ -1,0 +1,53 @@
+{
+  "record_kind": "CH-001R-R7_CHECKLIST",
+  "phase": "CH-001R-r7",
+  "implementation_commit": "6b02857401a9b1e81e1bd36d5a4418f90903adcb",
+  "implementation_tree": "fdbe7da15964659d4e2514580f6606f5731790ce",
+  "parent_packet": "9fb748ef6b22a21ed24a8a5fa66e4ec1463a049a",
+  "evidence_commit": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "checks": [
+    {"id": "R7-T01", "status": "PASS", "actual_evidence": ["workflow-validation.json", "workflow-validation.log"], "reason": "Real actionlint rejected the complete frozen T6 bytes with the documented job-level runner context diagnostic."},
+    {"id": "R7-T02", "status": "PASS", "actual_evidence": ["workflow-validation.json", "workflow-validation.log"], "reason": "Real actionlint accepted the complete repaired T7 workflow with expression/context checks enabled."},
+    {"id": "R7-T03", "status": "PASS", "actual_evidence": ["workflow-validation.test.mjs", "workflow-validation.log"], "reason": "Executable wrapper controls rejected missing, wrong-version, nonzero, zero-input, and malformed-workflow cases."},
+    {"id": "R7-T04", "status": "PASS", "actual_evidence": ["workflow-validation.json", "tests/fixtures/workflow-validation/invalid-steps.yml", "tests/fixtures/workflow-validation/valid-runtime.yml"], "reason": "Actual semantic validator rejected the nonexistent steps reference and accepted the supported runtime-context fixture."},
+    {"id": "R7-T05", "status": "PASS", "actual_evidence": ["workflow-validation.test.mjs"], "reason": "Separate child processes observed the same run/attempt-owned absolute path for qualification and cleanup."},
+    {"id": "R7-T06", "status": "PASS", "actual_evidence": ["workflow-validation.test.mjs"], "reason": "Spaces and shell-looking path data remained literal; the environment file was never sourced or evaluated."},
+    {"id": "R7-T07", "status": "PASS", "actual_evidence": ["workflow-validation.test.mjs"], "reason": "Missing, relative, multiline, and invalid-ID inputs failed before changing existing environment entries."},
+    {"id": "R7-T08", "status": "PASS", "actual_evidence": ["workflow-validation.test.mjs", "tests/ci/proof-boundary.test.mjs"], "reason": "Initialization created no proof/policy tree and preserved prior evidence; r5 ownership tests passed."},
+    {"id": "R7-T09", "status": "PASS", "actual_evidence": ["workflow-validation.test.mjs", "tests/ci/sandbox.test.mjs"], "reason": "Boolean opt-in, public/manual guard, exact sandbox defaults, non-root worker, and always cleanup wiring remained intact."},
+    {"id": "R7-T10", "status": "PASS", "actual_evidence": ["commands.log", "tests/ci/ci-repair.test.mjs", "tests/ci/proof-boundary.test.mjs", "tests/ci/sandbox.test.mjs"], "reason": "Existing r4/r5/r6 suites passed with direct counts 10/12/18; aggregate test:ci passed 4/4 files."},
+    {"id": "R7-T11", "status": "PASS", "actual_evidence": ["source-identities.json", "workflow-validation.test.mjs"], "reason": "Only package scripts changed; dependency pins, lockfile, native manifest, Node, Playwright, Docker and Compose bytes were unchanged."},
+    {"id": "R7-T12", "status": "PASS", "actual_evidence": ["source-identities.json", "commands.log", "README.md"], "reason": "Final checks were run against T7 and E7 is evidence/state-only; tracked tree was clean and unrelated untracked files were preserved."},
+    {"id": "R7-T13", "status": "NOT_RUN", "actual_evidence": [], "execution_owner": "router", "reason": "Publication-tree fetch and W7 definition verification require the authorized router."},
+    {"id": "R7-T14", "status": "NOT_RUN", "actual_evidence": [], "execution_owner": "router", "reason": "No workflow dispatch was submitted from the editing workspace."},
+    {"id": "R7-T15", "status": "NOT_RUN", "actual_evidence": [], "execution_owner": "router", "reason": "No new hosted run, job, artifact, sandbox measurement, worker result, or proof result exists."},
+    {"id": "R7-T16", "status": "PASS", "actual_evidence": ["dispatch-rejection-history.json", "README.md"], "execution_owner": "luna", "reason": "Historical rejection and validation-only record are separated, no identifiers were invented, and acceptance remains false."}
+  ],
+  "hosted": {
+    "publication_verified": "NOT_RUN",
+    "workflow_dispatch_submitted": false,
+    "request_outcome": null,
+    "run_id": null,
+    "run_attempt": null,
+    "job_id": null,
+    "artifact_id": null,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "sandbox_requested": null,
+    "sandbox_measured_qualified": null,
+    "worker_qualified": "NOT_RUN",
+    "policy_cleanup": "NOT_RUN"
+  },
+  "scope": {
+    "providers": false,
+    "publishing": false,
+    "application_rewrite": false,
+    "v0_2_work": false,
+    "sandbox_policy_relaxation": false,
+    "old_workflow_rerun": false,
+    "fresh_dispatch_count": 0
+  }
+}

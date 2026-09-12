@@ -1,4 +1,4 @@
-# Project state — CH-001R-r6 checkpoint
+# Project state — CH-001R-r7 checkpoint
 
 **Last updated:** 2026-09-12 UTC
 **State:** `awaiting_review`
@@ -7,11 +7,11 @@
 
 ## Authority and traceability
 
-- Active chapter: `CH-001R-r6` hosted Chromium sandbox qualification continuation; target remains the unchanged v0.1.0 bounded-proof contract, not full acceptance.
-- Current packet P6: `8fa06ddae978eb6ca8f946e77459810a7bc68cb3`; tree `c444fe48b83f6aee962c7fccb8a16562a2a3cf56`.
-- Current T6 implementation: `e0ea57665d00a643a8c392dfb9f6a84a723729af`; tree `7a5ada37e8ee88a1617ff19039fa116ced44e9c5`; parent P6.
-- Current T6 workflow: blob `f1ddbbfc0cbaa4602663428d569b61dbf12bd068`; file SHA-256 `e1e4f6e5ebfa61f2aae3c04bcf985d12407a8f921dfeaa34dae01d103d01af85`.
-- Current E6 evidence/handoff is being prepared against T6; it must remain evidence/state-only and must not alter the implementation identity.
+- Active chapter: `CH-001R-r7` workflow validation and dispatch repair; target remains the unchanged v0.1.0 bounded-proof contract, not full acceptance.
+- Current packet P7: `9fb748ef6b22a21ed24a8a5fa66e4ec1463a049a`; tree `ea70e7e6b11cc2c44c7e4213fe06c369d2fea9dc`.
+- Current T7 implementation: `6b02857401a9b1e81e1bd36d5a4418f90903adcb`; tree `fdbe7da15964659d4e2514580f6606f5731790ce`; descendant of P7/T6/E6.
+- Current T7 workflow: blob `2070e80be5355537631a7b2cf833eeb0a6cf28cb`; file SHA-256 `98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51`.
+- E7 is the evidence/state-only commit containing the r7 handoff and records; its full SHA is returned externally after commit and is not embedded self-referentially.
 - North Star baseline: `architect/Luna_CH001_v0.1.0_Pack/reference/north-star/NORTH_STAR.md` SHA-256 `3175b197c221588fa92273c9f8403ecbcc2357fe486f63a97365205d951ad80d`.
 - Starting source / packet P4: `a86c3ace9ad8bf1ec941565ce7dbc4e4d734b4e2` (P4 is based on prior E3 `4cf020317cfc2e8755f35ee6da10f7397c8676f2`).
 - T4 implementation: `69b784526260e3e5acf133da8d1a2fb33447d20f`; tree `55fdf4fc16f1d07498f6fb447cddc64e5261be2c`.
@@ -20,6 +20,14 @@
 - Historical r2 implementation/evidence commits remain `b516dab843be1b8870d3516185b52905982aec1f` / `5a931feb01ed8da16eb9f0079a380c61f5459792`; older records remain available.
 - Workflow at T4: blob `65f1ae428e925b4747fea03f6c228a8af4acf15b`, file SHA-256 `e41c6ce267c8dacfe759f83c873c0f53ebca90e2c56f19e6d17202267b06b896`.
 - Accepted application version: none. This checkpoint is not architect-accepted.
+
+## CH-001R-r7 workflow validation and dispatch repair
+
+- R7-F01 is repaired at the workflow-definition boundary: the unsupported `runner.temp` job-level environment binding was removed. The existing `identity` step now resolves the unchanged run/attempt-specific `ch001r6` state path with `RUNNER_TEMP` and appends it to `GITHUB_ENV` for later qualification and owned cleanup consumers.
+- R7-F02 is addressed by the pinned `pnpm lint:workflow` command. Official actionlint `1.7.7` rejected the complete frozen T6 workflow at the unsupported `runner` context and accepted the complete T7 workflow. Failure-control and runtime-transfer regressions are committed and passed.
+- Final T7 local checks passed: workflow static validation, `pnpm test:ci` (4/4 file-level CI files; direct r4/r5/r6/r7 counts 10/12/18/10), lint, typecheck, build, unit (20/20), security (4/4), syntax checks, and `git diff --check`.
+- `origin/main` remains at P7 in this workspace; T7 and E7 were not pushed. The router owns publication and may submit at most one fresh manual T7 dispatch after independently validating the publication tree. Hosted workflow/run/job/artifact/sandbox/worker/proof fields remain `NOT_RUN`/null.
+- The historical T6 dispatch remains `REJECTED_BEFORE_RUN` (HTTP 422 as reported) with no live-proof IDs. Push-validation record `34675672523` remains separate with zero jobs. Application acceptance remains `false`, accepted version remains `none`, and root remains `awaiting_review`.
 
 ## CH-001R-r5 continuation
 

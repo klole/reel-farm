@@ -1,0 +1,71 @@
+{
+  "record_kind": "WORKFLOW_STATIC_VALIDATION",
+  "phase": "CH-001R-r7",
+  "implementation_commit": "6b02857401a9b1e81e1bd36d5a4418f90903adcb",
+  "implementation_tree": "fdbe7da15964659d4e2514580f6606f5731790ce",
+  "workflow_path": ".github/workflows/ch001-live-proof.yml",
+  "workflow_blob_sha": "2070e80be5355537631a7b2cf833eeb0a6cf28cb",
+  "workflow_sha256": "98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51",
+  "validator": {
+    "name": "actionlint",
+    "version": "1.7.7",
+    "executable_path": "/tmp/actionlint-r7.3YgGWu/actionlint",
+    "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "release_reference": "https://github.com/rhysd/actionlint/releases/tag/v1.7.7",
+    "archive_reference": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "flags": ["-shellcheck=", "-pyflakes="]
+  },
+  "runs": [
+    {
+      "id": "R7-T01",
+      "subject": "complete frozen T6 workflow",
+      "source_commit": "e0ea57665d00a643a8c392dfb9f6a84a723729af",
+      "input_sha256": "e1e4f6e5ebfa61f2aae3c04bcf985d12407a8f921dfeaa34dae01d103d01af85",
+      "command": "ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint node scripts/ci/lint-workflow.mjs --file <temporary git-show T6 workflow>",
+      "started_at": "2026-09-12T06:17:30Z",
+      "ended_at": "2026-09-12T06:17:30Z",
+      "exit_code": 1,
+      "status": "PASS_EXPECTED_REJECTION",
+      "diagnostic": "line 39:36: context runner is not allowed here"
+    },
+    {
+      "id": "R7-T02",
+      "subject": "complete repaired T7 workflow",
+      "source_commit": "6b02857401a9b1e81e1bd36d5a4418f90903adcb",
+      "input_sha256": "98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51",
+      "command": "ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint pnpm lint:workflow",
+      "started_at": "2026-09-12T06:16:32.010Z",
+      "ended_at": "2026-09-12T06:16:32.205Z",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "id": "R7-T03",
+      "subject": "validator failure controls",
+      "source_commit": "6b02857401a9b1e81e1bd36d5a4418f90903adcb",
+      "command": "ACTIONLINT_BIN=<case tool> node scripts/ci/lint-workflow.mjs; node tests/ci/workflow-validation.test.mjs",
+      "exit_code": 0,
+      "status": "PASS",
+      "cases": ["missing tool", "wrong version", "nonzero validator", "zero discovered workflows", "invalid YAML"]
+    },
+    {
+      "id": "R7-T04",
+      "subject": "semantic step-reference controls",
+      "source_commit": "6b02857401a9b1e81e1bd36d5a4418f90903adcb",
+      "inputs": [
+        {"path": "tests/fixtures/workflow-validation/invalid-steps.yml", "sha256": "d9e46dc2bc0c8a58ab8f48004ea78d6c01fb9053f9b600febe829142d2f4630f", "exit_code": 1},
+        {"path": "tests/fixtures/workflow-validation/valid-runtime.yml", "sha256": "d00480daac04778f913214bd5442207f58912a02d1f46e7c7fb63e8eb58d42ce", "exit_code": 0}
+      ],
+      "command": "node tests/ci/workflow-validation.test.mjs",
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  ],
+  "regression_test_file": "tests/ci/workflow-validation.test.mjs",
+  "regression_test_file_sha256": "328123f74986b6bb3841932c54e03a3f062f22487561bb9a9a80639ca758eaa8",
+  "local_validator_available": true,
+  "github_dispatch_performed": false,
+  "application_acceptance": false,
+  "accepted_application_version": "none"
+}

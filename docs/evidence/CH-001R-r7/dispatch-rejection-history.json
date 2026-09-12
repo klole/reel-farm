@@ -1,0 +1,28 @@
+{
+  "record_kind": "HISTORICAL_ROUTER_DISPATCH_REJECTION",
+  "phase": "CH-001R-r7",
+  "implementation_sha": "e0ea57665d00a643a8c392dfb9f6a84a723729af",
+  "workflow_definition_sha": "a4d6e7a0149d6852bf348d6277c4200720320f9c",
+  "workflow_blob_sha": "f1ddbbfc0cbaa4602663428d569b61dbf12bd068",
+  "request_outcome": "REJECTED_BEFORE_RUN",
+  "request_outcome_basis": "User-provided reviewed T6 router outcome; raw response body was not supplied.",
+  "http_status": 422,
+  "raw_error_reference": null,
+  "live_proof_run_id": null,
+  "live_proof_job_id": null,
+  "proof_invoked": false,
+  "proof_exit_code": null,
+  "artifact_id": null,
+  "hosted_gate_counts": null,
+  "cause": "Unsupported runner.temp context in jobs.live-proof.env.",
+  "separate_validation_record": {
+    "run_id": 34675672523,
+    "event": "push",
+    "head_sha": "a4d6e7a0149d6852bf348d6277c4200720320f9c",
+    "status": "completed",
+    "conclusion": "failure",
+    "job_count": 0,
+    "is_live_proof": false
+  },
+  "application_acceptance": false
+}

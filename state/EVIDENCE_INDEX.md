@@ -62,3 +62,18 @@ This r5 continuation preserves the historical r4 artifact and the original CH-00
 | Handoff | [handoffs/CH-001R-r6.md](../handoffs/CH-001R-r6.md) | Ready for router publication/dispatch; awaiting architect review |
 
 This r6 continuation preserves all historical r5/original evidence. It keeps `application_acceptance=false`, accepted version `none`, and root `awaiting_review`; a bounded hosted outcome, even if successful, is not full v0.1 acceptance.
+
+## CH-001R-r7 workflow validation and dispatch repair
+
+| Evidence | Location | State |
+|---|---|---|
+| T7 source identities and hashes | [source-identities.json](../docs/evidence/CH-001R-r7/source-identities.json) | Recorded; T7 `6b02857401a9b1e81e1bd36d5a4418f90903adcb`, tree `fdbe7da15964659d4e2514580f6606f5731790ce` |
+| Pinned actionlint provenance | [actionlint-provenance.json](../scripts/ci/actionlint-provenance.json) | Recorded; v1.7.7 official Linux/amd64 archive and digest |
+| Full T6 negative and complete T7 positive validation | [workflow-validation.json](../docs/evidence/CH-001R-r7/workflow-validation.json) and [workflow-validation.log](../docs/evidence/CH-001R-r7/workflow-validation.log) | T7 static PASS; T6 expected context rejection |
+| Runtime/wiring and validator failure controls | [workflow-validation.test.mjs](../tests/ci/workflow-validation.test.mjs) | 10/10 direct R7 cases PASS |
+| Existing r4/r5/r6 helper suites | [commands.log](../docs/evidence/CH-001R-r7/commands.log) | 10/10, 12/12, 18/18 direct cases PASS; aggregate 4/4 files |
+| Historical T6 rejection and E6 validation-only record | [dispatch-rejection-history.json](../docs/evidence/CH-001R-r7/dispatch-rejection-history.json) | Preserved separately; no live proof IDs |
+| R7 checklist and scope | [r7-results.json](../docs/evidence/CH-001R-r7/r7-results.json) | T01-T12 local PASS; router T13-T15 NOT_RUN; T16 preservation PASS |
+| Handoff | [CH-001R-r7.md](../handoffs/CH-001R-r7.md) | Ready for router publication; application remains unaccepted |
+
+This r7 record changes only the bounded workflow validation/dispatch repair surface and evidence/state documentation. It does not replace original CH-001 gates or promote static validation to hosted runtime qualification or v0.1 acceptance.

@@ -1,0 +1,21 @@
+CH-001R-r7 final local command record
+Implementation: 6b02857401a9b1e81e1bd36d5a4418f90903adcb
+Tree: fdbe7da15964659d4e2514580f6606f5731790ce
+All times UTC; command exit codes are actual. The actionlint path is a temporary, checksum-verified official v1.7.7 Linux/amd64 release path.
+
+2026-09-12T06:16:31.862Z .. 2026-09-12T06:16:32.010Z | node --check scripts/ci/lint-workflow.mjs && bash -n scripts/ci/initialize-sandbox-state.sh | exit 0
+2026-09-12T06:16:32.010Z .. 2026-09-12T06:16:32.205Z | ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint pnpm lint:workflow | exit 0 | repaired workflow SHA-256 98808688f0261296f6c0ddd0b3b34b04e67bc2d74735660512ab6c1852849c51
+2026-09-12T06:16:32.205Z .. 2026-09-12T06:16:33.913Z | ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint pnpm test:ci | exit 0 | 4/4 file-level CI files; 10/12/18/10 individual cases in direct suite runs
+2026-09-12T06:16:33.913Z .. 2026-09-12T06:16:36.209Z | pnpm lint | exit 0
+2026-09-12T06:16:36.209Z .. 2026-09-12T06:16:38.340Z | pnpm typecheck | exit 0
+2026-09-12T06:16:38.340Z .. 2026-09-12T06:16:52.562Z | pnpm build | exit 0
+2026-09-12T06:16:52.562Z .. 2026-09-12T06:16:54.025Z | pnpm test:unit | exit 0 | 3/3 files; 20/20 tests
+2026-09-12T06:16:54.025Z .. 2026-09-12T06:16:54.714Z | pnpm test:security | exit 0 | 1/1 file; 4/4 tests
+2026-09-12T06:16:54.714Z .. 2026-09-12T06:16:54.782Z | git diff --check | exit 0
+
+2026-09-12T06:18:04Z .. 2026-09-12T06:18:06Z | direct r4/r5/r6/r7 CI suite runs | exit 0 | 10/10, 12/12, 18/18, 10/10 individual cases
+2026-09-12T06:17:30Z .. 2026-09-12T06:17:30Z | complete frozen T6 actionlint negative control | exit 1 expected | context runner not allowed at job-level env line 39
+
+NOT_RUN | pnpm proof:ch001 | Known editing-host prerequisites remained unavailable from r6 (Docker/Compose, loopback, pinned Chromium); no repeated local proof consumed.
+NOT_RUN | pnpm verify:ch001 | Strict original application verifier was not changed or used to promote this workflow repair.
+NOT_RUN | gh workflow run | Router alone owns publication and the one authorized fresh dispatch.
