@@ -7,11 +7,13 @@ import { fileURLToPath } from "node:url";
 
 const PHASE = "CH-001R-r4";
 const REPOSITORY = "klole/reel-farm";
-const BOOTSTRAP_STAGES = new Set(["ci-helper-regressions", "native-pnpm-bootstrap", "project-install", "browser-install"]);
+const BOOTSTRAP_STAGES = new Set(["actionlint-bootstrap", "workflow-validation", "ci-helper-regressions", "native-pnpm-bootstrap", "project-install", "browser-install"]);
 const EXPECTED_STAGES = [
   ["source-checkout", true],
   ["source-identity", true],
   ["node-setup", true],
+  ["actionlint-bootstrap", true],
+  ["workflow-validation", true],
   ["ci-helper-regressions", true],
   ["native-pnpm-bootstrap", true],
   ["project-install", true],
@@ -205,18 +207,38 @@ function updateBootstrapState(report) {
 function safeDetail(detail) {
   if (!detail || typeof detail !== "object" || Array.isArray(detail)) return null;
   const value = detail;
+  const archive = value.archive && typeof value.archive === "object" && !Array.isArray(value.archive) ? value.archive : {};
+  const executable = value.executable && typeof value.executable === "object" && !Array.isArray(value.executable) ? value.executable : {};
   return {
     status: safeText(value.status),
     error_classification: safeText(value.error_classification),
     error: value.error ? sanitizeDiagnostic(value.error) : null,
     target: safeText(value.target),
     version: safeText(value.version),
-    archive: safeText(value.archive),
-    archive_sha256: /^[0-9a-f]{64}$/.test(String(value.archive_sha256 ?? "")) ? value.archive_sha256 : null,
-    executable: safeText(value.executable),
-    executable_version: safeText(value.executable_version),
+    archive: safeText(typeof value.archive === "string" ? value.archive : archive.name),
+    archive_url: safeText(value.archive_url ?? archive.url),
+    archive_sha256: /^[0-9a-f]{64}$/.test(String(value.archive_sha256 ?? archive.expected_sha256 ?? "")) ? (value.archive_sha256 ?? archive.expected_sha256) : null,
+    archive_expected_sha256: /^[0-9a-f]{64}$/.test(String(value.archive_expected_sha256 ?? archive.expected_sha256 ?? "")) ? (value.archive_expected_sha256 ?? archive.expected_sha256) : null,
+    archive_measured_sha256: /^[0-9a-f]{64}$/.test(String(value.archive_measured_sha256 ?? archive.measured_sha256 ?? "")) ? (value.archive_measured_sha256 ?? archive.measured_sha256) : null,
+    executable: safeText(typeof value.executable === "string" ? value.executable : executable.path ?? executable.name),
+    executable_version: safeText(value.executable_version ?? executable.observed_version),
+    executable_expected_sha256: /^[0-9a-f]{64}$/.test(String(value.executable_expected_sha256 ?? executable.expected_sha256 ?? "")) ? (value.executable_expected_sha256 ?? executable.expected_sha256) : null,
+    executable_measured_sha256: /^[0-9a-f]{64}$/.test(String(value.executable_measured_sha256 ?? executable.measured_sha256 ?? "")) ? (value.executable_measured_sha256 ?? executable.measured_sha256) : null,
     bin_dir: safeText(value.bin_dir),
     path_updated: typeof value.path_updated === "boolean" ? value.path_updated : null,
+    platform: safeText(value.platform?.operating_system ?? value.platform),
+    architecture: safeText(value.platform?.architecture ?? value.architecture),
+    run_id: safeInteger(value.run_id),
+    run_attempt: safeInteger(value.run_attempt),
+    actual_exit: exitCode(value.actual_exit),
+    checkout_identity: value.checkout_identity && typeof value.checkout_identity === "object" ? {
+      requested_implementation_sha: safeSha(value.checkout_identity.requested_implementation_sha),
+      actual_checkout_sha: safeSha(value.checkout_identity.actual_checkout_sha),
+      workflow_definition_sha: safeSha(value.checkout_identity.workflow_definition_sha),
+      workflow_blob_sha: safeSha(value.checkout_identity.workflow_blob_sha),
+      workflow_file_sha256: /^[0-9a-f]{64}$/.test(String(value.checkout_identity.workflow_file_sha256 ?? "")) ? value.checkout_identity.workflow_file_sha256 : null,
+      repository: safeText(value.checkout_identity.repository)
+    } : null,
     selected_executable: value.selected_executable && typeof value.selected_executable === "object" ? {
       path: safeText(value.selected_executable.path),
       sha256: /^[0-9a-f]{64}$/.test(String(value.selected_executable.sha256 ?? "")) ? value.selected_executable.sha256 : null,
@@ -318,6 +340,8 @@ async function captureRunnerOutcomes(options) {
     ["CI_CHECKOUT_OUTCOME", "source-checkout", true],
     ["CI_IDENTITY_OUTCOME", "source-identity", true],
     ["CI_NODE_SETUP_OUTCOME", "node-setup", true],
+    ["CI_ACTIONLINT_BOOTSTRAP_OUTCOME", "actionlint-bootstrap", true],
+    ["CI_WORKFLOW_VALIDATION_OUTCOME", "workflow-validation", true],
     ["CI_HELPER_TESTS_OUTCOME", "ci-helper-regressions", true],
     ["CI_NATIVE_BOOTSTRAP_OUTCOME", "native-pnpm-bootstrap", true],
     ["CI_PROJECT_INSTALL_OUTCOME", "project-install", true],

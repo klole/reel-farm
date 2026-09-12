@@ -68,6 +68,21 @@ test("absent proof remains not invoked with a nullable proof exit and a failing 
   assert.equal(result.proof_validation, null);
 });
 
+test("actionlint prerequisite and workflow validation failures remain blocking before proof", () => {
+  const result = classifyResult({ report: report({
+    proof_invoked: false,
+    proof_exit_code: null,
+    stages: [
+      { name: "actionlint-bootstrap", status: "FAIL", blocking: true, exit_code: 1, error_classification: "CI_BOOTSTRAP_FAILURE" },
+      { name: "workflow-validation", status: "NOT_RUN", blocking: true, exit_code: null }
+    ]
+  }) });
+  assert.equal(result.classification, "CI_BOOTSTRAP_FAILURE");
+  assert.equal(result.primary_stage, "actionlint-bootstrap");
+  assert.equal(result.final_exit_code, 1);
+  assert.equal(result.proof_validation, null);
+});
+
 test("proof exits 1 and 2 remain distinct from bootstrap failure", () => {
   const failed = classifyResult({ report: report({ proof_exit_code: 1 }), proofReport: validProof({ exit_code: 1, status: "TEST_FAILURE" }) });
   const blocked = classifyResult({ report: report({ proof_exit_code: 2 }), proofReport: validProof({ exit_code: 2, status: "BLOCKED_ENVIRONMENT" }) });

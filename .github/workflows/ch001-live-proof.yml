@@ -123,12 +123,53 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Run dependency-free CI repair regressions
+      - name: Provision and verify pinned actionlint 1.7.7
+        id: actionlint_bootstrap
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r8-actionlint-bootstrap.log"
+          stage_report="$(dirname "$CI_BOOTSTRAP_REPORT")/actionlint-bootstrap.json"
+          set +e
+          actionlint_bin="$(node scripts/ci/actionlint-bootstrap.mjs --report "$stage_report" --print-bin 2>"$stage_log")"
+          stage_exit=$?
+          if [[ "$stage_exit" -eq 0 ]]; then
+            if [[ "$actionlint_bin" != /* || ! -x "$actionlint_bin" ]]; then
+              printf 'Provisioner did not return an absolute executable path: %s\n' "$actionlint_bin" >> "$stage_log"
+              stage_exit=1
+            else
+              export ACTIONLINT_BIN="$actionlint_bin"
+              if ! grep -Fqx "ACTIONLINT_BIN=$actionlint_bin" "$GITHUB_ENV"; then
+                printf 'Provisioner did not publish its verified path to GITHUB_ENV.\n' >> "$stage_log"
+                stage_exit=1
+              fi
+            fi
+          fi
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name actionlint-bootstrap --exit-code "$stage_exit" --detail-file "$stage_report" --log-file "$stage_log"
+          rm -f "$stage_log"
+          exit "$stage_exit"
+
+      - name: Validate current tracked workflows with pinned actionlint
+        id: workflow_validation
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          stage_log="$RUNNER_TEMP/ch001r8-workflow-validation.log"
+          set +e
+          node scripts/ci/lint-workflow.mjs 2>&1 | tee "$stage_log"
+          stage_exit=${PIPESTATUS[0]}
+          set -e
+          node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name workflow-validation --exit-code "$stage_exit" --log-file "$stage_log"
+          rm -f "$stage_log"
+          exit "$stage_exit"
+
+      - name: Run complete CI repair regressions with pinned actionlint
         id: ci_helper_tests
         if: ${{ success() }}
         run: |
           set -euo pipefail
-          stage_log="$RUNNER_TEMP/ch001r4-ci-helper-regressions.log"
+          stage_log="$RUNNER_TEMP/ch001r8-ci-helper-regressions.log"
           set +e
           node --test tests/ci 2>&1 | tee "$stage_log"
           stage_exit=${PIPESTATUS[0]}
@@ -253,7 +294,7 @@ jobs:
 
       - name: Execute bounded live proof
         id: proof
-        if: ${{ always() && steps.ci_helper_tests.outcome == 'success' && steps.bootstrap.outcome == 'success' && steps.project_install.outcome == 'success' && steps.browser_install.outcome == 'success' }}
+        if: ${{ always() && steps.actionlint_bootstrap.outcome == 'success' && steps.workflow_validation.outcome == 'success' && steps.ci_helper_tests.outcome == 'success' && steps.bootstrap.outcome == 'success' && steps.project_install.outcome == 'success' && steps.browser_install.outcome == 'success' }}
         run: |
           set -euo pipefail
           stage_log="$RUNNER_TEMP/ch001r4-proof-coordinator.log"
@@ -285,13 +326,15 @@ jobs:
           rm -f "$stage_log"
           exit "$cleanup_exit"
 
-      - name: Finalize dependency-free CI result
+      - name: Finalize captured CI result
         id: finalize
         if: ${{ always() }}
         env:
           CI_CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
           CI_IDENTITY_OUTCOME: ${{ steps.identity.outcome }}
           CI_NODE_SETUP_OUTCOME: ${{ steps.setup_node.outcome }}
+          CI_ACTIONLINT_BOOTSTRAP_OUTCOME: ${{ steps.actionlint_bootstrap.outcome }}
+          CI_WORKFLOW_VALIDATION_OUTCOME: ${{ steps.workflow_validation.outcome }}
           CI_HELPER_TESTS_OUTCOME: ${{ steps.ci_helper_tests.outcome }}
           CI_NATIVE_BOOTSTRAP_OUTCOME: ${{ steps.bootstrap.outcome }}
           CI_PROJECT_INSTALL_OUTCOME: ${{ steps.project_install.outcome }}

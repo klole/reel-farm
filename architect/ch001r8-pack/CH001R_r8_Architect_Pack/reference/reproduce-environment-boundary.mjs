@@ -1,6 +1,8 @@
 // Architect diagnostic only: no repository implementation or hosted acceptance.
 // Uses a byte-verified T7 shell initializer and equivalent T7 environment-merging
 // logic. Every environment file is synthetic and created in a temporary folder.
+/* global process */
+
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';

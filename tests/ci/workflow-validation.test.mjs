@@ -19,8 +19,8 @@ const invalidYamlFixture = resolve(repositoryRoot, "tests/fixtures/workflow-vali
 const t6Commit = "e0ea57665d00a643a8c392dfb9f6a84a723729af";
 const t6WorkflowSha256 = "e1e4f6e5ebfa61f2aae3c04bcf985d12407a8f921dfeaa34dae01d103d01af85";
 
-function withEnvironment(overrides = {}) {
-  const environment = { ...process.env };
+function withEnvironment(baseEnvironment, overrides = {}) {
+  const environment = { ...baseEnvironment };
   for (const [key, value] of Object.entries(overrides)) {
     if (value === undefined) delete environment[key];
     else environment[key] = value;
@@ -28,11 +28,38 @@ function withEnvironment(overrides = {}) {
   return environment;
 }
 
-async function run(command, argumentsList, overrides = {}) {
+function minimalRuntimeEnvironment(home = repositoryRoot) {
+  const environment = {
+    PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin",
+    HOME: home,
+    LANG: "C.UTF-8",
+    LC_ALL: "C.UTF-8",
+    TMPDIR: process.env.TMPDIR ?? tmpdir(),
+    GIT_CONFIG_NOSYSTEM: "1",
+    GIT_TERMINAL_PROMPT: "0"
+  };
+  if (process.env.ACTIONLINT_BIN) environment.ACTIONLINT_BIN = process.env.ACTIONLINT_BIN;
+  return environment;
+}
+
+function hostedLikeParentEnvironment(directory) {
+  return withEnvironment(minimalRuntimeEnvironment(directory), {
+    RUNNER_TEMP: resolve(directory, "parent runner temp"),
+    GITHUB_ENV: resolve(directory, "parent github-env"),
+    GITHUB_PATH: resolve(directory, "parent github-path"),
+    GITHUB_STEP_SUMMARY: resolve(directory, "parent step-summary"),
+    GITHUB_OUTPUT: resolve(directory, "parent github-output"),
+    GITHUB_RUN_ID: "999999999",
+    GITHUB_RUN_ATTEMPT: "1",
+    CH001_SANDBOX_STATE_DIR: resolve(directory, "inherited sandbox state")
+  });
+}
+
+async function runExact(command, argumentsList, completeEnvironment) {
   try {
     const result = await execFileAsync(command, argumentsList, {
       cwd: repositoryRoot,
-      env: withEnvironment(overrides),
+      env: completeEnvironment,
       maxBuffer: 10_000_000
     });
     return { status: 0, stdout: result.stdout, stderr: result.stderr };
@@ -46,17 +73,22 @@ async function run(command, argumentsList, overrides = {}) {
   }
 }
 
-async function runWrapper(argumentsList, overrides = {}) {
-  return run(process.execPath, [wrapper, ...argumentsList], overrides);
+function runWithOverrides(command, argumentsList, overrides = {}, baseEnvironment = minimalRuntimeEnvironment()) {
+  return runExact(command, argumentsList, withEnvironment(baseEnvironment, overrides));
 }
 
-function runActionlintDirect(path) {
-  const actionlint = process.env.ACTIONLINT_BIN ?? "actionlint";
+async function runWrapper(argumentsList, overrides = {}) {
+  return runWithOverrides(process.execPath, [wrapper, ...argumentsList], overrides);
+}
+
+function runActionlintDirect(path, environment = minimalRuntimeEnvironment()) {
+  const actionlint = environment.ACTIONLINT_BIN ?? "actionlint";
   try {
     return {
       status: 0,
       stdout: execFileSync(actionlint, ["-shellcheck=", "-pyflakes=", path], {
         cwd: repositoryRoot,
+        env: environment,
         encoding: "utf8",
         maxBuffer: 10_000_000
       }),
@@ -92,9 +124,15 @@ async function withTemporaryDirectory(operation) {
 async function makeRuntimeFixture(directory, overrides = {}) {
   const runnerTemp = resolve(directory, "runner temp");
   const envFile = resolve(directory, "github-env");
+  const parent = hostedLikeParentEnvironment(directory);
+  await mkdir(parent.RUNNER_TEMP, { recursive: true });
+  await writeFile(parent.GITHUB_ENV, "PARENT=preserve\n", "utf8");
+  await writeFile(parent.GITHUB_PATH, "PARENT_PATH=preserve\n", "utf8");
+  await writeFile(parent.GITHUB_STEP_SUMMARY, "PARENT_SUMMARY=preserve\n", "utf8");
+  await writeFile(parent.GITHUB_OUTPUT, "PARENT_OUTPUT=preserve\n", "utf8");
   await mkdir(runnerTemp, { recursive: true });
   await writeFile(envFile, "PREVIOUS=preserve\n", "utf8");
-  const environment = withEnvironment({
+  const environment = withEnvironment(parent, {
     RUNNER_TEMP: runnerTemp,
     GITHUB_RUN_ID: "123456789",
     GITHUB_RUN_ATTEMPT: "1",
@@ -102,7 +140,12 @@ async function makeRuntimeFixture(directory, overrides = {}) {
     CH001_SANDBOX_STATE_DIR: undefined,
     ...overrides
   });
-  return { runnerTemp, envFile, environment };
+  return { runnerTemp, envFile, parentEnvFile: parent.GITHUB_ENV, parent, environment };
+}
+
+async function observeChildEnvironment(environment, destination, keys) {
+  const source = "const fs = require('node:fs'); const keys = process.argv.slice(2); const observed = Object.fromEntries(keys.map((key) => [key, { present: Object.hasOwn(process.env, key), value: process.env[key] ?? null }])); fs.writeFileSync(process.argv[1], JSON.stringify(observed));";
+  return runExact(process.execPath, ["-e", source, destination, ...keys], environment);
 }
 
 test("R7-T01 rejects the complete frozen T6 workflow for the job-level runner context", async () => {
@@ -172,7 +215,7 @@ test("R7-T04 uses actual actionlint semantics for missing steps and supported ru
 test("R7-T05 transfers one run-owned absolute path to independent qualification and cleanup consumers", async () => {
   await withTemporaryDirectory(async (directory) => {
     const { runnerTemp, envFile, environment } = await makeRuntimeFixture(directory);
-    const initialized = await run("bash", [runtimeHelper], environment);
+    const initialized = await runExact("bash", [runtimeHelper], environment);
     assert.equal(initialized.status, 0, `${initialized.stdout}\n${initialized.stderr}`);
     const expected = `${runnerTemp}/ch001r6/123456789-1/sandbox`;
     const entries = (await readFile(envFile, "utf8")).split("\n");
@@ -182,11 +225,10 @@ test("R7-T05 transfers one run-owned absolute path to independent qualification 
 
     for (const consumer of ["qualification", "cleanup"]) {
       const observedPath = resolve(directory, `${consumer}.observed`);
-      const observed = await run(process.execPath, ["-e", "require('node:fs').writeFileSync(process.argv[1], process.env.CH001_SANDBOX_STATE_DIR ?? '')", observedPath], {
-        ...environment,
+      const observed = await runExact(process.execPath, ["-e", "require('node:fs').writeFileSync(process.argv[1], process.env.CH001_SANDBOX_STATE_DIR ?? '')", observedPath], withEnvironment(environment, {
         CH001_SANDBOX_STATE_DIR: expected,
         R7_CONSUMER: consumer
-      });
+      }));
       assert.equal(observed.status, 0, `${consumer}: ${observed.stderr}`);
       assert.equal(await readFile(observedPath, "utf8"), expected);
     }
@@ -198,7 +240,7 @@ test("R7-T06 keeps spaces and shell-looking values literal without evaluating th
     const marker = resolve(directory, "marker");
     const shellLookingTemp = `${directory}/runner temp $(touch ${marker})`;
     const { envFile, environment } = await makeRuntimeFixture(directory, { RUNNER_TEMP: shellLookingTemp });
-    const initialized = await run("bash", [runtimeHelper], environment);
+    const initialized = await runExact("bash", [runtimeHelper], environment);
     assert.equal(initialized.status, 0, `${initialized.stdout}\n${initialized.stderr}`);
     const expected = `${shellLookingTemp}/ch001r6/123456789-1/sandbox`;
     assert.equal(await readFile(envFile, "utf8"), `PREVIOUS=preserve\nCH001_SANDBOX_STATE_DIR=${expected}\n`);
@@ -206,10 +248,48 @@ test("R7-T06 keeps spaces and shell-looking values literal without evaluating th
   });
 });
 
-test("R7-T07 rejects invalid runtime inputs before changing existing environment entries", async () => {
+test("R8-T06 keeps missing RUNNER_TEMP absent under a hosted-like parent", async () => {
+  await withTemporaryDirectory(async (directory) => {
+    const { envFile, parentEnvFile, environment } = await makeRuntimeFixture(directory, { RUNNER_TEMP: undefined });
+    const observedPath = resolve(directory, "missing-runner-temp.observed.json");
+    const observed = await observeChildEnvironment(environment, observedPath, ["RUNNER_TEMP", "GITHUB_ENV", "CH001_SANDBOX_STATE_DIR"]);
+    assert.equal(observed.status, 0, `${observed.stdout}\n${observed.stderr}`);
+    assert.deepEqual(JSON.parse(await readFile(observedPath, "utf8")), {
+      RUNNER_TEMP: { present: false, value: null },
+      GITHUB_ENV: { present: true, value: envFile },
+      CH001_SANDBOX_STATE_DIR: { present: false, value: null }
+    });
+    const fixtureBefore = await readFile(envFile, "utf8");
+    const parentBefore = await readFile(parentEnvFile, "utf8");
+    const result = await runExact("bash", [runtimeHelper], environment);
+    assert.notEqual(result.status, 0, `${result.stdout}\n${result.stderr}`);
+    assert.equal(await readFile(envFile, "utf8"), fixtureBefore);
+    assert.equal(await readFile(parentEnvFile, "utf8"), parentBefore);
+  });
+});
+
+test("R8-T07 keeps missing GITHUB_ENV absent under a hosted-like parent", async () => {
+  await withTemporaryDirectory(async (directory) => {
+    const { envFile, parentEnvFile, environment } = await makeRuntimeFixture(directory, { GITHUB_ENV: undefined });
+    const observedPath = resolve(directory, "missing-github-env.observed.json");
+    const observed = await observeChildEnvironment(environment, observedPath, ["RUNNER_TEMP", "GITHUB_ENV", "CH001_SANDBOX_STATE_DIR"]);
+    assert.equal(observed.status, 0, `${observed.stdout}\n${observed.stderr}`);
+    assert.deepEqual(JSON.parse(await readFile(observedPath, "utf8")), {
+      RUNNER_TEMP: { present: true, value: resolve(directory, "runner temp") },
+      GITHUB_ENV: { present: false, value: null },
+      CH001_SANDBOX_STATE_DIR: { present: false, value: null }
+    });
+    const fixtureBefore = await readFile(envFile, "utf8");
+    const parentBefore = await readFile(parentEnvFile, "utf8");
+    const result = await runExact("bash", [runtimeHelper], environment);
+    assert.notEqual(result.status, 0, `${result.stdout}\n${result.stderr}`);
+    assert.equal(await readFile(envFile, "utf8"), fixtureBefore);
+    assert.equal(await readFile(parentEnvFile, "utf8"), parentBefore);
+  });
+});
+
+test("R8-T08 rejects invalid runtime inputs before changing any environment entries", async () => {
   const cases = [
-    ["missing RUNNER_TEMP", { RUNNER_TEMP: undefined }],
-    ["missing GITHUB_ENV", { GITHUB_ENV: undefined }],
     ["relative RUNNER_TEMP", { RUNNER_TEMP: "relative" }],
     ["newline RUNNER_TEMP", { RUNNER_TEMP: `${resolve(tmpdir(), "r7")}\nOTHER=value` }],
     ["invalid run ID", { GITHUB_RUN_ID: "not-a-run" }],
@@ -217,22 +297,51 @@ test("R7-T07 rejects invalid runtime inputs before changing existing environment
   ];
   for (const [name, overrides] of cases) {
     await withTemporaryDirectory(async (directory) => {
-      const { envFile, environment } = await makeRuntimeFixture(directory, overrides);
+      const { envFile, parentEnvFile, environment } = await makeRuntimeFixture(directory, overrides);
       const before = await readFile(envFile, "utf8");
-      const result = await run("bash", [runtimeHelper], environment);
+      const parentBefore = await readFile(parentEnvFile, "utf8");
+      const result = await runExact("bash", [runtimeHelper], environment);
       assert.notEqual(result.status, 0, name);
       assert.equal(await readFile(envFile, "utf8"), before, name);
+      assert.equal(await readFile(parentEnvFile, "utf8"), parentBefore, name);
     });
   }
 
   await withTemporaryDirectory(async (directory) => {
     const invalidEnvTarget = resolve(directory, "github-env-directory");
     await mkdir(invalidEnvTarget, { recursive: true });
-    const { envFile, environment } = await makeRuntimeFixture(directory, { GITHUB_ENV: invalidEnvTarget });
+    const { envFile, parentEnvFile, environment } = await makeRuntimeFixture(directory, { GITHUB_ENV: invalidEnvTarget });
     const before = await readFile(envFile, "utf8");
-    const result = await run("bash", [runtimeHelper], environment);
+    const parentBefore = await readFile(parentEnvFile, "utf8");
+    const result = await runExact("bash", [runtimeHelper], environment);
     assert.notEqual(result.status, 0);
     assert.equal(await readFile(envFile, "utf8"), before);
+    assert.equal(await readFile(parentEnvFile, "utf8"), parentBefore);
+  });
+});
+
+test("R8-T09 detects the old second environment merge as a real contamination", async () => {
+  await withTemporaryDirectory(async (directory) => {
+    for (const missing of ["RUNNER_TEMP", "GITHUB_ENV"]) {
+      const fixture = await makeRuntimeFixture(directory, { [missing]: undefined });
+      const observedPath = resolve(directory, `${missing}.legacy.observed.json`);
+      const legacyEnvironment = withEnvironment(fixture.parent, fixture.environment);
+      const observed = await observeChildEnvironment(legacyEnvironment, observedPath, ["RUNNER_TEMP", "GITHUB_ENV"]);
+      assert.equal(observed.status, 0, `${missing}: ${observed.stdout}\n${observed.stderr}`);
+      assert.equal(JSON.parse(await readFile(observedPath, "utf8"))[missing].present, true, missing);
+      const result = await runExact("bash", [runtimeHelper], legacyEnvironment);
+      assert.equal(result.status, 0, `${missing}: ${result.stdout}\n${result.stderr}`);
+      if (missing === "RUNNER_TEMP") {
+        assert.match(await readFile(fixture.envFile, "utf8"), /CH001_SANDBOX_STATE_DIR=/);
+        assert.equal(await readFile(fixture.parentEnvFile, "utf8"), "PARENT=preserve\n");
+      } else {
+        assert.equal(await readFile(fixture.envFile, "utf8"), "PREVIOUS=preserve\n");
+        assert.match(await readFile(fixture.parentEnvFile, "utf8"), /CH001_SANDBOX_STATE_DIR=/);
+      }
+      await rm(fixture.runnerTemp, { recursive: true, force: true });
+      await writeFile(fixture.envFile, "PREVIOUS=preserve\n", "utf8");
+      await writeFile(fixture.parentEnvFile, "PARENT=preserve\n", "utf8");
+    }
   });
 });
 
@@ -243,7 +352,7 @@ test("R7-T08 initialization creates no proof or policy tree and preserves prior 
     await writeFile(resolve(priorEvidence, "sentinel.txt"), "preserve\n");
     const before = await readdir(priorEvidence);
     const { environment } = await makeRuntimeFixture(directory);
-    const result = await run("bash", [runtimeHelper], environment);
+    const result = await runExact("bash", [runtimeHelper], environment);
     assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
     assert.deepEqual(await readdir(priorEvidence), before);
     assert.equal(await stat(resolve(directory, "proof/public")).catch(() => null), null);
@@ -260,6 +369,11 @@ test("R7-T09 preserves explicit opt-in, public/manual guard, exact sandbox wirin
   const jobEnv = workflow.slice(workflow.indexOf("    env:\n"), workflow.indexOf("    steps:\n"));
   assert.doesNotMatch(jobEnv, /CH001_SANDBOX_STATE_DIR/);
   assert.match(workflow, /bash scripts\/ci\/initialize-sandbox-state\.sh/);
+  assert.match(workflow, /Provision and verify pinned actionlint 1\.7\.7/);
+  assert.match(workflow, /Validate current tracked workflows with pinned actionlint/);
+  assert.match(workflow, /Run complete CI repair regressions with pinned actionlint/);
+  assert.ok(workflow.indexOf("Provision and verify pinned actionlint 1.7.7") < workflow.indexOf("Run complete CI repair regressions with pinned actionlint"));
+  assert.ok(workflow.indexOf("Validate current tracked workflows with pinned actionlint") < workflow.indexOf("Run complete CI repair regressions with pinned actionlint"));
   assert.match(workflow, /sandbox_qualification:[\s\S]*?required: true[\s\S]*?default: false[\s\S]*?type: boolean/);
   assert.match(workflow, /REPOSITORY_PRIVATE.*false/);
   assert.match(workflow, /node scripts\/ch001-sandbox\.mjs qualify/);
