@@ -36,7 +36,6 @@ jobs:
       CI_RESULT_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/ci-result.json
       CI_PROOF_REPORT: artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/proof/public/proof-result.json
       CH001_SANDBOX_REPORT: ${{ github.workspace }}/artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/sandbox-qualification.json
-      CH001_SANDBOX_STATE_DIR: ${{ runner.temp }}/ch001r6/${{ github.run_id }}-${{ github.run_attempt }}/sandbox
     steps:
       - name: Validate dispatch and runner class assumptions
         id: validate_dispatch
@@ -116,6 +115,7 @@ jobs:
             printf 'CH001_WORKFLOW_BLOB_SHA=%s\n' "$workflow_blob_sha"
             printf 'CH001_WORKFLOW_FILE_SHA256=%s\n' "$workflow_file_sha256"
           } >> "$GITHUB_ENV"
+          bash scripts/ci/initialize-sandbox-state.sh
 
       - name: Set up project-pinned Node
         id: setup_node

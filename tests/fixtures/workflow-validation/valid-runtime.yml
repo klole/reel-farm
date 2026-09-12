@@ -1,0 +1,15 @@
+name: R7 runtime context fixture
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Set path in a running step
+        env:
+          RUNNER_ROOT: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+          test -n "$RUNNER_ROOT"
+      - name: Consume the step value
+        run: printf '%s\n' "$RUNNER_ROOT"

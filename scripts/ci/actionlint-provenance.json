@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "name": "actionlint",
+  "version": "1.7.7",
+  "release_tag": "v1.7.7",
+  "release_commit_short": "03d0035",
+  "repository": "rhysd/actionlint",
+  "release_url": "https://github.com/rhysd/actionlint/releases/tag/v1.7.7",
+  "distribution": {
+    "platform": "linux",
+    "architecture": "amd64",
+    "archive": "actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_url": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "executable": "actionlint",
+    "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "validator_flags": [
+    "-shellcheck=",
+    "-pyflakes="
+  ],
+  "policy": "Use exactly version 1.7.7; optional external ShellCheck and Pyflakes integrations are disabled, while actionlint workflow and expression checks remain enabled."
+}

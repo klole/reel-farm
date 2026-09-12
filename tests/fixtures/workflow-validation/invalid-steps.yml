@@ -1,0 +1,10 @@
+name: R7 invalid steps fixture
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - id: present
+        run: echo present
+      - name: reference missing step
+        run: echo "${{ steps.missing.outputs.value }}"

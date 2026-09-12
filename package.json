@@ -14,6 +14,7 @@
     "build": "pnpm --filter @oss/contracts build && pnpm --filter @oss/db build && pnpm --filter @oss/storage build && pnpm --filter @oss/renderer build && pnpm --filter @oss/core build && pnpm --filter @oss/web build && pnpm --filter @oss/worker build",
     "start": "pnpm --filter @oss/web start",
     "lint": "eslint .",
+    "lint:workflow": "node scripts/ci/lint-workflow.mjs",
     "typecheck": "tsc -b tsconfig.json && tsc -p tests/tsconfig.json --noEmit",
     "test:unit": "vitest run --config vitest.config.ts tests/unit",
     "test:integration": "node --import tsx scripts/run-gated-check.ts integration",
