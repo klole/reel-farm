@@ -1,0 +1,73 @@
+{
+  "record_kind": "PACKET_VALIDATION_NOT_APPLICATION_TESTS",
+  "checks": [
+    {
+      "name": "six canonical Markdown documents exist",
+      "status": "PASS"
+    },
+    {
+      "name": "receipt template parses",
+      "status": "PASS"
+    },
+    {
+      "name": "review receipt parses",
+      "status": "PASS"
+    },
+    {
+      "name": "fixed implementation identity present in execution instructions",
+      "status": "PASS"
+    },
+    {
+      "name": "template grants no application acceptance",
+      "status": "PASS"
+    },
+    {
+      "name": "eight diagnostic checks initially NOT_RUN",
+      "status": "PASS"
+    },
+    {
+      "name": "hosted proof and artifact unknown in blank receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "no implementation edit authority",
+      "status": "PASS"
+    },
+    {
+      "name": "routes mutually exclusive",
+      "status": "PASS"
+    },
+    {
+      "name": "request allowance explicitly non-additive",
+      "status": "PASS"
+    },
+    {
+      "name": "old historical run IDs all preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "no unsupported dispatch_purpose flag",
+      "status": "PASS"
+    },
+    {
+      "name": "one complete hosted dispatch example",
+      "status": "PASS"
+    },
+    {
+      "name": "combined text produced",
+      "status": "PASS"
+    },
+    {
+      "name": "source references contain no invented runtime result",
+      "status": "PASS"
+    },
+    {
+      "name": "all relative Markdown links resolve",
+      "status": "PASS"
+    }
+  ],
+  "pass_count": 16,
+  "fail_count": 0,
+  "application_tests_run": false,
+  "docker_run": false
+}

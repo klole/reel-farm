@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "record_kind": "ROUTER_DIAGNOSTIC_RECEIPT_TEMPLATE_NOT_EXECUTED",
+  "assignment": "CH-001R-r10-D1",
+  "route": null,
+  "diagnostic_outcome": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "source": {
+    "expected_implementation_sha": "ec7cc08d6ed229af9780318858d8051202851746",
+    "reviewed_evidence_sha": "f512c9c02620ea600404cd304782a37e6689a109",
+    "actual_checkout_sha": null,
+    "actual_checkout_tree": null,
+    "publication_head_at_execution": null,
+    "workflow_definition_sha": null,
+    "workflow_blob_sha": null,
+    "workflow_file_sha256": null,
+    "migration_inputs_vs_T9": null
+  },
+  "local": {
+    "run_id": null,
+    "project_name": null,
+    "docker_context_verified_local": null,
+    "docker_version": null,
+    "compose_version": null,
+    "platform": null,
+    "emulation_used": null,
+    "final_image_id": null,
+    "fresh": {
+      "status": "NOT_RUN",
+      "command": null,
+      "cli_exit_code": null,
+      "container_exit_code": null,
+      "container_state": null,
+      "timed_out": null,
+      "stage_reached": null,
+      "exception_class": null,
+      "exception_excerpt": null,
+      "sqlstate": null
+    },
+    "repeat": {
+      "status": "NOT_RUN",
+      "cli_exit_code": null,
+      "container_exit_code": null
+    },
+    "schema": {
+      "status": "NOT_RUN",
+      "migration_marker_count": null,
+      "sentinel_preserved": null
+    }
+  },
+  "hosted": {
+    "dispatch_purpose": "diagnose_migration",
+    "r10_total_request_count": null,
+    "workflow_dispatch_submitted_by_this_execution": false,
+    "request_outcome": null,
+    "run_id": null,
+    "run_attempt": null,
+    "job_id": null,
+    "bootstrap_status": null,
+    "classification": null,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "application_gate_counts": null,
+    "artifact_id": null,
+    "artifact_name": null,
+    "artifact_bytes": null,
+    "artifact_sha256": null
+  },
+  "diagnostics": {
+    "status": "NOT_RUN",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "migration_log_path": null,
+    "container_state_path": null,
+    "truncated": null
+  },
+  "cleanup": {
+    "status": "NOT_RUN",
+    "ownership_verified": null,
+    "allocation_attempted": false,
+    "teardown_exit_code": null,
+    "containers_remaining": null,
+    "volumes_remaining": null,
+    "networks_remaining": null,
+    "build_images_retained": null
+  },
+  "evidence": {
+    "public_manifest": null,
+    "public_manifest_sha256": null,
+    "receipt_commit": null,
+    "local_history_files_retrieved": [],
+    "public_files": []
+  },
+  "checks": [
+    {
+      "id": "D1-01",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-02",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-03",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-04",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-05",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-06",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-07",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    },
+    {
+      "id": "D1-08",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": ""
+    }
+  ],
+  "external_actions": {
+    "repository_source_changed": false,
+    "evidence_pushed": false,
+    "sent": "no",
+    "destination": null
+  }
+}

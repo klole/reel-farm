@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "record_kind": "ARCHITECT_READ_ONLY_REVIEW",
+  "assignment": "CH-001R-r10-D1",
+  "review_date": "2026-09-15",
+  "observed_publication_head": "f512c9c02620ea600404cd304782a37e6689a109",
+  "e10_git_metadata": {
+    "sha": "f512c9c02620ea600404cd304782a37e6689a109",
+    "parent": "ec7cc08d6ed229af9780318858d8051202851746",
+    "tree": "61cd887e1f60a66e15bce6815aac02201860c574"
+  },
+  "t10_tree_reported_in_handoff": "9e43ac5c00801f7d523405dbe5874d64264fa7cc",
+  "handoff_completion_mode": "DIAGNOSTICS_READY_FOR_ROUTER_REPRODUCTION",
+  "reported_r10_checklist_counts": {
+    "PASS": 9,
+    "FAIL": 0,
+    "NOT_RUN": 9
+  },
+  "reported_local_application_counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NOT_RUN": 68
+  },
+  "reported_host_import_observation": {
+    "exit_code": 1,
+    "exception_class": "ERR_MODULE_NOT_FOUND",
+    "missing_package": "@oss/db",
+    "evidence_class": "host_only_not_final_image"
+  },
+  "e10_filtered_manual_run_query": {
+    "total_count": 0,
+    "scope": "head_sha=E10 and event=workflow_dispatch"
+  },
+  "final_image_migration_observed_by_architect": false,
+  "reported_migration_edit": false,
+  "source_blobs_returned_by_connector": {
+    "handoffs/CH-001R-r10.md": "27b096b9848ab370de5e0c1fc3c9ea79d34e2d7a",
+    "docs/evidence/CH-001R-r10/migration-diagnosis.json": "1b1045b0450d3454155f70b0740ee42bba1b5a81",
+    "docs/evidence/CH-001R-r10/r10-results.json": "b0fb43d183d3fe63284ac610410585b41472d746",
+    "docs/evidence/CH-001R-r10/router-reproduction.md": "41a7cc9d21cc0d7cde399bcea139b1312fd10b10",
+    "scripts/ch001-compose-diagnostics.mjs": "0f104b8435efa51f110ae1d9404aa627d8678f08",
+    "scripts/ch001-proof.ts": "40f2eacc063380ff8fe0ed19fe93d4c1e1b97117",
+    "scripts/ch001-compose.ts": "cc8173f7a52f8080b2046e95b857c7497cfdba9d"
+  },
+  "application_acceptance": false,
+  "architect_application_test_executions": 0,
+  "architect_migration_executions": 0,
+  "architect_docker_executions": 0,
+  "architect_hosted_submissions": 0,
+  "architect_remote_writes": 0,
+  "limitations": [
+    "Source excerpts and handoff reviewed; repository test suites were not rerun.",
+    "No new hosted artifact exists in the supplied T10 handoff.",
+    "Git blob values above came from the connector; this receipt does not claim independent full-file byte hashing.",
+    "Local gitignored prefix/proof output referenced by the handoff was not retrieved in this review."
+  ]
+}
