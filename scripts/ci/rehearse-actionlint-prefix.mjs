@@ -292,7 +292,7 @@ async function runPrefix(options) {
     const finalEnvironmentLines = (await readFile(commandFiles.github_env, "utf8")).trimEnd().split("\n");
     const appendedKeys = finalEnvironmentLines.slice(initialEnvironmentFile.trimEnd().split("\n").length).map((line) => line.slice(0, line.indexOf("=")));
     if (appendedKeys.filter((key) => key === "ACTIONLINT_BIN").length !== 1) throw new Error("GITHUB_ENV did not receive exactly one ACTIONLINT_BIN record.");
-    const proofTree = resolve(checkout, materialized.CI_EVIDENCE_ROOT);
+    const proofTree = resolve(checkout, materialized.CH001_EVIDENCE_ROOT);
     const proofPublicTree = resolve(proofTree, "public");
     const policyTree = resolve(checkout, "policy");
     const sandboxTree = resolve(statePath);
