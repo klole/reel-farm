@@ -1,0 +1,16 @@
+{
+  "assignment": "CH-001R-r10-D1",
+  "route": "HOSTED_FALLBACK",
+  "route_a_unavailable_reason": "box: docker CLI absent; Mac Kyles-MacBook-Pro: docker client present (darwin/arm64, context colima) but daemon socket missing (colima not running); pack forbids repairing Docker host",
+  "actionlint": {"version": "1.7.7", "status": "PASS", "local_precheck_run_id": "999001015"},
+  "workflow_blob_sha": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+  "workflow_file_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "implementation_sha": "ec7cc08d6ed229af9780318858d8051202851746",
+  "sandbox_qualification": true,
+  "dispatch_purpose_receipt_only": "diagnose_migration",
+  "definition_head": "c53f29861640831c4dbd588bef5ec9aa6fef5157",
+  "reviewed_E10": "f512c9c02620ea600404cd304782a37e6689a109",
+  "prior_T10_workflow_dispatch_count": 0,
+  "intended_at": "2026-09-15T08:26:00Z",
+  "command": "gh workflow run ch001-live-proof.yml --repo klole/reel-farm --ref main -f implementation_sha=ec7cc08d6ed229af9780318858d8051202851746 -f sandbox_qualification=true"
+}

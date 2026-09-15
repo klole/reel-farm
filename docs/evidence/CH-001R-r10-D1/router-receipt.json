@@ -1,0 +1,58 @@
+{
+  "assignment": "CH-001R-r10-D1",
+  "route": "HOSTED_FALLBACK",
+  "outcome": "CONTAINER_FAILURE_CAPTURED",
+  "diagnostic_disposition": "CONTAINER_FAILURE_CAPTURED",
+  "hosted_classification": "LIVE_PROOF_FAILED",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_status": "awaiting_review",
+  "T10": "ec7cc08d6ed229af9780318858d8051202851746",
+  "reviewed_E10": "f512c9c02620ea600404cd304782a37e6689a109",
+  "definition_head": "c53f29861640831c4dbd588bef5ec9aa6fef5157",
+  "route_a": {
+    "attempted": false,
+    "unavailable_reason": "box: no docker CLI; Mac Colima context present but daemon socket missing; pack forbids repairing Docker host"
+  },
+  "route_b": {
+    "elected": true,
+    "run_id": 34946892709,
+    "run_attempt": 1,
+    "job_id": 104308321648,
+    "artifact_id": 10387768055,
+    "artifact_name": "ch001-live-proof-34946892709-1",
+    "artifact_bytes": 65347,
+    "artifact_digest": "sha256:4c6dae545e0f778ff90bebf9216bd90258ceb41fde228a9fdff50f460a34e685",
+    "url": "https://github.com/klole/reel-farm/actions/runs/34946892709",
+    "requested_implementation_sha": "ec7cc08d6ed229af9780318858d8051202851746",
+    "actual_checkout_sha": "ec7cc08d6ed229af9780318858d8051202851746",
+    "workflow_definition_sha": "c53f29861640831c4dbd588bef5ec9aa6fef5157",
+    "workflow_blob_sha": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+    "sandbox_qualification": true,
+    "dispatch_purpose_receipt_only": "diagnose_migration",
+    "hosted_request_count_r10": 1
+  },
+  "migration": {
+    "command_reached": "package_loading",
+    "compose_startup_exit": 1,
+    "migrate_container_exit": 1,
+    "db_health": "healthy",
+    "inner_exception": "Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /app/scripts/migrate.ts",
+    "exception_code": "ERR_MODULE_NOT_FOUND",
+    "sqlstate": null,
+    "fresh_repeat_schema": "NOT_RUN (first migration failed; no patch/rerun)"
+  },
+  "cleanup": {
+    "teardown_exit": 0,
+    "project": "oss-ch001-r4-34946892709-1",
+    "status": "COMPLETE_PER_RECEIPT"
+  },
+  "gate_counts_hosted": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NOT_RUN": 68
+  },
+  "no_app_edits": true,
+  "no_second_dispatch": true,
+  "observed_at": "2026-09-15T08:29:51Z"
+}
