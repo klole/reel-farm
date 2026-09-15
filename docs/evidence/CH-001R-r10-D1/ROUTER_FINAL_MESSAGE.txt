@@ -2,7 +2,7 @@ Assignment: CH-001R-r10-D1
 Route: HOSTED_FALLBACK
 Outcome: CONTAINER_FAILURE_CAPTURED
 T10: ec7cc08d6ed229af9780318858d8051202851746
-Evidence/receipt commit: PENDING
+Evidence/receipt commit: 204800ed522b125d46d9448b4bff54079f1e2b7c
 Migration command reached: package_loading (final image)
 Migration CLI exit / inspected container exit: compose startup exit 1 / migrate container exit 1
 Inner exception: ERR_MODULE_NOT_FOUND Cannot find package '@oss/db' imported from /app/scripts/migrate.ts
