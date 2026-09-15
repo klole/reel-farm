@@ -432,6 +432,6 @@ async function main() {
 }
 
 main().then((exitCode) => { process.exitCode = exitCode; }).catch((error) => {
-  console.error(`source-bound prefix failed: ${error instanceof Error ? error.message : String(error)}`);
+  console.error(`source-bound prefix failed: ${error instanceof Error ? error.stack ?? error.message : String(error)}`);
   process.exitCode = 1;
 });
