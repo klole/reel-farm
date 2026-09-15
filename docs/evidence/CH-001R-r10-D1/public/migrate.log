@@ -1,0 +1,21 @@
+migrate-1  | 2026-09-15T08:28:34.197702943Z $ node --import tsx scripts/migrate.ts
+migrate-1  | 2026-09-15T08:28:34.350179109Z 
+migrate-1  | 2026-09-15T08:28:34.350202584Z node:internal/modules/run_main:123
+migrate-1  | 2026-09-15T08:28:34.350206360Z     triggerUncaughtException(
+migrate-1  | 2026-09-15T08:28:34.350209545Z     ^
+migrate-1  | 2026-09-15T08:28:34.351811420Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /app/scripts/migrate.ts
+migrate-1  | 2026-09-15T08:28:34.351822757Z     at packageResolve (node:internal/modules/esm/resolve:873:9)
+migrate-1  | 2026-09-15T08:28:34.351825832Z     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+migrate-1  | 2026-09-15T08:28:34.351829227Z     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+migrate-1  | 2026-09-15T08:28:34.351832031Z     at nextResolve (node:internal/modules/esm/hooks:864:28)
+migrate-1  | 2026-09-15T08:28:34.351834655Z     at resolveBase (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)
+migrate-1  | 2026-09-15T08:28:34.351837780Z     at resolveDirectory (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)
+migrate-1  | 2026-09-15T08:28:34.351841105Z     at resolveTsPaths (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)
+migrate-1  | 2026-09-15T08:28:34.351843919Z     at resolve (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)
+migrate-1  | 2026-09-15T08:28:34.351847044Z     at nextResolve (node:internal/modules/esm/hooks:864:28)
+migrate-1  | 2026-09-15T08:28:34.351849798Z     at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {
+migrate-1  | 2026-09-15T08:28:34.351852832Z   code: 'ERR_MODULE_NOT_FOUND'
+migrate-1  | 2026-09-15T08:28:34.351855537Z }
+migrate-1  | 2026-09-15T08:28:34.351857950Z 
+migrate-1  | 2026-09-15T08:28:34.351860184Z Node.js v20.19.2
+migrate-1  | 2026-09-15T08:28:34.355461737Z [ELIFECYCLE] Command failed with exit code 1.
