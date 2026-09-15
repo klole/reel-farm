@@ -1,0 +1,10 @@
+{
+  "record_kind": "CH001_COMPOSE_CLEANUP",
+  "run_id": "r10-local-proof",
+  "project_name": "oss-ch001-r10-local-proof",
+  "startup_attempted": false,
+  "project_owned": false,
+  "status": "NOT_RUN",
+  "reason": "No validated, run-owned Compose startup was attempted; no teardown command was issued.",
+  "source": "artifacts/ch001r10/r10-local-proof/proof/public/compose-cleanup.json"
+}

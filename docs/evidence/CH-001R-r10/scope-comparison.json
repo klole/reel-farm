@@ -1,0 +1,37 @@
+{
+  "record_kind": "CH001R_R10_SCOPE_COMPARISON",
+  "baseline": { "e9": "0f222800f1e91a18cc2f16824a87c9513cd29026", "e9_tree": "88cb7927e45605177318448115a28c177c6071a0" },
+  "implementation": { "t10": "ec7cc08d6ed229af9780318858d8051202851746", "t10_tree": "9e43ac5c00801f7d523405dbe5874d64264fa7cc" },
+  "changed_paths": [
+    "scripts/ch001-compose.ts",
+    "scripts/ch001-compose-diagnostics.mjs",
+    "scripts/ch001-compose-diagnostics.d.mts",
+    "scripts/ch001-proof.ts",
+    "tests/ci/compose-diagnostics.test.mjs"
+  ],
+  "change_disposition": "Coordinator diagnostics, bounded command execution, run-owned Compose validation/cleanup, public redaction, and focused control-flow tests only.",
+  "frozen_surfaces": {
+    "package.json": true,
+    "pnpm-lock.yaml": true,
+    "Dockerfile": true,
+    "compose.yaml": true,
+    "migrations/0001_ch001.sql": true,
+    "packages/db/src/client.ts": true,
+    "scripts/migrate.ts": true,
+    "apps/worker/src/index.ts": true,
+    "packages/renderer/src/scene.tsx": true,
+    ".github/workflows/ch001-live-proof.yml": true,
+    "original_72_gate_contract": true
+  },
+  "scope_flags": {
+    "migration_sql_changed": false,
+    "application_feature_code_changed": false,
+    "dependency_pins_changed": false,
+    "workflow_changed": false,
+    "worker_security_changed": false,
+    "sandbox_design_changed": false,
+    "providers": false,
+    "publishing": false,
+    "v0_2_work": false
+  }
+}

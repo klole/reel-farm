@@ -1,0 +1,8 @@
+CH-001R-r10 final-image repeat migration
+status=NOT_RUN
+reason=Fresh final-image migration was unavailable because Docker/Compose was unavailable
+required_condition=Same isolated database and unchanged final image after a completed fresh migration
+required_command=pnpm db:migrate
+exit_code=null
+exception=null
+schema_and_sentinel_preserved=null

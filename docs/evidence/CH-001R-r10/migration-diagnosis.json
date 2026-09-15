@@ -1,0 +1,51 @@
+{
+  "record_kind": "CH001R_R10_MIGRATION_DIAGNOSIS",
+  "evidence_class": "diagnostic_only",
+  "implementation_commit": "ec7cc08d6ed229af9780318858d8051202851746",
+  "final_image_reproduction": {
+    "status": "NOT_RUN",
+    "reason": "Docker CLI and Compose daemon are unavailable on the editing host.",
+    "image_id": null,
+    "database_project": null,
+    "command": "pnpm db:migrate",
+    "working_directory": "/app",
+    "user": "node",
+    "exit_code": null,
+    "exception": null
+  },
+  "host_only_root_script_probe": {
+    "status": "EXECUTED_NOT_FINAL_IMAGE",
+    "command": "DATABASE_URL=postgres://oss:oss@127.0.0.1:1/oss DOTENV_CONFIG_PATH=/dev/null DB_POOL_MAX=1 timeout 15s pnpm db:migrate",
+    "exit_code": 1,
+    "exception_class": "ERR_MODULE_NOT_FOUND",
+    "exception": "Cannot find package '@oss/db' imported from /workspace/projects/reel-farm/scripts/migrate.ts",
+    "reached": "root-script module loading",
+    "database_connection_attempted": false,
+    "secrets_used": false
+  },
+  "hypotheses": [
+    {
+      "name": "root-script @oss/db bare-package resolution",
+      "status": "SUPPORTED_ON_HOST_UNRESOLVED_IN_FINAL_IMAGE",
+      "evidence": "The host root pnpm db:migrate invocation exits with ERR_MODULE_NOT_FOUND before database connection.",
+      "limitation": "The exact T9 final image was not run; no final-image exception is claimed."
+    },
+    {
+      "name": "SQL, connection, transaction, advisory lock, or completion-record defect",
+      "status": "UNTESTED",
+      "evidence": null,
+      "limitation": "No isolated PostgreSQL final-image run was available."
+    }
+  ],
+  "migration_edit": {
+    "changed": false,
+    "reason": "Diagnostic-only mode forbids a speculative migration repair without the exact shipped-image exception.",
+    "migration_id_preserved": true,
+    "schema_preserved": true,
+    "transaction_and_lock_preserved": true
+  },
+  "fresh": { "status": "NOT_RUN" },
+  "repeat": { "status": "NOT_RUN" },
+  "controlled_failure": { "status": "NOT_RUN" },
+  "schema_check": { "status": "NOT_RUN" }
+}

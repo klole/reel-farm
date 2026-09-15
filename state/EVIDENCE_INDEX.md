@@ -1,5 +1,20 @@
 # Evidence index — CH-001
 
+## CH-001R-r10 migration-failure diagnosis and partial-startup cleanup repair
+
+| Evidence | Location | State |
+|---|---|---|
+| R10 evidence overview and disposition | [CH-001R-r10 README](../docs/evidence/CH-001R-r10/README.md) | Diagnostic-only; final-image migration and real partial-startup runtime are NOT_RUN; acceptance false |
+| Source/T9/P10/T10/workflow identities | [source-identity.json](../docs/evidence/CH-001R-r10/source-identity.json) | T10 `ec7cc08d6ed229af9780318858d8051202851746`; workflow blob/hash preserved |
+| Migration cause disposition | [migration-diagnosis.json](../docs/evidence/CH-001R-r10/migration-diagnosis.json), [baseline log](../docs/evidence/CH-001R-r10/migration-baseline.log) | Host-only `@oss/db` resolution failure; final image unresolved; no migration repair claimed |
+| Fresh/repeat/schema records | [migration-fresh.log](../docs/evidence/CH-001R-r10/migration-fresh.log), [migration-repeat.log](../docs/evidence/CH-001R-r10/migration-repeat.log), [migration-schema-check.json](../docs/evidence/CH-001R-r10/migration-schema-check.json) | NOT_RUN because Docker/Compose unavailable |
+| Partial-startup state/cleanup records | [compose-startup-state.json](../docs/evidence/CH-001R-r10/compose-startup-state.json), [compose-service-logs.log](../docs/evidence/CH-001R-r10/compose-service-logs.log), [compose-cleanup.json](../docs/evidence/CH-001R-r10/compose-cleanup.json) | Local proof early no-startup records; real stopped-service logs/cleanup NOT_RUN |
+| Command and scope reports | [command-report.json](../docs/evidence/CH-001R-r10/command-report.json), [scope-comparison.json](../docs/evidence/CH-001R-r10/scope-comparison.json) | Host matrix and frozen-surface review recorded |
+| Checklist | [r10-results.json](../docs/evidence/CH-001R-r10/r10-results.json) | 9 PASS / 0 FAIL / 9 NOT_RUN; no hosted result |
+| Router reproduction | [router-reproduction.md](../docs/evidence/CH-001R-r10/router-reproduction.md) | Requires capable Docker/Compose host; scoped synthetic credentials and cleanup only |
+| Local proof run | `artifacts/ch001r10/r10-local-proof/proof/public/` | Gitignored; exit 2 `BLOCKED_ENVIRONMENT`; 4 PASS / 0 FAIL / 68 NOT_RUN; manifest includes startup/cleanup records |
+| Handoff | [handoffs/CH-001R-r10.md](../handoffs/CH-001R-r10.md) | Diagnostic-ready for router reproduction; awaiting architect review |
+
 ## CH-001R-r9 actionlint report-path / workflow-shell boundary repair
 
 | Evidence | Location | State |

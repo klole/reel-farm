@@ -1,3 +1,22 @@
+# Project state — CH-001R-r10 checkpoint
+
+**Last updated:** 2026-09-15 UTC
+**State:** `awaiting_review`
+**Product:** Open Slideshow Studio
+**Target application version:** `0.1.0`
+
+## Current CH-001R-r10 bounded migration diagnosis and startup cleanup repair
+
+- P10 is `df8ce7d938910949fef3840ac2c79ec9c388dc6a` (tree `fe809452e322a858a2ec2dcdc634f712d51c714b`), based on E9 `0f222800f1e91a18cc2f16824a87c9513cd29026` (tree `88cb7927e45605177318448115a28c177c6071a0`); T9 remains `6014a247b124a186a1abfcb6d65a7ef024cf8cfc` (tree `6e590387c666ee3672210d022e51fc9283e07737`).
+- T10 implementation is `ec7cc08d6ed229af9780318858d8051202851746` (tree `9e43ac5c00801f7d523405dbe5874d64264fa7cc`). It is limited to bounded Compose command execution, run-owned project validation, failed partial-startup diagnostics, sanitized/bounded service logs, cleanup ownership, focused regressions, and coordinator wiring.
+- The historical failed hosted run `34937329430` and artifact `10383922146` remain read-only. Its migration stderr is absent from the archive; Luna did not rerun or dispatch it. Hosted request count for r10 is zero.
+- The final-image migration reproduction is `NOT_RUN`: this host has no Docker CLI or Compose daemon. The host-only synthetic `pnpm db:migrate` probe exited `1` before database connection with `ERR_MODULE_NOT_FOUND` for `@oss/db` from `scripts/migrate.ts`. This supports, but does not confirm, the root-script resolution hypothesis in the shipped image. No migration SQL or migration code was changed, and no migration repair is claimed.
+- The coordinator now separates startup attempted, project ownership, readiness, and teardown; collects stopped-service state, image IDs, and bounded/redacted logs before teardown; preserves the primary startup failure; records secondary diagnostic/cleanup failures; and writes diagnostics/cleanup before manifest hashing. Early no-startup paths write honest `NOT_RUN` records and issue no teardown.
+- Focused diagnostics tests passed. The final host matrix passed lint, typecheck, build, unit (`20/20`), security (`4/4`), official actionlint `1.7.7`, `pnpm test:ci` (`7/7` file-level), and both source-bound prefixes (`7/7` file-level and `69/69` nested, no `node_modules`).
+- The one local T10 proof run `r10-local-proof` exited `2` as `BLOCKED_ENVIRONMENT`; its original application ledger is `4 PASS / 0 FAIL / 68 NOT_RUN`. Its public startup and cleanup records report `startup_attempted=false`, `project_owned=false`, and no teardown command. No real partial-startup or final-image result is inferred.
+- Completion mode is `DIAGNOSTICS_READY_FOR_ROUTER_REPRODUCTION`. Application acceptance remains `false`; accepted version remains `none`; root remains `awaiting_review`. Luna did not publish, push, dispatch, use providers/credentials, or begin v0.2 work. Router/architect review is required before any next action.
+- Durable r10 evidence is [`docs/evidence/CH-001R-r10/README.md`](../docs/evidence/CH-001R-r10/README.md); the handoff is [`handoffs/CH-001R-r10.md`](../handoffs/CH-001R-r10.md).
+
 # Project state — CH-001R-r9 checkpoint
 
 **Last updated:** 2026-09-15 UTC

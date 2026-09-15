@@ -1,0 +1,13 @@
+CH-001R-r10 host-only migration probe
+date_utc=2026-09-15
+implementation_commit=ec7cc08d6ed229af9780318858d8051202851746
+command=DATABASE_URL=postgres://oss:oss@127.0.0.1:1/oss DOTENV_CONFIG_PATH=/dev/null DB_POOL_MAX=1 timeout 15s pnpm db:migrate
+exit_code=1
+final_image=false
+database_connection_attempted=false
+secrets_used=false
+
+stderr:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /workspace/projects/reel-farm/scripts/migrate.ts
+
+disposition=HOST_ONLY_DIAGNOSIS; exact T9 final-image exception NOT_OBTAINED; no migration edit claimed

@@ -1,0 +1,9 @@
+CH-001R-r10 real partial-startup service logs
+status=NOT_RUN
+reason=No Docker CLI or Compose daemon was available; no run-owned project was allocated
+required_services=db,migrate,web,worker
+required_log_command=docker compose --project-name <run-owned-project> logs --no-color --timestamps --tail 500 db migrate web worker
+public_log_capture=NOT_RUN
+private_raw_log_capture=NOT_RUN
+stopped_migrate_exit_code=null
+image_ids=null

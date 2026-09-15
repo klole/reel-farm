@@ -1,0 +1,30 @@
+{
+  "record_kind": "CH001R_R10_MIGRATION_SCHEMA_CHECK",
+  "status": "NOT_RUN",
+  "reason": "No isolated PostgreSQL final-image run was available.",
+  "expected_migration_id": "0001_ch001",
+  "expected_schema_migrations_row": {
+    "id": "0001_ch001",
+    "exactly_one_row_for_migration": true
+  },
+  "expected_tables": [
+    "user",
+    "session",
+    "account",
+    "verification",
+    "workspace",
+    "project",
+    "draft",
+    "draft_revision",
+    "asset",
+    "render_request",
+    "render_outbox",
+    "render_artifact",
+    "worker_heartbeat",
+    "save_mutation",
+    "schema_migrations"
+  ],
+  "observed_tables": null,
+  "observed_migration_rows": null,
+  "sentinel": null
+}

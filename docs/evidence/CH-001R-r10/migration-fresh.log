@@ -1,0 +1,8 @@
+CH-001R-r10 final-image fresh migration
+status=NOT_RUN
+reason=Docker CLI and Compose daemon unavailable on the editing host
+required_command=pnpm db:migrate
+required_database=isolated PostgreSQL 16.8 service with a fresh run-owned volume
+exit_code=null
+exception=null
+schema_observed=false

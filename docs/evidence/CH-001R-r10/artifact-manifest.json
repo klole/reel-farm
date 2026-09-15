@@ -1,0 +1,24 @@
+{
+  "record_kind": "CH001R_R10_ARTIFACT_MANIFEST",
+  "implementation_commit": "ec7cc08d6ed229af9780318858d8051202851746",
+  "evidence_commit": null,
+  "status": "DIAGNOSTICS_READY_FOR_ROUTER_REPRODUCTION",
+  "application_acceptance": false,
+  "files": [
+    { "path": "README.md", "sha256": "46231c5dc35d42f3002ab520672d09e664ae15fea6069be381d8f998ff5a6667", "bytes": 5926 },
+    { "path": "command-report.json", "sha256": "a47bfd2bba58fde201c14cc657689fcc8d9d4f8f5e70a9bc97f3afd2034191a4", "bytes": 2900 },
+    { "path": "compose-cleanup.json", "sha256": "6cca531857296ef376dd77ce3f5f875f5d3e117f4a5541e65fe4d31074316c37", "bytes": 388 },
+    { "path": "compose-service-logs.log", "sha256": "cb2cee3fdcc9120212c0d81683d9e616ffee894901b455ef8dcc0c28bb53a912", "bytes": 428 },
+    { "path": "compose-startup-state.json", "sha256": "66f5394a7251f670587643d57e6b7f60c31006926021764d8a6a7101a915a62d", "bytes": 455 },
+    { "path": "migration-baseline.log", "sha256": "92cb82aa01d8d250c0e2cef6d6885ef88b2457f2058639959a5df690118312fb", "bytes": 570 },
+    { "path": "migration-diagnosis.json", "sha256": "84049ad40d07c3f5af2808887918312dd4f1f167e123181f893544ac658979e2", "bytes": 2060 },
+    { "path": "migration-fresh.log", "sha256": "1e9f815b4eacae96d4f384a6265faa6f1689710f1f50d9fae0f0baaf38c08639", "bytes": 290 },
+    { "path": "migration-repeat.log", "sha256": "646974b38a83368b1e32eda030bc22dbc86e7358a117b58c6d29f0e8fa428d1a", "bytes": 346 },
+    { "path": "migration-schema-check.json", "sha256": "4849f9d68bec2fe779b7324b772d27b274a833dc7558ce04c91460130107d901", "bytes": 686 },
+    { "path": "r10-results.json", "sha256": "d7de7e401cbc91ea75b04e710c65d6504847a1fd8c5a292683dd63eb7ddc4669", "bytes": 5948 },
+    { "path": "router-reproduction.md", "sha256": "0dfe96e599889f524436214edb226bb5e6c89c22e03e187050879783ad8b3344", "bytes": 6623 },
+    { "path": "scope-comparison.json", "sha256": "dbee6918666e44d2a4b8ee69f747ff4f5ee253188872dd9aa6107374d4554444", "bytes": 1439 },
+    { "path": "source-identity.json", "sha256": "af31a2d11a5f288e29dfc89aab17790b30d3d67e8a492558be645572b334275f", "bytes": 1271 }
+  ],
+  "exclusion": "This manifest excludes its own bytes to avoid self-reference. Gitignored local proof records and private raw logs are separately identified in the handoff."
+}

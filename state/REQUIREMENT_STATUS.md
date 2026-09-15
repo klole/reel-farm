@@ -1,3 +1,20 @@
+# Requirement status — CH-001R-r10 checkpoint
+
+CH-001R-r10 is a bounded v0.1.0 migration-failure diagnosis and partial-startup diagnostics/cleanup repair. It does not accept the application or establish a successful final-image migration. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff.
+
+| R10 subset | Status | Evidence / boundary |
+|---|---|---|
+| Exact T9 final-image migration exception | `not_run` | Docker CLI/Compose daemon unavailable; no final-image stderr, image ID, SQLSTATE, schema result, fresh exit, repeat exit, or controlled-failure result is claimed. |
+| Root-script `@oss/db` hypothesis | `diagnostic_only` | Host-only `pnpm db:migrate` probe exited `1` with `ERR_MODULE_NOT_FOUND` before DB connection; exact final-image cause remains unresolved. |
+| Migration repair | `not_claimed` | Migration SQL, migration ID, transaction/lock semantics, package pins, Dockerfile, and Compose dependency surfaces are unchanged. |
+| Failed partial startup diagnostics | `implemented` | Run-owned project validation, stopped-service state, image IDs, bounded/redacted service logs, and malformed/failed-read handling are implemented in the proof path. |
+| Cleanup and failure precedence | `implemented` | Diagnostics precede scoped teardown; primary startup failure is preserved; secondary diagnostic/cleanup failures are appended; no-startup path performs no teardown. |
+| Runtime partial-startup / sibling-resource exercise | `not_run` | Requires Docker/Compose; executable router reproduction is in [`router-reproduction.md`](../docs/evidence/CH-001R-r10/router-reproduction.md). |
+| Static, focused, and source-bound checks | `passed` | Official actionlint `1.7.7`, `pnpm test:ci` 7/7, source-bound prefixes 69/69 nested each, lint/typecheck/build, unit 20/20, security 4/4. |
+| Application acceptance | `false` | Accepted application version `none`; root `awaiting_review`; no hosted T10 request was dispatched. |
+
+The original CH-001 requirements below remain the chapter status scaffold and are not promoted by this diagnostic-only continuation.
+
 # Requirement status — CH-001 checkpoint
 
 Statuses below are chapter evidence statuses, not acceptance of the full North Star. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff. CH-001R-r8 CI repair evidence is local and awaiting router publication; no hosted/application acceptance is claimed.

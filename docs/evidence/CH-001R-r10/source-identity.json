@@ -1,0 +1,38 @@
+{
+  "record_kind": "CH001R_R10_SOURCE_IDENTITY",
+  "chapter": "CH-001R-r10",
+  "target_application_version": "0.1.0",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "baseline": {
+    "t9": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+    "t9_tree": "6e590387c666ee3672210d022e51fc9283e07737",
+    "e9": "0f222800f1e91a18cc2f16824a87c9513cd29026",
+    "e9_tree": "88cb7927e45605177318448115a28c177c6071a0"
+  },
+  "packet": {
+    "p10": "df8ce7d938910949fef3840ac2c79ec9c388dc6a",
+    "p10_tree": "fe809452e322a858a2ec2dcdc634f712d51c714b"
+  },
+  "implementation": {
+    "t10": "ec7cc08d6ed229af9780318858d8051202851746",
+    "t10_tree": "9e43ac5c00801f7d523405dbe5874d64264fa7cc"
+  },
+  "workflow": {
+    "blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+    "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+    "changed_in_t10": false
+  },
+  "parents": [
+    "ec7cc08d6ed229af9780318858d8051202851746",
+    "df8ce7d938910949fef3840ac2c79ec9c388dc6a",
+    "0f222800f1e91a18cc2f16824a87c9513cd29026",
+    "6014a247b124a186a1abfcb6d65a7ef024cf8cfc"
+  ],
+  "hosted_actions": {
+    "dispatch_count": 0,
+    "historical_run_rerun": false,
+    "publication_performed": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "record_kind": "CH001_COMPOSE_STARTUP_STATE",
+  "run_id": "r10-local-proof",
+  "project_name": "oss-ch001-r10-local-proof",
+  "startup_attempted": false,
+  "status": "NOT_RUN",
+  "reason": "No validated, run-owned Compose startup was attempted.",
+  "diagnostics": {
+    "capture_order": [],
+    "raw_logs_private": true,
+    "public_logs_sanitized": true
+  },
+  "source": "artifacts/ch001r10/r10-local-proof/proof/public/compose-startup-state.json"
+}

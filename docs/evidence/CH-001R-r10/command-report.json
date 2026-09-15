@@ -1,0 +1,29 @@
+{
+  "record_kind": "CH001R_R10_COMMAND_REPORT",
+  "implementation_commit": "ec7cc08d6ed229af9780318858d8051202851746",
+  "observed_date_utc": "2026-09-15",
+  "commands": [
+    { "command": "pnpm install --frozen-lockfile", "exit_code": 1, "status": "FAIL_ENVIRONMENT", "detail": "Restricted sandbox DNS could not fetch registry tarballs." },
+    { "command": "pnpm install --frozen-lockfile", "exit_code": 0, "status": "PASS", "detail": "Approved network retry; pnpm 12.3.4; lockfile unchanged." },
+    { "command": "node --check scripts/ch001-compose-diagnostics.mjs && node --check scripts/ch001-proof-boundary.mjs && node --check tests/ci/compose-diagnostics.test.mjs", "exit_code": 0, "status": "PASS" },
+    { "command": "ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint pnpm lint:workflow", "exit_code": 0, "status": "PASS", "tool": "actionlint 1.7.7", "workflow_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d" },
+    { "command": "ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint ACTIONLINT_BOOTSTRAP_ARCHIVE=/tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz pnpm test:ci", "exit_code": 0, "status": "PASS", "file_level": { "discovered": 7, "executed": 7, "passed": 7, "failed": 0, "skipped": 0 } },
+    { "command": "pnpm lint", "exit_code": 0, "status": "PASS" },
+    { "command": "pnpm typecheck", "exit_code": 0, "status": "PASS" },
+    { "command": "pnpm build", "exit_code": 0, "status": "PASS" },
+    { "command": "pnpm test:unit", "exit_code": 0, "status": "PASS", "counts": { "files": 3, "tests": 20 } },
+    { "command": "pnpm test:security", "exit_code": 0, "status": "PASS", "counts": { "files": 1, "tests": 4 } },
+    { "command": "git diff --check", "exit_code": 0, "status": "PASS" },
+    { "command": "pnpm proof:ch001", "exit_code": 2, "status": "BLOCKED_ENVIRONMENT", "run_id": "r10-local-proof", "gate_counts": { "PASS": 4, "FAIL": 0, "NOT_RUN": 68 } },
+    { "command": "node scripts/ci/rehearse-actionlint-prefix.mjs --mode clean --run-id 900000701", "exit_code": 0, "status": "PASS", "file_level": { "passed": 7 }, "nested": { "passed": 69 }, "node": "v20.19.2", "node_modules_present": false },
+    { "command": "node scripts/ci/rehearse-actionlint-prefix.mjs --mode hosted-like --run-id 900000702", "exit_code": 0, "status": "PASS", "file_level": { "passed": 7 }, "nested": { "passed": 69 }, "node": "v20.19.2", "node_modules_present": false, "sandbox_opt_in": false },
+    { "command": "DATABASE_URL=postgres://oss:oss@127.0.0.1:1/oss DOTENV_CONFIG_PATH=/dev/null DB_POOL_MAX=1 timeout 15s pnpm db:migrate", "exit_code": 1, "status": "HOST_ONLY_DIAGNOSIS", "exception": "ERR_MODULE_NOT_FOUND for @oss/db" }
+  ],
+  "runtime_not_run": [
+    "final-image migration fresh",
+    "final-image migration repeat",
+    "controlled migration failure",
+    "real Docker partial-startup fixture",
+    "hosted application proof"
+  ]
+}
