@@ -1,3 +1,5 @@
+/* global process, console */
+
 import { isAbsolute, resolve } from "node:path";
 class ActionlintBootstrapError extends Error {
   constructor(classification, message, details = {}) {
