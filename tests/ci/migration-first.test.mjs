@@ -15,7 +15,7 @@ function terminal(exitCode = 0, state = "exited") {
   return { cli: { exit_code: exitCode, timed_out: false }, container: { exit_code: exitCode, state, timed_out: false } };
 }
 
-function adapterFor({ failStage = null, unknownExit = false, cleanupFailure = false } = {}) {
+function adapterFor({ failStage = null, unknownExit = false, cleanupFailure = false, sentinelAllocated = false } = {}) {
   const calls = [];
   const call = (name, value) => { calls.push(name); if (failStage === name) throw new Error(`${name} fixture failure`); return value; };
   return {
@@ -27,7 +27,7 @@ function adapterFor({ failStage = null, unknownExit = false, cleanupFailure = fa
     confirmFreshMarkerAbsent: async () => call("fresh_precondition", { status: "PASS", marker_count: 0 }),
     runMigration: async (stage) => call(stage, unknownExit && stage === "fresh" ? { cli: { exit_code: null }, container: { exit_code: null, state: "unknown" } } : terminal()),
     inspectSchema: async () => call("schema", { status: "PASS", marker_count: 1, schema_fingerprint: "schema" }),
-    createSentinel: async () => call("sentinel", { status: "PASS", sentinel: "preserved" }),
+    createSentinel: async () => { if (failStage === "sentinel") { calls.push("sentinel"); return { status: "FAIL", fixture_allocated: sentinelAllocated, error: "sentinel setup log failure" }; } return call("sentinel", { status: "PASS", sentinel: "preserved" }); },
     inspectRepeatState: async () => call("repeat_assertions", { status: "PASS", marker_count: 1, marker_unchanged: true, sentinel: "preserved" }),
     runFailureControl: async () => call("failure_control", { ...terminal(1), marker_count: 0, error_observed: true }),
     cleanupFixtures: async () => { calls.push("fixture_cleanup"); return cleanupFailure ? { status: "FAIL", error: "cleanup fixture failure" } : { status: "PASS", removed: true }; }
@@ -80,4 +80,17 @@ test("R11-T08 migration-first preserves completed migration results when fixture
   assert.equal(result.stages.fixture_cleanup.status, "FAIL");
   assert.equal(persisted.stages.fresh.status, "PASS");
   assert.equal(persisted.stages.failure_control.status, "PASS");
+});
+
+test("R11-T08 migration-first cleans a partially allocated sentinel and rejects false controlled-failure evidence", async () => {
+  const adapter = adapterFor({ failStage: "sentinel", sentinelAllocated: true });
+  const { result, persisted } = await runQualification(adapter);
+  assert.equal(result.status, "FAIL");
+  assert.equal(result.stages.sentinel.status, "FAIL");
+  assert.equal(result.stages.fixture_cleanup.status, "PASS");
+  assert.equal(adapter.calls.includes("fixture_cleanup"), true);
+  assert.equal(persisted.stages.repeat.status, "NOT_RUN");
+
+  const falseFailure = { ...terminal(1), marker_count: 1, error_observed: true };
+  assert.equal(isSuccessfulExpectedFailure(falseFailure), false);
 });
