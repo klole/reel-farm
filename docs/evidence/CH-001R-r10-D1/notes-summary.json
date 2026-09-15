@@ -1,0 +1,36 @@
+{
+  "assignment": "CH-001R-r10-D1",
+  "route": "HOSTED_FALLBACK",
+  "run_id": 34946892709,
+  "run_url": "https://github.com/klole/reel-farm/actions/runs/34946892709",
+  "conclusion": "failure",
+  "artifact": {
+    "id": 10387768055,
+    "name": "ch001-live-proof-34946892709-1",
+    "size_in_bytes": 65347,
+    "digest": "sha256:4c6dae545e0f778ff90bebf9216bd90258ceb41fde228a9fdff50f460a34e685"
+  },
+  "proof_classification": "LIVE_PROOF_FAILED",
+  "proof_status": "TEST_FAILURE",
+  "bootstrap_status": "PASS",
+  "migration_error": "Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /app/scripts/migrate.ts",
+  "compose_startup_state_summary": {
+    "startup_attempted": true,
+    "startup_exit_code": 1,
+    "db": "running/healthy",
+    "migrate": "exited/1",
+    "web": "created",
+    "worker": "created",
+    "failure": "service \"migrate\" didn't complete successfully: exit 1"
+  },
+  "cleanup_summary": {
+    "status": "PASS",
+    "teardown_exit_code": 0,
+    "post_cleanup": "REMOVED",
+    "containers_remaining": 0,
+    "volumes_remaining": 0
+  },
+  "diagnostic_outcome": "CONTAINER_FAILURE_CAPTURED",
+  "application_acceptance": false,
+  "observed_at": "2026-09-15T08:31:58Z"
+}

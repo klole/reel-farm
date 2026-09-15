@@ -2,14 +2,14 @@ Assignment: CH-001R-r10-D1
 Route: HOSTED_FALLBACK
 Outcome: CONTAINER_FAILURE_CAPTURED
 T10: ec7cc08d6ed229af9780318858d8051202851746
-Evidence/receipt commit: 204800ed522b125d46d9448b4bff54079f1e2b7c
-Migration command reached: package_loading (final image)
+Evidence/receipt commit: (pending this push; see HEAD after evidence commit)
+Migration command reached: package_loading (final image node --import tsx scripts/migrate.ts)
 Migration CLI exit / inspected container exit: compose startup exit 1 / migrate container exit 1
 Inner exception: ERR_MODULE_NOT_FOUND Cannot find package '@oss/db' imported from /app/scripts/migrate.ts
-Fresh / repeat / schema: NOT_RUN (stopped after first failure per D1)
-Diagnostics / cleanup: migrate logs + startup state captured; compose down -v exit 0
+Fresh / repeat / schema: NOT_RUN (stopped after first failure per D1; no patch/rerun)
+Diagnostics / cleanup: CAPTURED / COMPLETE (compose down -v exit 0; post_cleanup REMOVED)
 Hosted request count for r10: 1
 Hosted run / artifact: 34946892709 / 10387768055 ch001-live-proof-34946892709-1 digest sha256:4c6dae545e0f778ff90bebf9216bd90258ceb41fde228a9fdff50f460a34e685
-Hosted classification: LIVE_PROOF_FAILED (bootstrap PASS; proof_invoked true)
+Hosted classification (verbatim): LIVE_PROOF_FAILED
 application_acceptance=false; accepted version=none; root=awaiting_review
-sent=no (chat pending), destination=none yet; evidence push pending
+sent=no, destination=none (evidence push only; no Pro/chat message)

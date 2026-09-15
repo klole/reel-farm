@@ -3,6 +3,10 @@
     "bytes": 65347,
     "sha256": "4c6dae545e0f778ff90bebf9216bd90258ceb41fde228a9fdff50f460a34e685"
   },
+  "hosted/artifact.zip": {
+    "bytes": 65347,
+    "sha256": "4c6dae545e0f778ff90bebf9216bd90258ceb41fde228a9fdff50f460a34e685"
+  },
   "public/migrate.log": {
     "bytes": 2076,
     "sha256": "43f8333eeac5bac8e5fc27df8a4034a66345c340e28cbeeb734d70c320734d95"
@@ -26,5 +30,21 @@
   "intended-dispatch.json": {
     "bytes": 1088,
     "sha256": "18071efeee32d13b00096e2a982e7418f779324fc83043f425cb5c88646b94a2"
+  },
+  "notes-summary.json": {
+    "bytes": 1210,
+    "sha256": "3fae3d5cf94eb03d4d857b2ec25f872525c791a5f734eb9201156f997ab4ec56"
+  },
+  "router-receipt.json": {
+    "bytes": 8610,
+    "sha256": "274822ebdd34b1be5358baa9590203b0b41c5eee413ceee3ad48c14d3e9d6952"
+  },
+  "router-receipt.filled.json": {
+    "bytes": 8610,
+    "sha256": "274822ebdd34b1be5358baa9590203b0b41c5eee413ceee3ad48c14d3e9d6952"
+  },
+  "ROUTER_FINAL_MESSAGE.txt": {
+    "bytes": 1067,
+    "sha256": "ae8670bd66e79e9d66112196e5cfdbeebba7790909dc8682a3ad9e4b95deb5af"
   }
 }
