@@ -145,7 +145,7 @@ async function applyEnvironmentRecords(environment, path, previousContent, stepI
 
 function nodeTestCounts(output) {
   const metric = (name) => {
-    const matches = [...String(output).matchAll(new RegExp(`^ℹ ${name} (\\d+)$`, "gm"))];
+    const matches = [...String(output).matchAll(new RegExp(`^(?:ℹ|#) ${name} (\\d+)$`, "gm"))];
     if (matches.length === 0) throw new Error(`Complete CI output did not contain the final ${name} count.`);
     return Number(matches.at(-1)[1]);
   };
