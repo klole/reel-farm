@@ -293,7 +293,7 @@ async function runPrefix(options) {
     const nestedTestResults = [];
     const nestedTestOutputs = [];
     for (const testFile of testFiles) {
-      const nestedResult = await run(process.execPath, [testFile], { cwd: checkout, environment });
+      const nestedResult = await run(process.execPath, ["--test", testFile], { cwd: checkout, environment });
       let nestedCounts;
       try {
         nestedCounts = nodeTestCounts(nestedResult.stdout + nestedResult.stderr);
@@ -436,7 +436,7 @@ async function runPrefix(options) {
       absent_trees: absentPaths,
       generated_evidence: Object.fromEntries(Object.entries(evidencePaths).map(([key, path]) => [key, { path: copiedRelative(path), sha256: null }])),
       child_commands: stepResults.map(({ command, step_id, body_sha256, exit_code }) => ({ step_id, command, body_sha256, exit_code })),
-      nested_test_commands: testFiles.map((testFile, index) => ({ file: testFile, command: [process.execPath, testFile], ...nestedTestResults[index] })),
+      nested_test_commands: testFiles.map((testFile, index) => ({ file: testFile, command: [process.execPath, "--test", testFile], ...nestedTestResults[index] })),
       unavailable_checks: ["sandbox qualification", "Docker/Compose", "Chromium", "bounded application proof"],
       external_actions: { github_write: false, workflow_dispatch: false, hosted_run: null, providers: false, credentials: false }
     };
