@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "kind": "PACKET_DOCUMENT_AND_LOCAL_SUPPLEMENT_VALIDATION_NOT_APPLICATION_ACCEPTANCE",
+  "created_utc": "2026-09-15T15:06:31Z",
+  "checks": [
+    {
+      "check": "canonical commit and tree lengths",
+      "status": "PASS"
+    },
+    {
+      "check": "recorded digest lengths",
+      "status": "PASS"
+    },
+    {
+      "check": "exact approved implementation in dispatch command",
+      "status": "PASS"
+    },
+    {
+      "check": "only existing workflow inputs in dispatch command",
+      "status": "PASS"
+    },
+    {
+      "check": "explicit true sandbox opt in",
+      "status": "PASS"
+    },
+    {
+      "check": "one shared allowance rather than new budget",
+      "status": "PASS"
+    },
+    {
+      "check": "no new implementation chapter",
+      "status": "PASS"
+    },
+    {
+      "check": "immediate request history check required",
+      "status": "PASS"
+    },
+    {
+      "check": "ambiguous response does not authorize resend",
+      "status": "PASS"
+    },
+    {
+      "check": "historical D1 rerun prohibited",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt starts with no observed hosted proof",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt contains known implementation separately from runtime identity",
+      "status": "PASS"
+    },
+    {
+      "check": "acceptance false in receipt and author record",
+      "status": "PASS"
+    },
+    {
+      "check": "author has no remote writes or dispatch",
+      "status": "PASS"
+    },
+    {
+      "check": "supplemental test limitations explicit",
+      "status": "PASS"
+    },
+    {
+      "check": "local repetition evidence precision retained",
+      "status": "PASS"
+    },
+    {
+      "check": "T13 module copies rehash to connector blobs",
+      "status": "PASS"
+    },
+    {
+      "check": "six isolated checks actually passed",
+      "status": "PASS"
+    },
+    {
+      "check": "all machine files parse",
+      "status": "PASS"
+    },
+    {
+      "check": "Markdown code fences balanced",
+      "status": "PASS"
+    },
+    {
+      "check": "local link README.md -> 01_REVIEW_VERDICT.md",
+      "status": "PASS"
+    },
+    {
+      "check": "local link README.md -> 02_ROUTER_EXECUTION.md",
+      "status": "PASS"
+    },
+    {
+      "check": "local link README.md -> 03_OUTCOME_AND_RECEIPT.md",
+      "status": "PASS"
+    },
+    {
+      "check": "local link README.md -> ROUTER_START_PROMPT.md",
+      "status": "PASS"
+    },
+    {
+      "check": "local link README.md -> 04_SOURCES.md",
+      "status": "PASS"
+    },
+    {
+      "check": "combined document links resolved",
+      "status": "PASS"
+    },
+    {
+      "check": "no fabricated future runtime result",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "PASS": 27,
+    "FAIL": 0
+  },
+  "application_tests_run": false,
+  "hosted_dispatches": 0
+}

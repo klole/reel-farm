@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: isolated 1: missing or blank database stops before executor
+ok 1 - isolated 1: missing or blank database stops before executor
+  ---
+  duration_ms: 8.097471
+  type: 'test'
+  ...
+# Subtest: isolated 2: database and role remain distinct literal arguments
+ok 2 - isolated 2: database and role remain distinct literal arguments
+  ---
+  duration_ms: 0.378406
+  type: 'test'
+  ...
+# Subtest: isolated 3: production adapter forwards the explicit fixture target
+ok 3 - isolated 3: production adapter forwards the explicit fixture target
+  ---
+  duration_ms: 0.32897
+  type: 'test'
+  ...
+# Subtest: isolated 4: serializer retains identical command text and distinct captured identities
+ok 4 - isolated 4: serializer retains identical command text and distinct captured identities
+  ---
+  duration_ms: 2.549835
+  type: 'test'
+  ...
+# Subtest: isolated 5: serialization preserves failure order without dropping either execution
+ok 5 - isolated 5: serialization preserves failure order without dropping either execution
+  ---
+  duration_ms: 0.607962
+  type: 'test'
+  ...
+# Subtest: isolated 6: serializer rejects absent captured identity and absent binding
+ok 6 - isolated 6: serializer rejects absent captured identity and absent binding
+  ---
+  duration_ms: 0.598087
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 245.781848

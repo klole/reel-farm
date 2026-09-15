@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "assignment": "CH-001R-r13-V1",
+  "issued_utc": "2026-09-15T15:06:31Z",
+  "decision": "AUTHORIZE_ONE_FRESH_T13_SUBJECT_TO_ROUTER_PRECHECKS",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "implementation_tree": "405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8",
+  "evidence_commit": "d1ab7226b71e93235a9761f1432b6fb7be198609",
+  "evidence_tree": "77250fc98f4f3c35c91dec6e418690ddb3451360",
+  "packet_ancestor": "34be09f3a211aae01582270708b565b4a7cce539",
+  "workflow_blob_directly_compared_at_t13_e13": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+  "recorded_workflow_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "finding_dispositions": {
+    "F13-01": "source repair supported; real PostgreSQL runtime pending",
+    "F13-02": "source repair supported; real repeated-query runtime pending"
+  },
+  "identity_and_scope": {
+    "p13_t13_direct_parent": true,
+    "t13_e13_direct_parent": true,
+    "p13_t13_changed_file_count": 10,
+    "t13_e13_evidence_only": true,
+    "main_at_read": "d1ab7226b71e93235a9761f1432b6fb7be198609"
+  },
+  "historical_run_query": {
+    "event": "workflow_dispatch",
+    "created_gte": "2026-09-15T10:39:29Z",
+    "result_total_count": 0,
+    "limitation": "point-in-time read; router must recheck its own ledger and current history"
+  },
+  "luna_reported_results": {
+    "ci_file_modules": 10,
+    "ci_nested_cases": 85,
+    "unit_tests": 24,
+    "security_tests": 4,
+    "r13_checklist": {
+      "PASS": 9,
+      "FAIL": 0,
+      "NOT_RUN": 5
+    },
+    "local_proof_status": "BLOCKED_ENVIRONMENT",
+    "application_gate_counts": {
+      "PASS": 4,
+      "FAIL": 0,
+      "NOT_RUN": 68
+    },
+    "independently_rerun_by_architect": false
+  },
+  "architect_executed_checks": {
+    "kind": "isolated dependency-free source-copy checks, not application tests",
+    "node": "v22.16.0",
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "git_blob_identity_verified": true,
+    "full_validator_executed": false,
+    "pinned_application_runtime_used": false,
+    "report": "evidence/isolated-boundaries.tap"
+  },
+  "remaining_verification": [
+    "real PostgreSQL marker regression",
+    "final-image import and migration",
+    "schema/marker/sentinel/repeat",
+    "permission-failure control",
+    "real invocation-v2 query evidence",
+    "runtime cleanup and artifact integrity",
+    "downstream application journey"
+  ],
+  "precision_note": "The inspected nine-entry local command array has distinct command strings; repeated-command acceptance is presently source-test evidence, not a local live-query observation.",
+  "author_actions": {
+    "connected_github_reads": true,
+    "local_read_only_clone_attempt": "DNS failure, exit 128",
+    "repository_writes": 0,
+    "workflow_dispatches": 0,
+    "historical_reruns": 0,
+    "external_messages": 0,
+    "luna_spawns": 0,
+    "postgresql_runs": 0,
+    "docker_runs": 0,
+    "application_suite_runs": 0
+  }
+}

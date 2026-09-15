@@ -1,0 +1,41 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {buildMigrationSqlArgs, createMigrationSqlAdapter} from './ch001-migration-command.mjs';
+import {serializeCommandEvidence} from './ch001-command-records.mjs';
+const bindings={runId:'architect-synthetic-r13',implementationCommit:'6e04b5a5eefe2ef464572da35c88338fa342f525'};
+const captured=(id,code=0)=>({result:{invocationId:id,command:'psql -d fixture -Atc SELECT 1',startedAt:`2026-09-15T00:00:00.000Z`,endedAt:`2026-09-15T00:00:00.100Z`,exitCode:code},publicLogPath:`${id}.log`});
+test('isolated 1: missing or blank database stops before executor',async()=>{
+ let calls=0;const run=createMigrationSqlAdapter(()=>{calls++;});
+ for(const db of [undefined,null,'','  ']) await assert.rejects(()=>run('fixture','SELECT 1',db),/database/);
+ assert.equal(calls,0);
+});
+test('isolated 2: database and role remain distinct literal arguments',()=>{
+ const sql='SELECT 1';const args=buildMigrationSqlArgs({database:'fixture db',user:'observer role',sql});
+ assert.equal(args[args.indexOf('-d')+1],'fixture db');assert.equal(args[args.indexOf('-U')+1],'observer role');
+ assert.equal(args.at(-1),sql);assert.equal(args.includes('oss'),false);
+});
+test('isolated 3: production adapter forwards the explicit fixture target',async()=>{
+ const events=[];const run=createMigrationSqlAdapter((name,args)=>{events.push({name,args});return {exit_code:0};});
+ const r=await run('fixture-acl','REVOKE ALL ON TABLE public.schema_migrations FROM PUBLIC','fixture_r13','oss');
+ assert.equal(r.exit_code,0);assert.equal(events[0].args[events[0].args.indexOf('-d')+1],'fixture_r13');
+});
+test('isolated 4: serializer retains identical command text and distinct captured identities',()=>{
+ const inputs=[captured('first'),captured('second')];const before=structuredClone(inputs);
+ const out=serializeCommandEvidence(inputs,x=>x,bindings);
+ assert.equal(out.command_record_format,'invocation-v2');assert.equal(out.commands.length,2);
+ assert.equal(out.commands[0].command,out.commands[1].command);
+ assert.deepEqual(out.commands.map(x=>x.invocationId),['first','second']);
+ assert.deepEqual(out.child_invocations.map(x=>x.log_path),['first.log','second.log']);
+ assert.deepEqual(inputs,before);
+});
+test('isolated 5: serialization preserves failure order without dropping either execution',()=>{
+ for(const codes of [[0,1],[1,0]]){
+  const out=serializeCommandEvidence(codes.map((code,i)=>captured(`run-${i}`,code)),x=>x,bindings);
+  assert.deepEqual(out.commands.map(x=>x.exitCode),codes);
+  assert.deepEqual(out.child_invocations.map(x=>x.implementation_commit),[bindings.implementationCommit,bindings.implementationCommit]);
+ }
+});
+test('isolated 6: serializer rejects absent captured identity and absent binding',()=>{
+ assert.throws(()=>serializeCommandEvidence([captured('')],x=>x,bindings),/invocation ID/);
+ assert.throws(()=>serializeCommandEvidence([captured('x')],x=>x,{}),/run ID/);
+});

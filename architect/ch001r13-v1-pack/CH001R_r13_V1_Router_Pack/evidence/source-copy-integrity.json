@@ -1,0 +1,18 @@
+[
+  {
+    "repository_path": "scripts/ch001-migration-command.mjs",
+    "commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "git_blob_sha": "ab09537b92b813d06e41062bf947a761c0a3082f",
+    "bytes": 1760,
+    "sha256": "0b27c789485a4a41784b8b7f9ec1a48c3136ad652d69c6473b1cb093e4c345f0",
+    "matches_connector_blob": true
+  },
+  {
+    "repository_path": "scripts/ch001-command-records.mjs",
+    "commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "git_blob_sha": "b667f4c2742a6c90a75b6f0b7b090c20ca5916bb",
+    "bytes": 2287,
+    "sha256": "2ee52428d146a8aa487ad3e5a4373ac0bdc498ea27f942f57b0c32b9e9eda8b5",
+    "matches_connector_blob": true
+  }
+]
