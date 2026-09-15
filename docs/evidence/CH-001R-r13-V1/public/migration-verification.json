@@ -1,0 +1,2430 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001_MIGRATION_VERIFICATION",
+  "classification": "R12_MIGRATION_FIRST",
+  "run_id": "r4-34997237592-1",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "source_tree": "405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8",
+  "image": {
+    "services": [
+      "migrate",
+      "web",
+      "worker"
+    ],
+    "build_command": "docker compose build migrate web worker",
+    "final_image_required": true
+  },
+  "database": {
+    "compose_project": "oss-ch001-r4-34997237592-1",
+    "service": "db",
+    "network_alias": "db",
+    "host_published": false
+  },
+  "prebuild_module_import": {
+    "schema_version": 1,
+    "record_kind": "CH001_DB_MODULE_IMPORT",
+    "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+    "status": "PASS",
+    "implementation_context": "root/scripts context after frozen install and build",
+    "database_connection_attempted": false,
+    "dotenv_suppressed": true,
+    "node_path_present": false,
+    "resolved_path": "/home/runner/work/reel-farm/reel-farm/packages/db/dist/index.js",
+    "expected_path": "/home/runner/work/reel-farm/reel-farm/packages/db/dist/index.js",
+    "pool_api": {
+      "connect": true,
+      "end": true
+    },
+    "pool_closed": true,
+    "negative_control": {
+      "status": "PASS",
+      "control_kind": "RECORDED_FROZEN_BASELINE_EQUIVALENT",
+      "exit_code": 1,
+      "timed_out": false,
+      "missing_package_error": true,
+      "output_excerpt": "\nnode:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /tmp/oss-r12-db-import-negative-a2lNZy/scripts/migrate.ts\n    at packageResolve (node:internal/modules/esm/resolve:873:9)\n    at moduleResolve (node:internal/modules/esm/resolve:946:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1188:11)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at resolveBase (file:///home/runner/work/reel-farm/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\n    at resolveDirectory (file:///home/runner/work/reel-farm/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\n    at resolveTsPaths (file:///home/runner/work/reel-farm/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\n    at resolve (file:///home/runner/work/reel-farm/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v20.19.2\n"
+    },
+    "run_id": "r4-34997237592-1",
+    "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+    "execution": "in-process actual verifier after host build",
+    "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/007-post-build-db-module-import.log"
+  },
+  "started_at": "2026-09-15T16:49:07.384Z",
+  "ended_at": "2026-09-15T16:50:53.473Z",
+  "persisted_before_worker_readiness": true,
+  "worker_readiness_attempted": true,
+  "migration_qualified": true,
+  "failures": [],
+  "primary_failure": null,
+  "stages": {
+    "module_import": {
+      "schema_version": 1,
+      "record_kind": "CH001_FINAL_IMAGE_MODULE_IMPORT",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "final_image": true,
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-module-import -e DATABASE_URL=postgres://<redacted> -e DOTENV_CONFIG_PATH=/dev/null migrate node --import tsx scripts/verify-db-module-import.ts --negative-control",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/012-final-image-db-module-import.log",
+      "cli": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_truncated": false,
+        "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-module-import -e DATABASE_URL=postgres://<redacted> -e DOTENV_CONFIG_PATH=/dev/null migrate node --import tsx scripts/verify-db-module-import.ts --negative-control",
+        "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/012-final-image-db-module-import.log"
+      },
+      "child_declared_status": "PASS",
+      "child_declared_classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+      "child_report": {
+        "schema_version": 1,
+        "record_kind": "CH001_DB_MODULE_IMPORT",
+        "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+        "status": "PASS",
+        "implementation_context": "root/scripts context after frozen install and build",
+        "database_connection_attempted": false,
+        "dotenv_suppressed": true,
+        "node_path_present": false,
+        "resolved_path": "/app/packages/db/dist/index.js",
+        "expected_path": "/app/packages/db/dist/index.js",
+        "pool_api": {
+          "connect": true,
+          "end": true
+        },
+        "pool_closed": true,
+        "negative_control": {
+          "status": "PASS",
+          "control_kind": "RECORDED_FROZEN_BASELINE_EQUIVALENT",
+          "exit_code": 1,
+          "timed_out": false,
+          "missing_package_error": true,
+          "output_excerpt": "\nnode:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /tmp/oss-r12-db-import-negative-7DQPHC/scripts/migrate.ts\n    at packageResolve (node:internal/modules/esm/resolve:873:9)\n    at moduleResolve (node:internal/modules/esm/resolve:946:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1188:11)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at resolveBase (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\n    at resolveDirectory (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\n    at resolveTsPaths (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\n    at resolve (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v20.19.2\n"
+        }
+      },
+      "container": {
+        "inspection_status": "PASS",
+        "id": "9e93f0a96227a8943c9e5fc561cee98b84c3046f9c09fac78d431aaafc3c8eaa",
+        "name": "/oss-ch001-r4-34997237592-1-module-import",
+        "image_id": "sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab",
+        "project_identity": {
+          "project": "oss-ch001-r4-34997237592-1",
+          "service": "migrate",
+          "container_number": null
+        },
+        "state": "exited",
+        "exit_code": 0,
+        "error": "",
+        "started_at": "2026-09-15T16:50:38.650349595Z",
+        "finished_at": "2026-09-15T16:50:39.399318867Z",
+        "user": "node",
+        "working_directory": "/app",
+        "process": {
+          "path": "docker-entrypoint.sh",
+          "args": [
+            "node",
+            "--import",
+            "tsx",
+            "scripts/verify-db-module-import.ts",
+            "--negative-control"
+          ]
+        },
+        "configured_process": {
+          "entrypoint": [
+            "docker-entrypoint.sh"
+          ],
+          "cmd": [
+            "node",
+            "--import",
+            "tsx",
+            "scripts/verify-db-module-import.ts",
+            "--negative-control"
+          ]
+        },
+        "mounts": []
+      },
+      "inspection_error": null,
+      "status": "PASS",
+      "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+      "effective_verdict": "PASS",
+      "reasons": []
+    },
+    "build": {
+      "cli": {
+        "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env build migrate web worker",
+        "exit_code": 0,
+        "started_at": "2026-09-15T16:49:07.384Z",
+        "ended_at": "2026-09-15T16:50:38.462Z",
+        "timed_out": false,
+        "output_truncated": false,
+        "output_excerpt": "n\n#20 2.290 $ tsc -p tsconfig.json\n#20 3.192 $ tsc -p tsconfig.json\n#20 4.186 $ tsc -p tsconfig.json\n#20 5.164 $ next build\n#20 5.473 ▲ Next.js 16.3.4 (Turbopack)\n#20 5.505 ✓ Running next.config.ts took 31ms\n#20 5.509 Attention: Next.js now collects completely anonymous telemetry regarding usage.\n#20 5.509 This information is used to shape Next.js' roadmap and prioritize features.\n#20 5.509 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\n#20 5.509 https://nextjs.org/telemetry\n#20 5.509 \n#20 5.575 - Experiments (use with caution):\n#20 5.575   ✓ externalDir\n#20 5.575   ⨯ useTypeScriptCli\n#20 5.575 \n#20 5.627   Creating an optimized production build ...\n#20 6.191 ✓ Compiled successfully in 233ms\n#20 6.194   Running TypeScript ...\n#20 10.15   Finished TypeScript in 4.0s ...\n#20 10.16   Collecting page data using 3 workers ...\n#20 11.66   Generating static pages using 3 workers (0/8) ...\n#20 11.68   Generating static pages using 3 workers (2/8) \r\n#20 11.69   Generating static pages using 3 workers (4/8) \r\n#20 11.71   Generating static pages using 3 workers (6/8) \r\n#20 11.79 ✓ Generating static pages using 3 workers (8/8) in 129ms\n#20 11.79   Finalizing page optimization ...\n#20 11.82 \n#20 11.82 Route (app)\n#20 11.82 ┌ ƒ /\n#20 11.82 ├ ○ /_not-found\n#20 11.82 ├ ƒ /api/assets\n#20 11.82 ├ ƒ /api/assets/[assetId]/content\n#20 11.82 ├ ƒ /api/assets/[assetId]/thumbnail\n#20 11.82 ├ ƒ /api/auth/[...all]\n#20 11.82 ├ ƒ /api/csrf\n#20 11.82 ├ ƒ /api/health/details\n#20 11.82 ├ ƒ /api/health/live\n#20 11.82 ├ ƒ /api/projects\n#20 11.82 ├ ƒ /api/projects/[projectId]\n#20 11.82 ├ ƒ /api/projects/[projectId]/draft\n#20 11.82 ├ ƒ /api/projects/[projectId]/render\n#20 11.82 ├ ƒ /api/render-requests/[requestId]\n#20 11.82 ├ ƒ /api/render-requests/[requestId]/export\n#20 11.82 ├ ƒ /api/render-requests/[requestId]/images/[index]\n#20 11.82 ├ ƒ /api/setup\n#20 11.82 ├ ƒ /login\n#20 11.82 ├ ƒ /projects\n#20 11.82 ├ ƒ /projects/[projectId]\n#20 11.82 └ ƒ /setup\n#20 11.82 \n#20 11.82 \n#20 11.83 ○  (Static)   prerendered as static content\n#20 11.83 ƒ  (Dynamic)  server-rendered on demand\n#20 11.83 \n#20 11.95 $ tsc -p tsconfig.json\n#20 DONE 13.5s\n\n#21 [migrate runtime 4/9] COPY --from=build --chown=node:node /opt/pnpm /opt/pnpm\n#21 DONE 0.4s\n\n#22 [web runtime 5/9] COPY --from=build --chown=node:node /app /app\n#22 DONE 6.8s\n\n#23 [web runtime 6/9] COPY --from=build --chown=node:node /ms-playwright /ms-playwright\n#23 DONE 3.7s\n\n#24 [migrate runtime 7/9] RUN test -x /opt/pnpm/bin/pnpm   && test \"$(command -v pnpm)\" = \"/opt/pnpm/bin/pnpm\"   && test \"$(pnpm --version)\" = \"12.3.4\"\n#24 DONE 0.1s\n\n#25 [migrate runtime 8/9] RUN mkdir -p /data/media && chown -R node:node /data/media /ms-playwright\n#25 DONE 4.1s\n\n#26 [migrate runtime 9/9] RUN --network=none test \"$(id -un)\" = \"node\"   && test \"$(command -v pnpm)\" = \"/opt/pnpm/bin/pnpm\"   && test \"$(pnpm --version)\" = \"12.3.4\"\n#26 DONE 0.1s\n\n#27 [web] exporting to image\n#27 exporting layers\n#27 ...\n\n#28 [migrate] exporting to image\n#28 exporting layers 8.1s done\n#28 writing image sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab done\n#28 naming to docker.io/library/oss-ch001-r4-34997237592-1-migrate done\n#28 DONE 8.1s\n\n#27 [web] exporting to image\n#27 exporting layers 8.1s done\n#27 writing image sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab done\n#27 naming to docker.io/library/oss-ch001-r4-34997237592-1-web done\n#27 DONE 8.1s\n\n#29 [worker] exporting to image\n#29 exporting layers 8.1s done\n#29 writing image sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab done\n#29 naming to docker.io/library/oss-ch001-r4-34997237592-1-worker done\n#29 DONE 8.1s\n\n#30 [worker] resolving provenance for metadata file\n#30 DONE 0.0s\n\n#31 [web] resolving provenance for metadata file\n#31 DONE 0.0s\n\n#32 [migrate] resolving provenance for metadata file\n#32 DONE 0.0s\n migrate  Built\n web  Built\n worker  Built\n",
+        "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/011-compose-build-images.log"
+      },
+      "expected_exit_code": 0,
+      "cli_exit_code": 0,
+      "inspected_container_exit_code": null,
+      "terminal_state": null,
+      "timed_out": false,
+      "output_truncated": false,
+      "container_required": false,
+      "status": "PASS"
+    },
+    "database_start": {
+      "cli": {
+        "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env up -d db",
+        "exit_code": 0,
+        "started_at": "2026-09-15T16:50:39.488Z",
+        "ended_at": "2026-09-15T16:50:45.251Z",
+        "timed_out": false,
+        "output_truncated": false,
+        "output_excerpt": "[==================================================>]   1.12MB/1.12MB\n 59e8ecdd711f Downloading [===============================>                   ]  3.501kB/5.472kB\n 59e8ecdd711f Downloading [==================================================>]  5.472kB/5.472kB\n 59e8ecdd711f Verifying Checksum \n 59e8ecdd711f Download complete \n 248166938f44 Downloading [==================================================>]     183B/183B\n 248166938f44 Verifying Checksum \n 248166938f44 Download complete \n d160f5d84fae Pull complete \n 7cdbcf158508 Extracting [==================================================>]     176B/176B\n 7cdbcf158508 Pull complete \n ff49b4a326ab Extracting [==================================================>]     116B/116B\n ff49b4a326ab Extracting [==================================================>]     116B/116B\n ff49b4a326ab Pull complete \n 658bbf5b160b Extracting [>                                                  ]  557.1kB/104.9MB\n 658bbf5b160b Extracting [=>                                                 ]  2.228MB/104.9MB\n 658bbf5b160b Extracting [======>                                            ]  13.37MB/104.9MB\n 658bbf5b160b Extracting [===========>                                       ]  24.51MB/104.9MB\n 658bbf5b160b Extracting [================>                                  ]  35.65MB/104.9MB\n 658bbf5b160b Extracting [======================>                            ]  46.79MB/104.9MB\n 658bbf5b160b Extracting [=========================>                         ]  54.03MB/104.9MB\n 658bbf5b160b Extracting [==============================>                    ]   63.5MB/104.9MB\n 658bbf5b160b Extracting [===================================>               ]  74.09MB/104.9MB\n 658bbf5b160b Extracting [====================================>              ]  75.76MB/104.9MB\n 658bbf5b160b Extracting [====================================>              ]  76.87MB/104.9MB\n 658bbf5b160b Extracting [======================================>            ]  80.77MB/104.9MB\n 658bbf5b160b Extracting [========================================>          ]  85.79MB/104.9MB\n 658bbf5b160b Extracting [============================================>      ]  92.47MB/104.9MB\n 658bbf5b160b Extracting [=================================================> ]  104.7MB/104.9MB\n 658bbf5b160b Extracting [==================================================>]  104.9MB/104.9MB\n 658bbf5b160b Pull complete \n ad59dcac7955 Extracting [==================================================>]  9.559kB/9.559kB\n ad59dcac7955 Extracting [==================================================>]  9.559kB/9.559kB\n ad59dcac7955 Pull complete \n fe6f369443b5 Extracting [==================================================>]     128B/128B\n fe6f369443b5 Extracting [==================================================>]     128B/128B\n fe6f369443b5 Pull complete \n a95aeabeba27 Extracting [==================================================>]     170B/170B\n a95aeabeba27 Extracting [==================================================>]     170B/170B\n a95aeabeba27 Pull complete \n 59e8ecdd711f Extracting [==================================================>]  5.472kB/5.472kB\n 59e8ecdd711f Extracting [==================================================>]  5.472kB/5.472kB\n 59e8ecdd711f Pull complete \n 248166938f44 Extracting [==================================================>]     183B/183B\n 248166938f44 Extracting [==================================================>]     183B/183B\n 248166938f44 Pull complete \n db Pulled \ntime=\"2026-09-15T16:50:45Z\" level=warning msg=\"Found orphan containers ([oss-ch001-r4-34997237592-1-module-import]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"\n Container oss-ch001-r4-34997237592-1-db-1  Creating\n Container oss-ch001-r4-34997237592-1-db-1  Created\n Container oss-ch001-r4-34997237592-1-db-1  Starting\n Container oss-ch001-r4-34997237592-1-db-1  Started\n",
+        "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/014-compose-db-up.log"
+      },
+      "expected_exit_code": 0,
+      "cli_exit_code": 0,
+      "inspected_container_exit_code": null,
+      "terminal_state": null,
+      "timed_out": false,
+      "output_truncated": false,
+      "container_required": false,
+      "status": "PASS"
+    },
+    "database_ready": {
+      "status": "PASS",
+      "healthy": true,
+      "attempts": 2,
+      "last": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "/var/run/postgresql:5432 - accepting connections\n"
+      }
+    },
+    "marker_observer_regression": {
+      "schema_version": 1,
+      "record_kind": "CH001_MARKER_OBSERVER_REGRESSION",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "status": "PASS",
+      "fixture_database": "ch001_r12_marker_r4-34997237592-1",
+      "isolated_from_main_database": true,
+      "setup": [
+        {
+          "operation": "migration-marker-regression-create-role",
+          "status": "PASS",
+          "database": "oss",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/015-migration-marker-regression-create-role.log"
+        },
+        {
+          "operation": "migration-marker-regression-create-database",
+          "status": "PASS",
+          "database": "oss",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/016-migration-marker-regression-create-database.log"
+        },
+        {
+          "operation": "migration-marker-regression-grant-connect",
+          "status": "PASS",
+          "database": "oss",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/017-migration-marker-regression-grant-connect.log"
+        },
+        {
+          "operation": "migration-marker-regression-create-table",
+          "status": "PASS",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/020-migration-marker-regression-create-table.log"
+        },
+        {
+          "operation": "migration-marker-regression-insert-positive",
+          "status": "PASS",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/023-migration-marker-regression-insert-positive.log"
+        },
+        {
+          "operation": "migration-marker-regression-restrict-role",
+          "status": "PASS",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/026-migration-marker-regression-restrict-role.log"
+        }
+      ],
+      "cases": {
+        "absent_table": {
+          "status": "PASS",
+          "observation_status": "PASS",
+          "table_present": false,
+          "marker_count": 0,
+          "marker_count_source": "catalog_absence",
+          "count_executed": false,
+          "no_completion_marker": true,
+          "queries": [
+            {
+              "kind": "presence",
+              "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+              "exit_code": 0,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": false,
+              "count_attempted": false,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/018-migration-migration-marker-regression-absent-presence.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "oss"
+            }
+          ],
+          "reason": "The catalog-only presence query proved that public.schema_migrations is absent; COUNT was not executed."
+        },
+        "legacy_negative_control": {
+          "query": "SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END",
+          "exit_code": 1,
+          "timed_out": false,
+          "output_truncated": false,
+          "sqlstate": "42P01",
+          "observed_undefined_table": true,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/019-migration-marker-regression-legacy-absent.log"
+        },
+        "empty_table": {
+          "status": "PASS",
+          "observation_status": "PASS",
+          "table_present": true,
+          "marker_count": 0,
+          "marker_count_source": "catalog_count",
+          "count_executed": true,
+          "no_completion_marker": true,
+          "queries": [
+            {
+              "kind": "presence",
+              "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+              "exit_code": 0,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": true,
+              "count_attempted": false,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/021-migration-migration-marker-regression-empty-presence.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "oss"
+            },
+            {
+              "kind": "count",
+              "sql": "SELECT count(*)::text FROM public.schema_migrations",
+              "exit_code": 0,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": 0,
+              "count_attempted": true,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/022-migration-migration-marker-regression-empty-count.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "oss"
+            }
+          ]
+        },
+        "positive_marker": {
+          "status": "FAIL",
+          "observation_status": "PASS",
+          "table_present": true,
+          "marker_count": 1,
+          "marker_count_source": "catalog_count",
+          "count_executed": true,
+          "no_completion_marker": false,
+          "queries": [
+            {
+              "kind": "presence",
+              "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+              "exit_code": 0,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": true,
+              "count_attempted": false,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/024-migration-migration-marker-regression-positive-presence.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "oss"
+            },
+            {
+              "kind": "count",
+              "sql": "SELECT count(*)::text FROM public.schema_migrations",
+              "exit_code": 0,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": 1,
+              "count_attempted": true,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/025-migration-migration-marker-regression-positive-count.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "oss"
+            }
+          ],
+          "reason": "public.schema_migrations contains one or more completion-marker rows."
+        },
+        "count_denied": {
+          "status": "FAIL",
+          "observation_status": "FAIL",
+          "table_present": null,
+          "marker_count": null,
+          "marker_count_source": null,
+          "count_executed": true,
+          "no_completion_marker": null,
+          "queries": [
+            {
+              "kind": "presence",
+              "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+              "exit_code": 0,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": true,
+              "count_attempted": false,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/027-migration-migration-marker-regression-denied-presence.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "ch001_r12_observer_r4-34997237592-1"
+            },
+            {
+              "kind": "count",
+              "sql": "SELECT count(*)::text FROM public.schema_migrations",
+              "exit_code": 1,
+              "timed_out": false,
+              "output_truncated": false,
+              "output_line_count": 1,
+              "parsed_value": null,
+              "count_attempted": true,
+              "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/028-migration-migration-marker-regression-denied-count.log",
+              "database": "ch001_r12_marker_r4-34997237592-1",
+              "user": "ch001_r12_observer_r4-34997237592-1"
+            }
+          ],
+          "reason": "Marker-count query exited 1."
+        }
+      },
+      "cleanup": [
+        {
+          "operation": "migration-marker-regression-drop-database",
+          "status": "PASS",
+          "database": "oss",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/029-migration-marker-regression-drop-database.log"
+        },
+        {
+          "operation": "migration-marker-regression-drop-role",
+          "status": "PASS",
+          "database": "oss",
+          "user": "oss",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/030-migration-marker-regression-drop-role.log"
+        }
+      ]
+    },
+    "fresh_precondition": {
+      "status": "PASS",
+      "observation_status": "PASS",
+      "table_present": false,
+      "marker_count": 0,
+      "marker_count_source": "catalog_absence",
+      "count_executed": false,
+      "no_completion_marker": true,
+      "queries": [
+        {
+          "kind": "presence",
+          "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": false,
+          "count_attempted": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/031-migration-migration-fresh-precondition-presence.log",
+          "database": "oss",
+          "user": "oss"
+        }
+      ],
+      "reason": "The catalog-only presence query proved that public.schema_migrations is absent; COUNT was not executed."
+    },
+    "fresh": {
+      "container": {
+        "inspection_status": "PASS",
+        "id": "bb10d2f2f879285847104b7ea5786e6785b7b95e39b49f7878d793ac35a6a282",
+        "name": "/oss-ch001-r4-34997237592-1-fresh",
+        "image_id": "sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab",
+        "project_identity": {
+          "project": "oss-ch001-r4-34997237592-1",
+          "service": "migrate",
+          "container_number": null
+        },
+        "state": "exited",
+        "exit_code": 0,
+        "error": "",
+        "started_at": "2026-09-15T16:50:49.449275868Z",
+        "finished_at": "2026-09-15T16:50:50.256137953Z",
+        "user": "node",
+        "working_directory": "/app",
+        "process": {
+          "path": "docker-entrypoint.sh",
+          "args": [
+            "pnpm",
+            "db:migrate"
+          ]
+        },
+        "configured_process": {
+          "entrypoint": [
+            "docker-entrypoint.sh"
+          ],
+          "cmd": [
+            "pnpm",
+            "db:migrate"
+          ]
+        },
+        "mounts": []
+      },
+      "cli": {
+        "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-fresh migrate",
+        "exit_code": 0,
+        "started_at": "2026-09-15T16:50:49.301Z",
+        "ended_at": "2026-09-15T16:50:50.484Z",
+        "timed_out": false,
+        "output_truncated": false,
+        "output_excerpt": "time=\"2026-09-15T16:50:49Z\" level=warning msg=\"Found orphan containers ([oss-ch001-r4-34997237592-1-module-import]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"\n$ node --import tsx scripts/migrate.ts\nApplied migration 0001_ch001.\n",
+        "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/032-migration-fresh.log"
+      },
+      "expected_exit_code": 0,
+      "cli_exit_code": 0,
+      "inspected_container_exit_code": 0,
+      "terminal_state": "exited",
+      "timed_out": false,
+      "output_truncated": false,
+      "container_required": true,
+      "status": "PASS"
+    },
+    "schema": {
+      "status": "PASS",
+      "tables": [
+        "account",
+        "asset",
+        "draft",
+        "draft_revision",
+        "project",
+        "render_artifact",
+        "render_outbox",
+        "render_request",
+        "save_mutation",
+        "schema_migrations",
+        "session",
+        "user",
+        "verification",
+        "worker_heartbeat",
+        "workspace"
+      ],
+      "expected_tables": [
+        "account",
+        "asset",
+        "draft",
+        "draft_revision",
+        "project",
+        "render_artifact",
+        "render_outbox",
+        "render_request",
+        "save_mutation",
+        "schema_migrations",
+        "session",
+        "user",
+        "verification",
+        "worker_heartbeat",
+        "workspace"
+      ],
+      "constraints": [
+        {
+          "table_name": "account",
+          "name": "2200_16467_12_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "account",
+          "name": "2200_16467_13_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "account",
+          "name": "2200_16467_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "account",
+          "name": "2200_16467_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "account",
+          "name": "2200_16467_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "account",
+          "name": "2200_16467_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "account",
+          "name": "account_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "account",
+          "name": "account_provider_account_unique",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "account",
+          "name": "account_user_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_10_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_11_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_12_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_13_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_14_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_15_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_16_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_17_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_18_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_19_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_8_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "2200_16568_9_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "asset",
+          "name": "asset_derivative_key_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "asset",
+          "name": "asset_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "asset",
+          "name": "asset_storage_key_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "asset",
+          "name": "asset_thumbnail_key_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "asset",
+          "name": "asset_uploaded_by_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "asset",
+          "name": "asset_workspace_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "draft",
+          "name": "2200_16526_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft",
+          "name": "2200_16526_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft",
+          "name": "2200_16526_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft",
+          "name": "draft_head_revision_fk",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "draft",
+          "name": "draft_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "draft",
+          "name": "draft_project_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "draft",
+          "name": "draft_project_id_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "2200_16540_8_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "draft_revision_created_by_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "draft_revision_draft_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "draft_revision_hash_unique",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "draft_revision_number_unique",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "draft_revision",
+          "name": "draft_revision_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "project",
+          "name": "2200_16510_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "project",
+          "name": "2200_16510_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "project",
+          "name": "2200_16510_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "project",
+          "name": "2200_16510_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "project",
+          "name": "2200_16510_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "project",
+          "name": "2200_16510_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "project",
+          "name": "project_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "project",
+          "name": "project_workspace_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "project",
+          "name": "project_workspace_name_unique",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_10_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_11_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_12_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_8_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "2200_16643_9_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "render_artifact_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "render_artifact_render_request_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "render_artifact_render_request_id_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "render_artifact_revision_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "render_artifact",
+          "name": "render_artifact_zip_key_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "2200_16625_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "2200_16625_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "2200_16625_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "2200_16625_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "2200_16625_9_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "render_outbox_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "render_outbox_render_request_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "render_outbox",
+          "name": "render_outbox_render_request_id_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_14_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_15_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_8_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "2200_16596_9_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "render_request",
+          "name": "render_request_draft_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "render_request",
+          "name": "render_request_identity_unique",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "render_request",
+          "name": "render_request_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "render_request",
+          "name": "render_request_revision_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "render_request",
+          "name": "render_request_workspace_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "2200_16673_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "save_mutation_actor_user_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "save_mutation_draft_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "save_mutation_identity_unique",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "save_mutation_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "save_mutation",
+          "name": "save_mutation_revision_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "schema_migrations",
+          "name": "2200_16394_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "schema_migrations",
+          "name": "2200_16394_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "schema_migrations",
+          "name": "schema_migrations_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "session",
+          "name": "2200_16451_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "session",
+          "name": "2200_16451_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "session",
+          "name": "2200_16451_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "session",
+          "name": "2200_16451_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "session",
+          "name": "2200_16451_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "session",
+          "name": "2200_16451_8_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "session",
+          "name": "session_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "session",
+          "name": "session_token_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "session",
+          "name": "session_user_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "user",
+          "name": "2200_16439_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "user",
+          "name": "2200_16439_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "user",
+          "name": "2200_16439_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "user",
+          "name": "2200_16439_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "user",
+          "name": "2200_16439_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "user",
+          "name": "2200_16439_7_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "user",
+          "name": "user_email_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "user",
+          "name": "user_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "verification",
+          "name": "2200_16483_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "verification",
+          "name": "2200_16483_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "verification",
+          "name": "2200_16483_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "verification",
+          "name": "2200_16483_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "verification",
+          "name": "2200_16483_5_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "verification",
+          "name": "2200_16483_6_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "verification",
+          "name": "verification_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "worker_heartbeat",
+          "name": "2200_16666_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "worker_heartbeat",
+          "name": "2200_16666_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "worker_heartbeat",
+          "name": "2200_16666_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "worker_heartbeat",
+          "name": "2200_16666_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "worker_heartbeat",
+          "name": "worker_heartbeat_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "workspace",
+          "name": "2200_16492_1_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "workspace",
+          "name": "2200_16492_2_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "workspace",
+          "name": "2200_16492_3_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "workspace",
+          "name": "2200_16492_4_not_null",
+          "type": "CHECK"
+        },
+        {
+          "table_name": "workspace",
+          "name": "workspace_owner_user_id_fkey",
+          "type": "FOREIGN KEY"
+        },
+        {
+          "table_name": "workspace",
+          "name": "workspace_owner_user_id_key",
+          "type": "UNIQUE"
+        },
+        {
+          "table_name": "workspace",
+          "name": "workspace_pkey",
+          "type": "PRIMARY KEY"
+        },
+        {
+          "table_name": "workspace",
+          "name": "workspace_singleton_key_key",
+          "type": "UNIQUE"
+        }
+      ],
+      "required_constraint_names": [
+        "account_provider_account_unique",
+        "asset_derivative_key_key",
+        "asset_storage_key_key",
+        "asset_thumbnail_key_key",
+        "draft_head_revision_fk",
+        "draft_project_id_key",
+        "draft_revision_hash_unique",
+        "draft_revision_number_unique",
+        "project_workspace_name_unique",
+        "render_artifact_render_request_id_key",
+        "render_artifact_zip_key_key",
+        "render_outbox_render_request_id_key",
+        "render_request_identity_unique",
+        "save_mutation_identity_unique",
+        "schema_migrations_pkey",
+        "session_token_key",
+        "user_email_key",
+        "verification_pkey",
+        "workspace_owner_user_id_key",
+        "workspace_singleton_key_key"
+      ],
+      "marker": [
+        {
+          "id": "0001_ch001",
+          "applied_at": "2026-09-15T16:50:49.942248"
+        }
+      ],
+      "marker_count": 1,
+      "schema_fingerprint": "d485f44b163219e67e77d4cb7a7b034f06b9567dd22c6abeb1d145ae95c24f30",
+      "assertions": {
+        "tables_match": true,
+        "required_constraints_present": true,
+        "single_completion_marker": true
+      },
+      "schema_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/034-migration-fresh-schema.log",
+      "marker_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/035-migration-fresh-marker.log"
+    },
+    "sentinel": {
+      "status": "PASS",
+      "fixture_allocated": true,
+      "schema": "ch001_r12_r4_34997237592_1",
+      "value": "sentinel_r4-34997237592-1",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/036-migration-sentinel-create.log"
+    },
+    "repeat": {
+      "container": {
+        "inspection_status": "PASS",
+        "id": "fe8846ce0cf2fb07e4413eb81e6ac2442676c481d79acbb72b1d734b199168e2",
+        "name": "/oss-ch001-r4-34997237592-1-repeat",
+        "image_id": "sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab",
+        "project_identity": {
+          "project": "oss-ch001-r4-34997237592-1",
+          "service": "migrate",
+          "container_number": null
+        },
+        "state": "exited",
+        "exit_code": 0,
+        "error": "",
+        "started_at": "2026-09-15T16:50:50.919192769Z",
+        "finished_at": "2026-09-15T16:50:51.512905941Z",
+        "user": "node",
+        "working_directory": "/app",
+        "process": {
+          "path": "docker-entrypoint.sh",
+          "args": [
+            "pnpm",
+            "db:migrate"
+          ]
+        },
+        "configured_process": {
+          "entrypoint": [
+            "docker-entrypoint.sh"
+          ],
+          "cmd": [
+            "pnpm",
+            "db:migrate"
+          ]
+        },
+        "mounts": []
+      },
+      "cli": {
+        "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-repeat migrate",
+        "exit_code": 0,
+        "started_at": "2026-09-15T16:50:50.796Z",
+        "ended_at": "2026-09-15T16:50:51.725Z",
+        "timed_out": false,
+        "output_truncated": false,
+        "output_excerpt": "time=\"2026-09-15T16:50:50Z\" level=warning msg=\"Found orphan containers ([oss-ch001-r4-34997237592-1-fresh oss-ch001-r4-34997237592-1-module-import]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"\n$ node --import tsx scripts/migrate.ts\nMigration 0001_ch001 already applied.\n",
+        "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/037-migration-repeat.log"
+      },
+      "expected_exit_code": 0,
+      "cli_exit_code": 0,
+      "inspected_container_exit_code": 0,
+      "terminal_state": "exited",
+      "timed_out": false,
+      "output_truncated": false,
+      "container_required": true,
+      "status": "PASS"
+    },
+    "repeat_assertions": {
+      "status": "PASS",
+      "fresh_schema_fingerprint": "d485f44b163219e67e77d4cb7a7b034f06b9567dd22c6abeb1d145ae95c24f30",
+      "repeat_schema_fingerprint": "d485f44b163219e67e77d4cb7a7b034f06b9567dd22c6abeb1d145ae95c24f30",
+      "marker_unchanged": true,
+      "sentinel_preserved": true,
+      "sentinel_value": "sentinel_r4-34997237592-1",
+      "schema": {
+        "status": "PASS",
+        "tables": [
+          "account",
+          "asset",
+          "draft",
+          "draft_revision",
+          "project",
+          "render_artifact",
+          "render_outbox",
+          "render_request",
+          "save_mutation",
+          "schema_migrations",
+          "session",
+          "user",
+          "verification",
+          "worker_heartbeat",
+          "workspace"
+        ],
+        "expected_tables": [
+          "account",
+          "asset",
+          "draft",
+          "draft_revision",
+          "project",
+          "render_artifact",
+          "render_outbox",
+          "render_request",
+          "save_mutation",
+          "schema_migrations",
+          "session",
+          "user",
+          "verification",
+          "worker_heartbeat",
+          "workspace"
+        ],
+        "constraints": [
+          {
+            "table_name": "account",
+            "name": "2200_16467_12_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "account",
+            "name": "2200_16467_13_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "account",
+            "name": "2200_16467_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "account",
+            "name": "2200_16467_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "account",
+            "name": "2200_16467_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "account",
+            "name": "2200_16467_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "account",
+            "name": "account_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "account",
+            "name": "account_provider_account_unique",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "account",
+            "name": "account_user_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_10_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_11_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_12_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_13_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_14_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_15_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_16_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_17_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_18_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_19_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_8_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "2200_16568_9_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "asset",
+            "name": "asset_derivative_key_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "asset",
+            "name": "asset_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "asset",
+            "name": "asset_storage_key_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "asset",
+            "name": "asset_thumbnail_key_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "asset",
+            "name": "asset_uploaded_by_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "asset",
+            "name": "asset_workspace_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "draft",
+            "name": "2200_16526_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft",
+            "name": "2200_16526_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft",
+            "name": "2200_16526_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft",
+            "name": "draft_head_revision_fk",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "draft",
+            "name": "draft_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "draft",
+            "name": "draft_project_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "draft",
+            "name": "draft_project_id_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "2200_16540_8_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "draft_revision_created_by_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "draft_revision_draft_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "draft_revision_hash_unique",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "draft_revision_number_unique",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "draft_revision",
+            "name": "draft_revision_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "project",
+            "name": "2200_16510_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "project",
+            "name": "2200_16510_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "project",
+            "name": "2200_16510_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "project",
+            "name": "2200_16510_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "project",
+            "name": "2200_16510_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "project",
+            "name": "2200_16510_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "project",
+            "name": "project_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "project",
+            "name": "project_workspace_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "project",
+            "name": "project_workspace_name_unique",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_10_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_11_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_12_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_8_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "2200_16643_9_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "render_artifact_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "render_artifact_render_request_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "render_artifact_render_request_id_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "render_artifact_revision_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "render_artifact",
+            "name": "render_artifact_zip_key_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "2200_16625_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "2200_16625_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "2200_16625_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "2200_16625_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "2200_16625_9_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "render_outbox_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "render_outbox_render_request_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "render_outbox",
+            "name": "render_outbox_render_request_id_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_14_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_15_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_8_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "2200_16596_9_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "render_request",
+            "name": "render_request_draft_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "render_request",
+            "name": "render_request_identity_unique",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "render_request",
+            "name": "render_request_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "render_request",
+            "name": "render_request_revision_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "render_request",
+            "name": "render_request_workspace_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "2200_16673_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "save_mutation_actor_user_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "save_mutation_draft_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "save_mutation_identity_unique",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "save_mutation_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "save_mutation",
+            "name": "save_mutation_revision_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "schema_migrations",
+            "name": "2200_16394_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "schema_migrations",
+            "name": "2200_16394_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "schema_migrations",
+            "name": "schema_migrations_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "session",
+            "name": "2200_16451_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "session",
+            "name": "2200_16451_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "session",
+            "name": "2200_16451_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "session",
+            "name": "2200_16451_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "session",
+            "name": "2200_16451_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "session",
+            "name": "2200_16451_8_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "session",
+            "name": "session_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "session",
+            "name": "session_token_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "session",
+            "name": "session_user_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "user",
+            "name": "2200_16439_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "user",
+            "name": "2200_16439_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "user",
+            "name": "2200_16439_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "user",
+            "name": "2200_16439_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "user",
+            "name": "2200_16439_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "user",
+            "name": "2200_16439_7_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "user",
+            "name": "user_email_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "user",
+            "name": "user_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "verification",
+            "name": "2200_16483_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "verification",
+            "name": "2200_16483_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "verification",
+            "name": "2200_16483_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "verification",
+            "name": "2200_16483_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "verification",
+            "name": "2200_16483_5_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "verification",
+            "name": "2200_16483_6_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "verification",
+            "name": "verification_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "worker_heartbeat",
+            "name": "2200_16666_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "worker_heartbeat",
+            "name": "2200_16666_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "worker_heartbeat",
+            "name": "2200_16666_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "worker_heartbeat",
+            "name": "2200_16666_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "worker_heartbeat",
+            "name": "worker_heartbeat_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "workspace",
+            "name": "2200_16492_1_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "workspace",
+            "name": "2200_16492_2_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "workspace",
+            "name": "2200_16492_3_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "workspace",
+            "name": "2200_16492_4_not_null",
+            "type": "CHECK"
+          },
+          {
+            "table_name": "workspace",
+            "name": "workspace_owner_user_id_fkey",
+            "type": "FOREIGN KEY"
+          },
+          {
+            "table_name": "workspace",
+            "name": "workspace_owner_user_id_key",
+            "type": "UNIQUE"
+          },
+          {
+            "table_name": "workspace",
+            "name": "workspace_pkey",
+            "type": "PRIMARY KEY"
+          },
+          {
+            "table_name": "workspace",
+            "name": "workspace_singleton_key_key",
+            "type": "UNIQUE"
+          }
+        ],
+        "required_constraint_names": [
+          "account_provider_account_unique",
+          "asset_derivative_key_key",
+          "asset_storage_key_key",
+          "asset_thumbnail_key_key",
+          "draft_head_revision_fk",
+          "draft_project_id_key",
+          "draft_revision_hash_unique",
+          "draft_revision_number_unique",
+          "project_workspace_name_unique",
+          "render_artifact_render_request_id_key",
+          "render_artifact_zip_key_key",
+          "render_outbox_render_request_id_key",
+          "render_request_identity_unique",
+          "save_mutation_identity_unique",
+          "schema_migrations_pkey",
+          "session_token_key",
+          "user_email_key",
+          "verification_pkey",
+          "workspace_owner_user_id_key",
+          "workspace_singleton_key_key"
+        ],
+        "marker": [
+          {
+            "id": "0001_ch001",
+            "applied_at": "2026-09-15T16:50:49.942248"
+          }
+        ],
+        "marker_count": 1,
+        "schema_fingerprint": "d485f44b163219e67e77d4cb7a7b034f06b9567dd22c6abeb1d145ae95c24f30",
+        "assertions": {
+          "tables_match": true,
+          "required_constraints_present": true,
+          "single_completion_marker": true
+        },
+        "schema_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/039-migration-repeat-schema.log",
+        "marker_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/040-migration-repeat-marker.log"
+      },
+      "sentinel_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/041-migration-sentinel-check.log"
+    },
+    "failure_control": {
+      "container": {
+        "inspection_status": "PASS",
+        "id": "956d7f665ce23638732a1af43883f6e5f2fc858656a41a1e91581bdcaa1b570a",
+        "name": "/oss-ch001-r4-34997237592-1-failure-control",
+        "image_id": "sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab",
+        "project_identity": {
+          "project": "oss-ch001-r4-34997237592-1",
+          "service": "migrate",
+          "container_number": null
+        },
+        "state": "exited",
+        "exit_code": 1,
+        "error": "",
+        "started_at": "2026-09-15T16:50:52.552006545Z",
+        "finished_at": "2026-09-15T16:50:52.99014053Z",
+        "user": "node",
+        "working_directory": "/app",
+        "process": {
+          "path": "docker-entrypoint.sh",
+          "args": [
+            "pnpm",
+            "db:migrate"
+          ]
+        },
+        "configured_process": {
+          "entrypoint": [
+            "docker-entrypoint.sh"
+          ],
+          "cmd": [
+            "pnpm",
+            "db:migrate"
+          ]
+        },
+        "mounts": []
+      },
+      "cli": {
+        "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-failure-control -e DATABASE_URL=<redacted> migrate",
+        "exit_code": 1,
+        "started_at": "2026-09-15T16:50:52.448Z",
+        "ended_at": "2026-09-15T16:50:53.054Z",
+        "timed_out": false,
+        "output_truncated": false,
+        "output_excerpt": "time=\"2026-09-15T16:50:52Z\" level=warning msg=\"Found orphan containers ([oss-ch001-r4-34997237592-1-repeat oss-ch001-r4-34997237592-1-fresh oss-ch001-r4-34997237592-1-module-import]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"\n$ node --import tsx scripts/migrate.ts\n/app/node_modules/.pnpm/pg@8.16.3/node_modules/pg/lib/client.js:545\n          Error.captureStackTrace(err)\n                ^\n\nerror: permission denied for schema public\n    at /app/node_modules/.pnpm/pg@8.16.3/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async <anonymous> (/app/scripts/migrate.ts:18:3) {\n  length: 99,\n  severity: 'ERROR',\n  code: '42501',\n  detail: undefined,\n  hint: undefined,\n  position: '28',\n  internalPosition: undefined,\n  internalQuery: undefined,\n  where: undefined,\n  schema: undefined,\n  table: undefined,\n  column: undefined,\n  dataType: undefined,\n  constraint: undefined,\n  file: 'aclchk.c',\n  line: '2812',\n  routine: 'aclcheck_error'\n}\n\nNode.js v20.19.2\n[ELIFECYCLE] Command failed with exit code 1.\n\n",
+        "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/046-migration-failure-control.log"
+      },
+      "setup": [
+        {
+          "operation": "migration-failure-control-create-role",
+          "status": "PASS",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/042-migration-failure-control-create-role.log"
+        },
+        {
+          "operation": "migration-failure-control-create-database",
+          "status": "PASS",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/043-migration-failure-control-create-database.log"
+        },
+        {
+          "operation": "migration-failure-control-restrict-schema",
+          "status": "PASS",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/044-migration-failure-control-restrict-schema.log"
+        },
+        {
+          "operation": "migration-failure-control-revoke-create",
+          "status": "PASS",
+          "exit_code": 0,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/045-migration-failure-control-revoke-create.log"
+        }
+      ],
+      "marker_observation": {
+        "status": "PASS",
+        "observation_status": "PASS",
+        "table_present": false,
+        "marker_count": 0,
+        "marker_count_source": "catalog_absence",
+        "count_executed": false,
+        "no_completion_marker": true,
+        "queries": [
+          {
+            "kind": "presence",
+            "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+            "exit_code": 0,
+            "timed_out": false,
+            "output_truncated": false,
+            "output_line_count": 1,
+            "parsed_value": false,
+            "count_attempted": false,
+            "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/048-migration-migration-failure-control-marker-presence.log",
+            "database": "ch001_r12_db_r4-34997237592-1",
+            "user": "oss"
+          }
+        ],
+        "reason": "The catalog-only presence query proved that public.schema_migrations is absent; COUNT was not executed."
+      },
+      "marker_count": 0,
+      "marker_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/048-migration-migration-failure-control-marker-presence.log",
+      "error_observed": true,
+      "sqlstate": "42501",
+      "error_class": "postgresql_permission_failure",
+      "assertion_ok": true,
+      "status": "PASS"
+    },
+    "fixture_cleanup": {
+      "status": "PASS",
+      "operations": [
+        {
+          "operation": "migration-fixture-drop-sentinel",
+          "status": "PASS",
+          "exit_code": 0,
+          "timed_out": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/049-migration-fixture-drop-sentinel.log"
+        },
+        {
+          "operation": "migration-fixture-drop-database",
+          "status": "PASS",
+          "exit_code": 0,
+          "timed_out": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/050-migration-fixture-drop-database.log"
+        },
+        {
+          "operation": "migration-fixture-drop-role",
+          "status": "PASS",
+          "exit_code": 0,
+          "timed_out": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/051-migration-fixture-drop-role.log"
+        }
+      ],
+      "resources_released": true
+    }
+  },
+  "status": "PASS",
+  "worker_readiness_started_at": "2026-09-15T16:50:53.475Z",
+  "downstream_stack_start": {
+    "status": "PASS",
+    "exit_code": 0,
+    "timed_out": false,
+    "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/052-compose-stack-up-after-migration.log"
+  }
+}

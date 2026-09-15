@@ -1,0 +1,1788 @@
+{
+  "chapter": "CH-001R-r13",
+  "command_record_format": "invocation-v2",
+  "run_id": "r4-34997237592-1",
+  "child_invocations": [
+    {
+      "id": "r4-34997237592-1-4088-003",
+      "command": "docker version --format {{.Server.Version}}",
+      "started_at": "2026-09-15T16:48:32.166Z",
+      "ended_at": "2026-09-15T16:48:32.184Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/001-docker-version.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-004",
+      "command": "docker info --format {{.ServerVersion}}",
+      "started_at": "2026-09-15T16:48:32.185Z",
+      "ended_at": "2026-09-15T16:48:32.241Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/002-docker-info.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-005",
+      "command": "docker compose version --short",
+      "started_at": "2026-09-15T16:48:32.242Z",
+      "ended_at": "2026-09-15T16:48:32.290Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/003-compose-version.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-007",
+      "command": "pnpm lint",
+      "started_at": "2026-09-15T16:48:33.052Z",
+      "ended_at": "2026-09-15T16:48:35.812Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/004-host-lint.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-008",
+      "command": "pnpm typecheck",
+      "started_at": "2026-09-15T16:48:35.813Z",
+      "ended_at": "2026-09-15T16:48:43.862Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/005-host-typecheck.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-009",
+      "command": "pnpm build",
+      "started_at": "2026-09-15T16:48:43.863Z",
+      "ended_at": "2026-09-15T16:49:04.851Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/006-host-build.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-010",
+      "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+      "started_at": "2026-09-15T16:49:04.853Z",
+      "ended_at": "2026-09-15T16:49:05.161Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/007-post-build-db-module-import.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-011",
+      "command": "pnpm test:unit",
+      "started_at": "2026-09-15T16:49:05.162Z",
+      "ended_at": "2026-09-15T16:49:06.712Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/008-host-unit.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "report_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/unit-results.json"
+    },
+    {
+      "id": "r4-34997237592-1-4088-012",
+      "command": "pnpm test:security",
+      "started_at": "2026-09-15T16:49:06.713Z",
+      "ended_at": "2026-09-15T16:49:07.166Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/009-host-security.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "report_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/security-results.json"
+    },
+    {
+      "id": "r4-34997237592-1-4088-013",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env config --quiet",
+      "started_at": "2026-09-15T16:49:07.168Z",
+      "ended_at": "2026-09-15T16:49:07.307Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/010-compose-config.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-015",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env build migrate web worker",
+      "started_at": "2026-09-15T16:49:07.384Z",
+      "ended_at": "2026-09-15T16:50:38.462Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/011-compose-build-images.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-016",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-module-import -e DATABASE_URL=postgres://<redacted> -e DOTENV_CONFIG_PATH=/dev/null migrate node --import tsx scripts/verify-db-module-import.ts --negative-control",
+      "started_at": "2026-09-15T16:50:38.464Z",
+      "ended_at": "2026-09-15T16:50:39.469Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/012-final-image-db-module-import.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-017",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-module-import --format {{json .}}",
+      "started_at": "2026-09-15T16:50:39.471Z",
+      "ended_at": "2026-09-15T16:50:39.486Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/013-migration-container-inspect-oss-ch001-r4-34997237592-1-module-import.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-018",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env up -d db",
+      "started_at": "2026-09-15T16:50:39.488Z",
+      "ended_at": "2026-09-15T16:50:45.251Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/014-compose-db-up.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-019",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE ROLE \"ch001_r12_observer_r4-34997237592-1\" LOGIN PASSWORD '<redacted>'",
+      "started_at": "2026-09-15T16:50:47.441Z",
+      "ended_at": "2026-09-15T16:50:47.534Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/015-migration-marker-regression-create-role.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-020",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE DATABASE \"ch001_r12_marker_r4-34997237592-1\" OWNER oss",
+      "started_at": "2026-09-15T16:50:47.535Z",
+      "ended_at": "2026-09-15T16:50:47.707Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/016-migration-marker-regression-create-database.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-021",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc GRANT CONNECT ON DATABASE \"ch001_r12_marker_r4-34997237592-1\" TO \"ch001_r12_observer_r4-34997237592-1\"",
+      "started_at": "2026-09-15T16:50:47.708Z",
+      "ended_at": "2026-09-15T16:50:47.798Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/017-migration-marker-regression-grant-connect.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-022",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "started_at": "2026-09-15T16:50:47.799Z",
+      "ended_at": "2026-09-15T16:50:47.894Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/018-migration-migration-marker-regression-absent-presence.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-023",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -Atc SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END",
+      "started_at": "2026-09-15T16:50:47.896Z",
+      "ended_at": "2026-09-15T16:50:48.012Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/019-migration-marker-regression-legacy-absent.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-024",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc CREATE TABLE public.schema_migrations (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL)",
+      "started_at": "2026-09-15T16:50:48.013Z",
+      "ended_at": "2026-09-15T16:50:48.162Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/020-migration-marker-regression-create-table.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-025",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "started_at": "2026-09-15T16:50:48.162Z",
+      "ended_at": "2026-09-15T16:50:48.253Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/021-migration-migration-marker-regression-empty-presence.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-026",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT count(*)::text FROM public.schema_migrations",
+      "started_at": "2026-09-15T16:50:48.254Z",
+      "ended_at": "2026-09-15T16:50:48.349Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/022-migration-migration-marker-regression-empty-count.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-027",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc INSERT INTO public.schema_migrations (id, applied_at) VALUES ('0001_ch001', CURRENT_TIMESTAMP)",
+      "started_at": "2026-09-15T16:50:48.349Z",
+      "ended_at": "2026-09-15T16:50:48.438Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/023-migration-marker-regression-insert-positive.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-028",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "started_at": "2026-09-15T16:50:48.439Z",
+      "ended_at": "2026-09-15T16:50:48.529Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/024-migration-migration-marker-regression-positive-presence.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-029",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT count(*)::text FROM public.schema_migrations",
+      "started_at": "2026-09-15T16:50:48.530Z",
+      "ended_at": "2026-09-15T16:50:48.621Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/025-migration-migration-marker-regression-positive-count.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-030",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc REVOKE ALL ON TABLE public.schema_migrations FROM PUBLIC; GRANT USAGE ON SCHEMA public TO \"ch001_r12_observer_r4-34997237592-1\"",
+      "started_at": "2026-09-15T16:50:48.622Z",
+      "ended_at": "2026-09-15T16:50:48.713Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/026-migration-marker-regression-restrict-role.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-031",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T -e PGPASSWORD=<redacted> db psql -U ch001_r12_observer_r4-34997237592-1 -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "started_at": "2026-09-15T16:50:48.714Z",
+      "ended_at": "2026-09-15T16:50:48.806Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/027-migration-migration-marker-regression-denied-presence.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-032",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T -e PGPASSWORD=<redacted> db psql -U ch001_r12_observer_r4-34997237592-1 -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT count(*)::text FROM public.schema_migrations",
+      "started_at": "2026-09-15T16:50:48.807Z",
+      "ended_at": "2026-09-15T16:50:48.904Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/028-migration-migration-marker-regression-denied-count.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-033",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP DATABASE IF EXISTS \"ch001_r12_marker_r4-34997237592-1\" WITH (FORCE)",
+      "started_at": "2026-09-15T16:50:48.905Z",
+      "ended_at": "2026-09-15T16:50:49.113Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/029-migration-marker-regression-drop-database.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-034",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP ROLE IF EXISTS \"ch001_r12_observer_r4-34997237592-1\"",
+      "started_at": "2026-09-15T16:50:49.113Z",
+      "ended_at": "2026-09-15T16:50:49.206Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/030-migration-marker-regression-drop-role.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-035",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "started_at": "2026-09-15T16:50:49.207Z",
+      "ended_at": "2026-09-15T16:50:49.300Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/031-migration-migration-fresh-precondition-presence.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-036",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-fresh migrate",
+      "started_at": "2026-09-15T16:50:49.301Z",
+      "ended_at": "2026-09-15T16:50:50.484Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/032-migration-fresh.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-037",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-fresh --format {{json .}}",
+      "started_at": "2026-09-15T16:50:50.485Z",
+      "ended_at": "2026-09-15T16:50:50.499Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/033-migration-container-inspect-oss-ch001-r4-34997237592-1-fresh.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-038",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT json_build_object('tables', COALESCE((SELECT json_agg(table_name ORDER BY table_name) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'), '[]'::json), 'constraints', COALESCE((SELECT json_agg(json_build_object('table_name', table_name, 'name', constraint_name, 'type', constraint_type) ORDER BY table_name, constraint_name) FROM information_schema.table_constraints WHERE table_schema = 'public' AND table_name IN ('account', 'asset', 'draft', 'draft_revision', 'project', 'render_artifact', 'render_outbox', 'render_request', 'save_mutation', 'schema_migrations', 'session', 'user', 'verification', 'worker_heartbeat', 'workspace')), '[]'::json))::text",
+      "started_at": "2026-09-15T16:50:50.501Z",
+      "ended_at": "2026-09-15T16:50:50.603Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/034-migration-fresh-schema.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-039",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT COALESCE(json_agg(json_build_object('id', id, 'applied_at', to_char(applied_at AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US')) ORDER BY id), '[]'::json)::text FROM schema_migrations",
+      "started_at": "2026-09-15T16:50:50.604Z",
+      "ended_at": "2026-09-15T16:50:50.697Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/035-migration-fresh-marker.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-040",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE SCHEMA \"ch001_r12_r4_34997237592_1\"; CREATE TABLE \"ch001_r12_r4_34997237592_1\".sentinel (key TEXT PRIMARY KEY, value TEXT NOT NULL); INSERT INTO \"ch001_r12_r4_34997237592_1\".sentinel (key, value) VALUES ('proof', 'sentinel_r4-34997237592-1')",
+      "started_at": "2026-09-15T16:50:50.699Z",
+      "ended_at": "2026-09-15T16:50:50.796Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/036-migration-sentinel-create.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-041",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-repeat migrate",
+      "started_at": "2026-09-15T16:50:50.796Z",
+      "ended_at": "2026-09-15T16:50:51.725Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/037-migration-repeat.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-042",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-repeat --format {{json .}}",
+      "started_at": "2026-09-15T16:50:51.726Z",
+      "ended_at": "2026-09-15T16:50:51.740Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/038-migration-container-inspect-oss-ch001-r4-34997237592-1-repeat.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-043",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT json_build_object('tables', COALESCE((SELECT json_agg(table_name ORDER BY table_name) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'), '[]'::json), 'constraints', COALESCE((SELECT json_agg(json_build_object('table_name', table_name, 'name', constraint_name, 'type', constraint_type) ORDER BY table_name, constraint_name) FROM information_schema.table_constraints WHERE table_schema = 'public' AND table_name IN ('account', 'asset', 'draft', 'draft_revision', 'project', 'render_artifact', 'render_outbox', 'render_request', 'save_mutation', 'schema_migrations', 'session', 'user', 'verification', 'worker_heartbeat', 'workspace')), '[]'::json))::text",
+      "started_at": "2026-09-15T16:50:51.741Z",
+      "ended_at": "2026-09-15T16:50:51.842Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/039-migration-repeat-schema.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-044",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT COALESCE(json_agg(json_build_object('id', id, 'applied_at', to_char(applied_at AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US')) ORDER BY id), '[]'::json)::text FROM schema_migrations",
+      "started_at": "2026-09-15T16:50:51.843Z",
+      "ended_at": "2026-09-15T16:50:51.935Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/040-migration-repeat-marker.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-045",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT value FROM \"ch001_r12_r4_34997237592_1\".sentinel WHERE key = 'proof'",
+      "started_at": "2026-09-15T16:50:51.936Z",
+      "ended_at": "2026-09-15T16:50:52.029Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/041-migration-sentinel-check.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-046",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE ROLE \"ch001_r12_role_r4-34997237592-1\" LOGIN PASSWORD '<redacted>'",
+      "started_at": "2026-09-15T16:50:52.030Z",
+      "ended_at": "2026-09-15T16:50:52.131Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/042-migration-failure-control-create-role.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-047",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE DATABASE \"ch001_r12_db_r4-34997237592-1\" OWNER oss",
+      "started_at": "2026-09-15T16:50:52.131Z",
+      "ended_at": "2026-09-15T16:50:52.257Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/043-migration-failure-control-create-database.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-048",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc GRANT CONNECT ON DATABASE \"ch001_r12_db_r4-34997237592-1\" TO \"ch001_r12_role_r4-34997237592-1\"",
+      "started_at": "2026-09-15T16:50:52.258Z",
+      "ended_at": "2026-09-15T16:50:52.349Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/044-migration-failure-control-restrict-schema.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-049",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_db_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc REVOKE CREATE ON SCHEMA public FROM PUBLIC; REVOKE CREATE ON SCHEMA public FROM \"ch001_r12_role_r4-34997237592-1\"; GRANT USAGE ON SCHEMA public TO \"ch001_r12_role_r4-34997237592-1\"",
+      "started_at": "2026-09-15T16:50:52.350Z",
+      "ended_at": "2026-09-15T16:50:52.447Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/045-migration-failure-control-revoke-create.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-050",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-failure-control -e DATABASE_URL=<redacted> migrate",
+      "started_at": "2026-09-15T16:50:52.448Z",
+      "ended_at": "2026-09-15T16:50:53.054Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/046-migration-failure-control.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-051",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-failure-control --format {{json .}}",
+      "started_at": "2026-09-15T16:50:53.055Z",
+      "ended_at": "2026-09-15T16:50:53.070Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/047-migration-container-inspect-oss-ch001-r4-34997237592-1-failure-control.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-052",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_db_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "started_at": "2026-09-15T16:50:53.071Z",
+      "ended_at": "2026-09-15T16:50:53.169Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/048-migration-migration-failure-control-marker-presence.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-053",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP SCHEMA IF EXISTS \"ch001_r12_r4_34997237592_1\" CASCADE",
+      "started_at": "2026-09-15T16:50:53.171Z",
+      "ended_at": "2026-09-15T16:50:53.266Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/049-migration-fixture-drop-sentinel.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-054",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP DATABASE IF EXISTS \"ch001_r12_db_r4-34997237592-1\" WITH (FORCE)",
+      "started_at": "2026-09-15T16:50:53.267Z",
+      "ended_at": "2026-09-15T16:50:53.381Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/050-migration-fixture-drop-database.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-055",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP ROLE IF EXISTS \"ch001_r12_role_r4-34997237592-1\"",
+      "started_at": "2026-09-15T16:50:53.382Z",
+      "ended_at": "2026-09-15T16:50:53.472Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/051-migration-fixture-drop-role.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-056",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env up --no-build -d migrate web worker",
+      "started_at": "2026-09-15T16:50:53.476Z",
+      "ended_at": "2026-09-15T16:50:54.850Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/052-compose-stack-up-after-migration.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-057",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-module-import --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.250Z",
+      "ended_at": "2026-09-15T16:53:58.264Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/053-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-module-import.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-058",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-module-import",
+      "started_at": "2026-09-15T16:53:58.265Z",
+      "ended_at": "2026-09-15T16:53:58.281Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/054-migration-container-remove-oss-ch001-r4-34997237592-1-module-import.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-059",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-module-import --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.282Z",
+      "ended_at": "2026-09-15T16:53:58.295Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/055-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-module-import.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-060",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-fresh --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.295Z",
+      "ended_at": "2026-09-15T16:53:58.308Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/056-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-fresh.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-061",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-fresh",
+      "started_at": "2026-09-15T16:53:58.309Z",
+      "ended_at": "2026-09-15T16:53:58.327Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/057-migration-container-remove-oss-ch001-r4-34997237592-1-fresh.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-062",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-fresh --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.328Z",
+      "ended_at": "2026-09-15T16:53:58.340Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/058-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-fresh.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-063",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-repeat --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.341Z",
+      "ended_at": "2026-09-15T16:53:58.354Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/059-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-repeat.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-064",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-repeat",
+      "started_at": "2026-09-15T16:53:58.355Z",
+      "ended_at": "2026-09-15T16:53:58.372Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/060-migration-container-remove-oss-ch001-r4-34997237592-1-repeat.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-065",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-repeat --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.372Z",
+      "ended_at": "2026-09-15T16:53:58.385Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/061-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-repeat.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-066",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-failure-control --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.386Z",
+      "ended_at": "2026-09-15T16:53:58.399Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/062-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-failure-control.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-067",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-failure-control",
+      "started_at": "2026-09-15T16:53:58.400Z",
+      "ended_at": "2026-09-15T16:53:58.416Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/063-migration-container-remove-oss-ch001-r4-34997237592-1-failure-control.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r4-34997237592-1-4088-068",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-failure-control --format {{json .}}",
+      "started_at": "2026-09-15T16:53:58.416Z",
+      "ended_at": "2026-09-15T16:53:58.430Z",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/064-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-failure-control.log",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    }
+  ],
+  "target_application_version": "0.1.0",
+  "report_kind": "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "evidence_commit": null,
+  "generatedAt": "2026-09-15T16:54:09.277Z",
+  "commands": [
+    {
+      "invocationId": "r4-34997237592-1-4088-003",
+      "command": "docker version --format {{.Server.Version}}",
+      "startedAt": "2026-09-15T16:48:32.166Z",
+      "endedAt": "2026-09-15T16:48:32.184Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/001-docker-version.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-004",
+      "command": "docker info --format {{.ServerVersion}}",
+      "startedAt": "2026-09-15T16:48:32.185Z",
+      "endedAt": "2026-09-15T16:48:32.241Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/002-docker-info.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-005",
+      "command": "docker compose version --short",
+      "startedAt": "2026-09-15T16:48:32.242Z",
+      "endedAt": "2026-09-15T16:48:32.290Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/003-compose-version.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-007",
+      "command": "pnpm lint",
+      "startedAt": "2026-09-15T16:48:33.052Z",
+      "endedAt": "2026-09-15T16:48:35.812Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/004-host-lint.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-008",
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-15T16:48:35.813Z",
+      "endedAt": "2026-09-15T16:48:43.862Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/005-host-typecheck.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-009",
+      "command": "pnpm build",
+      "startedAt": "2026-09-15T16:48:43.863Z",
+      "endedAt": "2026-09-15T16:49:04.851Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/006-host-build.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-010",
+      "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+      "startedAt": "2026-09-15T16:49:04.853Z",
+      "endedAt": "2026-09-15T16:49:05.161Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/007-post-build-db-module-import.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-011",
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-15T16:49:05.162Z",
+      "endedAt": "2026-09-15T16:49:06.712Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/008-host-unit.log",
+      "reportPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/unit-results.json"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-012",
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-15T16:49:06.713Z",
+      "endedAt": "2026-09-15T16:49:07.166Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/009-host-security.log",
+      "reportPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/security-results.json"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-013",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env config --quiet",
+      "startedAt": "2026-09-15T16:49:07.168Z",
+      "endedAt": "2026-09-15T16:49:07.307Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/010-compose-config.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-015",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env build migrate web worker",
+      "startedAt": "2026-09-15T16:49:07.384Z",
+      "endedAt": "2026-09-15T16:50:38.462Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/011-compose-build-images.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-016",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-module-import -e DATABASE_URL=postgres://<redacted> -e DOTENV_CONFIG_PATH=/dev/null migrate node --import tsx scripts/verify-db-module-import.ts --negative-control",
+      "startedAt": "2026-09-15T16:50:38.464Z",
+      "endedAt": "2026-09-15T16:50:39.469Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/012-final-image-db-module-import.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-017",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-module-import --format {{json .}}",
+      "startedAt": "2026-09-15T16:50:39.471Z",
+      "endedAt": "2026-09-15T16:50:39.486Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/013-migration-container-inspect-oss-ch001-r4-34997237592-1-module-import.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-018",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env up -d db",
+      "startedAt": "2026-09-15T16:50:39.488Z",
+      "endedAt": "2026-09-15T16:50:45.251Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/014-compose-db-up.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-019",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE ROLE \"ch001_r12_observer_r4-34997237592-1\" LOGIN PASSWORD '<redacted>'",
+      "startedAt": "2026-09-15T16:50:47.441Z",
+      "endedAt": "2026-09-15T16:50:47.534Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/015-migration-marker-regression-create-role.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-020",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE DATABASE \"ch001_r12_marker_r4-34997237592-1\" OWNER oss",
+      "startedAt": "2026-09-15T16:50:47.535Z",
+      "endedAt": "2026-09-15T16:50:47.707Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/016-migration-marker-regression-create-database.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-021",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc GRANT CONNECT ON DATABASE \"ch001_r12_marker_r4-34997237592-1\" TO \"ch001_r12_observer_r4-34997237592-1\"",
+      "startedAt": "2026-09-15T16:50:47.708Z",
+      "endedAt": "2026-09-15T16:50:47.798Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/017-migration-marker-regression-grant-connect.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-022",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "startedAt": "2026-09-15T16:50:47.799Z",
+      "endedAt": "2026-09-15T16:50:47.894Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/018-migration-migration-marker-regression-absent-presence.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-023",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -Atc SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END",
+      "startedAt": "2026-09-15T16:50:47.896Z",
+      "endedAt": "2026-09-15T16:50:48.012Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/019-migration-marker-regression-legacy-absent.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-024",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc CREATE TABLE public.schema_migrations (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL)",
+      "startedAt": "2026-09-15T16:50:48.013Z",
+      "endedAt": "2026-09-15T16:50:48.162Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/020-migration-marker-regression-create-table.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-025",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "startedAt": "2026-09-15T16:50:48.162Z",
+      "endedAt": "2026-09-15T16:50:48.253Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/021-migration-migration-marker-regression-empty-presence.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-026",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT count(*)::text FROM public.schema_migrations",
+      "startedAt": "2026-09-15T16:50:48.254Z",
+      "endedAt": "2026-09-15T16:50:48.349Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/022-migration-migration-marker-regression-empty-count.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-027",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc INSERT INTO public.schema_migrations (id, applied_at) VALUES ('0001_ch001', CURRENT_TIMESTAMP)",
+      "startedAt": "2026-09-15T16:50:48.349Z",
+      "endedAt": "2026-09-15T16:50:48.438Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/023-migration-marker-regression-insert-positive.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-028",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "startedAt": "2026-09-15T16:50:48.439Z",
+      "endedAt": "2026-09-15T16:50:48.529Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/024-migration-migration-marker-regression-positive-presence.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-029",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT count(*)::text FROM public.schema_migrations",
+      "startedAt": "2026-09-15T16:50:48.530Z",
+      "endedAt": "2026-09-15T16:50:48.621Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/025-migration-migration-marker-regression-positive-count.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-030",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc REVOKE ALL ON TABLE public.schema_migrations FROM PUBLIC; GRANT USAGE ON SCHEMA public TO \"ch001_r12_observer_r4-34997237592-1\"",
+      "startedAt": "2026-09-15T16:50:48.622Z",
+      "endedAt": "2026-09-15T16:50:48.713Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/026-migration-marker-regression-restrict-role.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-031",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T -e PGPASSWORD=<redacted> db psql -U ch001_r12_observer_r4-34997237592-1 -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "startedAt": "2026-09-15T16:50:48.714Z",
+      "endedAt": "2026-09-15T16:50:48.806Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/027-migration-migration-marker-regression-denied-presence.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-032",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T -e PGPASSWORD=<redacted> db psql -U ch001_r12_observer_r4-34997237592-1 -d ch001_r12_marker_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT count(*)::text FROM public.schema_migrations",
+      "startedAt": "2026-09-15T16:50:48.807Z",
+      "endedAt": "2026-09-15T16:50:48.904Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/028-migration-migration-marker-regression-denied-count.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-033",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP DATABASE IF EXISTS \"ch001_r12_marker_r4-34997237592-1\" WITH (FORCE)",
+      "startedAt": "2026-09-15T16:50:48.905Z",
+      "endedAt": "2026-09-15T16:50:49.113Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/029-migration-marker-regression-drop-database.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-034",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP ROLE IF EXISTS \"ch001_r12_observer_r4-34997237592-1\"",
+      "startedAt": "2026-09-15T16:50:49.113Z",
+      "endedAt": "2026-09-15T16:50:49.206Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/030-migration-marker-regression-drop-role.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-035",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "startedAt": "2026-09-15T16:50:49.207Z",
+      "endedAt": "2026-09-15T16:50:49.300Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/031-migration-migration-fresh-precondition-presence.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-036",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-fresh migrate",
+      "startedAt": "2026-09-15T16:50:49.301Z",
+      "endedAt": "2026-09-15T16:50:50.484Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/032-migration-fresh.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-037",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-fresh --format {{json .}}",
+      "startedAt": "2026-09-15T16:50:50.485Z",
+      "endedAt": "2026-09-15T16:50:50.499Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/033-migration-container-inspect-oss-ch001-r4-34997237592-1-fresh.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-038",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT json_build_object('tables', COALESCE((SELECT json_agg(table_name ORDER BY table_name) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'), '[]'::json), 'constraints', COALESCE((SELECT json_agg(json_build_object('table_name', table_name, 'name', constraint_name, 'type', constraint_type) ORDER BY table_name, constraint_name) FROM information_schema.table_constraints WHERE table_schema = 'public' AND table_name IN ('account', 'asset', 'draft', 'draft_revision', 'project', 'render_artifact', 'render_outbox', 'render_request', 'save_mutation', 'schema_migrations', 'session', 'user', 'verification', 'worker_heartbeat', 'workspace')), '[]'::json))::text",
+      "startedAt": "2026-09-15T16:50:50.501Z",
+      "endedAt": "2026-09-15T16:50:50.603Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/034-migration-fresh-schema.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-039",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT COALESCE(json_agg(json_build_object('id', id, 'applied_at', to_char(applied_at AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US')) ORDER BY id), '[]'::json)::text FROM schema_migrations",
+      "startedAt": "2026-09-15T16:50:50.604Z",
+      "endedAt": "2026-09-15T16:50:50.697Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/035-migration-fresh-marker.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-040",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE SCHEMA \"ch001_r12_r4_34997237592_1\"; CREATE TABLE \"ch001_r12_r4_34997237592_1\".sentinel (key TEXT PRIMARY KEY, value TEXT NOT NULL); INSERT INTO \"ch001_r12_r4_34997237592_1\".sentinel (key, value) VALUES ('proof', 'sentinel_r4-34997237592-1')",
+      "startedAt": "2026-09-15T16:50:50.699Z",
+      "endedAt": "2026-09-15T16:50:50.796Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/036-migration-sentinel-create.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-041",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-repeat migrate",
+      "startedAt": "2026-09-15T16:50:50.796Z",
+      "endedAt": "2026-09-15T16:50:51.725Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/037-migration-repeat.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-042",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-repeat --format {{json .}}",
+      "startedAt": "2026-09-15T16:50:51.726Z",
+      "endedAt": "2026-09-15T16:50:51.740Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/038-migration-container-inspect-oss-ch001-r4-34997237592-1-repeat.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-043",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT json_build_object('tables', COALESCE((SELECT json_agg(table_name ORDER BY table_name) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'), '[]'::json), 'constraints', COALESCE((SELECT json_agg(json_build_object('table_name', table_name, 'name', constraint_name, 'type', constraint_type) ORDER BY table_name, constraint_name) FROM information_schema.table_constraints WHERE table_schema = 'public' AND table_name IN ('account', 'asset', 'draft', 'draft_revision', 'project', 'render_artifact', 'render_outbox', 'render_request', 'save_mutation', 'schema_migrations', 'session', 'user', 'verification', 'worker_heartbeat', 'workspace')), '[]'::json))::text",
+      "startedAt": "2026-09-15T16:50:51.741Z",
+      "endedAt": "2026-09-15T16:50:51.842Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/039-migration-repeat-schema.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-044",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT COALESCE(json_agg(json_build_object('id', id, 'applied_at', to_char(applied_at AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US')) ORDER BY id), '[]'::json)::text FROM schema_migrations",
+      "startedAt": "2026-09-15T16:50:51.843Z",
+      "endedAt": "2026-09-15T16:50:51.935Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/040-migration-repeat-marker.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-045",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc SELECT value FROM \"ch001_r12_r4_34997237592_1\".sentinel WHERE key = 'proof'",
+      "startedAt": "2026-09-15T16:50:51.936Z",
+      "endedAt": "2026-09-15T16:50:52.029Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/041-migration-sentinel-check.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-046",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE ROLE \"ch001_r12_role_r4-34997237592-1\" LOGIN PASSWORD '<redacted>'",
+      "startedAt": "2026-09-15T16:50:52.030Z",
+      "endedAt": "2026-09-15T16:50:52.131Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/042-migration-failure-control-create-role.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-047",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc CREATE DATABASE \"ch001_r12_db_r4-34997237592-1\" OWNER oss",
+      "startedAt": "2026-09-15T16:50:52.131Z",
+      "endedAt": "2026-09-15T16:50:52.257Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/043-migration-failure-control-create-database.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-048",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc GRANT CONNECT ON DATABASE \"ch001_r12_db_r4-34997237592-1\" TO \"ch001_r12_role_r4-34997237592-1\"",
+      "startedAt": "2026-09-15T16:50:52.258Z",
+      "endedAt": "2026-09-15T16:50:52.349Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/044-migration-failure-control-restrict-schema.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-049",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_db_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc REVOKE CREATE ON SCHEMA public FROM PUBLIC; REVOKE CREATE ON SCHEMA public FROM \"ch001_r12_role_r4-34997237592-1\"; GRANT USAGE ON SCHEMA public TO \"ch001_r12_role_r4-34997237592-1\"",
+      "startedAt": "2026-09-15T16:50:52.350Z",
+      "endedAt": "2026-09-15T16:50:52.447Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/045-migration-failure-control-revoke-create.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-050",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-failure-control -e DATABASE_URL=<redacted> migrate",
+      "startedAt": "2026-09-15T16:50:52.448Z",
+      "endedAt": "2026-09-15T16:50:53.054Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/046-migration-failure-control.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-051",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-failure-control --format {{json .}}",
+      "startedAt": "2026-09-15T16:50:53.055Z",
+      "endedAt": "2026-09-15T16:50:53.070Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/047-migration-container-inspect-oss-ch001-r4-34997237592-1-failure-control.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-052",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d ch001_r12_db_r4-34997237592-1 -v ON_ERROR_STOP=1 -Atc SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+      "startedAt": "2026-09-15T16:50:53.071Z",
+      "endedAt": "2026-09-15T16:50:53.169Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/048-migration-migration-failure-control-marker-presence.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-053",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP SCHEMA IF EXISTS \"ch001_r12_r4_34997237592_1\" CASCADE",
+      "startedAt": "2026-09-15T16:50:53.171Z",
+      "endedAt": "2026-09-15T16:50:53.266Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/049-migration-fixture-drop-sentinel.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-054",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP DATABASE IF EXISTS \"ch001_r12_db_r4-34997237592-1\" WITH (FORCE)",
+      "startedAt": "2026-09-15T16:50:53.267Z",
+      "endedAt": "2026-09-15T16:50:53.381Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/050-migration-fixture-drop-database.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-055",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env exec -T db psql -U oss -d oss -v ON_ERROR_STOP=1 -Atc DROP ROLE IF EXISTS \"ch001_r12_role_r4-34997237592-1\"",
+      "startedAt": "2026-09-15T16:50:53.382Z",
+      "endedAt": "2026-09-15T16:50:53.472Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/051-migration-fixture-drop-role.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-056",
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env up --no-build -d migrate web worker",
+      "startedAt": "2026-09-15T16:50:53.476Z",
+      "endedAt": "2026-09-15T16:50:54.850Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/052-compose-stack-up-after-migration.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-057",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-module-import --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.250Z",
+      "endedAt": "2026-09-15T16:53:58.264Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/053-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-module-import.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-058",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-module-import",
+      "startedAt": "2026-09-15T16:53:58.265Z",
+      "endedAt": "2026-09-15T16:53:58.281Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/054-migration-container-remove-oss-ch001-r4-34997237592-1-module-import.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-059",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-module-import --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.282Z",
+      "endedAt": "2026-09-15T16:53:58.295Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/055-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-module-import.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-060",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-fresh --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.295Z",
+      "endedAt": "2026-09-15T16:53:58.308Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/056-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-fresh.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-061",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-fresh",
+      "startedAt": "2026-09-15T16:53:58.309Z",
+      "endedAt": "2026-09-15T16:53:58.327Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/057-migration-container-remove-oss-ch001-r4-34997237592-1-fresh.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-062",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-fresh --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.328Z",
+      "endedAt": "2026-09-15T16:53:58.340Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/058-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-fresh.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-063",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-repeat --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.341Z",
+      "endedAt": "2026-09-15T16:53:58.354Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/059-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-repeat.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-064",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-repeat",
+      "startedAt": "2026-09-15T16:53:58.355Z",
+      "endedAt": "2026-09-15T16:53:58.372Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/060-migration-container-remove-oss-ch001-r4-34997237592-1-repeat.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-065",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-repeat --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.372Z",
+      "endedAt": "2026-09-15T16:53:58.385Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/061-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-repeat.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-066",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-failure-control --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.386Z",
+      "endedAt": "2026-09-15T16:53:58.399Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/062-migration-container-cleanup-before-oss-ch001-r4-34997237592-1-failure-control.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-067",
+      "command": "docker container rm -f oss-ch001-r4-34997237592-1-failure-control",
+      "startedAt": "2026-09-15T16:53:58.400Z",
+      "endedAt": "2026-09-15T16:53:58.416Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/063-migration-container-remove-oss-ch001-r4-34997237592-1-failure-control.log"
+    },
+    {
+      "invocationId": "r4-34997237592-1-4088-068",
+      "command": "docker container inspect oss-ch001-r4-34997237592-1-failure-control --format {{json .}}",
+      "startedAt": "2026-09-15T16:53:58.416Z",
+      "endedAt": "2026-09-15T16:53:58.430Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/064-migration-container-cleanup-after-oss-ch001-r4-34997237592-1-failure-control.log"
+    }
+  ],
+  "suites": [
+    {
+      "suite": "smoke",
+      "command": "pnpm proof:ch001 (owned Compose smoke/lifecycle)",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T16:48:32.141Z",
+      "ended_at": "2026-09-15T16:54:09.226Z",
+      "exit_code": 1,
+      "discovered": 15,
+      "executed": 15,
+      "passed": 14,
+      "failed": 1,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/smoke-results.json",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/010-compose-config.log"
+    },
+    {
+      "suite": "integration",
+      "command": "pnpm test:integration",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T16:48:32.141Z",
+      "ended_at": "2026-09-15T16:54:09.227Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/suite-integration.json",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/suite-integration-unavailable.log",
+      "unavailable_reason": "The bounded coordinator stopped before this suite could execute."
+    },
+    {
+      "suite": "e2e",
+      "command": "pnpm test:e2e",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T16:48:32.141Z",
+      "ended_at": "2026-09-15T16:54:09.227Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/suite-e2e.json",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/suite-e2e-unavailable.log",
+      "unavailable_reason": "The bounded coordinator stopped before this suite could execute."
+    },
+    {
+      "suite": "render",
+      "command": "pnpm test:render",
+      "run_id": "r4-34997237592-1",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T16:48:32.141Z",
+      "ended_at": "2026-09-15T16:54:09.228Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/suite-render.json",
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/suite-render-unavailable.log",
+      "unavailable_reason": "The bounded coordinator stopped before this suite could execute."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CH001-001",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-002",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-003",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-004",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-005",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-006",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-007",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-008",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-009",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-010",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-011",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-012",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-013",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-014",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-015",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-016",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-017",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-018",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-019",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-020",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-021",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-022",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-023",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-024",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-025",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-026",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-027",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-028",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-029",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-030",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-031",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-032",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-033",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-034",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-035",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-036",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-037",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-038",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-039",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-040",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-041",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-042",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-043",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-044",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-045",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-046",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-047",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-048",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-049",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-050",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-051",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-052",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-053",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-054",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-055",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-056",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-057",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-058",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-059",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-060",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-061",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-062",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-063",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-064",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-065",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-066",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-067",
+      "status": "PASS",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34997237592-1/proof/public/source-review.md",
+          "sha256": "c39e694094596f2477fad8875b24fcc5da22f0435c94c8c9944c1d186576da49",
+          "kind": "E1",
+          "reference": "source-review:ch001r13",
+          "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r12 source review."
+    },
+    {
+      "id": "CH001-068",
+      "status": "PASS",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34997237592-1/proof/public/source-review.md",
+          "sha256": "c39e694094596f2477fad8875b24fcc5da22f0435c94c8c9944c1d186576da49",
+          "kind": "E1",
+          "reference": "source-review:ch001r13",
+          "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r12 source review."
+    },
+    {
+      "id": "CH001-069",
+      "status": "PASS",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34997237592-1/proof/public/source-review.md",
+          "sha256": "c39e694094596f2477fad8875b24fcc5da22f0435c94c8c9944c1d186576da49",
+          "kind": "E1",
+          "reference": "source-review:ch001r13",
+          "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r12 source review."
+    },
+    {
+      "id": "CH001-070",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-071",
+      "status": "NOT_RUN",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [],
+      "reason": "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred."
+    },
+    {
+      "id": "CH001-072",
+      "status": "PASS",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": [
+        {
+          "path": "artifacts/ch001r4/r4-34997237592-1/proof/public/source-review.md",
+          "sha256": "c39e694094596f2477fad8875b24fcc5da22f0435c94c8c9944c1d186576da49",
+          "kind": "E1",
+          "reference": "source-review:ch001r13",
+          "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+        }
+      ],
+      "reason": "Source-only contract gate assessed by the r12 source review."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R01",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R02",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R03",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R04",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R05",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R06",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R07",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R08",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R09",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R10",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R11",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    }
+  ],
+  "artifact_manifest": {
+    "path": "artifacts/ch001r4/r4-34997237592-1/proof/public/artifact-manifest.json",
+    "sha256": "773cb1c0963fdb2df7984c006eae16d8d2137ee7f295cd1891aa3b2f20619af9",
+    "kind": "E1",
+    "reference": "aggregate:artifact-manifest",
+    "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+  }
+}

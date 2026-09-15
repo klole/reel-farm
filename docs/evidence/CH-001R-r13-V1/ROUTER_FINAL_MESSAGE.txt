@@ -1,0 +1,31 @@
+Assignment: CH-001R-r13-V1
+Route: HOSTED_T13_VERIFICATION
+Outcome: LIVE_PROOF_FAILED (migration PASS / worker readiness FAIL)
+Purpose: verify_fixture_database_binding_and_invocation_evidence
+T13: 6e04b5a5eefe2ef464572da35c88338fa342f525
+T13 tree: 405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8
+E13 reviewed: d1ab7226b71e93235a9761f1432b6fb7be198609
+Definition head at submit: 57e4ae456a73aedd58b25ba41e08b7320214eba0
+Workflow blob: 35fa339aac2fcb024cd476ff38d87d27eb6482af
+Workflow SHA-256: 733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d
+Checkout actual: 6e04b5a5eefe2ef464572da35c88338fa342f525
+Run: 34997237592 attempt 1 job 104476442516
+URL: https://github.com/klole/reel-farm/actions/runs/34997237592
+Submitted: 2026-09-15T16:47:42Z Settled: 2026-09-15T16:54:14Z
+Hosted classification: LIVE_PROOF_FAILED
+Bootstrap: PASS; sandbox: HOST_SANDBOX_QUALIFIED_POLICY_ACTIVE; proof_invoked=true; proof_exit=1; proof_status=TEST_FAILURE
+Module import (final image): PASS / MODULE_IMPORT_PASS_NOT_DATABASE_PROOF
+Marker observer: PASS; fixture_db=ch001_r12_marker_r4-34997237592-1; isolated_from_main=true
+Migration qualified: true; fresh/schema/repeat/sentinel/failure_control: PASS; sentinel_preserved=true
+Worker readiness attempted: true
+First failure: worker/browser/database/storage readiness timed out (web ready; worker crash-loop)
+Worker signature: SyntaxError: The requested module 'archiver' does not provide an export named 'default'
+Secondary: missing application journey artifacts (ENOENT) after worker stop
+Command format: invocation-v2; commands=64; unique invocationIds=64; repeated command texts preserved (max_dup=3)
+Cleanup: compose down -v PASS / post_cleanup REMOVED; migration one-off containers PASS
+Artifact: 10407819558 ch001-live-proof-34997237592-1 size=133243 sha256=7c6e47c834bcefff06e6c90c4130f9b1c7314bd8d30032a3b6b064ed32c66855
+Application gates this run: PASS=4 FAIL=0 NOT_RUN=68
+application_acceptance=false; accepted_application_version=none; root_state=awaiting_review
+next_action=architect_review_of_actual_T13_outcome
+T13 hosted request count=1; no second dispatch; no Luna; no app edits
+Evidence commit: (filled after push)

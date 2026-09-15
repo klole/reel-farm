@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001_MARKER_OBSERVER_REGRESSION",
+  "run_id": "r4-34997237592-1",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "status": "PASS",
+  "fixture_database": "ch001_r12_marker_r4-34997237592-1",
+  "isolated_from_main_database": true,
+  "setup": [
+    {
+      "operation": "migration-marker-regression-create-role",
+      "status": "PASS",
+      "database": "oss",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/015-migration-marker-regression-create-role.log"
+    },
+    {
+      "operation": "migration-marker-regression-create-database",
+      "status": "PASS",
+      "database": "oss",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/016-migration-marker-regression-create-database.log"
+    },
+    {
+      "operation": "migration-marker-regression-grant-connect",
+      "status": "PASS",
+      "database": "oss",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/017-migration-marker-regression-grant-connect.log"
+    },
+    {
+      "operation": "migration-marker-regression-create-table",
+      "status": "PASS",
+      "database": "ch001_r12_marker_r4-34997237592-1",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/020-migration-marker-regression-create-table.log"
+    },
+    {
+      "operation": "migration-marker-regression-insert-positive",
+      "status": "PASS",
+      "database": "ch001_r12_marker_r4-34997237592-1",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/023-migration-marker-regression-insert-positive.log"
+    },
+    {
+      "operation": "migration-marker-regression-restrict-role",
+      "status": "PASS",
+      "database": "ch001_r12_marker_r4-34997237592-1",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/026-migration-marker-regression-restrict-role.log"
+    }
+  ],
+  "cases": {
+    "absent_table": {
+      "status": "PASS",
+      "observation_status": "PASS",
+      "table_present": false,
+      "marker_count": 0,
+      "marker_count_source": "catalog_absence",
+      "count_executed": false,
+      "no_completion_marker": true,
+      "queries": [
+        {
+          "kind": "presence",
+          "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": false,
+          "count_attempted": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/018-migration-migration-marker-regression-absent-presence.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss"
+        }
+      ],
+      "reason": "The catalog-only presence query proved that public.schema_migrations is absent; COUNT was not executed."
+    },
+    "legacy_negative_control": {
+      "query": "SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END",
+      "exit_code": 1,
+      "timed_out": false,
+      "output_truncated": false,
+      "sqlstate": "42P01",
+      "observed_undefined_table": true,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/019-migration-marker-regression-legacy-absent.log"
+    },
+    "empty_table": {
+      "status": "PASS",
+      "observation_status": "PASS",
+      "table_present": true,
+      "marker_count": 0,
+      "marker_count_source": "catalog_count",
+      "count_executed": true,
+      "no_completion_marker": true,
+      "queries": [
+        {
+          "kind": "presence",
+          "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": true,
+          "count_attempted": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/021-migration-migration-marker-regression-empty-presence.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss"
+        },
+        {
+          "kind": "count",
+          "sql": "SELECT count(*)::text FROM public.schema_migrations",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": 0,
+          "count_attempted": true,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/022-migration-migration-marker-regression-empty-count.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss"
+        }
+      ]
+    },
+    "positive_marker": {
+      "status": "FAIL",
+      "observation_status": "PASS",
+      "table_present": true,
+      "marker_count": 1,
+      "marker_count_source": "catalog_count",
+      "count_executed": true,
+      "no_completion_marker": false,
+      "queries": [
+        {
+          "kind": "presence",
+          "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": true,
+          "count_attempted": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/024-migration-migration-marker-regression-positive-presence.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss"
+        },
+        {
+          "kind": "count",
+          "sql": "SELECT count(*)::text FROM public.schema_migrations",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": 1,
+          "count_attempted": true,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/025-migration-migration-marker-regression-positive-count.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "oss"
+        }
+      ],
+      "reason": "public.schema_migrations contains one or more completion-marker rows."
+    },
+    "count_denied": {
+      "status": "FAIL",
+      "observation_status": "FAIL",
+      "table_present": null,
+      "marker_count": null,
+      "marker_count_source": null,
+      "count_executed": true,
+      "no_completion_marker": null,
+      "queries": [
+        {
+          "kind": "presence",
+          "sql": "SELECT (pg_catalog.to_regclass('public.schema_migrations') IS NOT NULL)::int",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": true,
+          "count_attempted": false,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/027-migration-migration-marker-regression-denied-presence.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "ch001_r12_observer_r4-34997237592-1"
+        },
+        {
+          "kind": "count",
+          "sql": "SELECT count(*)::text FROM public.schema_migrations",
+          "exit_code": 1,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_line_count": 1,
+          "parsed_value": null,
+          "count_attempted": true,
+          "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/028-migration-migration-marker-regression-denied-count.log",
+          "database": "ch001_r12_marker_r4-34997237592-1",
+          "user": "ch001_r12_observer_r4-34997237592-1"
+        }
+      ],
+      "reason": "Marker-count query exited 1."
+    }
+  },
+  "cleanup": [
+    {
+      "operation": "migration-marker-regression-drop-database",
+      "status": "PASS",
+      "database": "oss",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/029-migration-marker-regression-drop-database.log"
+    },
+    {
+      "operation": "migration-marker-regression-drop-role",
+      "status": "PASS",
+      "database": "oss",
+      "user": "oss",
+      "exit_code": 0,
+      "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/030-migration-marker-regression-drop-role.log"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "record_kind": "CH001_COMPOSE_CLEANUP",
+  "run_id": "r4-34997237592-1",
+  "project_name": "oss-ch001-r4-34997237592-1",
+  "startup_attempted": true,
+  "project_owned": true,
+  "teardown": {
+    "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env down -v --remove-orphans",
+    "started_at": "2026-09-15T16:53:58.431Z",
+    "ended_at": "2026-09-15T16:54:09.159Z",
+    "exit_code": 0,
+    "timed_out": false,
+    "output_truncated": false,
+    "output_preview": " Container oss-ch001-r4-34997237592-1-web-1  Stopping\n Container oss-ch001-r4-34997237592-1-worker-1  Stopping\n Container oss-ch001-r4-34997237592-1-worker-1  Stopped\n Container oss-ch001-r4-34997237592-1-worker-1  Removing\n Container oss-ch001-r4-34997237592-1-worker-1  Removed\n Container oss-ch001-r4-34997237592-1-web-1  Stopped\n Container oss-ch001-r4-34997237592-1-web-1  Removing\n Container oss-ch001-r4-34997237592-1-web-1  Removed\n Container oss-ch001-r4-34997237592-1-migrate-1  Stopping\n Container oss-ch001-r4-34997237592-1-migrate-1  Stopped\n Container oss-ch001-r4-34997237592-1-migrate-1  Removing\n Container oss-ch001-r4-34997237592-1-migrate-1  Removed\n Container oss-ch001-r4-34997237592-1-db-1  Stopping\n Container oss-ch001-r4-34997237592-1-db-1  Stopped\n Container oss-ch001-r4-34997237592-1-db-1  Removing\n Container oss-ch001-r4-34997237592-1-db-1  Removed\n Volume oss-ch001-r4-34997237592-1_oss_media_data  Removing\n Network oss-ch001-r4-34997237592-1_default  Removing\n Volume oss-ch001-r4-34997237592-1_oss_db_data  Removing\n Volume oss-ch001-r4-34997237592-1_oss_media_data  Removed\n Volume oss-ch001-r4-34997237592-1_oss_db_data  Removed\n Network oss-ch001-r4-34997237592-1_default  Removed\n"
+  },
+  "post_cleanup": {
+    "status": "REMOVED",
+    "containers": [],
+    "volumes": [],
+    "container_check": {
+      "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env ps --all --format json",
+      "started_at": "2026-09-15T16:54:09.159Z",
+      "ended_at": "2026-09-15T16:54:09.212Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": ""
+    },
+    "container_parse_status": "OK",
+    "container_parse_error": null,
+    "volume_check": {
+      "command": "docker volume ls --filter label=com.docker.compose.project=oss-ch001-r4-34997237592-1 --format {{json .}}",
+      "started_at": "2026-09-15T16:54:09.212Z",
+      "ended_at": "2026-09-15T16:54:09.225Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": ""
+    },
+    "volume_parse_status": "OK",
+    "volume_parse_error": null
+  },
+  "bounded_timeout_ms": 20000,
+  "max_output_bytes": 131072,
+  "status": "PASS",
+  "integration_database_cleanup": {
+    "status": "NOT_RUN",
+    "reason": "No disposable integration database remained allocated."
+  },
+  "migration_container_cleanup": {
+    "record_kind": "CH001_MIGRATION_CONTAINER_CLEANUP",
+    "run_id": "r4-34997237592-1",
+    "status": "PASS",
+    "containers": [
+      {
+        "name": "oss-ch001-r4-34997237592-1-module-import",
+        "status": "PASS",
+        "present_before_cleanup": true,
+        "remove_exit_code": 0,
+        "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/054-migration-container-remove-oss-ch001-r4-34997237592-1-module-import.log",
+        "absence_verified": true
+      },
+      {
+        "name": "oss-ch001-r4-34997237592-1-fresh",
+        "status": "PASS",
+        "present_before_cleanup": true,
+        "remove_exit_code": 0,
+        "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/057-migration-container-remove-oss-ch001-r4-34997237592-1-fresh.log",
+        "absence_verified": true
+      },
+      {
+        "name": "oss-ch001-r4-34997237592-1-repeat",
+        "status": "PASS",
+        "present_before_cleanup": true,
+        "remove_exit_code": 0,
+        "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/060-migration-container-remove-oss-ch001-r4-34997237592-1-repeat.log",
+        "absence_verified": true
+      },
+      {
+        "name": "oss-ch001-r4-34997237592-1-failure-control",
+        "status": "PASS",
+        "present_before_cleanup": true,
+        "remove_exit_code": 0,
+        "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/063-migration-container-remove-oss-ch001-r4-34997237592-1-failure-control.log",
+        "absence_verified": true
+      }
+    ],
+    "cleanup_scope": "explicitly named CH-001R-r12 migration/module-import one-offs only; no global prune"
+  }
+}

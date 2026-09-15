@@ -1,0 +1,557 @@
+{
+  "profile": "CH-001R-r13 bounded source repair qualification",
+  "status": "TEST_FAILURE",
+  "exit_code": 1,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "run_id": "r4-34997237592-1",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "workflow_sha": "57e4ae456a73aedd58b25ba41e08b7320214eba0",
+  "scope": "bounded r13 source repair: explicit fixture database routing and invocation-preserving evidence, followed by the existing r12 migration-first/application proof path",
+  "prohibited_scope": [
+    "fal.ai",
+    "ScrapeCreators",
+    "TikTok",
+    "publishing",
+    "scheduling",
+    "analytics",
+    "billing",
+    "video",
+    "public deployment",
+    "release",
+    "v0.2"
+  ],
+  "failures": [
+    "worker/browser/database/storage readiness: Timed out waiting for web and worker health ready: condition was false",
+    "artifact exists: a-little-room-to-focus.zip: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/a-little-room-to-focus.zip'",
+    "artifact exists: alternate-4x5.zip: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/alternate-4x5.zip'",
+    "artifact exists: journey-hashes.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/journey-hashes.json'",
+    "artifact exists: alternate-format.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/alternate-format.json'",
+    "artifact exists: final-preview.png: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/final-preview.png'",
+    "artifact exists: alternate-preview.png: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/alternate-preview.png'",
+    "artifact exists: worker-down-queued.png: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/worker-down-queued.png'",
+    "artifact exists: lifecycle.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/lifecycle.json'",
+    "artifact exists: same-data-restart.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/same-data-restart.json'",
+    "canonical and alternate ZIPs are structurally inspectable: ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/a-little-room-to-focus.zip'",
+    "journey hash record identifies full render and byte equality: ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/journey-hashes.json'"
+  ],
+  "environment_failures": [],
+  "gate_counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NOT_RUN": 68
+  },
+  "validation": {
+    "ok": false,
+    "errors": [
+      "integration suite did not pass (exit 1).",
+      "integration did not discover and execute assertions.",
+      "e2e suite did not pass (exit 1).",
+      "e2e did not discover and execute assertions.",
+      "render suite did not pass (exit 1).",
+      "render did not discover and execute assertions.",
+      "smoke suite did not pass (exit 1).",
+      "smoke has failed or skipped tests.",
+      "Every mandatory gate must be PASS before the aggregate can pass."
+    ]
+  },
+  "steps": [
+    {
+      "name": "docker-version",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:48:32.166Z",
+      "endedAt": "2026-09-15T16:48:32.185Z",
+      "invocationId": "r4-34997237592-1-4088-003"
+    },
+    {
+      "name": "docker-info",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:48:32.185Z",
+      "endedAt": "2026-09-15T16:48:32.242Z",
+      "invocationId": "r4-34997237592-1-4088-004"
+    },
+    {
+      "name": "compose-version",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:48:32.242Z",
+      "endedAt": "2026-09-15T16:48:32.290Z",
+      "invocationId": "r4-34997237592-1-4088-005"
+    },
+    {
+      "name": "host-lint",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:48:33.052Z",
+      "endedAt": "2026-09-15T16:48:35.813Z",
+      "invocationId": "r4-34997237592-1-4088-007"
+    },
+    {
+      "name": "host-typecheck",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:48:35.813Z",
+      "endedAt": "2026-09-15T16:48:43.863Z",
+      "invocationId": "r4-34997237592-1-4088-008"
+    },
+    {
+      "name": "host-build",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:48:43.863Z",
+      "endedAt": "2026-09-15T16:49:04.853Z",
+      "invocationId": "r4-34997237592-1-4088-009"
+    },
+    {
+      "name": "post-build-db-module-import",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:49:04.853Z",
+      "endedAt": "2026-09-15T16:49:05.161Z",
+      "invocationId": "r4-34997237592-1-4088-010"
+    },
+    {
+      "name": "host-unit",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:49:05.162Z",
+      "endedAt": "2026-09-15T16:49:06.713Z",
+      "invocationId": "r4-34997237592-1-4088-011"
+    },
+    {
+      "name": "host-security",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:49:06.713Z",
+      "endedAt": "2026-09-15T16:49:07.167Z",
+      "invocationId": "r4-34997237592-1-4088-012"
+    },
+    {
+      "name": "compose-config",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:49:07.168Z",
+      "endedAt": "2026-09-15T16:49:07.308Z",
+      "invocationId": "r4-34997237592-1-4088-013"
+    },
+    {
+      "name": "compose-build-images",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:49:07.384Z",
+      "endedAt": "2026-09-15T16:50:38.464Z",
+      "invocationId": "r4-34997237592-1-4088-015"
+    },
+    {
+      "name": "final-image-db-module-import",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:38.464Z",
+      "endedAt": "2026-09-15T16:50:39.470Z",
+      "invocationId": "r4-34997237592-1-4088-016"
+    },
+    {
+      "name": "migration-container-inspect-oss-ch001-r4-34997237592-1-module-import",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:39.471Z",
+      "endedAt": "2026-09-15T16:50:39.487Z",
+      "invocationId": "r4-34997237592-1-4088-017"
+    },
+    {
+      "name": "compose-db-up",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:39.488Z",
+      "endedAt": "2026-09-15T16:50:45.251Z",
+      "invocationId": "r4-34997237592-1-4088-018"
+    },
+    {
+      "name": "migration-marker-regression-create-role",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:47.441Z",
+      "endedAt": "2026-09-15T16:50:47.535Z",
+      "invocationId": "r4-34997237592-1-4088-019"
+    },
+    {
+      "name": "migration-marker-regression-create-database",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:47.535Z",
+      "endedAt": "2026-09-15T16:50:47.708Z",
+      "invocationId": "r4-34997237592-1-4088-020"
+    },
+    {
+      "name": "migration-marker-regression-grant-connect",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:47.708Z",
+      "endedAt": "2026-09-15T16:50:47.798Z",
+      "invocationId": "r4-34997237592-1-4088-021"
+    },
+    {
+      "name": "migration-migration-marker-regression-absent-presence",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:47.799Z",
+      "endedAt": "2026-09-15T16:50:47.896Z",
+      "invocationId": "r4-34997237592-1-4088-022"
+    },
+    {
+      "name": "migration-marker-regression-legacy-absent",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:50:47.896Z",
+      "endedAt": "2026-09-15T16:50:48.013Z",
+      "detail": "ERROR:  42P01: relation \"schema_migrations\" does not exist\nLINE 1: ...tions') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_mig...\n                                                             ^\nLOCATION:  parserOpenTable, parse_relation.c:1449\n",
+      "invocationId": "r4-34997237592-1-4088-023"
+    },
+    {
+      "name": "migration-marker-regression-create-table",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.013Z",
+      "endedAt": "2026-09-15T16:50:48.162Z",
+      "invocationId": "r4-34997237592-1-4088-024"
+    },
+    {
+      "name": "migration-migration-marker-regression-empty-presence",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.162Z",
+      "endedAt": "2026-09-15T16:50:48.254Z",
+      "invocationId": "r4-34997237592-1-4088-025"
+    },
+    {
+      "name": "migration-migration-marker-regression-empty-count",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.254Z",
+      "endedAt": "2026-09-15T16:50:48.349Z",
+      "invocationId": "r4-34997237592-1-4088-026"
+    },
+    {
+      "name": "migration-marker-regression-insert-positive",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.349Z",
+      "endedAt": "2026-09-15T16:50:48.439Z",
+      "invocationId": "r4-34997237592-1-4088-027"
+    },
+    {
+      "name": "migration-migration-marker-regression-positive-presence",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.439Z",
+      "endedAt": "2026-09-15T16:50:48.530Z",
+      "invocationId": "r4-34997237592-1-4088-028"
+    },
+    {
+      "name": "migration-migration-marker-regression-positive-count",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.530Z",
+      "endedAt": "2026-09-15T16:50:48.622Z",
+      "invocationId": "r4-34997237592-1-4088-029"
+    },
+    {
+      "name": "migration-marker-regression-restrict-role",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.622Z",
+      "endedAt": "2026-09-15T16:50:48.714Z",
+      "invocationId": "r4-34997237592-1-4088-030"
+    },
+    {
+      "name": "migration-migration-marker-regression-denied-presence",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.714Z",
+      "endedAt": "2026-09-15T16:50:48.806Z",
+      "invocationId": "r4-34997237592-1-4088-031"
+    },
+    {
+      "name": "migration-migration-marker-regression-denied-count",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:50:48.807Z",
+      "endedAt": "2026-09-15T16:50:48.904Z",
+      "detail": "ERROR:  permission denied for table schema_migrations\n",
+      "invocationId": "r4-34997237592-1-4088-032"
+    },
+    {
+      "name": "migration-marker-regression-drop-database",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:48.905Z",
+      "endedAt": "2026-09-15T16:50:49.113Z",
+      "invocationId": "r4-34997237592-1-4088-033"
+    },
+    {
+      "name": "migration-marker-regression-drop-role",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:49.113Z",
+      "endedAt": "2026-09-15T16:50:49.206Z",
+      "invocationId": "r4-34997237592-1-4088-034"
+    },
+    {
+      "name": "migration-migration-fresh-precondition-presence",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:49.207Z",
+      "endedAt": "2026-09-15T16:50:49.301Z",
+      "invocationId": "r4-34997237592-1-4088-035"
+    },
+    {
+      "name": "migration-fresh",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:49.301Z",
+      "endedAt": "2026-09-15T16:50:50.485Z",
+      "invocationId": "r4-34997237592-1-4088-036"
+    },
+    {
+      "name": "migration-container-inspect-oss-ch001-r4-34997237592-1-fresh",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:50.485Z",
+      "endedAt": "2026-09-15T16:50:50.500Z",
+      "invocationId": "r4-34997237592-1-4088-037"
+    },
+    {
+      "name": "migration-fresh-schema",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:50.501Z",
+      "endedAt": "2026-09-15T16:50:50.603Z",
+      "invocationId": "r4-34997237592-1-4088-038"
+    },
+    {
+      "name": "migration-fresh-marker",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:50.604Z",
+      "endedAt": "2026-09-15T16:50:50.698Z",
+      "invocationId": "r4-34997237592-1-4088-039"
+    },
+    {
+      "name": "migration-sentinel-create",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:50.699Z",
+      "endedAt": "2026-09-15T16:50:50.796Z",
+      "invocationId": "r4-34997237592-1-4088-040"
+    },
+    {
+      "name": "migration-repeat",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:50.796Z",
+      "endedAt": "2026-09-15T16:50:51.726Z",
+      "invocationId": "r4-34997237592-1-4088-041"
+    },
+    {
+      "name": "migration-container-inspect-oss-ch001-r4-34997237592-1-repeat",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:51.726Z",
+      "endedAt": "2026-09-15T16:50:51.740Z",
+      "invocationId": "r4-34997237592-1-4088-042"
+    },
+    {
+      "name": "migration-repeat-schema",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:51.741Z",
+      "endedAt": "2026-09-15T16:50:51.843Z",
+      "invocationId": "r4-34997237592-1-4088-043"
+    },
+    {
+      "name": "migration-repeat-marker",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:51.843Z",
+      "endedAt": "2026-09-15T16:50:51.936Z",
+      "invocationId": "r4-34997237592-1-4088-044"
+    },
+    {
+      "name": "migration-sentinel-check",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:51.936Z",
+      "endedAt": "2026-09-15T16:50:52.030Z",
+      "invocationId": "r4-34997237592-1-4088-045"
+    },
+    {
+      "name": "migration-failure-control-create-role",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:52.030Z",
+      "endedAt": "2026-09-15T16:50:52.131Z",
+      "invocationId": "r4-34997237592-1-4088-046"
+    },
+    {
+      "name": "migration-failure-control-create-database",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:52.131Z",
+      "endedAt": "2026-09-15T16:50:52.258Z",
+      "invocationId": "r4-34997237592-1-4088-047"
+    },
+    {
+      "name": "migration-failure-control-restrict-schema",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:52.258Z",
+      "endedAt": "2026-09-15T16:50:52.350Z",
+      "invocationId": "r4-34997237592-1-4088-048"
+    },
+    {
+      "name": "migration-failure-control-revoke-create",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:52.350Z",
+      "endedAt": "2026-09-15T16:50:52.448Z",
+      "invocationId": "r4-34997237592-1-4088-049"
+    },
+    {
+      "name": "migration-failure-control",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:52.448Z",
+      "endedAt": "2026-09-15T16:50:53.055Z",
+      "invocationId": "r4-34997237592-1-4088-050"
+    },
+    {
+      "name": "migration-container-inspect-oss-ch001-r4-34997237592-1-failure-control",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:53.055Z",
+      "endedAt": "2026-09-15T16:50:53.071Z",
+      "invocationId": "r4-34997237592-1-4088-051"
+    },
+    {
+      "name": "migration-migration-failure-control-marker-presence",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:53.071Z",
+      "endedAt": "2026-09-15T16:50:53.170Z",
+      "invocationId": "r4-34997237592-1-4088-052"
+    },
+    {
+      "name": "migration-fixture-drop-sentinel",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:53.171Z",
+      "endedAt": "2026-09-15T16:50:53.267Z",
+      "invocationId": "r4-34997237592-1-4088-053"
+    },
+    {
+      "name": "migration-fixture-drop-database",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:53.267Z",
+      "endedAt": "2026-09-15T16:50:53.382Z",
+      "invocationId": "r4-34997237592-1-4088-054"
+    },
+    {
+      "name": "migration-fixture-drop-role",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:53.382Z",
+      "endedAt": "2026-09-15T16:50:53.473Z",
+      "invocationId": "r4-34997237592-1-4088-055"
+    },
+    {
+      "name": "compose-stack-up-after-migration",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:53.476Z",
+      "endedAt": "2026-09-15T16:50:54.851Z",
+      "invocationId": "r4-34997237592-1-4088-056"
+    },
+    {
+      "name": "web live health after shipped-image startup",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:50:54.853Z",
+      "endedAt": "2026-09-15T16:50:56.909Z"
+    },
+    {
+      "name": "worker/browser/database/storage readiness",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:50:56.909Z",
+      "endedAt": "2026-09-15T16:53:57.897Z",
+      "detail": "Timed out waiting for web and worker health ready: condition was false"
+    },
+    {
+      "name": "migration-container-remove-oss-ch001-r4-34997237592-1-module-import",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:53:58.265Z",
+      "endedAt": "2026-09-15T16:53:58.282Z",
+      "invocationId": "r4-34997237592-1-4088-058"
+    },
+    {
+      "name": "migration-container-remove-oss-ch001-r4-34997237592-1-fresh",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:53:58.309Z",
+      "endedAt": "2026-09-15T16:53:58.328Z",
+      "invocationId": "r4-34997237592-1-4088-061"
+    },
+    {
+      "name": "migration-container-remove-oss-ch001-r4-34997237592-1-repeat",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:53:58.355Z",
+      "endedAt": "2026-09-15T16:53:58.372Z",
+      "invocationId": "r4-34997237592-1-4088-064"
+    },
+    {
+      "name": "migration-container-remove-oss-ch001-r4-34997237592-1-failure-control",
+      "status": "PASS",
+      "startedAt": "2026-09-15T16:53:58.400Z",
+      "endedAt": "2026-09-15T16:53:58.416Z",
+      "invocationId": "r4-34997237592-1-4088-067"
+    },
+    {
+      "name": "artifact exists: a-little-room-to-focus.zip",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.228Z",
+      "endedAt": "2026-09-15T16:54:09.228Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/a-little-room-to-focus.zip'"
+    },
+    {
+      "name": "artifact exists: alternate-4x5.zip",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.228Z",
+      "endedAt": "2026-09-15T16:54:09.228Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/alternate-4x5.zip'"
+    },
+    {
+      "name": "artifact exists: journey-hashes.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.228Z",
+      "endedAt": "2026-09-15T16:54:09.228Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/journey-hashes.json'"
+    },
+    {
+      "name": "artifact exists: alternate-format.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.228Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/alternate-format.json'"
+    },
+    {
+      "name": "artifact exists: final-preview.png",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/final-preview.png'"
+    },
+    {
+      "name": "artifact exists: alternate-preview.png",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/alternate-preview.png'"
+    },
+    {
+      "name": "artifact exists: worker-down-queued.png",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/worker-down-queued.png'"
+    },
+    {
+      "name": "artifact exists: lifecycle.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/lifecycle.json'"
+    },
+    {
+      "name": "artifact exists: same-data-restart.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/same-data-restart.json'"
+    },
+    {
+      "name": "canonical and alternate ZIPs are structurally inspectable",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/a-little-room-to-focus.zip'"
+    },
+    {
+      "name": "journey hash record identifies full render and byte equality",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T16:54:09.229Z",
+      "endedAt": "2026-09-15T16:54:09.229Z",
+      "detail": "ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/public/journey-hashes.json'"
+    }
+  ],
+  "required_live_artifacts": [
+    "migration-verification.json",
+    "migration-marker-regression.json",
+    "module-import-verification.json",
+    "a-little-room-to-focus.zip",
+    "alternate-4x5.zip",
+    "journey-hashes.json",
+    "lifecycle.json",
+    "same-data-restart.json"
+  ],
+  "evidence_root": "artifacts/ch001r4/r4-34997237592-1/proof/public",
+  "artifact_manifest": "artifacts/ch001r4/r4-34997237592-1/proof/public/artifact-manifest.json",
+  "artifact_manifest_sha256": "773cb1c0963fdb2df7984c006eae16d8d2137ee7f295cd1891aa3b2f20619af9"
+}

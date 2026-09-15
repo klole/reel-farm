@@ -1,0 +1,5 @@
+claim_started_at=2026-09-15T16:56:00Z
+owner=watch-pro-reel-farm-loop
+reason=sibling watch-ch-001r-r13-v1-hosted-finish never-run; T13 hosted run 34997237592 completed failure at 16:54:14Z; taking outcome capture + Pro return path
+run_id=34997237592
+implementation_sha=6e04b5a5eefe2ef464572da35c88338fa342f525

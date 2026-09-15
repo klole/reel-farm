@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "record_kind": "CI_BOOTSTRAP_OBSERVATION",
+  "phase": "CH-001R-r4",
+  "repository": "klole/reel-farm",
+  "run_id": 34997237592,
+  "run_attempt": 1,
+  "run_key": "r4-34997237592-1",
+  "requested_implementation_sha": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "actual_checkout_sha": null,
+  "workflow_definition_sha": "57e4ae456a73aedd58b25ba41e08b7320214eba0",
+  "bootstrap_status": "NOT_RUN",
+  "failed_stage": null,
+  "bootstrap_exit_code": null,
+  "proof_invoked": false,
+  "proof_exit_code": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "stages": [],
+  "started_at": "2026-09-15T16:47:49.925Z",
+  "ended_at": null
+}

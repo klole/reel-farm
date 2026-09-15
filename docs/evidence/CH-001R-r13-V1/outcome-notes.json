@@ -1,0 +1,24 @@
+{
+  "first_failure": "worker/browser/database/storage readiness: Timed out waiting for web and worker health ready: condition was false",
+  "worker_crash_signature": "SyntaxError: The requested module 'archiver' does not provide an export named 'default'",
+  "worker_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/compose-service-logs/worker.log",
+  "web_ready": true,
+  "marker_overall_status": "PASS",
+  "marker_fixture_database": "ch001_r12_marker_r4-34997237592-1",
+  "marker_isolated_from_main_database": true,
+  "marker_case_status_summary": {
+    "absent_table": "PASS",
+    "legacy_negative_control": null,
+    "empty_table": "PASS",
+    "positive_marker": "FAIL",
+    "count_denied": "FAIL"
+  },
+  "migration_qualified": true,
+  "migration_status": "PASS",
+  "command_record_format": "invocation-v2",
+  "command_count": 64,
+  "distinct_invocation_ids": true,
+  "unique_invocation_id_count": 64,
+  "distinct_command_text_count": 51,
+  "max_repeated_command_text": 3
+}

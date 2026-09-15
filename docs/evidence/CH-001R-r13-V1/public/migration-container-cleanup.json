@@ -1,0 +1,40 @@
+{
+  "record_kind": "CH001_MIGRATION_CONTAINER_CLEANUP",
+  "run_id": "r4-34997237592-1",
+  "status": "PASS",
+  "containers": [
+    {
+      "name": "oss-ch001-r4-34997237592-1-module-import",
+      "status": "PASS",
+      "present_before_cleanup": true,
+      "remove_exit_code": 0,
+      "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/054-migration-container-remove-oss-ch001-r4-34997237592-1-module-import.log",
+      "absence_verified": true
+    },
+    {
+      "name": "oss-ch001-r4-34997237592-1-fresh",
+      "status": "PASS",
+      "present_before_cleanup": true,
+      "remove_exit_code": 0,
+      "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/057-migration-container-remove-oss-ch001-r4-34997237592-1-fresh.log",
+      "absence_verified": true
+    },
+    {
+      "name": "oss-ch001-r4-34997237592-1-repeat",
+      "status": "PASS",
+      "present_before_cleanup": true,
+      "remove_exit_code": 0,
+      "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/060-migration-container-remove-oss-ch001-r4-34997237592-1-repeat.log",
+      "absence_verified": true
+    },
+    {
+      "name": "oss-ch001-r4-34997237592-1-failure-control",
+      "status": "PASS",
+      "present_before_cleanup": true,
+      "remove_exit_code": 0,
+      "remove_log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/063-migration-container-remove-oss-ch001-r4-34997237592-1-failure-control.log",
+      "absence_verified": true
+    }
+  ],
+  "cleanup_scope": "explicitly named CH-001R-r12 migration/module-import one-offs only; no global prune"
+}

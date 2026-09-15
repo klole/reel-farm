@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001_FINAL_IMAGE_MODULE_IMPORT",
+  "run_id": "r4-34997237592-1",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "final_image": true,
+  "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-module-import -e DATABASE_URL=postgres://<redacted> -e DOTENV_CONFIG_PATH=/dev/null migrate node --import tsx scripts/verify-db-module-import.ts --negative-control",
+  "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/012-final-image-db-module-import.log",
+  "cli": {
+    "exit_code": 0,
+    "timed_out": false,
+    "output_truncated": false,
+    "command": "docker compose -p oss-ch001-r4-34997237592-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34997237592-1/proof/private/compose.env run --no-deps -T --name oss-ch001-r4-34997237592-1-module-import -e DATABASE_URL=postgres://<redacted> -e DOTENV_CONFIG_PATH=/dev/null migrate node --import tsx scripts/verify-db-module-import.ts --negative-control",
+    "log_path": "artifacts/ch001r4/r4-34997237592-1/proof/public/commands/012-final-image-db-module-import.log"
+  },
+  "child_declared_status": "PASS",
+  "child_declared_classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+  "child_report": {
+    "schema_version": 1,
+    "record_kind": "CH001_DB_MODULE_IMPORT",
+    "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+    "status": "PASS",
+    "implementation_context": "root/scripts context after frozen install and build",
+    "database_connection_attempted": false,
+    "dotenv_suppressed": true,
+    "node_path_present": false,
+    "resolved_path": "/app/packages/db/dist/index.js",
+    "expected_path": "/app/packages/db/dist/index.js",
+    "pool_api": {
+      "connect": true,
+      "end": true
+    },
+    "pool_closed": true,
+    "negative_control": {
+      "status": "PASS",
+      "control_kind": "RECORDED_FROZEN_BASELINE_EQUIVALENT",
+      "exit_code": 1,
+      "timed_out": false,
+      "missing_package_error": true,
+      "output_excerpt": "\nnode:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /tmp/oss-r12-db-import-negative-7DQPHC/scripts/migrate.ts\n    at packageResolve (node:internal/modules/esm/resolve:873:9)\n    at moduleResolve (node:internal/modules/esm/resolve:946:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1188:11)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at resolveBase (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\n    at resolveDirectory (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\n    at resolveTsPaths (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\n    at resolve (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v20.19.2\n"
+    }
+  },
+  "container": {
+    "inspection_status": "PASS",
+    "id": "9e93f0a96227a8943c9e5fc561cee98b84c3046f9c09fac78d431aaafc3c8eaa",
+    "name": "/oss-ch001-r4-34997237592-1-module-import",
+    "image_id": "sha256:669ea45e510d47ad0362305f7c988f255dadf8e0841a8453a113611490dc0aab",
+    "project_identity": {
+      "project": "oss-ch001-r4-34997237592-1",
+      "service": "migrate",
+      "container_number": null
+    },
+    "state": "exited",
+    "exit_code": 0,
+    "error": "",
+    "started_at": "2026-09-15T16:50:38.650349595Z",
+    "finished_at": "2026-09-15T16:50:39.399318867Z",
+    "user": "node",
+    "working_directory": "/app",
+    "process": {
+      "path": "docker-entrypoint.sh",
+      "args": [
+        "node",
+        "--import",
+        "tsx",
+        "scripts/verify-db-module-import.ts",
+        "--negative-control"
+      ]
+    },
+    "configured_process": {
+      "entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "cmd": [
+        "node",
+        "--import",
+        "tsx",
+        "scripts/verify-db-module-import.ts",
+        "--negative-control"
+      ]
+    },
+    "mounts": []
+  },
+  "inspection_error": null,
+  "status": "PASS",
+  "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+  "effective_verdict": "PASS",
+  "reasons": []
+}
