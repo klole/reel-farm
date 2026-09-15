@@ -158,11 +158,12 @@
     "public_content_review": "sanitization.json status=sanitized; private/excluded",
     "original_archive_path": "docs/evidence/CH-001R-r13-V1/ch001-live-proof-34997237592-1.zip",
     "receipt_path": "docs/evidence/CH-001R-r13-V1/router-receipt.filled.json",
-    "evidence_commit_returned_separately": true
+    "evidence_commit_returned_separately": true,
+    "evidence_commit": "03dbf224f82cba00b51a5c76e8e99552d3cde6d8"
   },
   "external_actions": {
     "packet_delivered_to_router": true,
-    "evidence_pushed": false,
+    "evidence_pushed": true,
     "external_message_sent": false,
     "luna_spawned": false,
     "workflow_submission": true,

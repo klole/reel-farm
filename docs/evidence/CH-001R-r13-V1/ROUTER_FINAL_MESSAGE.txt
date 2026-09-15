@@ -28,4 +28,4 @@ Application gates this run: PASS=4 FAIL=0 NOT_RUN=68
 application_acceptance=false; accepted_application_version=none; root_state=awaiting_review
 next_action=architect_review_of_actual_T13_outcome
 T13 hosted request count=1; no second dispatch; no Luna; no app edits
-Evidence commit: (filled after push)
+Evidence commit: 03dbf224f82cba00b51a5c76e8e99552d3cde6d8
