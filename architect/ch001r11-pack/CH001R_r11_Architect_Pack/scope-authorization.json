@@ -1,0 +1,45 @@
+{
+  "assignment": "CH-001R-r11",
+  "packet_revision": "r1",
+  "application_acceptance": false,
+  "root_manifest_allowance": {
+    "json_pointer": "/dependencies/@oss~1db",
+    "expected_value": "workspace:*",
+    "all_other_root_fields": "unchanged"
+  },
+  "lock_allowance": {
+    "document": "application importer document, not package-manager metadata",
+    "importer": ".",
+    "dependency": "@oss/db",
+    "specifier": "workspace:*",
+    "resolution": "link:packages/db",
+    "registry_versions_and_integrities": "unchanged",
+    "all_other_importers": "unchanged"
+  },
+  "additional_allowances": [
+    "Exact exception plus negative regressions in R7-T11 pin guard",
+    "Post-build real module-import smoke helper/tests",
+    "Migration-first verification helper/tests wired into existing ch001-proof coordinator",
+    "Accurate stage metadata/evidence for those new checks",
+    "Evidence/state/handoff only"
+  ],
+  "forbidden": [
+    "migration script/SQL change",
+    "new registry dependency",
+    "external version update",
+    "broad hoisting/alias/manual symlink",
+    "workflow change",
+    "Dockerfile/compose.yaml change",
+    "sandbox or worker isolation relaxation",
+    "original 72-gate weakening",
+    "providers/AI/publishing/scheduling/billing/video/v0.2",
+    "automatic dispatch or historical rerun"
+  ],
+  "router": {
+    "max_new_T11_requests": 1,
+    "conditional_on_source_ready_and_publication_checks": true,
+    "T10_request_allowance_consumed": true,
+    "architect_dispatched": false,
+    "luna_may_dispatch": false
+  }
+}

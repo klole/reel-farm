@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "record_kind": "MIGRATION_VERIFICATION_TEMPLATE_NOT_EXECUTED",
+  "assignment": "CH-001R-r11",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "run_id": null,
+  "implementation_commit": null,
+  "implementation_tree": null,
+  "runtime": {
+    "environment": null,
+    "image_id": null,
+    "user": null,
+    "working_directory": null,
+    "command": null,
+    "compose_project": null,
+    "database_identity": null,
+    "source_or_node_modules_bind_mount": null
+  },
+  "import_smoke": {
+    "status": "NOT_RUN",
+    "classification": null,
+    "resolved_path": null,
+    "exit_code": null,
+    "database_contacted": null,
+    "evidence": []
+  },
+  "fresh": {
+    "status": "NOT_RUN",
+    "cli_exit_code": null,
+    "container_id": null,
+    "container_exit_code": null,
+    "timed_out": null,
+    "error_class": null,
+    "sqlstate": null,
+    "evidence": []
+  },
+  "schema": {
+    "status": "NOT_RUN",
+    "marker_count": null,
+    "marker_id": null,
+    "marker_applied_at": null,
+    "tables_and_constraints_verified": null,
+    "evidence": []
+  },
+  "repeat": {
+    "status": "NOT_RUN",
+    "cli_exit_code": null,
+    "container_exit_code": null,
+    "same_database": null,
+    "same_image": null,
+    "marker_unchanged": null,
+    "sentinel_preserved": null,
+    "evidence": []
+  },
+  "controlled_failure": {
+    "test_status": "NOT_RUN",
+    "migration_operation_expected_to_fail": true,
+    "actual_cli_exit_code": null,
+    "actual_container_exit_code": null,
+    "error_class": null,
+    "sqlstate": null,
+    "no_false_completion_marker": null,
+    "evidence": []
+  },
+  "downstream_proof": {
+    "invoked": false,
+    "status": null,
+    "exit_code": null,
+    "first_distinct_failure": null
+  },
+  "cleanup": {
+    "status": "NOT_RUN",
+    "exit_code": null,
+    "post_cleanup": null,
+    "evidence": []
+  },
+  "note": "No passwords, environment dumps, credential-bearing URLs or self-referential manifest hashes belong here."
+}

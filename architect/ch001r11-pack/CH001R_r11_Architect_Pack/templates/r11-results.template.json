@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "record_kind": "REPAIR_CHECKLIST_TEMPLATE_NOT_EXECUTED",
+  "assignment": "CH-001R-r11",
+  "packet_revision": "r1",
+  "target_application_version": "0.1.0",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "disposition": null,
+  "source": {
+    "starting_commit": null,
+    "packet_commit": null,
+    "implementation_commit": null,
+    "implementation_tree": null,
+    "evidence_commit": null
+  },
+  "workflow": {
+    "definition_commit": null,
+    "blob_sha": null,
+    "file_sha256": null
+  },
+  "candidate_lock_sha256": null,
+  "hosted_request_count": 0,
+  "hosted_run_id": null,
+  "application_gate_counts": null,
+  "checks": [
+    {
+      "id": "R11-T01",
+      "title": "Historical baseline and source identity",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T02",
+      "title": "Exact root runtime dependency",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T03",
+      "title": "Narrow lockfile delta and frozen install",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T04",
+      "title": "Pin guard positive and negative cases",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T05",
+      "title": "Real post-build dependency import and negative control",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T06",
+      "title": "Clean and hosted-like pre-install rehearsals",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T07",
+      "title": "Existing project and workflow checks",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T08",
+      "title": "Migration-first control-flow regressions",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T09",
+      "title": "Shipped-image identity and invocation",
+      "required_evidence_class": "runtime",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T10",
+      "title": "Fresh migration terminal success",
+      "required_evidence_class": "runtime",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T11",
+      "title": "Real schema and completion marker",
+      "required_evidence_class": "runtime",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T12",
+      "title": "Same-database repeat preserves state",
+      "required_evidence_class": "runtime",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T13",
+      "title": "Real controlled failure stays a failure",
+      "required_evidence_class": "runtime",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T14",
+      "title": "Scoped runtime diagnostics and teardown",
+      "required_evidence_class": "runtime",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T15",
+      "title": "Evidence/report regression checks",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T16",
+      "title": "Scope/state and durable handoff",
+      "required_evidence_class": "source",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T17",
+      "title": "Router publication identity checks",
+      "required_evidence_class": "router",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    },
+    {
+      "id": "R11-T18",
+      "title": "One fresh hosted observation or explicit no-request receipt",
+      "required_evidence_class": "router",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "evidence": [],
+      "reason": "Template only; no candidate execution."
+    }
+  ],
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 18
+  },
+  "external_actions": {
+    "source_published": false,
+    "hosted_dispatched": false,
+    "message_sent": false
+  }
+}

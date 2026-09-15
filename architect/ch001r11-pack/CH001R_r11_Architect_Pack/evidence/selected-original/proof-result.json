@@ -1,0 +1,218 @@
+{
+  "profile": "CH-001R-r3 bounded live proof",
+  "status": "TEST_FAILURE",
+  "exit_code": 1,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "run_id": "r4-34946892709-1",
+  "implementation_commit": "ec7cc08d6ed229af9780318858d8051202851746",
+  "workflow_sha": "c53f29861640831c4dbd588bef5ec9aa6fef5157",
+  "scope": "runner bootstrap, real local app/database/browser/worker journey, canonical seven-slide ZIP, alternate 4:5 output, preview-byte equality, and basic same-data restart evidence only",
+  "prohibited_scope": [
+    "fal.ai",
+    "ScrapeCreators",
+    "TikTok",
+    "publishing",
+    "scheduling",
+    "analytics",
+    "billing",
+    "video",
+    "public deployment",
+    "release",
+    "v0.2"
+  ],
+  "failures": [
+    "The shipped Compose image stack did not start (exit 1).",
+    "artifact exists: a-little-room-to-focus.zip: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/a-little-room-to-focus.zip'",
+    "artifact exists: alternate-4x5.zip: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/alternate-4x5.zip'",
+    "artifact exists: journey-hashes.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/journey-hashes.json'",
+    "artifact exists: alternate-format.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/alternate-format.json'",
+    "artifact exists: final-preview.png: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/final-preview.png'",
+    "artifact exists: alternate-preview.png: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/alternate-preview.png'",
+    "artifact exists: worker-down-queued.png: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/worker-down-queued.png'",
+    "artifact exists: lifecycle.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/lifecycle.json'",
+    "artifact exists: same-data-restart.json: ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/same-data-restart.json'",
+    "canonical and alternate ZIPs are structurally inspectable: ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/a-little-room-to-focus.zip'",
+    "journey hash record identifies full render and byte equality: ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/journey-hashes.json'"
+  ],
+  "environment_failures": [],
+  "gate_counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NOT_RUN": 68
+  },
+  "validation": {
+    "ok": false,
+    "errors": [
+      "integration suite did not pass (exit 1).",
+      "integration did not discover and execute assertions.",
+      "e2e suite did not pass (exit 1).",
+      "e2e did not discover and execute assertions.",
+      "render suite did not pass (exit 1).",
+      "render did not discover and execute assertions.",
+      "smoke suite did not pass (exit 1).",
+      "smoke did not discover and execute assertions.",
+      "Every mandatory gate must be PASS before the aggregate can pass."
+    ]
+  },
+  "steps": [
+    {
+      "name": "docker-version",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:22.970Z",
+      "endedAt": "2026-09-15T08:26:22.987Z",
+      "invocationId": "r4-34946892709-1-4222-003"
+    },
+    {
+      "name": "docker-info",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:22.987Z",
+      "endedAt": "2026-09-15T08:26:23.057Z",
+      "invocationId": "r4-34946892709-1-4222-004"
+    },
+    {
+      "name": "compose-version",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:23.057Z",
+      "endedAt": "2026-09-15T08:26:23.102Z",
+      "invocationId": "r4-34946892709-1-4222-005"
+    },
+    {
+      "name": "host-lint",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:23.759Z",
+      "endedAt": "2026-09-15T08:26:26.108Z",
+      "invocationId": "r4-34946892709-1-4222-007"
+    },
+    {
+      "name": "host-typecheck",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:26.108Z",
+      "endedAt": "2026-09-15T08:26:33.810Z",
+      "invocationId": "r4-34946892709-1-4222-008"
+    },
+    {
+      "name": "host-build",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:33.810Z",
+      "endedAt": "2026-09-15T08:26:52.519Z",
+      "invocationId": "r4-34946892709-1-4222-009"
+    },
+    {
+      "name": "host-unit",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:52.519Z",
+      "endedAt": "2026-09-15T08:26:54.480Z",
+      "invocationId": "r4-34946892709-1-4222-010"
+    },
+    {
+      "name": "host-security",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:54.481Z",
+      "endedAt": "2026-09-15T08:26:54.915Z",
+      "invocationId": "r4-34946892709-1-4222-011"
+    },
+    {
+      "name": "compose-config",
+      "status": "PASS",
+      "startedAt": "2026-09-15T08:26:54.916Z",
+      "endedAt": "2026-09-15T08:26:55.016Z",
+      "invocationId": "r4-34946892709-1-4222-012"
+    },
+    {
+      "name": "compose-up-build",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:26:55.093Z",
+      "endedAt": "2026-09-15T08:28:34.695Z",
+      "detail": "done\n#28 DONE 8.8s\n\n#29 [migrate] exporting to image\n#29 exporting layers 8.4s done\n#29 writing image sha256:5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9 done\n#29 naming to docker.io/library/oss-ch001-r4-34946892709-1-migrate 0.2s done\n#29 DONE 8.8s\n\n#30 [worker] resolving provenance for metadata file\n#30 DONE 0.0s\n\n#31 [migrate] resolving provenance for metadata file\n#31 DONE 0.0s\n\n#32 [web] resolving provenance for metadata file\n#32 DONE 0.0s\n web  Built\n worker  Built\n migrate  Built\n Network oss-ch001-r4-34946892709-1_default  Creating\n Network oss-ch001-r4-34946892709-1_default  Created\n Volume \"oss-ch001-r4-34946892709-1_oss_media_data\"  Creating\n Volume \"oss-ch001-r4-34946892709-1_oss_media_data\"  Created\n Volume \"oss-ch001-r4-34946892709-1_oss_db_data\"  Creating\n Volume \"oss-ch001-r4-34946892709-1_oss_db_data\"  Created\n Container oss-ch001-r4-34946892709-1-db-1  Creating\n Container oss-ch001-r4-34946892709-1-db-1  Created\n Container oss-ch001-r4-34946892709-1-migrate-1  Creating\n Container oss-ch001-r4-34946892709-1-migrate-1  Created\n Container oss-ch001-r4-34946892709-1-worker-1  Creating\n Container oss-ch001-r4-34946892709-1-web-1  Creating\n Container oss-ch001-r4-34946892709-1-web-1  Created\n Container oss-ch001-r4-34946892709-1-worker-1  Created\n Container oss-ch001-r4-34946892709-1-db-1  Starting\n Container oss-ch001-r4-34946892709-1-db-1  Started\n Container oss-ch001-r4-34946892709-1-db-1  Waiting\n Container oss-ch001-r4-34946892709-1-db-1  Healthy\n Container oss-ch001-r4-34946892709-1-migrate-1  Starting\n Container oss-ch001-r4-34946892709-1-migrate-1  Started\n Container oss-ch001-r4-34946892709-1-migrate-1  Waiting\n Container oss-ch001-r4-34946892709-1-migrate-1  Waiting\n Container oss-ch001-r4-34946892709-1-migrate-1  service \"migrate\" didn't complete successfully: exit 1\n Container oss-ch001-r4-34946892709-1-migrate-1  service \"migrate\" didn't complete successfully: exit 1\nservice \"migrate\" didn't complete successfully: exit 1\n",
+      "invocationId": "r4-34946892709-1-4222-013"
+    },
+    {
+      "name": "artifact exists: a-little-room-to-focus.zip",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.380Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/a-little-room-to-focus.zip'"
+    },
+    {
+      "name": "artifact exists: alternate-4x5.zip",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/alternate-4x5.zip'"
+    },
+    {
+      "name": "artifact exists: journey-hashes.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/journey-hashes.json'"
+    },
+    {
+      "name": "artifact exists: alternate-format.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/alternate-format.json'"
+    },
+    {
+      "name": "artifact exists: final-preview.png",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/final-preview.png'"
+    },
+    {
+      "name": "artifact exists: alternate-preview.png",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/alternate-preview.png'"
+    },
+    {
+      "name": "artifact exists: worker-down-queued.png",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/worker-down-queued.png'"
+    },
+    {
+      "name": "artifact exists: lifecycle.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/lifecycle.json'"
+    },
+    {
+      "name": "artifact exists: same-data-restart.json",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, stat '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/same-data-restart.json'"
+    },
+    {
+      "name": "canonical and alternate ZIPs are structurally inspectable",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.381Z",
+      "detail": "ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/a-little-room-to-focus.zip'"
+    },
+    {
+      "name": "journey hash record identifies full render and byte equality",
+      "status": "FAIL",
+      "startedAt": "2026-09-15T08:28:35.381Z",
+      "endedAt": "2026-09-15T08:28:35.382Z",
+      "detail": "ENOENT: no such file or directory, open '/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/public/journey-hashes.json'"
+    }
+  ],
+  "required_live_artifacts": [
+    "a-little-room-to-focus.zip",
+    "alternate-4x5.zip",
+    "journey-hashes.json",
+    "lifecycle.json",
+    "same-data-restart.json"
+  ],
+  "evidence_root": "artifacts/ch001r4/r4-34946892709-1/proof/public",
+  "artifact_manifest": "artifacts/ch001r4/r4-34946892709-1/proof/public/artifact-manifest.json",
+  "artifact_manifest_sha256": "7090bc60378568a3090d98d4b18558ae509331ed6ed70226dedb750cf06ab865"
+}

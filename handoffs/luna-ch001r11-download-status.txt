@@ -1,0 +1,24 @@
+status=installed
+observed_at=2026-09-15T09:27:52Z
+source_thread=https://chatgpt.com/c/6aa32649-7154-83e8-9af9-2710e140cdd9
+pack_dir=architect/ch001r11-pack/
+generation=COMPLETE
+authorized_chapter=CH-001R-r11
+prior_T10=ec7cc08d6ed229af9780318858d8051202851746
+prior_E10=f512c9c02620ea600404cd304782a37e6689a109
+hosted_run=34946892709
+artifact=10387768055
+files=
+  CH001R_r11_Architect_Pack.zip
+  CH001R_r11_Architect_Pack/ (extracted)
+  LUNA_CH001R11_COMPLETE.md
+  LUNA_CH001R11_START_PROMPT.md
+  01_REVIEW_VERDICT.md
+  historical-run-inspection.json
+  complete-ch001r11.md
+  start-prompt-ch001r11.md
+  review-ch001r11-verdict.md
+  historical-ch001r11-inspection.json
+  architect/starter-ch001r11-luna.md
+  architect/assignment-ch001r11-luna.md
+  handoffs/luna-ch001r11-dispatch.md

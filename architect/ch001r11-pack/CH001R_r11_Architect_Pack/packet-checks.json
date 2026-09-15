@@ -1,0 +1,122 @@
+{
+  "record_kind": "ARCHITECT_PACKET_CHECKS_NOT_APPLICATION_TESTS",
+  "generated_at": "2026-09-15T08:50:05.903634+00:00",
+  "checks": [
+    {
+      "name": "All eight operative Markdown files present",
+      "status": "PASS"
+    },
+    {
+      "name": "All JSON evidence/templates parse",
+      "status": "PASS"
+    },
+    {
+      "name": "18 unique sequential repair case IDs",
+      "status": "PASS"
+    },
+    {
+      "name": "Checklist template honestly unexecuted",
+      "status": "PASS"
+    },
+    {
+      "name": "Migration template has no invented runtime pass",
+      "status": "PASS"
+    },
+    {
+      "name": "Application acceptance false in templates and authorization",
+      "status": "PASS"
+    },
+    {
+      "name": "Root dependency allowance exactly specified",
+      "status": "PASS"
+    },
+    {
+      "name": "Only root local lock relationship authorized",
+      "status": "PASS"
+    },
+    {
+      "name": "Multi-document lock preservation explicit",
+      "status": "PASS"
+    },
+    {
+      "name": "Historical pin guard explicitly covered",
+      "status": "PASS"
+    },
+    {
+      "name": "No dependencyful new test required before install",
+      "status": "PASS"
+    },
+    {
+      "name": "Docker-unavailable candidate path avoids circular requirement",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh/schema/repeat precede worker readiness",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual image command and terminal exit required",
+      "status": "PASS"
+    },
+    {
+      "name": "Original workflow pinned in router policy",
+      "status": "PASS"
+    },
+    {
+      "name": "New dispatch at most one and Luna prohibited",
+      "status": "PASS"
+    },
+    {
+      "name": "Dispatch command uses only existing inputs",
+      "status": "PASS"
+    },
+    {
+      "name": "Historical T10 and earlier requests frozen",
+      "status": "PASS"
+    },
+    {
+      "name": "No self-referential future evidence hash requested",
+      "status": "PASS"
+    },
+    {
+      "name": "Complete assignment contains every operative section",
+      "status": "PASS"
+    },
+    {
+      "name": "Starting prompt copy matches",
+      "status": "PASS"
+    },
+    {
+      "name": "Historical inspection 16 actual checks pass",
+      "status": "PASS"
+    },
+    {
+      "name": "Historical count remains 4/0/68",
+      "status": "PASS"
+    },
+    {
+      "name": "Six selected originals preserved byte-for-byte",
+      "status": "PASS"
+    },
+    {
+      "name": "Historical ZIP remains API-digest-identical",
+      "status": "PASS"
+    },
+    {
+      "name": "No source/test/dispatch execution claimed by architect",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "PASS": 26,
+    "FAIL": 0
+  },
+  "not_executed": [
+    "candidate dependency install",
+    "candidate import test",
+    "application tests",
+    "Docker or migration",
+    "hosted run",
+    "GitHub write"
+  ]
+}

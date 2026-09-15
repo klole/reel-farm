@@ -1,0 +1,296 @@
+{
+  "record_kind": "CH001_COMPOSE_STARTUP_STATE",
+  "run_id": "r4-34946892709-1",
+  "project_name": "oss-ch001-r4-34946892709-1",
+  "ownership": {
+    "owned": true,
+    "status": "VERIFIED_ABSENT",
+    "checks": [
+      {
+        "name": "project_containers_absent",
+        "command": {
+          "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env ps --all --format json",
+          "started_at": "2026-09-15T08:26:55.016Z",
+          "ended_at": "2026-09-15T08:26:55.078Z",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_preview": ""
+        },
+        "parse_status": "OK",
+        "records": [],
+        "error": null
+      },
+      {
+        "name": "project_volumes_absent",
+        "command": {
+          "command": "docker volume ls --filter label=com.docker.compose.project=oss-ch001-r4-34946892709-1 --format {{json .}}",
+          "started_at": "2026-09-15T08:26:55.079Z",
+          "ended_at": "2026-09-15T08:26:55.092Z",
+          "exit_code": 0,
+          "timed_out": false,
+          "output_truncated": false,
+          "output_preview": ""
+        },
+        "parse_status": "OK",
+        "records": [],
+        "error": null
+      }
+    ]
+  },
+  "startup_attempted": true,
+  "startup": {
+    "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env up --build -d db migrate web worker",
+    "started_at": "2026-09-15T08:26:55.093Z",
+    "ended_at": "2026-09-15T08:28:34.693Z",
+    "exit_code": 1,
+    "timed_out": false,
+    "output_truncated": false,
+    "output_preview": "├ ƒ /api/projects/[projectId]/draft\n#20 11.91 ├ ƒ /api/projects/[projectId]/render\n#20 11.91 ├ ƒ /api/render-requests/[requestId]\n#20 11.91 ├ ƒ /api/render-requests/[requestId]/export\n#20 11.91 ├ ƒ /api/render-requests/[requestId]/images/[index]\n#20 11.91 ├ ƒ /api/setup\n#20 11.91 ├ ƒ /login\n#20 11.91 ├ ƒ /projects\n#20 11.91 ├ ƒ /projects/[projectId]\n#20 11.91 └ ƒ /setup\n#20 11.91 \n#20 11.91 \n#20 11.91 ○  (Static)   prerendered as static content\n#20 11.91 ƒ  (Dynamic)  server-rendered on demand\n#20 11.91 \n#20 12.07 $ tsc -p tsconfig.json\n#20 DONE 13.7s\n\n#21 [migrate runtime 4/9] COPY --from=build --chown=node:node /opt/pnpm /opt/pnpm\n#21 DONE 0.4s\n\n#22 [web runtime 5/9] COPY --from=build --chown=node:node /app /app\n#22 DONE 7.0s\n\n#23 [web runtime 6/9] COPY --from=build --chown=node:node /ms-playwright /ms-playwright\n#23 DONE 3.7s\n\n#24 [worker runtime 7/9] RUN test -x /opt/pnpm/bin/pnpm   && test \"$(command -v pnpm)\" = \"/opt/pnpm/bin/pnpm\"   && test \"$(pnpm --version)\" = \"12.3.4\"\n#24 DONE 0.1s\n\n#25 [web runtime 8/9] RUN mkdir -p /data/media && chown -R node:node /data/media /ms-playwright\n#25 DONE 4.6s\n\n#26 [worker runtime 9/9] RUN --network=none test \"$(id -un)\" = \"node\"   && test \"$(command -v pnpm)\" = \"/opt/pnpm/bin/pnpm\"   && test \"$(pnpm --version)\" = \"12.3.4\"\n#26 DONE 0.1s\n\n#27 [worker] exporting to image\n#27 exporting layers\n#27 ...\n\n#28 [web] exporting to image\n#28 exporting layers 8.4s done\n#28 writing image sha256:5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9 done\n#28 naming to docker.io/library/oss-ch001-r4-34946892709-1-web\n#28 ...\n\n#27 [worker] exporting to image\n#27 exporting layers 8.4s done\n#27 writing image sha256:5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9 done\n#27 naming to docker.io/library/oss-ch001-r4-34946892709-1-worker\n#27 naming to docker.io/library/oss-ch001-r4-34946892709-1-worker 0.2s done\n#27 DONE 8.8s\n\n#28 [web] exporting to image\n#28 naming to docker.io/library/oss-ch001-r4-34946892709-1-web 0.2s done\n#28 DONE 8.8s\n\n#29 [migrate] exporting to image\n#29 exporting layers 8.4s done\n#29 writing image sha256:5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9 done\n#29 naming to docker.io/library/oss-ch001-r4-34946892709-1-migrate 0.2s done\n#29 DONE 8.8s\n\n#30 [worker] resolving provenance for metadata file\n#30 DONE 0.0s\n\n#31 [migrate] resolving provenance for metadata file\n#31 DONE 0.0s\n\n#32 [web] resolving provenance for metadata file\n#32 DONE 0.0s\n web  Built\n worker  Built\n migrate  Built\n Network oss-ch001-r4-34946892709-1_default  Creating\n Network oss-ch001-r4-34946892709-1_default  Created\n Volume \"oss-ch001-r4-34946892709-1_oss_media_data\"  Creating\n Volume \"oss-ch001-r4-34946892709-1_oss_media_data\"  Created\n Volume \"oss-ch001-r4-34946892709-1_oss_db_data\"  Creating\n Volume \"oss-ch001-r4-34946892709-1_oss_db_data\"  Created\n Container oss-ch001-r4-34946892709-1-db-1  Creating\n Container oss-ch001-r4-34946892709-1-db-1  Created\n Container oss-ch001-r4-34946892709-1-migrate-1  Creating\n Container oss-ch001-r4-34946892709-1-migrate-1  Created\n Container oss-ch001-r4-34946892709-1-worker-1  Creating\n Container oss-ch001-r4-34946892709-1-web-1  Creating\n Container oss-ch001-r4-34946892709-1-web-1  Created\n Container oss-ch001-r4-34946892709-1-worker-1  Created\n Container oss-ch001-r4-34946892709-1-db-1  Starting\n Container oss-ch001-r4-34946892709-1-db-1  Started\n Container oss-ch001-r4-34946892709-1-db-1  Waiting\n Container oss-ch001-r4-34946892709-1-db-1  Healthy\n Container oss-ch001-r4-34946892709-1-migrate-1  Starting\n Container oss-ch001-r4-34946892709-1-migrate-1  Started\n Container oss-ch001-r4-34946892709-1-migrate-1  Waiting\n Container oss-ch001-r4-34946892709-1-migrate-1  Waiting\n Container oss-ch001-r4-34946892709-1-migrate-1  service \"migrate\" didn't complete successfully: exit 1\n Container oss-ch001-r4-34946892709-1-migrate-1  service \"migrate\" didn't complete successfully: exit 1\nservice \"migrate\" didn't complete successfully: exit 1\n"
+  },
+  "ps": {
+    "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env ps --all --format json",
+    "started_at": "2026-09-15T08:28:34.697Z",
+    "ended_at": "2026-09-15T08:28:34.751Z",
+    "exit_code": 0,
+    "timed_out": false,
+    "output_truncated": false,
+    "output_preview": ",\"Mounts\":\"oss-ch001-r4-3…\",\"Name\":\"oss-ch001-r4-34946892709-1-db-1\",\"Names\":\"oss-ch001-r4-34946892709-1-db-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"5432/tcp\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[{\"URL\":\"\",\"TargetPort\":5432,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"5 seconds ago\",\"Service\":\"db\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 4 seconds (healthy)\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-09-15 08:28:30 +0000 UTC\",\"ExitCode\":1,\"Health\":\"\",\"ID\":\"89931a151094\",\"Image\":\"oss-ch001-r4-34946892709-1-migrate\",\"Labels\":\"com.docker.compose.version=2.38.2,com.docker.compose.container-number=1,com.docker.compose.depends_on=db:service_healthy:false,com.docker.compose.oneoff=False,com.docker.compose.project.environment_file=/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env,com.docker.compose.project.working_dir=/home/runner/work/reel-farm/reel-farm,com.docker.compose.config-hash=d6370b6d2eba887e3aa755a933d33426861892a4fa2d2603f09976e36d2e3750,com.docker.compose.project=oss-ch001-r4-34946892709-1,com.docker.compose.project.config_files=/home/runner/work/reel-farm/reel-farm/compose.yaml,com.docker.compose.service=migrate\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"oss-ch001-r4-34946892709-1-migrate-1\",\"Names\":\"oss-ch001-r4-34946892709-1-migrate-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[],\"RunningFor\":\"4 seconds ago\",\"Service\":\"migrate\",\"Size\":\"0B\",\"State\":\"exited\",\"Status\":\"Exited (1) Less than a second ago\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-09-15 08:28:30 +0000 UTC\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"a35961792bcb\",\"Image\":\"oss-ch001-r4-34946892709-1-web\",\"Labels\":\"com.docker.compose.container-number=1,com.docker.compose.depends_on=migrate:service_completed_successfully:false,com.docker.compose.project.config_files=/home/runner/work/reel-farm/reel-farm/compose.yaml,com.docker.compose.project.environment_file=/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env,com.docker.compose.version=2.38.2,com.docker.compose.config-hash=0c9b698b18b01fe5f827cae51e554c9e8bbc8383c41a4e10a757eb817ecc0ebc,com.docker.compose.oneoff=False,com.docker.compose.project=oss-ch001-r4-34946892709-1,com.docker.compose.project.working_dir=/home/runner/work/reel-farm/reel-farm,com.docker.compose.service=web\",\"LocalVolumes\":\"1\",\"Mounts\":\"oss-ch001-r4-3…\",\"Name\":\"oss-ch001-r4-34946892709-1-web-1\",\"Names\":\"oss-ch001-r4-34946892709-1-web-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[],\"RunningFor\":\"4 seconds ago\",\"Service\":\"web\",\"Size\":\"0B\",\"State\":\"created\",\"Status\":\"Created\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-09-15 08:28:30 +0000 UTC\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"5ccb8d172695\",\"Image\":\"oss-ch001-r4-34946892709-1-worker\",\"Labels\":\"com.docker.compose.project=oss-ch001-r4-34946892709-1,com.docker.compose.project.environment_file=/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env,com.docker.compose.project.working_dir=/home/runner/work/reel-farm/reel-farm,com.docker.compose.service=worker,com.docker.compose.version=2.38.2,com.docker.compose.config-hash=e693525538763ff5ef85a2d514f0a0a43cf6608a085ce00dfec2662309cf2e0d,com.docker.compose.container-number=1,com.docker.compose.depends_on=migrate:service_completed_successfully:false,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=/home/runner/work/reel-farm/reel-farm/compose.yaml\",\"LocalVolumes\":\"1\",\"Mounts\":\"oss-ch001-r4-3…\",\"Name\":\"oss-ch001-r4-34946892709-1-worker-1\",\"Names\":\"oss-ch001-r4-34946892709-1-worker-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[],\"RunningFor\":\"4 seconds ago\",\"Service\":\"worker\",\"Size\":\"0B\",\"State\":\"created\",\"Status\":\"Created\"}\n",
+    "parse_status": "OK",
+    "parse_error": null,
+    "services": [
+      {
+        "service": "db",
+        "container_name": "oss-ch001-r4-34946892709-1-db-1",
+        "container_id": "9c7e66b68363",
+        "state": "running",
+        "health": "healthy",
+        "exit_code": 0,
+        "project": "oss-ch001-r4-34946892709-1"
+      },
+      {
+        "service": "migrate",
+        "container_name": "oss-ch001-r4-34946892709-1-migrate-1",
+        "container_id": "89931a151094",
+        "state": "exited",
+        "health": "",
+        "exit_code": 1,
+        "project": "oss-ch001-r4-34946892709-1"
+      },
+      {
+        "service": "web",
+        "container_name": "oss-ch001-r4-34946892709-1-web-1",
+        "container_id": "a35961792bcb",
+        "state": "created",
+        "health": "",
+        "exit_code": 0,
+        "project": "oss-ch001-r4-34946892709-1"
+      },
+      {
+        "service": "worker",
+        "container_name": "oss-ch001-r4-34946892709-1-worker-1",
+        "container_id": "5ccb8d172695",
+        "state": "created",
+        "health": "",
+        "exit_code": 0,
+        "project": "oss-ch001-r4-34946892709-1"
+      }
+    ]
+  },
+  "images": {
+    "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env images --quiet db migrate web worker",
+    "started_at": "2026-09-15T08:28:34.752Z",
+    "ended_at": "2026-09-15T08:28:34.810Z",
+    "exit_code": 0,
+    "timed_out": false,
+    "output_truncated": false,
+    "output_preview": "5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9\n2875f9e036c28b7bf74dd744e8fcc091b9ff8551f11e8779265439d5a068734d\n",
+    "ids": [
+      "5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9",
+      "2875f9e036c28b7bf74dd744e8fcc091b9ff8551f11e8779265439d5a068734d"
+    ]
+  },
+  "services": [
+    {
+      "service": "db",
+      "presence": "PRESENT",
+      "containers": [
+        {
+          "service": "db",
+          "container_name": "oss-ch001-r4-34946892709-1-db-1",
+          "container_id": "9c7e66b68363",
+          "state": "running",
+          "health": "healthy",
+          "exit_code": 0,
+          "project": "oss-ch001-r4-34946892709-1"
+        }
+      ],
+      "log_status": "CAPTURED",
+      "log_command": {
+        "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 db",
+        "started_at": "2026-09-15T08:28:34.811Z",
+        "ended_at": "2026-09-15T08:28:34.863Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_truncated": false,
+        "output_preview": ".944 UTC [35] WARNING:  no usable system locales were found\ndb-1  | 2026-09-15T08:28:31.293790086Z performing post-bootstrap initialization ... ok\ndb-1  | 2026-09-15T08:28:32.202230303Z syncing data to disk ... ok\ndb-1  | 2026-09-15T08:28:32.202258776Z \ndb-1  | 2026-09-15T08:28:32.202262131Z \ndb-1  | 2026-09-15T08:28:32.202265055Z Success. You can now start the database server using:\ndb-1  | 2026-09-15T08:28:32.202267519Z \ndb-1  | 2026-09-15T08:28:32.202269722Z     pg_ctl -D /var/lib/postgresql/data -l logfile start\ndb-1  | 2026-09-15T08:28:32.202272116Z \ndb-1  | 2026-09-15T08:28:32.202230648Z initdb: warning: enabling \"trust\" authentication for local connections\ndb-1  | 2026-09-15T08:28:32.202279317Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.\ndb-1  | 2026-09-15T08:28:32.235637446Z waiting for server to start....2026-09-15 08:28:32.235 UTC [41] LOG:  starting PostgreSQL 16.8 on x86_64-pc-linux-musl, compiled by gcc (Alpine 14.2.0) 14.2.0, 64-bit\ndb-1  | 2026-09-15T08:28:32.236168256Z 2026-09-15 08:28:32.236 UTC [41] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\ndb-1  | 2026-09-15T08:28:32.238392213Z 2026-09-15 08:28:32.238 UTC [44] LOG:  database system was shut down at 2026-09-15 08:28:31 UTC\ndb-1  | 2026-09-15T08:28:32.242080090Z 2026-09-15 08:28:32.241 UTC [41] LOG:  database system is ready to accept connections\ndb-1  | 2026-09-15T08:28:32.319652175Z  done\ndb-1  | 2026-09-15T08:28:32.319674819Z server started\ndb-1  | 2026-09-15T08:28:32.383568546Z CREATE DATABASE\ndb-1  | 2026-09-15T08:28:32.384457952Z \ndb-1  | 2026-09-15T08:28:32.384467847Z \ndb-1  | 2026-09-15T08:28:32.384470862Z /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\ndb-1  | 2026-09-15T08:28:32.384473806Z \ndb-1  | 2026-09-15T08:28:32.384884535Z waiting for server to shut down....2026-09-15 08:28:32.384 UTC [41] LOG:  received fast shutdown request\ndb-1  | 2026-09-15T08:28:32.385537369Z 2026-09-15 08:28:32.385 UTC [41] LOG:  aborting any active transactions\ndb-1  | 2026-09-15T08:28:32.388096707Z 2026-09-15 08:28:32.388 UTC [41] LOG:  background worker \"logical replication launcher\" (PID 47) exited with exit code 1\ndb-1  | 2026-09-15T08:28:32.388759901Z 2026-09-15 08:28:32.388 UTC [42] LOG:  shutting down\ndb-1  | 2026-09-15T08:28:32.389194636Z 2026-09-15 08:28:32.389 UTC [42] LOG:  checkpoint starting: shutdown immediate\ndb-1  | 2026-09-15T08:28:32.485074819Z 2026-09-15 08:28:32.484 UTC [42] LOG:  checkpoint complete: wrote 924 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.068 s, sync=0.027 s, total=0.097 s; sync files=301, longest=0.009 s, average=0.001 s; distance=4267 kB, estimate=4267 kB; lsn=0/191AB58, redo lsn=0/191AB58\ndb-1  | 2026-09-15T08:28:32.491663646Z 2026-09-15 08:28:32.491 UTC [41] LOG:  database system is shut down\ndb-1  | 2026-09-15T08:28:32.585299647Z  done\ndb-1  | 2026-09-15T08:28:32.585326908Z server stopped\ndb-1  | 2026-09-15T08:28:32.586156914Z \ndb-1  | 2026-09-15T08:28:32.586167360Z PostgreSQL init process complete; ready for start up.\ndb-1  | 2026-09-15T08:28:32.586171236Z \ndb-1  | 2026-09-15T08:28:32.604243610Z 2026-09-15 08:28:32.604 UTC [1] LOG:  starting PostgreSQL 16.8 on x86_64-pc-linux-musl, compiled by gcc (Alpine 14.2.0) 14.2.0, 64-bit\ndb-1  | 2026-09-15T08:28:32.604362834Z 2026-09-15 08:28:32.604 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\ndb-1  | 2026-09-15T08:28:32.604369204Z 2026-09-15 08:28:32.604 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\ndb-1  | 2026-09-15T08:28:32.605254533Z 2026-09-15 08:28:32.605 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\ndb-1  | 2026-09-15T08:28:32.607470889Z 2026-09-15 08:28:32.607 UTC [57] LOG:  database system was shut down at 2026-09-15 08:28:32 UTC\ndb-1  | 2026-09-15T08:28:32.611168522Z 2026-09-15 08:28:32.610 UTC [1] LOG:  database system is ready to accept connections\n"
+      },
+      "public_log_path": "artifacts/ch001r4/r4-34946892709-1/proof/public/compose-service-logs/db.log"
+    },
+    {
+      "service": "migrate",
+      "presence": "PRESENT",
+      "containers": [
+        {
+          "service": "migrate",
+          "container_name": "oss-ch001-r4-34946892709-1-migrate-1",
+          "container_id": "89931a151094",
+          "state": "exited",
+          "health": "",
+          "exit_code": 1,
+          "project": "oss-ch001-r4-34946892709-1"
+        }
+      ],
+      "log_status": "CAPTURED",
+      "log_command": {
+        "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 migrate",
+        "started_at": "2026-09-15T08:28:34.864Z",
+        "ended_at": "2026-09-15T08:28:34.917Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_truncated": false,
+        "output_preview": "migrate-1  | 2026-09-15T08:28:34.197702943Z $ node --import tsx scripts/migrate.ts\nmigrate-1  | 2026-09-15T08:28:34.350179109Z \nmigrate-1  | 2026-09-15T08:28:34.350202584Z node:internal/modules/run_main:123\nmigrate-1  | 2026-09-15T08:28:34.350206360Z     triggerUncaughtException(\nmigrate-1  | 2026-09-15T08:28:34.350209545Z     ^\nmigrate-1  | 2026-09-15T08:28:34.351811420Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /app/scripts/migrate.ts\nmigrate-1  | 2026-09-15T08:28:34.351822757Z     at packageResolve (node:internal/modules/esm/resolve:873:9)\nmigrate-1  | 2026-09-15T08:28:34.351825832Z     at moduleResolve (node:internal/modules/esm/resolve:946:18)\nmigrate-1  | 2026-09-15T08:28:34.351829227Z     at defaultResolve (node:internal/modules/esm/resolve:1188:11)\nmigrate-1  | 2026-09-15T08:28:34.351832031Z     at nextResolve (node:internal/modules/esm/hooks:864:28)\nmigrate-1  | 2026-09-15T08:28:34.351834655Z     at resolveBase (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\nmigrate-1  | 2026-09-15T08:28:34.351837780Z     at resolveDirectory (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\nmigrate-1  | 2026-09-15T08:28:34.351841105Z     at resolveTsPaths (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\nmigrate-1  | 2026-09-15T08:28:34.351843919Z     at resolve (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\nmigrate-1  | 2026-09-15T08:28:34.351847044Z     at nextResolve (node:internal/modules/esm/hooks:864:28)\nmigrate-1  | 2026-09-15T08:28:34.351849798Z     at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\nmigrate-1  | 2026-09-15T08:28:34.351852832Z   code: 'ERR_MODULE_NOT_FOUND'\nmigrate-1  | 2026-09-15T08:28:34.351855537Z }\nmigrate-1  | 2026-09-15T08:28:34.351857950Z \nmigrate-1  | 2026-09-15T08:28:34.351860184Z Node.js v20.19.2\nmigrate-1  | 2026-09-15T08:28:34.355461737Z [ELIFECYCLE] Command failed with exit code 1.\n"
+      },
+      "public_log_path": "artifacts/ch001r4/r4-34946892709-1/proof/public/compose-service-logs/migrate.log"
+    },
+    {
+      "service": "web",
+      "presence": "PRESENT",
+      "containers": [
+        {
+          "service": "web",
+          "container_name": "oss-ch001-r4-34946892709-1-web-1",
+          "container_id": "a35961792bcb",
+          "state": "created",
+          "health": "",
+          "exit_code": 0,
+          "project": "oss-ch001-r4-34946892709-1"
+        }
+      ],
+      "log_status": "CAPTURED",
+      "log_command": {
+        "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 web",
+        "started_at": "2026-09-15T08:28:34.918Z",
+        "ended_at": "2026-09-15T08:28:34.972Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_truncated": false,
+        "output_preview": ""
+      },
+      "public_log_path": "artifacts/ch001r4/r4-34946892709-1/proof/public/compose-service-logs/web.log"
+    },
+    {
+      "service": "worker",
+      "presence": "PRESENT",
+      "containers": [
+        {
+          "service": "worker",
+          "container_name": "oss-ch001-r4-34946892709-1-worker-1",
+          "container_id": "5ccb8d172695",
+          "state": "created",
+          "health": "",
+          "exit_code": 0,
+          "project": "oss-ch001-r4-34946892709-1"
+        }
+      ],
+      "log_status": "CAPTURED",
+      "log_command": {
+        "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 worker",
+        "started_at": "2026-09-15T08:28:34.973Z",
+        "ended_at": "2026-09-15T08:28:35.031Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_truncated": false,
+        "output_preview": ""
+      },
+      "public_log_path": "artifacts/ch001r4/r4-34946892709-1/proof/public/compose-service-logs/worker.log"
+    }
+  ],
+  "diagnostics": {
+    "bounded_timeout_ms": 20000,
+    "max_output_bytes": 131072,
+    "capture_order": [
+      "startup",
+      "ps --all",
+      "images",
+      "logs db",
+      "logs migrate",
+      "logs web",
+      "logs worker"
+    ],
+    "raw_logs_private": true,
+    "public_logs_sanitized": true
+  },
+  "command_records": [
+    {
+      "name": "compose-ps-all",
+      "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env ps --all --format json",
+      "started_at": "2026-09-15T08:28:34.697Z",
+      "ended_at": "2026-09-15T08:28:34.751Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": ",\"Mounts\":\"oss-ch001-r4-3…\",\"Name\":\"oss-ch001-r4-34946892709-1-db-1\",\"Names\":\"oss-ch001-r4-34946892709-1-db-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"5432/tcp\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[{\"URL\":\"\",\"TargetPort\":5432,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"5 seconds ago\",\"Service\":\"db\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 4 seconds (healthy)\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-09-15 08:28:30 +0000 UTC\",\"ExitCode\":1,\"Health\":\"\",\"ID\":\"89931a151094\",\"Image\":\"oss-ch001-r4-34946892709-1-migrate\",\"Labels\":\"com.docker.compose.version=2.38.2,com.docker.compose.container-number=1,com.docker.compose.depends_on=db:service_healthy:false,com.docker.compose.oneoff=False,com.docker.compose.project.environment_file=/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env,com.docker.compose.project.working_dir=/home/runner/work/reel-farm/reel-farm,com.docker.compose.config-hash=d6370b6d2eba887e3aa755a933d33426861892a4fa2d2603f09976e36d2e3750,com.docker.compose.project=oss-ch001-r4-34946892709-1,com.docker.compose.project.config_files=/home/runner/work/reel-farm/reel-farm/compose.yaml,com.docker.compose.service=migrate\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"oss-ch001-r4-34946892709-1-migrate-1\",\"Names\":\"oss-ch001-r4-34946892709-1-migrate-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[],\"RunningFor\":\"4 seconds ago\",\"Service\":\"migrate\",\"Size\":\"0B\",\"State\":\"exited\",\"Status\":\"Exited (1) Less than a second ago\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-09-15 08:28:30 +0000 UTC\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"a35961792bcb\",\"Image\":\"oss-ch001-r4-34946892709-1-web\",\"Labels\":\"com.docker.compose.container-number=1,com.docker.compose.depends_on=migrate:service_completed_successfully:false,com.docker.compose.project.config_files=/home/runner/work/reel-farm/reel-farm/compose.yaml,com.docker.compose.project.environment_file=/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env,com.docker.compose.version=2.38.2,com.docker.compose.config-hash=0c9b698b18b01fe5f827cae51e554c9e8bbc8383c41a4e10a757eb817ecc0ebc,com.docker.compose.oneoff=False,com.docker.compose.project=oss-ch001-r4-34946892709-1,com.docker.compose.project.working_dir=/home/runner/work/reel-farm/reel-farm,com.docker.compose.service=web\",\"LocalVolumes\":\"1\",\"Mounts\":\"oss-ch001-r4-3…\",\"Name\":\"oss-ch001-r4-34946892709-1-web-1\",\"Names\":\"oss-ch001-r4-34946892709-1-web-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[],\"RunningFor\":\"4 seconds ago\",\"Service\":\"web\",\"Size\":\"0B\",\"State\":\"created\",\"Status\":\"Created\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-09-15 08:28:30 +0000 UTC\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"5ccb8d172695\",\"Image\":\"oss-ch001-r4-34946892709-1-worker\",\"Labels\":\"com.docker.compose.project=oss-ch001-r4-34946892709-1,com.docker.compose.project.environment_file=/home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env,com.docker.compose.project.working_dir=/home/runner/work/reel-farm/reel-farm,com.docker.compose.service=worker,com.docker.compose.version=2.38.2,com.docker.compose.config-hash=e693525538763ff5ef85a2d514f0a0a43cf6608a085ce00dfec2662309cf2e0d,com.docker.compose.container-number=1,com.docker.compose.depends_on=migrate:service_completed_successfully:false,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=/home/runner/work/reel-farm/reel-farm/compose.yaml\",\"LocalVolumes\":\"1\",\"Mounts\":\"oss-ch001-r4-3…\",\"Name\":\"oss-ch001-r4-34946892709-1-worker-1\",\"Names\":\"oss-ch001-r4-34946892709-1-worker-1\",\"Networks\":\"oss-ch001-r4-34946892709-1_default\",\"Ports\":\"\",\"Project\":\"oss-ch001-r4-34946892709-1\",\"Publishers\":[],\"RunningFor\":\"4 seconds ago\",\"Service\":\"worker\",\"Size\":\"0B\",\"State\":\"created\",\"Status\":\"Created\"}\n"
+    },
+    {
+      "name": "compose-images",
+      "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env images --quiet db migrate web worker",
+      "started_at": "2026-09-15T08:28:34.752Z",
+      "ended_at": "2026-09-15T08:28:34.810Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": "5f7f543fd6b1f1bc0dd97e3b1fb5f2c33e0a2f2eee4911a145409e1071c7d2b9\n2875f9e036c28b7bf74dd744e8fcc091b9ff8551f11e8779265439d5a068734d\n"
+    },
+    {
+      "name": "compose-logs-db",
+      "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 db",
+      "started_at": "2026-09-15T08:28:34.811Z",
+      "ended_at": "2026-09-15T08:28:34.863Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": ".944 UTC [35] WARNING:  no usable system locales were found\ndb-1  | 2026-09-15T08:28:31.293790086Z performing post-bootstrap initialization ... ok\ndb-1  | 2026-09-15T08:28:32.202230303Z syncing data to disk ... ok\ndb-1  | 2026-09-15T08:28:32.202258776Z \ndb-1  | 2026-09-15T08:28:32.202262131Z \ndb-1  | 2026-09-15T08:28:32.202265055Z Success. You can now start the database server using:\ndb-1  | 2026-09-15T08:28:32.202267519Z \ndb-1  | 2026-09-15T08:28:32.202269722Z     pg_ctl -D /var/lib/postgresql/data -l logfile start\ndb-1  | 2026-09-15T08:28:32.202272116Z \ndb-1  | 2026-09-15T08:28:32.202230648Z initdb: warning: enabling \"trust\" authentication for local connections\ndb-1  | 2026-09-15T08:28:32.202279317Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.\ndb-1  | 2026-09-15T08:28:32.235637446Z waiting for server to start....2026-09-15 08:28:32.235 UTC [41] LOG:  starting PostgreSQL 16.8 on x86_64-pc-linux-musl, compiled by gcc (Alpine 14.2.0) 14.2.0, 64-bit\ndb-1  | 2026-09-15T08:28:32.236168256Z 2026-09-15 08:28:32.236 UTC [41] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\ndb-1  | 2026-09-15T08:28:32.238392213Z 2026-09-15 08:28:32.238 UTC [44] LOG:  database system was shut down at 2026-09-15 08:28:31 UTC\ndb-1  | 2026-09-15T08:28:32.242080090Z 2026-09-15 08:28:32.241 UTC [41] LOG:  database system is ready to accept connections\ndb-1  | 2026-09-15T08:28:32.319652175Z  done\ndb-1  | 2026-09-15T08:28:32.319674819Z server started\ndb-1  | 2026-09-15T08:28:32.383568546Z CREATE DATABASE\ndb-1  | 2026-09-15T08:28:32.384457952Z \ndb-1  | 2026-09-15T08:28:32.384467847Z \ndb-1  | 2026-09-15T08:28:32.384470862Z /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\ndb-1  | 2026-09-15T08:28:32.384473806Z \ndb-1  | 2026-09-15T08:28:32.384884535Z waiting for server to shut down....2026-09-15 08:28:32.384 UTC [41] LOG:  received fast shutdown request\ndb-1  | 2026-09-15T08:28:32.385537369Z 2026-09-15 08:28:32.385 UTC [41] LOG:  aborting any active transactions\ndb-1  | 2026-09-15T08:28:32.388096707Z 2026-09-15 08:28:32.388 UTC [41] LOG:  background worker \"logical replication launcher\" (PID 47) exited with exit code 1\ndb-1  | 2026-09-15T08:28:32.388759901Z 2026-09-15 08:28:32.388 UTC [42] LOG:  shutting down\ndb-1  | 2026-09-15T08:28:32.389194636Z 2026-09-15 08:28:32.389 UTC [42] LOG:  checkpoint starting: shutdown immediate\ndb-1  | 2026-09-15T08:28:32.485074819Z 2026-09-15 08:28:32.484 UTC [42] LOG:  checkpoint complete: wrote 924 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.068 s, sync=0.027 s, total=0.097 s; sync files=301, longest=0.009 s, average=0.001 s; distance=4267 kB, estimate=4267 kB; lsn=0/191AB58, redo lsn=0/191AB58\ndb-1  | 2026-09-15T08:28:32.491663646Z 2026-09-15 08:28:32.491 UTC [41] LOG:  database system is shut down\ndb-1  | 2026-09-15T08:28:32.585299647Z  done\ndb-1  | 2026-09-15T08:28:32.585326908Z server stopped\ndb-1  | 2026-09-15T08:28:32.586156914Z \ndb-1  | 2026-09-15T08:28:32.586167360Z PostgreSQL init process complete; ready for start up.\ndb-1  | 2026-09-15T08:28:32.586171236Z \ndb-1  | 2026-09-15T08:28:32.604243610Z 2026-09-15 08:28:32.604 UTC [1] LOG:  starting PostgreSQL 16.8 on x86_64-pc-linux-musl, compiled by gcc (Alpine 14.2.0) 14.2.0, 64-bit\ndb-1  | 2026-09-15T08:28:32.604362834Z 2026-09-15 08:28:32.604 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\ndb-1  | 2026-09-15T08:28:32.604369204Z 2026-09-15 08:28:32.604 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\ndb-1  | 2026-09-15T08:28:32.605254533Z 2026-09-15 08:28:32.605 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\ndb-1  | 2026-09-15T08:28:32.607470889Z 2026-09-15 08:28:32.607 UTC [57] LOG:  database system was shut down at 2026-09-15 08:28:32 UTC\ndb-1  | 2026-09-15T08:28:32.611168522Z 2026-09-15 08:28:32.610 UTC [1] LOG:  database system is ready to accept connections\n"
+    },
+    {
+      "name": "compose-logs-migrate",
+      "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 migrate",
+      "started_at": "2026-09-15T08:28:34.864Z",
+      "ended_at": "2026-09-15T08:28:34.917Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": "migrate-1  | 2026-09-15T08:28:34.197702943Z $ node --import tsx scripts/migrate.ts\nmigrate-1  | 2026-09-15T08:28:34.350179109Z \nmigrate-1  | 2026-09-15T08:28:34.350202584Z node:internal/modules/run_main:123\nmigrate-1  | 2026-09-15T08:28:34.350206360Z     triggerUncaughtException(\nmigrate-1  | 2026-09-15T08:28:34.350209545Z     ^\nmigrate-1  | 2026-09-15T08:28:34.351811420Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /app/scripts/migrate.ts\nmigrate-1  | 2026-09-15T08:28:34.351822757Z     at packageResolve (node:internal/modules/esm/resolve:873:9)\nmigrate-1  | 2026-09-15T08:28:34.351825832Z     at moduleResolve (node:internal/modules/esm/resolve:946:18)\nmigrate-1  | 2026-09-15T08:28:34.351829227Z     at defaultResolve (node:internal/modules/esm/resolve:1188:11)\nmigrate-1  | 2026-09-15T08:28:34.351832031Z     at nextResolve (node:internal/modules/esm/hooks:864:28)\nmigrate-1  | 2026-09-15T08:28:34.351834655Z     at resolveBase (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\nmigrate-1  | 2026-09-15T08:28:34.351837780Z     at resolveDirectory (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\nmigrate-1  | 2026-09-15T08:28:34.351841105Z     at resolveTsPaths (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\nmigrate-1  | 2026-09-15T08:28:34.351843919Z     at resolve (file:///app/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\nmigrate-1  | 2026-09-15T08:28:34.351847044Z     at nextResolve (node:internal/modules/esm/hooks:864:28)\nmigrate-1  | 2026-09-15T08:28:34.351849798Z     at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\nmigrate-1  | 2026-09-15T08:28:34.351852832Z   code: 'ERR_MODULE_NOT_FOUND'\nmigrate-1  | 2026-09-15T08:28:34.351855537Z }\nmigrate-1  | 2026-09-15T08:28:34.351857950Z \nmigrate-1  | 2026-09-15T08:28:34.351860184Z Node.js v20.19.2\nmigrate-1  | 2026-09-15T08:28:34.355461737Z [ELIFECYCLE] Command failed with exit code 1.\n"
+    },
+    {
+      "name": "compose-logs-web",
+      "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 web",
+      "started_at": "2026-09-15T08:28:34.918Z",
+      "ended_at": "2026-09-15T08:28:34.972Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": ""
+    },
+    {
+      "name": "compose-logs-worker",
+      "command": "docker compose -p oss-ch001-r4-34946892709-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34946892709-1/proof/private/compose.env logs --no-color --timestamps --tail 500 worker",
+      "started_at": "2026-09-15T08:28:34.973Z",
+      "ended_at": "2026-09-15T08:28:35.031Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "output_truncated": false,
+      "output_preview": ""
+    }
+  ]
+}
