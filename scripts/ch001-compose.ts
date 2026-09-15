@@ -7,24 +7,73 @@ export type CommandResult = {
   endedAt: string;
   exitCode: number;
   output: string;
+  timedOut?: boolean;
+  outputTruncated?: boolean;
+};
+
+export type CommandOptions = {
+  env?: NodeJS.ProcessEnv;
+  timeoutMs?: number;
+  maxOutputBytes?: number;
 };
 
 export type ComposeProject = {
   projectName: string;
   envPath: string;
   root: string;
-  run(args: string[], options?: { env?: NodeJS.ProcessEnv }): Promise<CommandResult>;
+  run(args: string[], options?: CommandOptions): Promise<CommandResult>;
+  dockerRun(args: string[], options?: CommandOptions): Promise<CommandResult>;
 };
 
-export async function runCommand(command: string, args: string[], options: { cwd: string; env?: NodeJS.ProcessEnv } ): Promise<CommandResult> {
+export async function runCommand(command: string, args: string[], options: { cwd: string } & CommandOptions ): Promise<CommandResult> {
   const startedAt = new Date().toISOString();
   return new Promise((resolveResult) => {
     const child = spawn(command, args, { cwd: options.cwd, env: options.env ?? process.env, stdio: ["ignore", "pipe", "pipe"] });
     let output = "";
-    child.stdout.on("data", (chunk: Buffer) => { output += chunk.toString(); });
-    child.stderr.on("data", (chunk: Buffer) => { output += chunk.toString(); });
-    child.on("error", (error) => resolveResult({ command: [command, ...args].join(" "), startedAt, endedAt: new Date().toISOString(), exitCode: 1, output: `${output}${error.message}\n` }));
-    child.on("close", (code) => resolveResult({ command: [command, ...args].join(" "), startedAt, endedAt: new Date().toISOString(), exitCode: code ?? 1, output }));
+    const maxOutputBytes = options.maxOutputBytes ?? Number.MAX_SAFE_INTEGER;
+    let outputTruncated = false;
+    let timedOut = false;
+    let settled = false;
+    let timeoutHandle: NodeJS.Timeout | undefined;
+    let killHandle: NodeJS.Timeout | undefined;
+    const appendOutput = (chunk: Buffer): void => {
+      const remaining = maxOutputBytes - Buffer.byteLength(output);
+      if (remaining <= 0) { outputTruncated = true; return; }
+      if (chunk.byteLength <= remaining) output += chunk.toString();
+      else {
+        output += chunk.subarray(0, remaining).toString();
+        outputTruncated = true;
+      }
+    };
+    const finish = (exitCode: number, suffix = ""): void => {
+      if (settled) return;
+      settled = true;
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+      if (killHandle) clearTimeout(killHandle);
+      if (suffix) appendOutput(Buffer.from(suffix));
+      resolveResult({
+        command: [command, ...args].join(" "),
+        startedAt,
+        endedAt: new Date().toISOString(),
+        exitCode,
+        output,
+        ...(timedOut ? { timedOut: true } : {}),
+        ...(outputTruncated ? { outputTruncated: true } : {})
+      });
+    };
+    child.stdout.on("data", (chunk: Buffer) => appendOutput(chunk));
+    child.stderr.on("data", (chunk: Buffer) => appendOutput(chunk));
+    child.on("error", (error) => finish(1, `${error.message}\n`));
+    child.on("close", (code) => finish(timedOut ? 124 : code ?? 1));
+    if (options.timeoutMs !== undefined) {
+      const timeoutMs = Math.max(1, Math.floor(options.timeoutMs));
+      timeoutHandle = setTimeout(() => {
+        timedOut = true;
+        appendOutput(Buffer.from(`\n[command timed out after ${timeoutMs}ms]\n`));
+        child.kill("SIGTERM");
+        killHandle = setTimeout(() => child.kill("SIGKILL"), 1_000);
+      }, timeoutMs);
+    }
   });
 }
 
@@ -34,7 +83,10 @@ export function makeComposeProject(root: string, projectName: string, envPath: s
     envPath,
     root,
     run(args, options = {}) {
-      return runCommand("docker", ["compose", "-p", projectName, "--env-file", envPath, ...args], { cwd: root, env: options.env ?? process.env });
+      return runCommand("docker", ["compose", "-p", projectName, "--env-file", envPath, ...args], { cwd: root, env: options.env ?? process.env, timeoutMs: options.timeoutMs, maxOutputBytes: options.maxOutputBytes });
+    },
+    dockerRun(args, options = {}) {
+      return runCommand("docker", args, { cwd: root, env: options.env ?? process.env, timeoutMs: options.timeoutMs, maxOutputBytes: options.maxOutputBytes });
     }
   };
 }

@@ -15,6 +15,15 @@ import {
   type SuiteReport
 } from "./ch001-harness.js";
 import { freeLoopbackPort, makeComposeProject, waitForCondition, waitForHttp, type CommandResult, type ComposeProject } from "./ch001-compose.js";
+import {
+  collectComposeDiagnostics,
+  teardownComposeProject,
+  verifyComposeProjectOwnership,
+  writeComposeNotRunEvidence,
+  type ComposeDiagnosticCollection,
+  type ComposeCleanupResult,
+  type ComposeOwnershipResult
+} from "./ch001-compose-diagnostics.mjs";
 import { readZipEntries } from "../tests/helpers/zip.ts";
 import { assertValidProofRunId, prepareProofEvidenceDirectories, resolveProofEvidenceRoot, writeCoordinatorFailureReport } from "./ch001-proof-boundary.mjs";
 import { assertManagedBrowserIdentity, resolveManagedBrowserExecutable, type ManagedBrowserResolution } from "./ch001-sandbox.mjs";
@@ -50,6 +59,11 @@ const secrets: string[] = [];
 let invocationNumber = 0;
 let composeProject: ComposeProject | undefined;
 let composeStarted = false;
+let composeStartupAttempted = false;
+let composeProjectOwned = false;
+let composeLifecycleFinalized = false;
+let composeOwnership: ComposeOwnershipResult | null = null;
+let composeStartupResult: CommandResult | null = null;
 let composeEnvPath = "";
 let emptyEnvPath = "";
 let port = 0;
@@ -62,6 +76,8 @@ let loopbackPortReady = true;
 let evidenceOwned = false;
 let browserResolution: ManagedBrowserResolution | null = null;
 let browserIdentityOptions: { playwrightExecutablePath: string; selectedExecutablePath: string; browsersPath?: string } | null = null;
+let composeDiagnostics: ComposeDiagnosticCollection | null = null;
+let composeCleanup: ComposeCleanupResult | null = null;
 
 browserPath = process.env.BROWSER_EXECUTABLE_PATH ?? chromium.executablePath();
 
@@ -133,7 +149,7 @@ async function commandStep(name: string, command: string, args: string[], env: N
 async function composeStep(name: string, args: string[], options: { reportPath?: string; publicLogName?: string } = {}): Promise<CommandOutput> {
   if (!composeProject) throw new Error("Compose project has not been initialized.");
   const output = await composeProject.run(args);
-  const result: ProcessResult = { ...output, invocationId: invocationId() };
+  const result: ProcessResult = { ...output, command: redact(output.command), invocationId: invocationId() };
   const slug = safeName(options.publicLogName ?? name);
   const publicLogPath = resolve(publicCommandDir, `${String(commandOutputs.length + 1).padStart(3, "0")}-${slug}.log`);
   const privateLogPath = resolve(privateCommandDir, `${String(commandOutputs.length + 1).padStart(3, "0")}-${slug}.log`);
@@ -393,10 +409,18 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
   composeProject = makeComposeProject(root, projectName, composeEnvPath);
   const config = await composeStep("compose-config", ["config", "--quiet"]);
   if (config.result.exitCode !== 0) { failures.push("Compose config did not validate."); return false; }
+  composeOwnership = await verifyComposeProjectOwnership({ project: composeProject, repositoryRoot: root, runId });
+  if (!composeOwnership.owned) {
+    failures.push(`Compose project ownership validation refused startup: ${composeOwnership.reason}`);
+    return false;
+  }
+  composeProjectOwned = true;
   await writeJson(resolve(publicDir, "compose-network.json"), { compose_project: projectName, host_published: [`127.0.0.1:${port}:3000`], host_published_private_services: [], assertion: "web is loopback-only; db and worker have no host ports" });
+  composeStartupAttempted = true;
   const started = await composeStep("compose-up-build", ["up", "--build", "-d", "db", "migrate", "web", "worker"]);
+  composeStartupResult = started.result;
   composeStarted = started.result.exitCode === 0;
-  if (!composeStarted) { failures.push("The shipped Compose image stack did not start."); return false; }
+  if (!composeStarted) { failures.push(`The shipped Compose image stack did not start (exit ${started.result.exitCode}).`); return false; }
   await assertion("web live health after shipped-image startup", async () => { await waitForHttp(`${baseUrl}/api/health/live`); });
   const health = await assertion("worker/browser/database/storage readiness", async () => { await waitForHealthReady(); });
   if (!health) return false;
@@ -608,6 +632,79 @@ async function publicManifest(): Promise<{ path: string; ref: Awaited<ReturnType
   return { path: pathFromRoot(manifestPath), ref };
 }
 
+async function finalizeComposeLifecycle(): Promise<void> {
+  if (composeLifecycleFinalized) return;
+  composeLifecycleFinalized = true;
+  if (!evidenceOwned) return;
+  if (!composeProject || !composeProjectOwned || !composeStartupAttempted || !composeStartupResult) {
+    await writeComposeNotRunEvidence({ publicDir, runId, projectName, reason: composeOwnership?.reason ?? "No validated, run-owned Compose startup was attempted." }).catch((error) => failures.push(`Compose diagnostic record could not be written: ${error instanceof Error ? error.message : String(error)}`));
+    return;
+  }
+
+  const includeServiceLogs = !composeStarted || failures.length > 0;
+  try {
+    composeDiagnostics = await collectComposeDiagnostics({
+      project: composeProject,
+      repositoryRoot: root,
+      publicDir,
+      privateDir,
+      runId,
+      startupResult: composeStartupResult,
+      ownership: composeOwnership,
+      secrets,
+      includeServiceLogs
+    });
+    failures.push(...composeDiagnostics.secondaryFailures);
+  } catch (error) {
+    failures.push(`Compose diagnostics failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  const integrationCleanup: Record<string, unknown> = { status: "NOT_RUN", reason: "No disposable integration database remained allocated." };
+  if (integrationDatabaseCreated && integrationDatabase) {
+    try {
+      const dropped = await composeProject.run(["exec", "-T", "db", "psql", "-U", "oss", "-d", "oss", "-v", "ON_ERROR_STOP=0", "-c", `DROP DATABASE IF EXISTS "${integrationDatabase}" WITH (FORCE)`], { timeoutMs: 20_000, maxOutputBytes: 128 * 1024 });
+      integrationCleanup.status = dropped.exitCode === 0 && !dropped.timedOut ? "PASS" : "FAIL";
+      integrationCleanup.command = redact(dropped.command);
+      integrationCleanup.exit_code = dropped.exitCode;
+      integrationCleanup.timed_out = dropped.timedOut === true;
+      integrationCleanup.output = redact(dropped.output).slice(-4_000);
+      if (dropped.exitCode !== 0 || dropped.timedOut) failures.push(`Disposable integration database cleanup failed (exit ${dropped.exitCode}${dropped.timedOut ? ", timed out" : ""}).`);
+    } catch (error) {
+      integrationCleanup.status = "FAIL";
+      integrationCleanup.error = error instanceof Error ? error.message : String(error);
+      failures.push(`Disposable integration database cleanup failed: ${integrationCleanup.error}`);
+    }
+    integrationDatabaseCreated = false;
+  }
+
+  try {
+    composeCleanup = await teardownComposeProject({
+      project: composeProject,
+      repositoryRoot: root,
+      publicDir,
+      runId,
+      ownershipVerified: composeProjectOwned,
+      startupAttempted: composeStartupAttempted
+    });
+    failures.push(...composeCleanup.secondaryFailures);
+    const cleanupRecord = { ...composeCleanup.receipt, integration_database_cleanup: integrationCleanup };
+    await writeJson(resolve(publicDir, "compose-cleanup.json"), cleanupRecord);
+  } catch (error) {
+    failures.push(`Compose cleanup failed: ${error instanceof Error ? error.message : String(error)}`);
+    await writeJson(resolve(publicDir, "compose-cleanup.json"), {
+      record_kind: "CH001_COMPOSE_CLEANUP",
+      run_id: runId,
+      project_name: projectName,
+      startup_attempted: composeStartupAttempted,
+      project_owned: composeProjectOwned,
+      status: "FAIL",
+      primary_failure_preserved: true,
+      error: error instanceof Error ? error.message : String(error),
+      integration_database_cleanup: integrationCleanup
+    }).catch(() => undefined);
+  }
+}
+
 async function sanitizePublic(): Promise<void> {
   const textExtensions = new Set([".json", ".log", ".txt", ".md", ".html", ".xml", ".csv"]);
   for (const file of await listFiles(publicDir)) {
@@ -619,6 +716,10 @@ async function sanitizePublic(): Promise<void> {
 }
 
 async function finalize(host: Record<string, unknown>, source: { path: string; clean: boolean }): Promise<number> {
+  // Diagnostics and owned teardown must precede public sanitization and the
+  // payload manifest. The final manifest therefore binds the pre-deletion
+  // service state and the cleanup receipt.
+  await finalizeComposeLifecycle();
   await smokeSuite();
   await ensureSuiteReports();
   await artifactChecks();
@@ -648,11 +749,7 @@ async function finalize(host: Record<string, unknown>, source: { path: string; c
 }
 
 async function cleanup(): Promise<void> {
-  if (composeProject && (composeStarted || integrationDatabaseCreated)) {
-    if (integrationDatabaseCreated && integrationDatabase) await composeProject.run(["exec", "-T", "db", "psql", "-U", "oss", "-d", "oss", "-v", "ON_ERROR_STOP=0", "-c", `DROP DATABASE IF EXISTS "${integrationDatabase}" WITH (FORCE)`]).catch(() => undefined);
-    await composeProject.run(["logs", "--no-color", "web", "worker", "migrate"]).then((result) => writeText(resolve(privateDir, "compose-final.log"), result.output)).catch(() => undefined);
-    await composeProject.run(["down", "-v", "--remove-orphans"]).catch(() => undefined);
-  }
+  await finalizeComposeLifecycle().catch((error) => failures.push(`Compose finalization failed: ${error instanceof Error ? error.message : String(error)}`));
 }
 
 let exitCode: number;
@@ -674,6 +771,7 @@ try {
   const detail = error instanceof Error ? error.message : String(error);
   failures.push(`Coordinator: ${detail}`);
   if (evidenceOwned) await sourceReview().catch(() => undefined);
+  await finalizeComposeLifecycle().catch((cleanupError) => failures.push(`Compose finalization failed: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`));
   await writeCoordinatorFailureReport({ publicDir, ownsEvidence: evidenceOwned, report: { profile: "CH-001R-r3 bounded live proof", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." } }).catch(() => undefined);
   console.error(`CH-001R-r3 coordinator error: ${detail}`);
   exitCode = environmentFailures.length > 0 ? 2 : 1;
