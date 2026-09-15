@@ -29,6 +29,7 @@
   "dependencies": {
     "@fontsource/inter": "5.3.0",
     "@fontsource/source-serif-4": "5.3.0",
+    "@oss/db": "workspace:*",
     "archiver": "8.0.0",
     "better-auth": "1.7.4",
     "dotenv": "17.4.2",

@@ -8,6 +8,7 @@ import { resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { promisify } from "node:util";
 import { test } from "node:test";
+import { assertAllowedLockfileDelta, assertAllowedRootManifestDelta } from "../../scripts/ci/pin-scope.mjs";
 
 const execFileAsync = promisify(execFile);
 const repositoryRoot = process.cwd();
@@ -388,10 +389,50 @@ test("R7-T09 preserves explicit opt-in, public/manual guard, exact sandbox wirin
 test("R7-T11 keeps toolchain, dependency, native release, and runtime pins unchanged apart from one script", async () => {
   const currentPackage = JSON.parse(await readFile(resolve(repositoryRoot, "package.json"), "utf8"));
   const t6Package = JSON.parse(await gitShow("package.json"));
-  const packageWithoutWorkflowScript = { ...currentPackage, scripts: { ...currentPackage.scripts } };
-  delete packageWithoutWorkflowScript.scripts["lint:workflow"];
-  assert.deepEqual(packageWithoutWorkflowScript, t6Package);
-  for (const path of [".nvmrc", "pnpm-lock.yaml", "scripts/ci/pnpm-native-release.json", "Dockerfile", "compose.yaml", "playwright.config.ts"]) {
+  assertAllowedRootManifestDelta(currentPackage, t6Package);
+  assertAllowedLockfileDelta(await readFile(resolve(repositoryRoot, "pnpm-lock.yaml"), "utf8"), await gitShow("pnpm-lock.yaml"));
+  for (const path of [".nvmrc", ".tool-versions", ".npmrc", "scripts/ci/pnpm-native-release.json", "Dockerfile", "compose.yaml", "playwright.config.ts"]) {
     assert.equal(await readFile(resolve(repositoryRoot, path), "utf8"), await gitShow(path), `${path} changed unexpectedly`);
   }
+});
+
+test("R11-T04 pin guard rejects wrong or missing workspace dependency forms and unrelated root changes", async () => {
+  const currentPackage = JSON.parse(await readFile(resolve(repositoryRoot, "package.json"), "utf8"));
+  const t6Package = JSON.parse(await gitShow("package.json"));
+  const currentLock = await readFile(resolve(repositoryRoot, "pnpm-lock.yaml"), "utf8");
+  const t6Lock = await gitShow("pnpm-lock.yaml");
+  const rootLink = ["      '@oss/db':", "        specifier: workspace:*", "        version: link:packages/db"].join("\n");
+  const rootLinkIndex = currentLock.indexOf(rootLink);
+  assert.notEqual(rootLinkIndex, -1);
+
+  const wrongSpecifier = structuredClone(currentPackage);
+  wrongSpecifier.dependencies["@oss/db"] = "8.16.3";
+  assert.throws(() => assertAllowedRootManifestDelta(wrongSpecifier, t6Package), /workspace:\*/);
+
+  const missingEdge = structuredClone(currentPackage);
+  delete missingEdge.dependencies["@oss/db"];
+  assert.throws(() => assertAllowedRootManifestDelta(missingEdge, t6Package), /workspace:\*/);
+
+  const secondRootDependency = structuredClone(currentPackage);
+  secondRootDependency.dependencies["@oss/not-authorized"] = "workspace:*";
+  assert.throws(() => assertAllowedRootManifestDelta(secondRootDependency, t6Package), /unapproved change/i);
+
+  const changedExternal = structuredClone(currentPackage);
+  changedExternal.dependencies.pg = "8.16.2";
+  assert.throws(() => assertAllowedRootManifestDelta(changedExternal, t6Package), /unapproved change/i);
+
+  const changedRuntimePin = structuredClone(currentPackage);
+  changedRuntimePin.engines.node = ">=20.10.0 <21";
+  assert.throws(() => assertAllowedRootManifestDelta(changedRuntimePin, t6Package), /unapproved change/i);
+
+  const wrongLockSpecifier = currentLock.replace("        specifier: workspace:*\n        version: link:packages/db", "        specifier: workspace:^0.1.0\n        version: link:packages/db");
+  assert.throws(() => assertAllowedLockfileDelta(wrongLockSpecifier, t6Lock), /authorized|local link|workspace/i);
+  assert.throws(() => assertAllowedLockfileDelta(currentLock.slice(0, rootLinkIndex) + currentLock.slice(rootLinkIndex + rootLink.length), t6Lock), /exactly one|relationship/i);
+  const secondLockEdge = currentLock.slice(0, rootLinkIndex + rootLink.length) + "\n" + rootLink.replace("@oss/db", "@oss/not-authorized").replace("link:packages/db", "link:packages/contracts") + currentLock.slice(rootLinkIndex + rootLink.length);
+  assert.throws(() => assertAllowedLockfileDelta(secondLockEdge, t6Lock), /outside|unapproved|relationship/i);
+
+  const changedLockExternal = currentLock.replace("      pg:\n        specifier: 8.16.3\n        version: 8.16.3", "      pg:\n        specifier: 8.16.2\n        version: 8.16.2");
+  assert.throws(() => assertAllowedLockfileDelta(changedLockExternal, t6Lock), /outside|change/i);
+  const changedLockMetadata = currentLock.replace("lockfileVersion: '9.0'", "lockfileVersion: '8.0'");
+  assert.throws(() => assertAllowedLockfileDelta(changedLockMetadata, t6Lock), /outside|change|documents/i);
 });
