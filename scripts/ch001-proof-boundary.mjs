@@ -17,7 +17,7 @@ export function assertValidProofRunId(runId) {
 export function resolveProofEvidenceRoot(repositoryRoot, configuredRoot, runId) {
   assertValidProofRunId(runId);
   const root = resolve(repositoryRoot);
-  const evidenceRoot = resolve(root, configuredRoot ?? `artifacts/ch001r3/${runId}`);
+  const evidenceRoot = resolve(root, configuredRoot ?? `artifacts/ch001r11/${runId}`);
   const evidenceRelative = relative(root, evidenceRoot);
   if (!evidenceRelative || evidenceRelative.startsWith("..") || isAbsolute(evidenceRelative)) throw new Error(`CH001_EVIDENCE_ROOT must remain inside the repository: ${evidenceRoot}`);
   return evidenceRoot;

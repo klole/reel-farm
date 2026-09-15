@@ -45,7 +45,7 @@ function rootImporterRange(text) {
   const secondDocumentStart = separators[1] + 1;
   const importers = lineIndex(lines, (line) => line === "importers:", secondDocumentStart, "Application lockfile importer document is missing.");
   const rootStart = lineIndex(lines, (line, index) => index > importers && line === ROOT_IMPORTER, importers + 1, "Application root importer is missing.");
-  const rootEnd = lines.findIndex((line, index) => index > rootStart && /^  \S.*:$/.test(line));
+  const rootEnd = lines.findIndex((line, index) => index > rootStart && /^ {2}\S.*:$/.test(line));
   if (rootEnd < 0) throw new Error("Application root importer has no bounded end.");
   const dependencies = lineIndex(lines, (line, index) => index > rootStart && index < rootEnd && line === "    dependencies:", rootStart + 1, "Application root runtime dependencies are missing.");
   const devDependencies = lineIndex(lines, (line, index) => index > dependencies && index < rootEnd && line === "    devDependencies:", dependencies + 1, "Application root devDependencies boundary is missing.");

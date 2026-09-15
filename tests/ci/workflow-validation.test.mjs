@@ -1,4 +1,4 @@
-/* global process */
+/* global process structuredClone */
 
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
