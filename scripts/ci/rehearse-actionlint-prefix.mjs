@@ -283,8 +283,23 @@ async function runPrefix(options) {
     if (!statePath || !isAbsolute(statePath) || actionlintEnvironment.CH001_SANDBOX_STATE_DIR !== statePath || workflowValidationEnvironment.CH001_SANDBOX_STATE_DIR !== statePath || ciEnvironment.CH001_SANDBOX_STATE_DIR !== statePath) throw new Error("The run-owned sandbox state path was not transferred identically.");
     if (materialized.CH001_SANDBOX_OPT_IN !== "false") throw new Error("The source-bound prefix unexpectedly enabled sandbox qualification.");
     const ciOutput = stepResults.find((step) => step.step_id === "ci_helper_tests");
-    const counts = nodeTestCounts(ciOutput.stdout + ciOutput.stderr);
-    if (counts.failed !== 0 || counts.skipped !== 0 || counts.passed === 0) throw new Error("The complete CI regression suite did not pass without skips.");
+    const fileLevelCounts = nodeTestCounts(ciOutput.stdout + ciOutput.stderr);
+    if (fileLevelCounts.failed !== 0 || fileLevelCounts.skipped !== 0 || fileLevelCounts.passed === 0) throw new Error("The complete CI regression suite did not pass without skips.");
+    const testFilesResult = await run("git", ["ls-files", "-z", "--", "tests/ci"], { cwd: checkout, environment });
+    if (testFilesResult.exit_code !== 0) throw new Error(`Unable to enumerate tracked CI test modules: ${testFilesResult.stderr || testFilesResult.stdout}`);
+    const testFiles = testFilesResult.stdout.split("\0").filter((path) => /\.test\.mjs$/.test(path));
+    if (testFiles.length !== fileLevelCounts.passed) throw new Error(`CI file-level count ${fileLevelCounts.passed} does not match tracked test modules ${testFiles.length}.`);
+    const nestedTestResults = [];
+    const nestedTestOutputs = [];
+    for (const testFile of testFiles) {
+      const nestedResult = await run(process.execPath, [testFile], { cwd: checkout, environment });
+      const nestedCounts = nodeTestCounts(nestedResult.stdout + nestedResult.stderr);
+      nestedTestResults.push({ file: testFile, ...nestedCounts, exit_code: nestedResult.exit_code });
+      nestedTestOutputs.push({ file: testFile, stdout: nestedResult.stdout, stderr: nestedResult.stderr });
+      if (nestedResult.exit_code !== 0 || nestedCounts.failed !== 0 || nestedCounts.skipped !== 0) throw new Error(`Nested CI test module failed: ${testFile}`);
+    }
+    const nestedCounts = nestedTestResults.reduce((totals, current) => Object.fromEntries(Object.keys(totals).map((key) => [key, totals[key] + current[key]])), { discovered: 0, executed: 0, passed: 0, failed: 0, skipped: 0 });
+    if (nestedCounts.passed === 0 || nestedCounts.failed !== 0 || nestedCounts.skipped !== 0) throw new Error("Nested CI test modules did not pass without skips.");
     const commandAfter = Object.fromEntries(await Promise.all(Object.entries(commandFiles).map(async ([key, path]) => [key, await fileSnapshot(path)])));
     for (const key of ["github_path", "github_output", "github_step_summary"]) {
       if (commandBefore[key].sha256 !== commandAfter[key].sha256 || commandBefore[key].bytes !== commandAfter[key].bytes) throw new Error(`${key} changed during the source-bound prefix.`);
@@ -325,7 +340,8 @@ async function runPrefix(options) {
       `node=${process.version}`,
       `node_modules_present=${await stat(resolve(checkout, "node_modules")).then(() => true).catch(() => false)}`,
       ...Object.values(bodies).map((body) => `step=${body.step_id} body_sha256=${body.body_sha256}\n${body.body}`),
-      ...stepResults.map((step) => [`--- ${step.step_id} exit=${step.exit_code} ---`, step.stdout, step.stderr].join("\n"))
+      ...stepResults.map((step) => [`--- ${step.step_id} exit=${step.exit_code} ---`, step.stdout, step.stderr].join("\n")),
+      ...nestedTestOutputs.map((result) => [`--- nested ${result.file} ---`, result.stdout, result.stderr].join("\n"))
     ].join("\n");
     await writeFile(evidencePaths.commands_log, commandLog, "utf8");
     const copiedRelative = (path) => relative(repositoryRoot, path);
@@ -390,9 +406,11 @@ async function runPrefix(options) {
       },
       ci_suite: {
         command: "node --test tests/ci",
-        ...counts,
+        file_level: fileLevelCounts,
+        nested_cases: nestedCounts,
         exit_code: ciOutput.exit_code,
-        file_level_subtests: 6
+        tracked_test_modules: testFiles,
+        nested_module_results: nestedTestResults
       },
       command_files: {
         github_env: { before: commandBefore.github_env, after: commandAfter.github_env, appended_keys: appendedKeys },
@@ -412,6 +430,7 @@ async function runPrefix(options) {
       absent_trees: absentPaths,
       generated_evidence: Object.fromEntries(Object.entries(evidencePaths).map(([key, path]) => [key, { path: copiedRelative(path), sha256: null }])),
       child_commands: stepResults.map(({ command, step_id, body_sha256, exit_code }) => ({ step_id, command, body_sha256, exit_code })),
+      nested_test_commands: testFiles.map((testFile, index) => ({ file: testFile, command: [process.execPath, testFile], ...nestedTestResults[index] })),
       unavailable_checks: ["sandbox qualification", "Docker/Compose", "Chromium", "bounded application proof"],
       external_actions: { github_write: false, workflow_dispatch: false, hosted_run: null, providers: false, credentials: false }
     };
