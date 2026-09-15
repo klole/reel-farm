@@ -1,0 +1,41 @@
+$ node --test tests/ci
+TAP version 13
+# Subtest: /workspace/projects/reel-farm/tests/ci/actionlint-bootstrap.test.mjs
+ok 1 - /workspace/projects/reel-farm/tests/ci/actionlint-bootstrap.test.mjs
+  ---
+  duration_ms: 459.897602
+  ...
+# Subtest: /workspace/projects/reel-farm/tests/ci/actionlint-workflow-boundary.test.mjs
+ok 2 - /workspace/projects/reel-farm/tests/ci/actionlint-workflow-boundary.test.mjs
+  ---
+  duration_ms: 2332.389259
+  ...
+# Subtest: /workspace/projects/reel-farm/tests/ci/ci-repair.test.mjs
+ok 3 - /workspace/projects/reel-farm/tests/ci/ci-repair.test.mjs
+  ---
+  duration_ms: 189.760866
+  ...
+# Subtest: /workspace/projects/reel-farm/tests/ci/proof-boundary.test.mjs
+ok 4 - /workspace/projects/reel-farm/tests/ci/proof-boundary.test.mjs
+  ---
+  duration_ms: 539.782839
+  ...
+# Subtest: /workspace/projects/reel-farm/tests/ci/sandbox.test.mjs
+ok 5 - /workspace/projects/reel-farm/tests/ci/sandbox.test.mjs
+  ---
+  duration_ms: 247.925747
+  ...
+# Subtest: /workspace/projects/reel-farm/tests/ci/workflow-validation.test.mjs
+ok 6 - /workspace/projects/reel-farm/tests/ci/workflow-validation.test.mjs
+  ---
+  duration_ms: 2023.645712
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2346.346767

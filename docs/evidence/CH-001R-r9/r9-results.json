@@ -1,0 +1,134 @@
+{
+  "record_kind": "R9_REPAIR_CHECKLIST_RESULT",
+  "phase": "CH-001R-r9",
+  "base_commit": "d04a0a70d890890132041061be87742396c1909e",
+  "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "implementation_tree": "6e590387c666ee3672210d022e51fc9283e07737",
+  "evidence_commit": null,
+  "workflow_blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+  "workflow_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "target_application_version": "0.1.0",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "summary": {"pass": 12, "fail": 0, "not_run": 2},
+  "checks": [
+    {
+      "id": "R9-T01",
+      "status": "PASS",
+      "command_or_case": "Read-only inspection of the settled T8 hosted receipt",
+      "evidence": ["historical-hosted-receipt.json", "../../../architect/ch001r9-pack/CH001R_r9_Architect_Pack/evidence/historical-run-inspection.json"],
+      "note": "Run 34928718810, job 104252240220, actual artifact 10380711446, archive 5558 bytes with the recorded SHA-256; no hosted gate counts were inherited."
+    },
+    {
+      "id": "R9-T02",
+      "status": "PASS",
+      "command_or_case": "Exact T8 workflow body negative control",
+      "evidence": ["../../../tests/ci/actionlint-workflow-boundary.test.mjs", "historical-hosted-receipt.json"],
+      "note": "The frozen T8 caller supplies a relative stage report, the unchanged helper contract rejects it, the outer stage is FAIL, proof is false/null, and the historical ZIP remains unchanged."
+    },
+    {
+      "id": "R9-T03",
+      "status": "PASS",
+      "command_or_case": "Exact current workflow actionlint step with real helper/reporter",
+      "evidence": ["../../../tests/ci/actionlint-workflow-boundary.test.mjs", "prefix-clean.json", "prefix-hosted-like.json"],
+      "note": "The raw relative report root resolves to an absolute sibling; the real inner v1.7.7 attestation and outer actionlint-bootstrap PASS agree."
+    },
+    {
+      "id": "R9-T04",
+      "status": "PASS",
+      "command_or_case": "Quoted-space and already-absolute report-base controls",
+      "evidence": ["../../../tests/ci/actionlint-workflow-boundary.test.mjs", "prefix-clean.json"],
+      "note": "Both report forms work through the same extracted workflow body, and helper/recorder use one identical sibling target."
+    },
+    {
+      "id": "R9-T05",
+      "status": "PASS",
+      "command_or_case": "Explicit invalid report-path and null/no-report tests",
+      "evidence": ["../../../tests/ci/actionlint-bootstrap.test.mjs", "../../../scripts/ci/actionlint-bootstrap.mjs"],
+      "note": "Relative, empty, newline, carriage-return, and environment-sourced invalid paths reject; explicit null preserves supported no-report behavior."
+    },
+    {
+      "id": "R9-T06",
+      "status": "PASS",
+      "command_or_case": "Early-rejection side-effect sentinels",
+      "evidence": ["../../../tests/ci/actionlint-bootstrap.test.mjs", "prefix-clean.json", "prefix-hosted-like.json"],
+      "note": "Invalid input is rejected before tool/download/temp/report/GITHUB_ENV side effects; prefix command-file sentinels remain byte-identical except expected environment records."
+    },
+    {
+      "id": "R9-T07",
+      "status": "PASS",
+      "command_or_case": "Existing CI reporter/failure-propagation regressions and prefix result",
+      "evidence": ["../../../tests/ci/ci-repair.test.mjs", "prefix-clean-ci-result.json", "prefix-hosted-like-ci-result.json"],
+      "note": "The complete prefix reaches the later stages with bootstrap PASS; no proof is invoked and the outer result remains an honest CI_BOOTSTRAP_FAILURE with nullable proof exit and null gate counts."
+    },
+    {
+      "id": "R9-T08",
+      "status": "PASS",
+      "command_or_case": "Source-bound clean and hosted-like prefix rehearsal",
+      "evidence": ["prefix-clean.json", "prefix-hosted-like.json", "prefix-clean.commands.log", "prefix-hosted-like.commands.log"],
+      "note": "Both independent detached T9 checkouts have no node_modules, use raw workflow environment values, real actionlint, exact extracted bodies, isolated command files, and false sandbox opt-in."
+    },
+    {
+      "id": "R9-T09",
+      "status": "PASS",
+      "command_or_case": "pnpm test:ci plus nested module execution",
+      "evidence": ["04-test-ci.log", "prefix-clean.json", "prefix-hosted-like.json"],
+      "note": "The real aggregate Node runner reports 6/6 file-level subtests; source-bound nested execution reports 64/64 cases across six modules, with zero failures and skips in both modes."
+    },
+    {
+      "id": "R9-T10",
+      "status": "PASS",
+      "command_or_case": "pnpm lint:workflow and semantic-negative actionlint controls",
+      "evidence": ["03-workflow-lint.log", "../../../tests/ci/workflow-validation.test.mjs", "prefix-clean-outer.json"],
+      "note": "Official actionlint 1.7.7 accepts the current workflow; the existing validation tests retain frozen/semantic-negative rejection controls."
+    },
+    {
+      "id": "R9-T11",
+      "status": "PASS",
+      "command_or_case": "Required final local command matrix",
+      "evidence": ["commands.log", "01-pnpm-install-approved.log", "02-syntax.log", "03-workflow-lint.log", "04-test-ci.log", "05-lint.log", "06-typecheck.log", "07-build.log", "08-unit.log", "09-security.log", "10-diff-check.log", "scope-comparison.json"],
+      "note": "Frozen install (approved retry), syntax, workflow lint, CI, lint, typecheck, build, unit, security, and diff checks all pass on final T9; the initial restricted install DNS failure is retained separately."
+    },
+    {
+      "id": "R9-T12",
+      "status": "PASS",
+      "command_or_case": "Final identity/evidence/state inspection",
+      "evidence": ["README.md", "scope-comparison.json", "prefix-clean.json", "prefix-hosted-like.json", "r9-results.json", "../../../handoffs/CH-001R-r9.md"],
+      "note": "T9 and its tree, workflow identity, raw logs, report hashes, scope comparison, and handoff are prepared for the subsequent evidence-only E9 commit; acceptance remains false."
+    },
+    {
+      "id": "R9-T13",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "execution_owner": "router",
+      "note": "Publication ancestry, W9 bytes, and router preflight are router-owned and were not performed by Luna."
+    },
+    {
+      "id": "R9-T14",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "execution_owner": "router",
+      "note": "No fresh T9 hosted request/run/job/artifact was submitted from Luna; the conditional manual request remains separate."
+    }
+  ],
+  "hosted": {
+    "dispatch_submitted": false,
+    "request_accepted": false,
+    "run_started": false,
+    "run_id": null,
+    "job_id": null,
+    "artifact_id": null,
+    "bootstrap_status": null,
+    "failed_stage": null,
+    "sandbox_qualification_status": null,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "application_gate_counts": null,
+    "worker_qualification_status": null,
+    "cleanup_status": null,
+    "application_acceptance": false
+  }
+}

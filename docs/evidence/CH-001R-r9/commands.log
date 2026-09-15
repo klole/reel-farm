@@ -1,0 +1,52 @@
+CH-001R-r9 final local command record
+T9=6014a247b124a186a1abfcb6d65a7ef024cf8cfc
+T9_TREE=6e590387c666ee3672210d022e51fc9283e07737
+E8=d04a0a70d890890132041061be87742396c1909e
+P9=1f7a920e437d561fd40e8524cdb11453294a6124
+node=v20.19.2
+pnpm=12.3.4
+actionlint=/tmp/actionlint-r7.3YgGWu/actionlint
+actionlint_version=1.7.7
+actionlint_archive=/tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz
+actionlint_archive_sha256=023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+actionlint_executable_sha256=9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c
+
+1. pnpm install --frozen-lockfile --reporter=silent
+   exit=1 in the restricted sandbox: DNS could not resolve the uncached npm tarball; raw output: 01-pnpm-install.log
+1b. pnpm install --frozen-lockfile --reporter=silent
+   exit=0 with the approved network retry; raw output: 01-pnpm-install-approved.log
+
+2. set -o pipefail; { set -euo pipefail; for file in scripts/ci/actionlint-bootstrap.mjs scripts/ci/workflow-shell.mjs scripts/ci/rehearse-actionlint-prefix.mjs scripts/ci/ci-result.mjs tests/ci/actionlint-bootstrap.test.mjs tests/ci/actionlint-workflow-boundary.test.mjs; do node --check "$file"; done; bash -n scripts/ci/initialize-sandbox-state.sh; } 2>&1 | tee docs/evidence/CH-001R-r9/02-syntax.log
+   exit=0; raw output: 02-syntax.log
+
+3. ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint pnpm lint:workflow
+   exit=0; raw output: 03-workflow-lint.log
+
+4. ACTIONLINT_BIN=/tmp/actionlint-r7.3YgGWu/actionlint ACTIONLINT_BOOTSTRAP_ARCHIVE=/tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz pnpm test:ci
+   exit=0; Node runner 6/6 file-level subtests; raw output: 04-test-ci.log
+
+5. node scripts/ci/rehearse-actionlint-prefix.mjs --mode clean --archive /tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz --output docs/evidence/CH-001R-r9/prefix-clean.json --run-id 900000601 --attempt 1
+   exit=0; nested 64/64 cases; raw command/body output: prefix-clean.commands.log; generated reports: prefix-clean-inner.json, prefix-clean-outer.json, prefix-clean-ci-result.json
+
+6. node scripts/ci/rehearse-actionlint-prefix.mjs --mode hosted-like --archive /tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz --output docs/evidence/CH-001R-r9/prefix-hosted-like.json --run-id 900000602 --attempt 1
+   exit=0; nested 64/64 cases; raw command/body output: prefix-hosted-like.commands.log; generated reports: prefix-hosted-like-inner.json, prefix-hosted-like-outer.json, prefix-hosted-like-ci-result.json
+
+7. pnpm lint
+   exit=0; raw output: 05-lint.log
+
+8. pnpm typecheck
+   exit=0; raw output: 06-typecheck.log
+
+9. pnpm build
+   exit=0; raw output: 07-build.log
+
+10. pnpm test:unit
+    exit=0; 3 files and 20/20 tests; raw output: 08-unit.log
+
+11. pnpm test:security
+    exit=0; 1 file and 4/4 tests; raw output: 09-security.log
+
+12. git diff --check
+    exit=0; raw output: 10-diff-check.log. The staged evidence was additionally checked with `git diff --cached --check`, exit=0.
+
+No hosted workflow was dispatched or rerun. No providers, publishing, credentials, application proof, sandbox qualification, Docker/Compose, Chromium, or v0.2 work was performed.

@@ -1,0 +1,39 @@
+{
+  "record_kind": "CH001R_R9_HISTORICAL_HOSTED_RECEIPT",
+  "phase": "CH-001R-r9",
+  "source_run_id": 34928718810,
+  "source_attempt": 1,
+  "job_id": 104252240220,
+  "requested_implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "actual_checkout_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "workflow_definition_sha": "d04a0a70d890890132041061be87742396c1909e",
+  "workflow_blob_sha": "fb4d3e4ee58eff81e43395fa6df99c53b65de417",
+  "artifact": {
+    "id_api_listed": 10380711446,
+    "id_in_router_message_preserved": 10380718846,
+    "id_discrepancy_note": "The API-listed/downloaded artifact ID is authoritative; the router-message ID is preserved only as a discrepancy.",
+    "name": "ch001-live-proof-34928718810-1",
+    "bytes": 5558,
+    "sha256": "3c3905e781479fb627481c6bbf5a0bbea03ae1ab93d323cfda5b1475415db92f",
+    "expires_at": "2026-09-29T04:24:53Z",
+    "original_zip": "architect/ch001r9-pack/CH001R_r9_Architect_Pack/evidence/ch001-live-proof-34928718810-1.zip",
+    "original_zip_preserved_unchanged": true
+  },
+  "result": {
+    "classification": "CI_BOOTSTRAP_FAILURE",
+    "failed_stage": "actionlint-bootstrap",
+    "bootstrap_exit_code": 1,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "application_gate_counts": null,
+    "application_acceptance": false,
+    "accepted_application_version": "none"
+  },
+  "scope": {
+    "read_only_historical_evidence": true,
+    "rerun_submitted": false,
+    "new_hosted_run_created": false,
+    "note": "The T8 failure and archive remain preserved; no hosted counts are inherited into T9 local evidence."
+  },
+  "source_inspection": "architect/ch001r9-pack/CH001R_r9_Architect_Pack/evidence/historical-run-inspection.json"
+}

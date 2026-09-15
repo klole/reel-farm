@@ -1,0 +1,12 @@
+$ vitest run --config vitest.config.ts tests/security
+
+ RUN  v5.0.0 /workspace/projects/reel-farm
+
+ ✓ tests/security/scope.test.ts (4 tests) 9ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  06:17:20
+   Duration  249ms (transform 45%, import 31%, tests 15%, worker 8%)
+
+JSON report written to /workspace/projects/reel-farm/artifacts/unit-results.json

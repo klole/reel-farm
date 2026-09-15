@@ -1,0 +1,26 @@
+$ node scripts/ci/lint-workflow.mjs
+{
+  "record_kind": "WORKFLOW_STATIC_VALIDATION_INVOCATION",
+  "root": "/workspace/projects/reel-farm",
+  "validator": {
+    "name": "actionlint",
+    "version": "1.7.7",
+    "executable": "/tmp/actionlint-r7.3YgGWu/actionlint",
+    "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "distribution_reference": "https://github.com/rhysd/actionlint/releases/tag/v1.7.7",
+    "archive_reference": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757"
+  },
+  "command": [
+    "/tmp/actionlint-r7.3YgGWu/actionlint",
+    "-shellcheck=",
+    "-pyflakes=",
+    ".github/workflows/ch001-live-proof.yml"
+  ],
+  "inputs": [
+    {
+      "path": ".github/workflows/ch001-live-proof.yml",
+      "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d"
+    }
+  ]
+}

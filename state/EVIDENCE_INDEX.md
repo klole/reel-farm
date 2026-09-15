@@ -1,5 +1,19 @@
 # Evidence index — CH-001
 
+## CH-001R-r9 actionlint report-path / workflow-shell boundary repair
+
+| Evidence | Location | State |
+|---|---|---|
+| T9 implementation identity and frozen-surface comparison | [scope-comparison.json](../docs/evidence/CH-001R-r9/scope-comparison.json) | T9 `6014a247b124a186a1abfcb6d65a7ef024cf8cfc`, tree `6e590387c666ee3672210d022e51fc9283e07737`; bounded changes only |
+| Exact workflow/helper/reporter boundary results | [r9-results.json](../docs/evidence/CH-001R-r9/r9-results.json) and [README](../docs/evidence/CH-001R-r9/README.md) | R9-T01..T12 PASS; router R9-T13/T14 NOT_RUN |
+| Clean source-bound prefix | [prefix-clean.json](../docs/evidence/CH-001R-r9/prefix-clean.json) and [raw commands](../docs/evidence/CH-001R-r9/prefix-clean.commands.log) | T9 detached no-node_modules checkout; file-level 6/6 and nested 64/64 |
+| Hosted-like source-bound prefix | [prefix-hosted-like.json](../docs/evidence/CH-001R-r9/prefix-hosted-like.json) and [raw commands](../docs/evidence/CH-001R-r9/prefix-hosted-like.commands.log) | Synthetic inherited runner/sandbox state; opt-in false; file-level 6/6 and nested 64/64 |
+| Historical T8 hosted receipt | [historical-hosted-receipt.json](../docs/evidence/CH-001R-r9/historical-hosted-receipt.json) | Run 34928718810, actual artifact 10380711446, preserved read-only; no hosted counts inherited |
+| Final local commands and raw outputs | [commands.log](../docs/evidence/CH-001R-r9/commands.log) and [r9 evidence directory](../docs/evidence/CH-001R-r9/) | Frozen install retry, syntax, actionlint, CI, prefixes, lint, typecheck, build, unit, security, and diff passed |
+| Handoff | [handoffs/CH-001R-r9.md](../handoffs/CH-001R-r9.md) | READY_FOR_ROUTER_PUBLISH; acceptance remains false |
+
+This r9 record is a bounded v0.1.0 CI repair. It preserves the historical T8 artifact/failure and original acceptance contract; it does not establish hosted proof, application acceptance, sandbox qualification, publishing, providers, credentials, or v0.2 work.
+
 | Evidence | Location | State |
 |---|---|---|
 | Baseline, packet hashes, host capabilities | [CH-001 preflight](../docs/chapters/CH-001/PREFLIGHT.md) | Recorded |

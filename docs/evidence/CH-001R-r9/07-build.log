@@ -1,0 +1,53 @@
+$ pnpm --filter @oss/contracts build && pnpm --filter @oss/db build && pnpm --filter @oss/storage build && pnpm --filter @oss/renderer build && pnpm --filter @oss/core build && pnpm --filter @oss/web build && pnpm --filter @oss/worker build
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ next build
+▲ Next.js 16.3.4 (Turbopack)
+✓ Running next.config.ts took 80ms
+- Experiments (use with caution):
+  ✓ externalDir
+  ⨯ useTypeScriptCli
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1340ms
+  Running TypeScript ...
+  Finished TypeScript in 4.3s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/8) ...
+  Generating static pages using 7 workers (2/8)
+  Generating static pages using 7 workers (4/8)
+  Generating static pages using 7 workers (6/8)
+✓ Generating static pages using 7 workers (8/8) in 169ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/assets
+├ ƒ /api/assets/[assetId]/content
+├ ƒ /api/assets/[assetId]/thumbnail
+├ ƒ /api/auth/[...all]
+├ ƒ /api/csrf
+├ ƒ /api/health/details
+├ ƒ /api/health/live
+├ ƒ /api/projects
+├ ƒ /api/projects/[projectId]
+├ ƒ /api/projects/[projectId]/draft
+├ ƒ /api/projects/[projectId]/render
+├ ƒ /api/render-requests/[requestId]
+├ ƒ /api/render-requests/[requestId]/export
+├ ƒ /api/render-requests/[requestId]/images/[index]
+├ ƒ /api/setup
+├ ƒ /login
+├ ƒ /projects
+├ ƒ /projects/[projectId]
+└ ƒ /setup
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+$ tsc -p tsconfig.json

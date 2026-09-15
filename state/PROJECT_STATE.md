@@ -1,3 +1,21 @@
+# Project state — CH-001R-r9 checkpoint
+
+**Last updated:** 2026-09-15 UTC
+**State:** `awaiting_review`
+**Product:** Open Slideshow Studio
+**Target application version:** `0.1.0`
+
+## Current CH-001R-r9 bounded repair
+
+- P9 is `1f7a920e437d561fd40e8524cdb11453294a6124` (tree `b98145e3bed876d880beb9c09306715ff7e02f3d`); E8 remains `d04a0a70d890890132041061be87742396c1909e` (tree `40b9bc095b139a19e1c42130bf5e43ca15c79cc6`).
+- Final T9 implementation is `6014a247b124a186a1abfcb6d65a7ef024cf8cfc` (tree `6e590387c666ee3672210d022e51fc9283e07737`). It contains only the bounded report-path/workflow-shell repair, focused regressions, source-bound rehearsal, and a non-semantic lint declaration for the architect-only reference excerpt.
+- The workflow blob is `35fa339aac2fcb024cd476ff38d87d27eb6482af`; its SHA-256 is `733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d`. The raw relative `CI_BOOTSTRAP_REPORT` is resolved to an absolute sibling `actionlint-bootstrap.json` before passing one target to both helper and reporter.
+- Final local checks passed on Node `20.19.2`, pnpm `12.3.4`, and official actionlint `1.7.7`: syntax, frozen install, workflow lint, `pnpm test:ci`, clean/hosted-like source-bound no-node_modules prefixes, lint, typecheck, build, unit (`20/20`), security (`4/4`), and diff checks. The aggregate CI runner is `6/6` file-level subtests; the source-bound nested total is `64/64` cases, with zero failures/skips.
+- Source-bound clean run `900000601` and hosted-like run `900000602` both used independent detached T9 checkouts, the actual extracted workflow bodies, raw relative job environment forms, real actionlint, and isolated synthetic command files. The hosted-like mode carried inherited synthetic sandbox state with explicit opt-in false. Proof, policy, and sandbox-state trees remained absent.
+- The settled T8 hosted failure `34928718810` is preserved read-only: job `104252240220`, actual API-listed artifact `10380711446`, 5558 bytes, SHA-256 `3c3905e781479fb627481c6bbf5a0bbea03ae1ab93d323cfda5b1475415db92f`, failed at `actionlint-bootstrap`, `proof_invoked=false`, `proof_exit_code=null`, and no application gate counts. It was not rerun; the original ZIP is unchanged.
+- R9-T01 through R9-T12 are PASS in `docs/evidence/CH-001R-r9/r9-results.json`. R9-T13/T14 are router-owned `NOT_RUN`. Luna did not dispatch, rerun, publish, use providers/credentials, qualify sandbox, run proof, or begin v0.2 work.
+- Application acceptance remains `false`; accepted application version remains `none`. E9 is the evidence/state-only commit containing the r9 handoff and records; its actual SHA is returned externally after commit and is not embedded self-referentially here. The older r8 section below is historical.
+
 # Project state — CH-001R-r8 checkpoint
 
 **Last updated:** 2026-09-12 UTC

@@ -1,0 +1,510 @@
+{
+  "record_kind": "CH001R_R9_SOURCE_BOUND_PREFIX",
+  "phase": "CH-001R-r9",
+  "mode": "hosted-like",
+  "status": "PASS",
+  "implementation_sha": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "implementation_tree": "6e590387c666ee3672210d022e51fc9283e07737",
+  "workflow_path": ".github/workflows/ch001-live-proof.yml",
+  "workflow_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "checkout_method": "independent no-local clone with detached T9 checkout",
+  "checkout": "/tmp/ch001r9-prefix-hosted-like-8tYTvR/checkout",
+  "cwd": "/tmp/ch001r9-prefix-hosted-like-8tYTvR/checkout",
+  "node": "v20.19.2",
+  "expected_node": "v20.19.2",
+  "node_matches_project_pin": true,
+  "node_modules_present_before_prefix": false,
+  "synthetic_run_id": "900000602",
+  "synthetic_run_attempt": "1",
+  "raw_job_environment": {
+    "CI_BOOTSTRAP_REPORT": "artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/bootstrap-result.json",
+    "CI_RESULT_REPORT": "artifacts/ch001r4/r4-${{ github.run_id }}-${{ github.run_attempt }}/bootstrap/public/ci-result.json",
+    "CH001_SANDBOX_OPT_IN": "${{ inputs.sandbox_qualification }}"
+  },
+  "materialized_environment": {
+    "CI_BOOTSTRAP_REPORT": "artifacts/ch001r4/r4-900000602-1/bootstrap/public/bootstrap-result.json",
+    "CI_RESULT_REPORT": "artifacts/ch001r4/r4-900000602-1/bootstrap/public/ci-result.json",
+    "CH001_SANDBOX_OPT_IN": "false"
+  },
+  "steps": {
+    "identity": {
+      "id": "identity",
+      "body_sha256": "845910247da5bc996dc62b7e2b1d39e66702d4440b28c6a727d687039f4df3a9",
+      "exit_code": 0
+    },
+    "actionlint_bootstrap": {
+      "id": "actionlint_bootstrap",
+      "body_sha256": "4261577d40af9b9ced4040512d3bf978203ccc2491d2143a196ccc778f6a3967",
+      "exit_code": 0
+    },
+    "workflow_validation": {
+      "id": "workflow_validation",
+      "body_sha256": "a3eabe4cbbfa5699ecf3a90e6c824b99358e60fd6ac9d80bb3f94c1d728e590c",
+      "exit_code": 0
+    },
+    "ci_helper_tests": {
+      "id": "ci_helper_tests",
+      "body_sha256": "07a39d433b3622283e331a7d096176003bf38109b9a057ec415164b811c1263a",
+      "exit_code": 0
+    }
+  },
+  "actionlint_step_contract": {
+    "helper_report_argument_uses": 1,
+    "recorder_detail_argument_uses": 1
+  },
+  "report_paths": {
+    "resolved_stage_report": "docs/evidence/CH-001R-r9/prefix-hosted-like-inner.json",
+    "helper_report_argument": "docs/evidence/CH-001R-r9/prefix-hosted-like-inner.json",
+    "recorder_detail_file": "docs/evidence/CH-001R-r9/prefix-hosted-like-inner.json",
+    "outer_bootstrap_report": "docs/evidence/CH-001R-r9/prefix-hosted-like-outer.json",
+    "outer_ci_result": "docs/evidence/CH-001R-r9/prefix-hosted-like-ci-result.json",
+    "actionlint_log": "docs/evidence/CH-001R-r9/prefix-hosted-like-actionlint.log",
+    "same_target_for_helper_and_recorder": true,
+    "raw_workflow_report_was_relative": true
+  },
+  "actionlint": {
+    "version": "1.7.7",
+    "archive_source": "local_override",
+    "archive_cache": {
+      "path": "/tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz",
+      "sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+      "source": "cached_offline_official_archive"
+    },
+    "archive_expected_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "archive_measured_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "executable_expected_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "executable_measured_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "executable": "/tmp/ch001r9-prefix-hosted-like-8tYTvR/synthetic runner temp/ch001r8-actionlint-900000602-1-akZ9KY/actionlint",
+    "download_attempts": null,
+    "report_sha256": "b6cd346c9b5d8e60e1756f9e6caa571cc4288d64c62a8b36ac1ccae638641c84"
+  },
+  "workflow_validation": {
+    "status": "PASS",
+    "exit_code": 0,
+    "outer_report_sha256": "2cdb00490f16a684204520ab33f51cf35e336115be4dd28a1f59ae30fe35cde4"
+  },
+  "ci_suite": {
+    "command": "node --test tests/ci",
+    "file_level": {
+      "discovered": 6,
+      "executed": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    },
+    "nested_cases": {
+      "discovered": 64,
+      "executed": 64,
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0
+    },
+    "exit_code": 0,
+    "tracked_test_modules": [
+      "tests/ci/actionlint-bootstrap.test.mjs",
+      "tests/ci/actionlint-workflow-boundary.test.mjs",
+      "tests/ci/ci-repair.test.mjs",
+      "tests/ci/proof-boundary.test.mjs",
+      "tests/ci/sandbox.test.mjs",
+      "tests/ci/workflow-validation.test.mjs"
+    ],
+    "nested_module_results": [
+      {
+        "file": "tests/ci/actionlint-bootstrap.test.mjs",
+        "discovered": 6,
+        "executed": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "exit_code": 0
+      },
+      {
+        "file": "tests/ci/actionlint-workflow-boundary.test.mjs",
+        "discovered": 4,
+        "executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "exit_code": 0
+      },
+      {
+        "file": "tests/ci/ci-repair.test.mjs",
+        "discovered": 11,
+        "executed": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0,
+        "exit_code": 0
+      },
+      {
+        "file": "tests/ci/proof-boundary.test.mjs",
+        "discovered": 12,
+        "executed": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0,
+        "exit_code": 0
+      },
+      {
+        "file": "tests/ci/sandbox.test.mjs",
+        "discovered": 18,
+        "executed": 18,
+        "passed": 18,
+        "failed": 0,
+        "skipped": 0,
+        "exit_code": 0
+      },
+      {
+        "file": "tests/ci/workflow-validation.test.mjs",
+        "discovered": 13,
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exit_code": 0
+      }
+    ]
+  },
+  "command_files": {
+    "github_env": {
+      "before": {
+        "bytes": 29,
+        "sha256": "521febfb7f3ac7874b6ecda49bfe53bbd13fc3129bbe58ac00058fa0f8f2ae58"
+      },
+      "after": {
+        "bytes": 493,
+        "sha256": "98aa837d47455ee6069bd3db7448cb75d97bc791f0a46d6cd435dcc4a14b5932"
+      },
+      "appended_keys": [
+        "CH001_IMPLEMENTATION_COMMIT",
+        "CH001_WORKFLOW_BLOB_SHA",
+        "CH001_WORKFLOW_FILE_SHA256",
+        "CH001_SANDBOX_STATE_DIR",
+        "ACTIONLINT_BIN"
+      ]
+    },
+    "github_path": {
+      "before": {
+        "bytes": 30,
+        "sha256": "5e009ddc81c4b594fb089c470a492ce30c82d7abe24bddb46fbee9a5fd1f252f"
+      },
+      "after": {
+        "bytes": 30,
+        "sha256": "5e009ddc81c4b594fb089c470a492ce30c82d7abe24bddb46fbee9a5fd1f252f"
+      },
+      "unchanged": true
+    },
+    "github_output": {
+      "before": {
+        "bytes": 32,
+        "sha256": "4a20246c6faac6d039902e8cdff57fc9d1b185f9a82e6676673871cec2bc0376"
+      },
+      "after": {
+        "bytes": 32,
+        "sha256": "4a20246c6faac6d039902e8cdff57fc9d1b185f9a82e6676673871cec2bc0376"
+      },
+      "unchanged": true
+    },
+    "github_step_summary": {
+      "before": {
+        "bytes": 33,
+        "sha256": "99ba94dbe173a5e65077e1fbcaf4c8db6916e6df73410d79a9efc32a70915f5a"
+      },
+      "after": {
+        "bytes": 33,
+        "sha256": "99ba94dbe173a5e65077e1fbcaf4c8db6916e6df73410d79a9efc32a70915f5a"
+      },
+      "unchanged": true
+    }
+  },
+  "environment_records": [
+    {
+      "step_id": "identity",
+      "appended_keys": [
+        "CH001_IMPLEMENTATION_COMMIT",
+        "CH001_WORKFLOW_BLOB_SHA",
+        "CH001_WORKFLOW_FILE_SHA256",
+        "CH001_SANDBOX_STATE_DIR"
+      ]
+    },
+    {
+      "step_id": "actionlint_bootstrap",
+      "appended_keys": [
+        "ACTIONLINT_BIN"
+      ]
+    },
+    {
+      "step_id": "workflow_validation",
+      "appended_keys": []
+    },
+    {
+      "step_id": "ci_helper_tests",
+      "appended_keys": []
+    }
+  ],
+  "environment_transfer": {
+    "applied_as_data_without_source_or_eval": true,
+    "actionlint_bin": "/tmp/ch001r9-prefix-hosted-like-8tYTvR/synthetic runner temp/ch001r8-actionlint-900000602-1-akZ9KY/actionlint",
+    "actionlint_bin_consumers_match": true,
+    "run_owned_state_path": "/tmp/ch001r9-prefix-hosted-like-8tYTvR/synthetic runner temp/ch001r6/900000602-1/sandbox",
+    "state_path_consumers_match": true,
+    "inherited_sandbox_state": "/tmp/ch001r9-prefix-hosted-like-8tYTvR/inherited sandbox state"
+  },
+  "absent_trees": {
+    "proof": true,
+    "proof_public": true,
+    "policy": true,
+    "sandbox_state": true
+  },
+  "generated_evidence": {
+    "inner_report": {
+      "path": "docs/evidence/CH-001R-r9/prefix-hosted-like-inner.json",
+      "sha256": "b6cd346c9b5d8e60e1756f9e6caa571cc4288d64c62a8b36ac1ccae638641c84"
+    },
+    "outer_report": {
+      "path": "docs/evidence/CH-001R-r9/prefix-hosted-like-outer.json",
+      "sha256": "2cdb00490f16a684204520ab33f51cf35e336115be4dd28a1f59ae30fe35cde4"
+    },
+    "outer_ci_result": {
+      "path": "docs/evidence/CH-001R-r9/prefix-hosted-like-ci-result.json",
+      "sha256": "087b9e56941a4cccba4a1b0267c7bc4b6477c2ed8d58858e60fe2cb61f9447d9"
+    },
+    "actionlint_log": {
+      "path": "docs/evidence/CH-001R-r9/prefix-hosted-like-actionlint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commands_log": {
+      "path": "docs/evidence/CH-001R-r9/prefix-hosted-like.commands.log",
+      "sha256": "67f68b7bf34aee9c1ad738417da712aebb0b5026f35dbddaa0274b23fc468515"
+    }
+  },
+  "child_commands": [
+    {
+      "step_id": "identity",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-euo",
+        "pipefail",
+        "-c",
+        "set -euo pipefail\nactual_sha=\"$(git rev-parse HEAD)\"\ntest \"$actual_sha\" = \"$REQUESTED_SHA\"\ngit cat-file -e \"$REQUESTED_SHA^{commit}\"\ngit merge-base --is-ancestor \"$REQUESTED_SHA\" origin/main\ntest -z \"$(git status --porcelain --untracked-files=no)\"\nworkflow_blob_sha=\"$(git rev-parse \"$CH001_WORKFLOW_SHA:.github/workflows/ch001-live-proof.yml\")\"\nworkflow_file_sha256=\"$(sha256sum .github/workflows/ch001-live-proof.yml | awk '{print $1}')\"\n\nmkdir -p \"$(dirname \"$CI_BOOTSTRAP_REPORT\")\"\nexport CH001_IMPLEMENTATION_COMMIT=\"$actual_sha\"\nexport CH001_WORKFLOW_BLOB_SHA=\"$workflow_blob_sha\"\nexport CH001_WORKFLOW_FILE_SHA256=\"$workflow_file_sha256\"\nnode scripts/ci/ci-result.mjs init --report \"$CI_BOOTSTRAP_REPORT\"\nprintf 'Bounded CH-001R-r4 live proof; not v0.1 acceptance.\\nImplementation: %s\\nWorkflow definition: %s\\nWorkflow blob: %s\\nRun: %s\\n' \"$REQUESTED_SHA\" \"$CH001_WORKFLOW_SHA\" \"$workflow_blob_sha\" \"$CH001_RUN_ID\" > \"$(dirname \"$CI_BOOTSTRAP_REPORT\")/dispatch.txt\"\n\n{\n  printf 'CH001_IMPLEMENTATION_COMMIT=%s\\n' \"$actual_sha\"\n  printf 'CH001_WORKFLOW_BLOB_SHA=%s\\n' \"$workflow_blob_sha\"\n  printf 'CH001_WORKFLOW_FILE_SHA256=%s\\n' \"$workflow_file_sha256\"\n} >> \"$GITHUB_ENV\"\nbash scripts/ci/initialize-sandbox-state.sh\n"
+      ],
+      "body_sha256": "845910247da5bc996dc62b7e2b1d39e66702d4440b28c6a727d687039f4df3a9",
+      "exit_code": 0
+    },
+    {
+      "step_id": "actionlint_bootstrap",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-euo",
+        "pipefail",
+        "-c",
+        "set -euo pipefail\nstage_log=\"$RUNNER_TEMP/ch001r8-actionlint-bootstrap.log\"\nstage_report=\"$(node --input-type=commonjs -e '\n  const path = require(\"node:path\");\n  const base = process.env.CI_BOOTSTRAP_REPORT;\n  if (typeof base !== \"string\" || base.length === 0 || /[\\0\\r\\n]/.test(base)) {\n    throw new Error(\"CI_BOOTSTRAP_REPORT must be a non-empty single-line path.\");\n  }\n  process.stdout.write(path.resolve(path.dirname(base), \"actionlint-bootstrap.json\"));\n')\"\nset +e\nactionlint_bin=\"$(node scripts/ci/actionlint-bootstrap.mjs --report \"$stage_report\" --print-bin 2>\"$stage_log\")\"\nstage_exit=$?\nif [[ \"$stage_exit\" -eq 0 ]]; then\n  if [[ \"$actionlint_bin\" != /* || ! -x \"$actionlint_bin\" ]]; then\n    printf 'Provisioner did not return an absolute executable path: %s\\n' \"$actionlint_bin\" >> \"$stage_log\"\n    stage_exit=1\n  else\n    export ACTIONLINT_BIN=\"$actionlint_bin\"\n    if ! grep -Fqx \"ACTIONLINT_BIN=$actionlint_bin\" \"$GITHUB_ENV\"; then\n      printf 'Provisioner did not publish its verified path to GITHUB_ENV.\\n' >> \"$stage_log\"\n      stage_exit=1\n    fi\n  fi\nfi\nset -e\nnode scripts/ci/ci-result.mjs record-stage --report \"$CI_BOOTSTRAP_REPORT\" --name actionlint-bootstrap --exit-code \"$stage_exit\" --detail-file \"$stage_report\" --log-file \"$stage_log\"\nrm -f \"$stage_log\"\nexit \"$stage_exit\"\n"
+      ],
+      "body_sha256": "4261577d40af9b9ced4040512d3bf978203ccc2491d2143a196ccc778f6a3967",
+      "exit_code": 0
+    },
+    {
+      "step_id": "workflow_validation",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-euo",
+        "pipefail",
+        "-c",
+        "set -euo pipefail\nstage_log=\"$RUNNER_TEMP/ch001r8-workflow-validation.log\"\nset +e\nnode scripts/ci/lint-workflow.mjs 2>&1 | tee \"$stage_log\"\nstage_exit=${PIPESTATUS[0]}\nset -e\nnode scripts/ci/ci-result.mjs record-stage --report \"$CI_BOOTSTRAP_REPORT\" --name workflow-validation --exit-code \"$stage_exit\" --log-file \"$stage_log\"\nrm -f \"$stage_log\"\nexit \"$stage_exit\"\n"
+      ],
+      "body_sha256": "a3eabe4cbbfa5699ecf3a90e6c824b99358e60fd6ac9d80bb3f94c1d728e590c",
+      "exit_code": 0
+    },
+    {
+      "step_id": "ci_helper_tests",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-euo",
+        "pipefail",
+        "-c",
+        "set -euo pipefail\nstage_log=\"$RUNNER_TEMP/ch001r8-ci-helper-regressions.log\"\nset +e\nnode --test tests/ci 2>&1 | tee \"$stage_log\"\nstage_exit=${PIPESTATUS[0]}\nset -e\nnode scripts/ci/ci-result.mjs record-stage --report \"$CI_BOOTSTRAP_REPORT\" --name ci-helper-regressions --exit-code \"$stage_exit\" --log-file \"$stage_log\"\nrm -f \"$stage_log\"\nexit \"$stage_exit\"\n"
+      ],
+      "body_sha256": "07a39d433b3622283e331a7d096176003bf38109b9a057ec415164b811c1263a",
+      "exit_code": 0
+    }
+  ],
+  "nested_test_commands": [
+    {
+      "file": "tests/ci/actionlint-bootstrap.test.mjs",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "set -o pipefail\n\"$1\" --input-type=module -e 'await import(\"./\" + process.argv[1])' \"$2\" 2>&1 | tee\nnested_exit=${PIPESTATUS[0]}\nexit \"$nested_exit\"",
+        "ch001r9-nested",
+        "/usr/bin/node",
+        "tests/ci/actionlint-bootstrap.test.mjs"
+      ],
+      "test_command": [
+        "/usr/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import(\"./\" + process.argv[1])",
+        "tests/ci/actionlint-bootstrap.test.mjs"
+      ],
+      "discovered": 6,
+      "executed": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "file": "tests/ci/actionlint-workflow-boundary.test.mjs",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "set -o pipefail\n\"$1\" --input-type=module -e 'await import(\"./\" + process.argv[1])' \"$2\" 2>&1 | tee\nnested_exit=${PIPESTATUS[0]}\nexit \"$nested_exit\"",
+        "ch001r9-nested",
+        "/usr/bin/node",
+        "tests/ci/actionlint-workflow-boundary.test.mjs"
+      ],
+      "test_command": [
+        "/usr/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import(\"./\" + process.argv[1])",
+        "tests/ci/actionlint-workflow-boundary.test.mjs"
+      ],
+      "discovered": 4,
+      "executed": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "file": "tests/ci/ci-repair.test.mjs",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "set -o pipefail\n\"$1\" --input-type=module -e 'await import(\"./\" + process.argv[1])' \"$2\" 2>&1 | tee\nnested_exit=${PIPESTATUS[0]}\nexit \"$nested_exit\"",
+        "ch001r9-nested",
+        "/usr/bin/node",
+        "tests/ci/ci-repair.test.mjs"
+      ],
+      "test_command": [
+        "/usr/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import(\"./\" + process.argv[1])",
+        "tests/ci/ci-repair.test.mjs"
+      ],
+      "discovered": 11,
+      "executed": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "file": "tests/ci/proof-boundary.test.mjs",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "set -o pipefail\n\"$1\" --input-type=module -e 'await import(\"./\" + process.argv[1])' \"$2\" 2>&1 | tee\nnested_exit=${PIPESTATUS[0]}\nexit \"$nested_exit\"",
+        "ch001r9-nested",
+        "/usr/bin/node",
+        "tests/ci/proof-boundary.test.mjs"
+      ],
+      "test_command": [
+        "/usr/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import(\"./\" + process.argv[1])",
+        "tests/ci/proof-boundary.test.mjs"
+      ],
+      "discovered": 12,
+      "executed": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "file": "tests/ci/sandbox.test.mjs",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "set -o pipefail\n\"$1\" --input-type=module -e 'await import(\"./\" + process.argv[1])' \"$2\" 2>&1 | tee\nnested_exit=${PIPESTATUS[0]}\nexit \"$nested_exit\"",
+        "ch001r9-nested",
+        "/usr/bin/node",
+        "tests/ci/sandbox.test.mjs"
+      ],
+      "test_command": [
+        "/usr/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import(\"./\" + process.argv[1])",
+        "tests/ci/sandbox.test.mjs"
+      ],
+      "discovered": 18,
+      "executed": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "file": "tests/ci/workflow-validation.test.mjs",
+      "command": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "set -o pipefail\n\"$1\" --input-type=module -e 'await import(\"./\" + process.argv[1])' \"$2\" 2>&1 | tee\nnested_exit=${PIPESTATUS[0]}\nexit \"$nested_exit\"",
+        "ch001r9-nested",
+        "/usr/bin/node",
+        "tests/ci/workflow-validation.test.mjs"
+      ],
+      "test_command": [
+        "/usr/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import(\"./\" + process.argv[1])",
+        "tests/ci/workflow-validation.test.mjs"
+      ],
+      "discovered": 13,
+      "executed": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    }
+  ],
+  "unavailable_checks": [
+    "sandbox qualification",
+    "Docker/Compose",
+    "Chromium",
+    "bounded application proof"
+  ],
+  "external_actions": {
+    "github_write": false,
+    "workflow_dispatch": false,
+    "hosted_run": null,
+    "providers": false,
+    "credentials": false
+  }
+}

@@ -1,0 +1,14 @@
+Error: ERR_PNPM_TARBALL_FETCH_TARBALL
+
+  × installing dependencies
+  ├─▶ Failed to fetch https://registry.npmjs.org/shebang-command/-/shebang-
+  │   command-2.0.0.tgz: error sending request for url (https://
+  │   registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz): client
+  │   error (Connect): dns error: failed to lookup address information:
+  │   Temporary failure in name resolution
+  ├─▶ error sending request for url (https://registry.npmjs.org/shebang-
+  │   command/-/shebang-command-2.0.0.tgz)
+  ├─▶ client error (Connect)
+  ├─▶ dns error
+  ╰─▶ failed to lookup address information: Temporary failure in name
+      resolution

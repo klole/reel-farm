@@ -1,0 +1,78 @@
+{
+  "record_kind": "CH001R_R9_SCOPE_COMPARISON",
+  "phase": "CH-001R-r9",
+  "baseline": {
+    "e8": "d04a0a70d890890132041061be87742396c1909e",
+    "e8_tree": "40b9bc095b139a19e1c42130bf5e43ca15c79cc6",
+    "p9": "1f7a920e437d561fd40e8524cdb11453294a6124",
+    "p9_tree": "b98145e3bed876d880beb9c09306715ff7e02f3d"
+  },
+  "implementation": {
+    "t9": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+    "t9_tree": "6e590387c666ee3672210d022e51fc9283e07737"
+  },
+  "changed_from_p9": [
+    {
+      "path": ".github/workflows/ch001-live-proof.yml",
+      "disposition": "The actionlint step resolves an absolute sibling report path from the raw relative CI_BOOTSTRAP_REPORT while retaining the existing helper and recorder arguments."
+    },
+    {
+      "path": "scripts/ci/actionlint-bootstrap.mjs",
+      "disposition": "The explicit report path is validated before provisioning side effects; the absolute-path contract and null/no-report behavior remain."
+    },
+    {
+      "path": "scripts/ci/workflow-shell.mjs",
+      "disposition": "Dependency-free exact literal workflow-shell extraction/materialization helper for tests and rehearsal."
+    },
+    {
+      "path": "scripts/ci/rehearse-actionlint-prefix.mjs",
+      "disposition": "Source-bound clean/hosted-like no-node_modules prefix rehearsal using extracted workflow bodies and real actionlint/helper/reporter."
+    },
+    {
+      "path": "tests/ci/actionlint-bootstrap.test.mjs",
+      "disposition": "Focused early report-path side-effect and null/no-report regressions."
+    },
+    {
+      "path": "tests/ci/actionlint-workflow-boundary.test.mjs",
+      "disposition": "Exact current workflow-shell/helper/reporter positive controls, quoted/absolute path controls, frozen T8 negative control, and extractor negative controls."
+    },
+    {
+      "path": "architect/ch001r9-pack/CH001R_r9_Architect_Pack/reference/T8-report-guard.excerpt.mjs",
+      "disposition": "Non-semantic ESLint global declaration only, matching the prior r8 diagnostic fixture; reference diagnostic behavior is unchanged."
+    }
+  ],
+  "frozen_surfaces": {
+    "package.json": {"sha256": "4150f4a4cfb483a287b7d0d5e4238e6dc2544edf099b294362f29f95e6804ab5", "unchanged_from_p9": true},
+    "pnpm-lock.yaml": {"sha256": "9c49bf356bdd523623b79cf6096df83de51f06b358bffa88391700a4c5719d70", "unchanged_from_p9": true},
+    ".nvmrc": {"sha256": "4500e8d9dd80dba8f66ec54b39b8dce1d0dcbd3d8b2a93e9960a19cfd7d25f40", "unchanged_from_p9": true},
+    "pnpm-workspace.yaml": {"sha256": "86514fa5603ea1d1bb5a7e5770fb0a370a5741a92ec4ccc241ae90981d3c8206", "unchanged_from_p9": true},
+    "Dockerfile": {"sha256": "2dbc57859851533903a758cb7f904a13d17a3a2a585b806cc693c57884d8d7b8", "unchanged_from_p9": true},
+    "compose.yaml": {"sha256": "41e078d39e0535492a4bc2d8b26c49ee6bfdccc50afcc8c0625720f197e61e35", "unchanged_from_p9": true},
+    "playwright.config.ts": {"sha256": "aadc1ea0b1e13c6916fb5a3d76b96f27b614db7a569ae8673d725c930fe93693", "unchanged_from_p9": true},
+    "scripts/ci/pnpm-native-release.json": {"sha256": "fb6212a43173722f565a4101c311b23b54b7204f4828e0c62e9b9f7af1a8bd6d", "unchanged_from_p9": true},
+    "scripts/ch001-sandbox.mjs": {"sha256": "278910d588524884f821c25febc5856b350d71ce7c386ffdea036fb5df29262e", "unchanged_from_p9": true},
+    "scripts/verify-ch001.ts": {"sha256": "9d130eca408261a3fcf18fb0a3b4a6f2b72500660ea6fd6b56bd1b056cf56e92", "unchanged_from_p9": true},
+    "architect/gates-ch001r3.md": {"sha256": "56d8a56865199aa4e8b3614bb322f90faa5fa6bc50bf3fd23865fcddf47ba901", "unchanged_from_p9": true},
+    "architect/Luna_CH001_v0.1.0_Pack/gate-results.template.json": {"sha256": "a9e6860ee8d377bc7e23e6f365f441705722723319d8367a515dd51c16a4531c", "unchanged_from_p9": true},
+    "apps/worker/src/index.ts": {"sha256": "61722e5fb755e29f00d1e9bcecec9040b4f04022d042813d07602b37a00a5d8a", "unchanged_from_p9": true},
+    "packages/renderer/src/index.ts": {"sha256": "852036edea7492e6854bb9a5d5b832f2bf3e19d7b8aaff9927a24af4427dce83", "unchanged_from_p9": true},
+    "packages/renderer/src/scene.tsx": {"sha256": "95ec78e6116acb796d5236a7dbe07bd3ac321f8e7b5901c93893f5a215fb0c5f", "unchanged_from_p9": true}
+  },
+  "pins": {
+    "node": "20.19.2",
+    "pnpm": "12.3.4",
+    "actionlint": "1.7.7",
+    "actionlint_archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "actionlint_executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "scope": {
+    "application_code_changed": false,
+    "dependency_pins_changed": false,
+    "native_pins_changed": false,
+    "sandbox_design_changed": false,
+    "original_72_gate_contract_changed": false,
+    "providers": false,
+    "publishing": false,
+    "v0_2_work": false
+  }
+}
