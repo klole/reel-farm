@@ -1,0 +1,717 @@
+{
+  "schema_version": 1,
+  "phase": "CH-001R-r6",
+  "run_id": "r4-34937329430-1",
+  "context": "host-proof-browser",
+  "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "workflow_definition_commit": "0f222800f1e91a18cc2f16824a87c9513cd29026",
+  "requested_implementation_sha": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "context_guard": {
+    "allowed": true,
+    "checks": [
+      {
+        "name": "repository",
+        "ok": true,
+        "actual": "klole/reel-farm",
+        "expected": "klole/reel-farm"
+      },
+      {
+        "name": "event",
+        "ok": true,
+        "actual": "workflow_dispatch",
+        "expected": "workflow_dispatch"
+      },
+      {
+        "name": "runner_environment",
+        "ok": true,
+        "actual": "github-hosted",
+        "expected": "github-hosted"
+      },
+      {
+        "name": "runner_os",
+        "ok": true,
+        "actual": "Linux",
+        "expected": "Linux"
+      },
+      {
+        "name": "github_actions",
+        "ok": true,
+        "actual": "true",
+        "expected": "true"
+      },
+      {
+        "name": "public_repository",
+        "ok": true,
+        "actual": "false",
+        "expected": "false"
+      },
+      {
+        "name": "main_ref",
+        "ok": true,
+        "actual": "refs/heads/main",
+        "expected": "refs/heads/main"
+      },
+      {
+        "name": "linux_process",
+        "ok": true,
+        "actual": "linux",
+        "expected": "linux"
+      },
+      {
+        "name": "non_root_browser_uid",
+        "ok": true,
+        "actual": 1001,
+        "expected": "positive uid"
+      },
+      {
+        "name": "sandbox_opt_in",
+        "ok": true,
+        "actual": "true",
+        "expected": "true"
+      },
+      {
+        "name": "requested_checkout_identity",
+        "ok": true,
+        "actual": {
+          "requested": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+          "actual": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc"
+        },
+        "expected": "equal full SHA values"
+      },
+      {
+        "name": "ubuntu_image",
+        "ok": true,
+        "actual": "ubuntu24",
+        "expected": "Ubuntu"
+      }
+    ],
+    "failures": [],
+    "browser_uid": 1001
+  },
+  "selected_executable": {
+    "path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+    "sha256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+    "browsers_root": "/home/runner/.cache/ms-playwright",
+    "revision": "chromium-1243",
+    "mode": "0755",
+    "uid": 1001,
+    "gid": 1001
+  },
+  "uid": 1001,
+  "apparmor_enabled": true,
+  "restriction_before": {
+    "apparmor_restrict_unprivileged_userns": 1,
+    "unprivileged_userns_clone": 1,
+    "max_user_namespaces": 63791
+  },
+  "restriction_after": {
+    "apparmor_restrict_unprivileged_userns": 1,
+    "unprivileged_userns_clone": 1,
+    "max_user_namespaces": 63791
+  },
+  "default_probe": {
+    "sandbox_requested": true,
+    "launch_succeeded": false,
+    "sandbox_observed": null,
+    "browser_version": null,
+    "error": "ngine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --user-data-dir=/tmp/ch001r6-browser-3718-d4f51024-b692-404d-81e9-d9b512b036ba --remote-debugging-pipe about:blank\n  - <launched> pid=3736\n  - [pid=3736][err] [3736:3736:0915/063221.628118:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:129] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.\n  - [pid=3736][err] Received signal 6\n  - [pid=3736][err] #0 0x555f252ddbc3 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6a9abc2)\n  - [pid=3736][err] #1 0x555f29fa3494 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb760493)\n  - [pid=3736][err] #2 0x7f671ce45330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)\n  - [pid=3736][err] #3 0x7f671ce4527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)\n  - [pid=3736][err] #4 0x7f671ce288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)\n  - [pid=3736][err] #5 0x555f29f9a385 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb757384)\n  - [pid=3736][err] #6 0x555f29f5a14d (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb71714c)\n  - [pid=3736][err] #7 0x555f29f5a0de (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xb7170dd)\n  - [pid=3736][err] #8 0x555f250a4603 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6861602)\n  - [pid=3736][err] #9 0x555f23d3d1f9 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x54fa1f8)\n  - [pid=3736][err] #10 0x555f2512028b (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x68dd28a)\n  - [pid=3736][err] #11 0x555f291f8d01 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0xa9b5d00)\n  - [pid=3736][err] #12 0x555f24811687 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fce686)\n  - [pid=3736][err] #13 0x555f24810b00 (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x5fcdaff)\n  - [pid=3736][err] #14 0x7f671ce2a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)\n  - [pid=3736][err] #15 0x7f671ce2a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)\n  - [pid=3736][err] #16 0x555f255a035a (/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome+0x6d5d359)\n  - [pid=3736][err]   r8: 000030c0000cc263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246\n  - [pid=3736][err]  r12: 0000000000000006 r13: 000030c0000cc000 r14: 0000000000000016 r15: 00007ffe1a539da8\n  - [pid=3736][err]   di: 0000000000000e98  si: 0000000000000e98  bp: 00007ffe1a539720  bx: 0000000000000e98\n  - [pid=3736][err]   dx: 0000000000000006  ax: 0000000000000000  cx: 00007f671ce9ec0c  sp: 00007ffe1a5396e0\n  - [pid=3736][err]   ip: 00007f671ce9ec0c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000\n  - [pid=3736][err]  trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000\n  - [pid=3736][err] [end of stack trace]\n  - [pid=3736] <gracefully close start>\n  - [pid=3736] <kill>\n  - [pid=3736] <will force kill>\n  - [pid=3736] <process did exit: exitCode=null, signal=SIGABRT>\n  - [pid=3736] starting temporary directories cleanup\n  - [pid=3736] finished temporary directories cleanup\n  - [pid=3736] <gracefully close end>\n",
+    "error_classification": "APPARMOR_OR_USERNS_POLICY_BLOCK",
+    "timed_out": false,
+    "process_exit_code": null,
+    "synthetic_render": {
+      "attempted": true,
+      "content_marker": "CH001-R6-SANDBOX-PROBE",
+      "content_observed": false
+    },
+    "diagnostic_evidence": [
+      {
+        "kind": "chrome://sandbox",
+        "available": false,
+        "result": null,
+        "excerpt": null,
+        "reason": "not attempted"
+      },
+      {
+        "kind": "renderer-process-seccomp-and-userns",
+        "available": false,
+        "result": null,
+        "renderer_count": 0,
+        "facts": []
+      },
+      {
+        "kind": "effective-launch-switches",
+        "available": false,
+        "result": "no-forbidden-switches-observed",
+        "forbidden_switches": []
+      },
+      {
+        "kind": "kernel-denial-excerpt",
+        "available": true,
+        "tied_to_probe": false,
+        "matched": [],
+        "interpretation": "No bounded denial tied to the selected browser probe was readable; absence is not evidence that no denial occurred."
+      }
+    ],
+    "process_facts": {
+      "available": false,
+      "processes": [],
+      "reason": "browser did not launch"
+    },
+    "pids": [],
+    "started_at": "2026-09-15T06:32:21.482Z",
+    "ended_at": "2026-09-15T06:32:21.817Z"
+  },
+  "policy": {
+    "decision": "INSTALL_EXACT_MANAGED_EXECUTABLE",
+    "policy_changed": true,
+    "profile_name": "ch001r6-r4-34937329430-1-3718-70909e61",
+    "profile_path": "/etc/apparmor.d/ch001r6-r4-34937329430-1-3718-70909e61",
+    "attachment": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+    "sha256": "cc2792faa18e4a38f38bf02acae8bb036c7a4b12312a9ecf4de9086f69bed79a",
+    "loaded": true,
+    "install_exit_code": 0,
+    "install_status": "INSTALLED",
+    "install_error": null,
+    "policy_active_during_probe": true,
+    "cleanup_profile": {
+      "name": "ch001r6-r4-34937329430-1-3718-70909e61",
+      "path": "/etc/apparmor.d/ch001r6-r4-34937329430-1-3718-70909e61",
+      "expected_sha256": "cc2792faa18e4a38f38bf02acae8bb036c7a4b12312a9ecf4de9086f69bed79a",
+      "removal_status": "PASS"
+    }
+  },
+  "qualified_probe": {
+    "sandbox_requested": true,
+    "launch_succeeded": true,
+    "sandbox_observed": true,
+    "browser_version": "153.0.8010.12",
+    "error": null,
+    "error_classification": null,
+    "timed_out": false,
+    "process_exit_code": null,
+    "synthetic_render": {
+      "attempted": true,
+      "content_marker": "CH001-R6-SANDBOX-PROBE",
+      "content_observed": true
+    },
+    "diagnostic_evidence": [
+      {
+        "kind": "chrome://sandbox",
+        "available": true,
+        "result": "positive",
+        "excerpt": "Sandbox Status Layer 1 Sandbox Namespace PID namespaces Yes Network namespaces Yes Seccomp-BPF sandbox Yes Seccomp-BPF sandbox supports TSYNC Yes Ptrace Protection with Yama LSM (Broker) Yes Ptrace Protection with Yama LSM (Non-broker) No You are adequately sandboxed.",
+        "reason": null
+      },
+      {
+        "kind": "renderer-process-seccomp-and-userns",
+        "available": false,
+        "result": null,
+        "renderer_count": 0,
+        "facts": []
+      },
+      {
+        "kind": "effective-launch-switches",
+        "available": true,
+        "result": "no-forbidden-switches-observed",
+        "forbidden_switches": []
+      },
+      {
+        "kind": "kernel-denial-excerpt",
+        "available": true,
+        "tied_to_probe": false,
+        "matched": [],
+        "interpretation": "No bounded denial tied to the selected browser probe was readable; absence is not evidence that no denial occurred."
+      }
+    ],
+    "process_facts": {
+      "available": true,
+      "processes": [
+        {
+          "pid": 3780,
+          "ppid": 3718,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 45,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026531837]",
+            "pid": "pid:[4026531836]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026531833]"
+          },
+          "seccomp": {
+            "mode": 0,
+            "filters": 0
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3788,
+          "ppid": 3780,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026531837]",
+            "pid": "pid:[4026531836]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026531833]"
+          },
+          "seccomp": {
+            "mode": 0,
+            "filters": 0
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3789,
+          "ppid": 3780,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026532313]",
+            "pid": "pid:[4026532318]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026532319]"
+          },
+          "seccomp": {
+            "mode": 0,
+            "filters": 0
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3791,
+          "ppid": 3789,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026532313]",
+            "pid": "pid:[4026532318]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026532319]"
+          },
+          "seccomp": {
+            "mode": 0,
+            "filters": 0
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3811,
+          "ppid": 3788,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026531837]",
+            "pid": "pid:[4026531836]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026531833]"
+          },
+          "seccomp": {
+            "mode": 0,
+            "filters": 0
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3825,
+          "ppid": 3780,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026531837]",
+            "pid": "pid:[4026531836]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026531833]"
+          },
+          "seccomp": {
+            "mode": 0,
+            "filters": 0
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3831,
+          "ppid": 3791,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026532313]",
+            "pid": "pid:[4026532316]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026532319]"
+          },
+          "seccomp": {
+            "mode": 2,
+            "filters": 1
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3857,
+          "ppid": 3791,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026532313]",
+            "pid": "pid:[4026532378]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026532319]"
+          },
+          "seccomp": {
+            "mode": 2,
+            "filters": 1
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3867,
+          "ppid": 3791,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026532313]",
+            "pid": "pid:[4026532380]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026532319]"
+          },
+          "seccomp": {
+            "mode": 2,
+            "filters": 1
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        },
+        {
+          "pid": 3908,
+          "ppid": 3791,
+          "uid": 1001,
+          "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "is_renderer": false,
+          "argument_count": 1,
+          "forbidden_switches": [],
+          "namespaces": {
+            "user": "user:[4026532313]",
+            "pid": "pid:[4026532379]",
+            "mnt": "mnt:[4026531832]",
+            "net": "net:[4026532319]"
+          },
+          "seccomp": {
+            "mode": 2,
+            "filters": 1
+          },
+          "apparmor_profile": "ch001r6-r4-34937329430-1-3718-70909e61 (unconfined)"
+        }
+      ],
+      "reason": null
+    },
+    "pids": [
+      3780,
+      3788,
+      3789,
+      3791,
+      3811,
+      3825,
+      3831,
+      3857,
+      3867,
+      3908
+    ],
+    "started_at": "2026-09-15T06:32:22.660Z",
+    "ended_at": "2026-09-15T06:32:23.371Z"
+  },
+  "cleanup": {
+    "status": "PASS",
+    "owned_resources_removed": true,
+    "preserved_unowned": false,
+    "ownership_record": "/home/runner/work/_temp/ch001r6/34937329430-1/sandbox/apparmor-ownership.json",
+    "removal_exit_code": 0,
+    "removal_status": "REMOVED",
+    "profile_loaded_after": false,
+    "removal_error": null,
+    "removed_at": "2026-09-15T06:34:33.794Z"
+  },
+  "global_policy": {
+    "before": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "after_policy": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "after_cleanup": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "unchanged": true,
+    "apparmor_before": {
+      "enabled": true,
+      "enabled_reason": null,
+      "parser": {
+        "available": true,
+        "path": "/usr/sbin/apparmor_parser",
+        "version": "AppArmor parser version 4.0.1\nCopyright (C) 1999-2008 Novell Inc.\nCopyright 2009-2018 Canonical Ltd.\n",
+        "exit_code": 0
+      },
+      "status_command": {
+        "available": true,
+        "enabled_exit_code": 0,
+        "enabled": true
+      },
+      "profiles": {
+        "available": false,
+        "relevant": [],
+        "reason": "unavailable"
+      }
+    },
+    "apparmor_after_policy": {
+      "enabled": true,
+      "enabled_reason": null,
+      "parser": {
+        "available": true,
+        "path": "/usr/sbin/apparmor_parser",
+        "version": "AppArmor parser version 4.0.1\nCopyright (C) 1999-2008 Novell Inc.\nCopyright 2009-2018 Canonical Ltd.\n",
+        "exit_code": 0
+      },
+      "status_command": {
+        "available": true,
+        "enabled_exit_code": 0,
+        "enabled": true
+      },
+      "profiles": {
+        "available": false,
+        "relevant": [],
+        "reason": "unavailable"
+      }
+    },
+    "apparmor_after_cleanup": {
+      "enabled": true,
+      "enabled_reason": null,
+      "parser": {
+        "available": true,
+        "path": "/usr/sbin/apparmor_parser",
+        "version": "AppArmor parser version 4.0.1\nCopyright (C) 1999-2008 Novell Inc.\nCopyright 2009-2018 Canonical Ltd.\n",
+        "exit_code": 0
+      },
+      "status_command": {
+        "available": true,
+        "enabled_exit_code": 0,
+        "enabled": true
+      },
+      "profiles": {
+        "available": false,
+        "relevant": [],
+        "reason": "unavailable"
+      }
+    }
+  },
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "status": "HOST_SANDBOX_QUALIFIED_POLICY_ACTIVE",
+  "error_classification": null,
+  "error": null,
+  "limitations": [],
+  "launch_site_coverage": [
+    {
+      "site": "scripts/ch001-proof.ts host preflight",
+      "executable_source": "BROWSER_EXECUTABLE_PATH from qualified workflow path",
+      "sandbox_requested": true
+    },
+    {
+      "site": "playwright.config.ts host E2E/render",
+      "executable_source": "BROWSER_EXECUTABLE_PATH from qualified workflow path",
+      "sandbox_requested": true
+    },
+    {
+      "site": "scripts/ch001-lifecycle.ts host lifecycle",
+      "executable_source": "BROWSER_EXECUTABLE_PATH from qualified workflow path",
+      "sandbox_requested": true
+    },
+    {
+      "site": "apps/worker/src/index.ts container worker",
+      "executable_source": "image-local Playwright managed executable",
+      "sandbox_requested": true,
+      "separate_context": true
+    }
+  ],
+  "host_before_policy": {
+    "os_release": {
+      "available": true,
+      "id": "ubuntu",
+      "version_id": "24.04",
+      "pretty_name": "Ubuntu 24.04.5 LTS"
+    },
+    "kernel": "Linux 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64\n",
+    "uid": 1001,
+    "gid": 1001,
+    "sysctls": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "sysctl_reasons": {},
+    "apparmor": {
+      "enabled": true,
+      "enabled_reason": null,
+      "parser": {
+        "available": true,
+        "path": "/usr/sbin/apparmor_parser",
+        "version": "AppArmor parser version 4.0.1\nCopyright (C) 1999-2008 Novell Inc.\nCopyright 2009-2018 Canonical Ltd.\n",
+        "exit_code": 0
+      },
+      "status_command": {
+        "available": true,
+        "enabled_exit_code": 0,
+        "enabled": true
+      },
+      "profiles": {
+        "available": false,
+        "relevant": [],
+        "reason": "unavailable"
+      }
+    },
+    "process_facts": {
+      "available": true,
+      "processes": [],
+      "reason": null
+    },
+    "kernel_denials": {
+      "available": true,
+      "results": [
+        {
+          "command": "dmesg",
+          "exit_code": 1,
+          "available": true,
+          "error": null
+        },
+        {
+          "command": "journalctl",
+          "exit_code": 1,
+          "available": true,
+          "error": null
+        }
+      ],
+      "matched": [],
+      "tied_to_probe": false,
+      "started_at": null,
+      "interpretation": "No bounded denial tied to the selected browser probe was readable; absence is not evidence that no denial occurred."
+    },
+    "process_facts_after_default_probe": {
+      "available": false,
+      "processes": [],
+      "reason": "browser did not launch"
+    },
+    "kernel_denials_after_default_probe": {
+      "available": true,
+      "results": [
+        {
+          "command": "dmesg",
+          "exit_code": 1,
+          "available": true,
+          "error": null
+        },
+        {
+          "command": "journalctl",
+          "exit_code": 1,
+          "available": true,
+          "error": null
+        }
+      ],
+      "matched": [],
+      "tied_to_probe": false,
+      "started_at": "2026-09-15T06:32:21.482Z",
+      "interpretation": "No bounded denial tied to the selected browser probe was readable; absence is not evidence that no denial occurred."
+    }
+  },
+  "host_after_policy": {
+    "os_release": {
+      "available": true,
+      "id": "ubuntu",
+      "version_id": "24.04",
+      "pretty_name": "Ubuntu 24.04.5 LTS"
+    },
+    "kernel": "Linux 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64\n",
+    "uid": 1001,
+    "gid": 1001,
+    "sysctls": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "sysctl_reasons": {},
+    "apparmor": {
+      "enabled": true,
+      "enabled_reason": null,
+      "parser": {
+        "available": true,
+        "path": "/usr/sbin/apparmor_parser",
+        "version": "AppArmor parser version 4.0.1\nCopyright (C) 1999-2008 Novell Inc.\nCopyright 2009-2018 Canonical Ltd.\n",
+        "exit_code": 0
+      },
+      "status_command": {
+        "available": true,
+        "enabled_exit_code": 0,
+        "enabled": true
+      },
+      "profiles": {
+        "available": false,
+        "relevant": [],
+        "reason": "unavailable"
+      }
+    },
+    "process_facts": {
+      "available": true,
+      "processes": [],
+      "reason": null
+    },
+    "kernel_denials": {
+      "available": true,
+      "results": [
+        {
+          "command": "dmesg",
+          "exit_code": 1,
+          "available": true,
+          "error": null
+        },
+        {
+          "command": "journalctl",
+          "exit_code": 1,
+          "available": true,
+          "error": null
+        }
+      ],
+      "matched": [],
+      "tied_to_probe": false,
+      "started_at": null,
+      "interpretation": "No bounded denial tied to the selected browser probe was readable; absence is not evidence that no denial occurred."
+    }
+  }
+}

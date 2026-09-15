@@ -1,0 +1,209 @@
+{
+  "run_id": "r4-34937329430-1",
+  "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "commands": [
+    {
+      "command": "docker version --format {{.Server.Version}}",
+      "startedAt": "2026-09-15T06:32:27.229Z",
+      "endedAt": "2026-09-15T06:32:27.247Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/001-docker-version.log"
+    },
+    {
+      "command": "docker info --format {{.ServerVersion}}",
+      "startedAt": "2026-09-15T06:32:27.248Z",
+      "endedAt": "2026-09-15T06:32:27.291Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/002-docker-info.log"
+    },
+    {
+      "command": "docker compose version --short",
+      "startedAt": "2026-09-15T06:32:27.292Z",
+      "endedAt": "2026-09-15T06:32:27.343Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/003-compose-version.log"
+    },
+    {
+      "command": "pnpm lint",
+      "startedAt": "2026-09-15T06:32:28.090Z",
+      "endedAt": "2026-09-15T06:32:30.492Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/004-host-lint.log"
+    },
+    {
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-15T06:32:30.493Z",
+      "endedAt": "2026-09-15T06:32:38.282Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/005-host-typecheck.log"
+    },
+    {
+      "command": "pnpm build",
+      "startedAt": "2026-09-15T06:32:38.283Z",
+      "endedAt": "2026-09-15T06:32:59.724Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/006-host-build.log"
+    },
+    {
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-15T06:32:59.726Z",
+      "endedAt": "2026-09-15T06:33:01.260Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/007-host-unit.log",
+      "reportPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/unit-results.json"
+    },
+    {
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-15T06:33:01.262Z",
+      "endedAt": "2026-09-15T06:33:01.716Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/008-host-security.log",
+      "reportPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/security-results.json"
+    },
+    {
+      "command": "docker compose -p oss-ch001-r4-34937329430-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/private/compose.env config --quiet",
+      "startedAt": "2026-09-15T06:33:01.717Z",
+      "endedAt": "2026-09-15T06:33:02.063Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/009-compose-config.log"
+    },
+    {
+      "command": "docker compose -p oss-ch001-r4-34937329430-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/private/compose.env up --build -d db migrate web worker",
+      "startedAt": "2026-09-15T06:33:02.064Z",
+      "endedAt": "2026-09-15T06:34:33.611Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/010-compose-up-build.log"
+    }
+  ],
+  "suites": [
+    {
+      "suite": "smoke",
+      "command": "pnpm proof:ch001 (owned Compose smoke/lifecycle)",
+      "run_id": "r4-34937329430-1",
+      "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+      "started_at": "2026-09-15T06:32:27.206Z",
+      "ended_at": "2026-09-15T06:34:33.615Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/smoke-results.json",
+      "log_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/009-compose-config.log"
+    },
+    {
+      "suite": "integration",
+      "command": "pnpm test:integration",
+      "run_id": "r4-34937329430-1",
+      "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+      "started_at": "2026-09-15T06:32:27.206Z",
+      "ended_at": "2026-09-15T06:34:33.616Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-integration.json",
+      "log_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-integration-unavailable.log",
+      "unavailable_reason": "The bounded coordinator stopped before this suite could execute."
+    },
+    {
+      "suite": "e2e",
+      "command": "pnpm test:e2e",
+      "run_id": "r4-34937329430-1",
+      "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+      "started_at": "2026-09-15T06:32:27.206Z",
+      "ended_at": "2026-09-15T06:34:33.616Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-e2e.json",
+      "log_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-e2e-unavailable.log",
+      "unavailable_reason": "The bounded coordinator stopped before this suite could execute."
+    },
+    {
+      "suite": "render",
+      "command": "pnpm test:render",
+      "run_id": "r4-34937329430-1",
+      "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+      "started_at": "2026-09-15T06:32:27.206Z",
+      "ended_at": "2026-09-15T06:34:33.617Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-render.json",
+      "log_path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-render-unavailable.log",
+      "unavailable_reason": "The bounded coordinator stopped before this suite could execute."
+    }
+  ],
+  "child_invocations": [
+    {
+      "id": "r4-34937329430-1-4040-003",
+      "command": "docker version --format {{.Server.Version}}",
+      "started_at": "2026-09-15T06:32:27.229Z",
+      "ended_at": "2026-09-15T06:32:27.247Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-004",
+      "command": "docker info --format {{.ServerVersion}}",
+      "started_at": "2026-09-15T06:32:27.248Z",
+      "ended_at": "2026-09-15T06:32:27.291Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-005",
+      "command": "docker compose version --short",
+      "started_at": "2026-09-15T06:32:27.292Z",
+      "ended_at": "2026-09-15T06:32:27.343Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-007",
+      "command": "pnpm lint",
+      "started_at": "2026-09-15T06:32:28.090Z",
+      "ended_at": "2026-09-15T06:32:30.492Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-008",
+      "command": "pnpm typecheck",
+      "started_at": "2026-09-15T06:32:30.493Z",
+      "ended_at": "2026-09-15T06:32:38.282Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-009",
+      "command": "pnpm build",
+      "started_at": "2026-09-15T06:32:38.283Z",
+      "ended_at": "2026-09-15T06:32:59.724Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-010",
+      "command": "pnpm test:unit",
+      "started_at": "2026-09-15T06:32:59.726Z",
+      "ended_at": "2026-09-15T06:33:01.260Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-011",
+      "command": "pnpm test:security",
+      "started_at": "2026-09-15T06:33:01.262Z",
+      "ended_at": "2026-09-15T06:33:01.716Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-012",
+      "command": "docker compose -p oss-ch001-r4-34937329430-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/private/compose.env config --quiet",
+      "started_at": "2026-09-15T06:33:01.717Z",
+      "ended_at": "2026-09-15T06:33:02.063Z"
+    },
+    {
+      "id": "r4-34937329430-1-4040-013",
+      "command": "docker compose -p oss-ch001-r4-34937329430-1 --env-file /home/runner/work/reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/private/compose.env up --build -d db migrate web worker",
+      "started_at": "2026-09-15T06:33:02.064Z",
+      "ended_at": "2026-09-15T06:34:33.611Z"
+    }
+  ]
+}

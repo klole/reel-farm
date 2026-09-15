@@ -1,0 +1,700 @@
+{
+  "record_kind": "ARCHITECT_HISTORICAL_ARTIFACT_INSPECTION_NOT_APPLICATION_TEST",
+  "target_chapter": "CH-001R-r10",
+  "historical_phase": "CH-001R-r9",
+  "run_id": 34937329430,
+  "attempt": 1,
+  "job_id": 104277995082,
+  "event": "workflow_dispatch",
+  "github_conclusion": "failure",
+  "run_source": "https://github.com/klole/reel-farm/actions/runs/34937329430",
+  "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "implementation_tree": "6e590387c666ee3672210d022e51fc9283e07737",
+  "evidence_commit": "0f222800f1e91a18cc2f16824a87c9513cd29026",
+  "evidence_tree": "88cb7927e45605177318448115a28c177c6071a0",
+  "workflow_blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+  "workflow_sha256_attested": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "artifact": {
+    "id": 10383922146,
+    "name": "ch001-live-proof-34937329430-1",
+    "bytes": 52987,
+    "sha256": "4b64eb28f946bd74fd67fe14b10200b85886ed28eb42ea2847e71443ac1a96f0",
+    "api_expected_sha256": "4b64eb28f946bd74fd67fe14b10200b85886ed28eb42ea2847e71443ac1a96f0",
+    "archive_members": 46,
+    "api_reported_expiry": "2026-09-29T06:34:34Z"
+  },
+  "observed": {
+    "bootstrap_status": "PASS",
+    "classification": "LIVE_PROOF_FAILED",
+    "proof_status": "TEST_FAILURE",
+    "proof_invoked": true,
+    "proof_exit_code": 1,
+    "application_acceptance": false,
+    "accepted_application_version": "none",
+    "gate_counts": {
+      "PASS": 4,
+      "FAIL": 0,
+      "NOT_RUN": 68
+    },
+    "source_only_pass_ids": [
+      "CH001-067",
+      "CH001-068",
+      "CH001-069",
+      "CH001-072"
+    ],
+    "hosted_ci_cases": {
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0
+    },
+    "image_sha256_from_build_progress": "f7cee227d436baa5998abf5b5ca5f56051b2eefb1c4446bd88c1eb700b8177b2",
+    "migration_exit_code_from_compose": 1,
+    "migration_stderr_captured": false,
+    "migration_exception": null,
+    "worker_runtime_qualified": false,
+    "host_sandbox_positive": true,
+    "host_sandbox_evidence": "real launch, synthetic content, positive chrome://sandbox result",
+    "renderer_process_specific_evidence_available": false,
+    "host_policy_cleanup_reported": {
+      "status": "PASS",
+      "owned_resources_removed": true,
+      "preserved_unowned": false,
+      "ownership_record": "/home/runner/work/_temp/ch001r6/34937329430-1/sandbox/apparmor-ownership.json",
+      "removal_exit_code": 0,
+      "removal_status": "REMOVED",
+      "profile_loaded_after": false,
+      "removal_error": null,
+      "removed_at": "2026-09-15T06:34:33.794Z"
+    },
+    "global_policy_settings_before": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "global_policy_settings_after_cleanup": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "unprivileged_userns_clone": 1,
+      "max_user_namespaces": 63791
+    },
+    "global_policy_settings_unchanged": true,
+    "compose_teardown_observed": false,
+    "missing_required_live_artifacts": [
+      "a-little-room-to-focus.zip",
+      "alternate-4x5.zip",
+      "journey-hashes.json",
+      "lifecycle.json",
+      "same-data-restart.json"
+    ],
+    "archived_artifact_delivery_status": "PENDING"
+  },
+  "inspection_checks": [
+    {
+      "check": "archive size",
+      "status": "PASS",
+      "detail": 52987
+    },
+    {
+      "check": "archive SHA-256",
+      "status": "PASS",
+      "detail": "4b64eb28f946bd74fd67fe14b10200b85886ed28eb42ea2847e71443ac1a96f0"
+    },
+    {
+      "check": "ZIP CRC",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "unique archive members",
+      "status": "PASS",
+      "detail": 46
+    },
+    {
+      "check": "safe regular archive paths",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "requested and actual implementation match T9",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "workflow definition and blob identity",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "bootstrap succeeded and proof actually ran",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "failure classifications preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "application remains unaccepted",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "no prerequisite environment failure recorded",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "72 original gate IDs preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "ledger counts and source-only passes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "hosted CI suite reports 64 pass zero fail",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "host static commands passed",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "built image and failed migration visible",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Compose command returned exit 1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "positive host sandbox diagnostic with synthetic content",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "host policy removal reported with unchanged measured global settings",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "required application artifacts absent",
+      "status": "PASS",
+      "detail": [
+        "a-little-room-to-focus.zip",
+        "alternate-4x5.zip",
+        "journey-hashes.json",
+        "lifecycle.json",
+        "same-data-restart.json"
+      ]
+    },
+    {
+      "check": "all declared public payload hashes and lengths",
+      "status": "PASS",
+      "detail": 27
+    },
+    {
+      "check": "no private raw logs or environment files in archive",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "no migration stdout/stderr or teardown report in artifact",
+      "status": "PASS",
+      "detail": "Detached Compose progress is present; no service diagnostic log was preserved."
+    }
+  ],
+  "inspection_passed": 23,
+  "inspection_failed": 0,
+  "manifest_payload_verifications": [
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/command-report.json",
+      "exists": true,
+      "expected_sha256": "85b82b52bf566705630bb19671bebfe6c769ec0ad9d5af0c6704a09e4155d9b4",
+      "measured_sha256": "85b82b52bf566705630bb19671bebfe6c769ec0ad9d5af0c6704a09e4155d9b4",
+      "expected_bytes": 8247,
+      "measured_bytes": 8247,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/001-docker-version.log",
+      "exists": true,
+      "expected_sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d",
+      "measured_sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d",
+      "expected_bytes": 7,
+      "measured_bytes": 7,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/002-docker-info.log",
+      "exists": true,
+      "expected_sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d",
+      "measured_sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d",
+      "expected_bytes": 7,
+      "measured_bytes": 7,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/003-compose-version.log",
+      "exists": true,
+      "expected_sha256": "278ec87a75ab3da08b3b34c6d9e678df7a3c71298d2f3ea3880f078e1b71b1e3",
+      "measured_sha256": "278ec87a75ab3da08b3b34c6d9e678df7a3c71298d2f3ea3880f078e1b71b1e3",
+      "expected_bytes": 7,
+      "measured_bytes": 7,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/004-host-lint.log",
+      "exists": true,
+      "expected_sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1",
+      "measured_sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1",
+      "expected_bytes": 11,
+      "measured_bytes": 11,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/005-host-typecheck.log",
+      "exists": true,
+      "expected_sha256": "f6e04c1d444f9763504feca2dbbdf170e0f84adc9fd976d9e449a6146b533b4f",
+      "measured_sha256": "f6e04c1d444f9763504feca2dbbdf170e0f84adc9fd976d9e449a6146b533b4f",
+      "expected_bytes": 62,
+      "measured_bytes": 62,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/006-host-build.log",
+      "exists": true,
+      "expected_sha256": "765ba59156090ce6a9b7123aa1a518844ee4b5ed95913f97019089e862a8a90c",
+      "measured_sha256": "765ba59156090ce6a9b7123aa1a518844ee4b5ed95913f97019089e862a8a90c",
+      "expected_bytes": 2154,
+      "measured_bytes": 2154,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/007-host-unit.log",
+      "exists": true,
+      "expected_sha256": "328c32022bf758ba2ae3d115cda616fc8f2252f7d35fd76bcb63c5af7d5e8c38",
+      "measured_sha256": "328c32022bf758ba2ae3d115cda616fc8f2252f7d35fd76bcb63c5af7d5e8c38",
+      "expected_bytes": 841,
+      "measured_bytes": 841,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/008-host-security.log",
+      "exists": true,
+      "expected_sha256": "313a5aed9f8cfff040c1c2b7e301489ab80b9d108772e8785aa6629567de015d",
+      "measured_sha256": "313a5aed9f8cfff040c1c2b7e301489ab80b9d108772e8785aa6629567de015d",
+      "expected_bytes": 639,
+      "measured_bytes": 639,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/009-compose-config.log",
+      "exists": true,
+      "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "measured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected_bytes": 0,
+      "measured_bytes": 0,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/commands/010-compose-up-build.log",
+      "exists": true,
+      "expected_sha256": "7e1b29a3b43d6c5abf6e3185928a6efd482d81c1467293111c1b198520d2d0cb",
+      "measured_sha256": "7e1b29a3b43d6c5abf6e3185928a6efd482d81c1467293111c1b198520d2d0cb",
+      "expected_bytes": 69453,
+      "measured_bytes": 69453,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/compose-network.json",
+      "exists": true,
+      "expected_sha256": "79f096e648ac98340ba9726d8160af7c5abf38bb5cf0d81d28b653a297e91cf5",
+      "measured_sha256": "79f096e648ac98340ba9726d8160af7c5abf38bb5cf0d81d28b653a297e91cf5",
+      "expected_bytes": 222,
+      "measured_bytes": 222,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/dispatch.json",
+      "exists": true,
+      "expected_sha256": "af1398986486b5b21bc4810a5410348b44386803a6ec91349c66888ee614e03a",
+      "measured_sha256": "af1398986486b5b21bc4810a5410348b44386803a6ec91349c66888ee614e03a",
+      "expected_bytes": 401,
+      "measured_bytes": 401,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/environment.json",
+      "exists": true,
+      "expected_sha256": "ef04c1e50c51a346c1c782ae120bbf84dac36d0d5d05bb6b50e055d3a8dcf0d0",
+      "measured_sha256": "ef04c1e50c51a346c1c782ae120bbf84dac36d0d5d05bb6b50e055d3a8dcf0d0",
+      "expected_bytes": 3003,
+      "measured_bytes": 3003,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/finding-dispositions.json",
+      "exists": true,
+      "expected_sha256": "45beb94e612d06e8eb8009979cb0a85e625a606c3e4bcebd8280ea7093a8dadf",
+      "measured_sha256": "45beb94e612d06e8eb8009979cb0a85e625a606c3e4bcebd8280ea7093a8dadf",
+      "expected_bytes": 4423,
+      "measured_bytes": 4423,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/sanitization.json",
+      "exists": true,
+      "expected_sha256": "1c0b695e61e6af5260c23b7dea98623d04242bf1a561e0f313d98552931202c0",
+      "measured_sha256": "1c0b695e61e6af5260c23b7dea98623d04242bf1a561e0f313d98552931202c0",
+      "expected_bytes": 371,
+      "measured_bytes": 371,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/security-results.json",
+      "exists": true,
+      "expected_sha256": "e3d3e9e4669dfb3ed7ec0fb1e4ed6ab833d44ad5d0a80ec2c7dfe7e20087c46c",
+      "measured_sha256": "e3d3e9e4669dfb3ed7ec0fb1e4ed6ab833d44ad5d0a80ec2c7dfe7e20087c46c",
+      "expected_bytes": 2140,
+      "measured_bytes": 2140,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/smoke-results.json",
+      "exists": true,
+      "expected_sha256": "b2882ad525bec1ffe6191b64e6bba04a3c630ec329587013f89283e91c15f470",
+      "measured_sha256": "b2882ad525bec1ffe6191b64e6bba04a3c630ec329587013f89283e91c15f470",
+      "expected_bytes": 165,
+      "measured_bytes": 165,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/source-review.md",
+      "exists": true,
+      "expected_sha256": "c91e6002a4e47904a5c06140c9f017afa8c69ad82ea92c8d9ad678f622944346",
+      "measured_sha256": "c91e6002a4e47904a5c06140c9f017afa8c69ad82ea92c8d9ad678f622944346",
+      "expected_bytes": 780,
+      "measured_bytes": 780,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-e2e-unavailable.log",
+      "exists": true,
+      "expected_sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404",
+      "measured_sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404",
+      "expected_bytes": 74,
+      "measured_bytes": 74,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-e2e.json",
+      "exists": true,
+      "expected_sha256": "e6ae966097ee9c533f838c920be7e984e1d144d4176d11cfac097517215606c7",
+      "measured_sha256": "e6ae966097ee9c533f838c920be7e984e1d144d4176d11cfac097517215606c7",
+      "expected_bytes": 606,
+      "measured_bytes": 606,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-integration-unavailable.log",
+      "exists": true,
+      "expected_sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404",
+      "measured_sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404",
+      "expected_bytes": 74,
+      "measured_bytes": 74,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-integration.json",
+      "exists": true,
+      "expected_sha256": "1e5d655c5665bdbbf949623910134b492334544acf235444573caba9d9acc3dc",
+      "measured_sha256": "1e5d655c5665bdbbf949623910134b492334544acf235444573caba9d9acc3dc",
+      "expected_bytes": 638,
+      "measured_bytes": 638,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-render-unavailable.log",
+      "exists": true,
+      "expected_sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404",
+      "measured_sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404",
+      "expected_bytes": 74,
+      "measured_bytes": 74,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-render.json",
+      "exists": true,
+      "expected_sha256": "5e5d7674039e9733016163e5f73d40ab47b6792620f6233dd7b16ecccb1ef021",
+      "measured_sha256": "5e5d7674039e9733016163e5f73d40ab47b6792620f6233dd7b16ecccb1ef021",
+      "expected_bytes": 618,
+      "measured_bytes": 618,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/suite-smoke.json",
+      "exists": true,
+      "expected_sha256": "96bba4ae6273cbe8db8e99715b65fbfd8690f6c1106e292e711736ed8650394e",
+      "measured_sha256": "96bba4ae6273cbe8db8e99715b65fbfd8690f6c1106e292e711736ed8650394e",
+      "expected_bytes": 561,
+      "measured_bytes": 561,
+      "valid": true
+    },
+    {
+      "path": "artifacts/ch001r4/r4-34937329430-1/proof/public/unit-results.json",
+      "exists": true,
+      "expected_sha256": "325724a9c6c2fb66aff3f368ea6fbcfae339148dca3086538afd064c8832b7d6",
+      "measured_sha256": "325724a9c6c2fb66aff3f368ea6fbcfae339148dca3086538afd064c8832b7d6",
+      "expected_bytes": 7233,
+      "measured_bytes": 7233,
+      "valid": true
+    }
+  ],
+  "archive_inventory": [
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/actionlint-bootstrap.json",
+      "bytes": 2354,
+      "sha256": "a4844b22ffb6e725820fb38babd8ad7a930c4bb6039f9f6d190a36a97fc59d47"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 11763,
+      "sha256": "22208a5911b503fc55eff8b4b8e235626b511f9b9cb55559e8668784320cd7e1"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/ci-result.json",
+      "bytes": 1313,
+      "sha256": "60319c7a41cee11d5e53e4474158411a1e172cbcccc87b401d04d8c418e99409"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/bounded-proof.log",
+      "bytes": 194,
+      "sha256": "3548c33029935c62aeedc2e4b3418c7eadd2029a622ae54c431ee4cd443f005e"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/browser-install.log",
+      "bytes": 8641,
+      "sha256": "7da09f9851d165c096e8094c40764a9e4ddfd355354775516210080ec1394158"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/ci-helper-regressions.log",
+      "bytes": 6001,
+      "sha256": "e47a4f795de1cce1cadf6e7bb04c25c8497bf71912050db5c40f55693c0dad66"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/docker-preflight.log",
+      "bytes": 801,
+      "sha256": "476d4c5355b46da29728d7ebaf3ae0b0d98665464077995c38a6c67a74fd4956"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/project-install.log",
+      "bytes": 1999,
+      "sha256": "85fb6caa3b361fc765bd37e442c2252da7b8e0cf35b6e82a3c91c2b33594bc7c"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/sandbox-cleanup.log",
+      "bytes": 64,
+      "sha256": "13c3e77fdd9c83a1531b8678242a59cfa701bf39c4f00a5b84ef25bb9aed1f02"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/sandbox-qualification.log",
+      "bytes": 186,
+      "sha256": "e03bea21c9b093cbf2d105960ae62f1d0228171a1ee9b46ab003006f55e7c823"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/commands/workflow-validation.log",
+      "bytes": 1032,
+      "sha256": "f2e0d573d087f3383502b15eae8a58694130c789e3fa4a724393494e91427f76"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/dispatch.txt",
+      "bytes": 249,
+      "sha256": "411eb5095f83ce0b3dc2121701518d1ada6c4120080984c378cfdce66c85bf21"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/bootstrap/public/sandbox-qualification.json",
+      "bytes": 25306,
+      "sha256": "ed74ebdfb50a06077f87b27c4a23ce0744bb2c56ea7b1e94b365ba8132198d8a"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/artifact-manifest.json",
+      "bytes": 5884,
+      "sha256": "530e5fda8cbfdc947f77a54c2da426ce7b7edc6e44a19d50f3c3510053ee4d3a"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/command-report.json",
+      "bytes": 8247,
+      "sha256": "85b82b52bf566705630bb19671bebfe6c769ec0ad9d5af0c6704a09e4155d9b4"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/001-docker-version.log",
+      "bytes": 7,
+      "sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/002-docker-info.log",
+      "bytes": 7,
+      "sha256": "6bd60857f0062defe4edbffc3b3e49ecd7b055a2598326793fc1cfb435587e0d"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/003-compose-version.log",
+      "bytes": 7,
+      "sha256": "278ec87a75ab3da08b3b34c6d9e678df7a3c71298d2f3ea3880f078e1b71b1e3"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/004-host-lint.log",
+      "bytes": 11,
+      "sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/005-host-typecheck.log",
+      "bytes": 62,
+      "sha256": "f6e04c1d444f9763504feca2dbbdf170e0f84adc9fd976d9e449a6146b533b4f"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/007-host-unit.log",
+      "bytes": 841,
+      "sha256": "328c32022bf758ba2ae3d115cda616fc8f2252f7d35fd76bcb63c5af7d5e8c38"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/006-host-build.log",
+      "bytes": 2154,
+      "sha256": "765ba59156090ce6a9b7123aa1a518844ee4b5ed95913f97019089e862a8a90c"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/008-host-security.log",
+      "bytes": 639,
+      "sha256": "313a5aed9f8cfff040c1c2b7e301489ab80b9d108772e8785aa6629567de015d"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/009-compose-config.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/commands/010-compose-up-build.log",
+      "bytes": 69453,
+      "sha256": "7e1b29a3b43d6c5abf6e3185928a6efd482d81c1467293111c1b198520d2d0cb"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/compose-network.json",
+      "bytes": 222,
+      "sha256": "79f096e648ac98340ba9726d8160af7c5abf38bb5cf0d81d28b653a297e91cf5"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/dispatch.json",
+      "bytes": 401,
+      "sha256": "af1398986486b5b21bc4810a5410348b44386803a6ec91349c66888ee614e03a"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/environment.json",
+      "bytes": 3003,
+      "sha256": "ef04c1e50c51a346c1c782ae120bbf84dac36d0d5d05bb6b50e055d3a8dcf0d0"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/finding-dispositions.json",
+      "bytes": 4423,
+      "sha256": "45beb94e612d06e8eb8009979cb0a85e625a606c3e4bcebd8280ea7093a8dadf"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/gate-results.json",
+      "bytes": 30303,
+      "sha256": "e9117b3e5a0ac2eea2b879d5b7d0a129cfaeeea4c0a495d5e2b3d8ef667453ea"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/proof-result.json",
+      "bytes": 12190,
+      "sha256": "54df42f04b808dcae7a2c09d30cd780c55d817bbe7db6969552451dc188e8914"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/sanitization.json",
+      "bytes": 371,
+      "sha256": "1c0b695e61e6af5260c23b7dea98623d04242bf1a561e0f313d98552931202c0"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/security-results.json",
+      "bytes": 2140,
+      "sha256": "e3d3e9e4669dfb3ed7ec0fb1e4ed6ab833d44ad5d0a80ec2c7dfe7e20087c46c"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/smoke-results.json",
+      "bytes": 165,
+      "sha256": "b2882ad525bec1ffe6191b64e6bba04a3c630ec329587013f89283e91c15f470"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/source-review.md",
+      "bytes": 780,
+      "sha256": "c91e6002a4e47904a5c06140c9f017afa8c69ad82ea92c8d9ad678f622944346"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-e2e-unavailable.log",
+      "bytes": 74,
+      "sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-integration-unavailable.log",
+      "bytes": 74,
+      "sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-e2e.json",
+      "bytes": 606,
+      "sha256": "e6ae966097ee9c533f838c920be7e984e1d144d4176d11cfac097517215606c7"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-integration.json",
+      "bytes": 638,
+      "sha256": "1e5d655c5665bdbbf949623910134b492334544acf235444573caba9d9acc3dc"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-render-unavailable.log",
+      "bytes": 74,
+      "sha256": "105331acaeddc47cdc47ad1bb9552bce4b748165c3a2d8e9389e159b1e71b404"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-render.json",
+      "bytes": 618,
+      "sha256": "5e5d7674039e9733016163e5f73d40ab47b6792620f6233dd7b16ecccb1ef021"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/suite-smoke.json",
+      "bytes": 561,
+      "sha256": "96bba4ae6273cbe8db8e99715b65fbfd8690f6c1106e292e711736ed8650394e"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/unit-results.json",
+      "bytes": 7233,
+      "sha256": "325724a9c6c2fb66aff3f368ea6fbcfae339148dca3086538afd064c8832b7d6"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34937329430-1/proof/public/verifier-result.json",
+      "bytes": 304,
+      "sha256": "ccbff21df779f45c3dc7216ec25b8ae751803b97129c0c9aac0393a6cf5e47c5"
+    },
+    {
+      "path": "_temp/ch001r4/r4-34937329430-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 689,
+      "sha256": "a94d50acb83abddf509049999ebe869b5761672fc22cbb27ed2ef11368458490"
+    },
+    {
+      "path": "_temp/ch001r4/r4-34937329430-1/bootstrap/public/dispatch.txt",
+      "bytes": 193,
+      "sha256": "20e3cf5dede91a74d94d7d1454255e85108f1ac863a214f486f1af5f7bb6fed1"
+    }
+  ],
+  "limitations": [
+    "No T9 application or migration was executed by the architect.",
+    "No Docker daemon, project-pinned Node 20, or project dependency tree was available in the review runtime.",
+    "Container-side clone failed DNS resolution; connector reads and the downloaded artifact were used.",
+    "The missing migration exception prevents confirmation of the inner runtime cause.",
+    "Workflow file SHA-256 is recorded from matching handoff/artifact attestations, not recomputed from a full workflow download here.",
+    "API metadata and original ZIP are independent of the archived pre-upload PENDING field."
+  ]
+}

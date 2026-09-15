@@ -1,0 +1,9 @@
+downloaded=yes
+observed_at=2026-09-15T07:11:30Z
+source_thread=https://chatgpt.com/c/6aa32649-7154-83e8-9af9-2710e140cdd9
+pack_dir=architect/ch001r10-pack/
+generation=COMPLETE
+prior_E9=0f222800f1e91a18cc2f16824a87c9513cd29026
+prior_T9=6014a247b124a186a1abfcb6d65a7ef024cf8cfc
+hosted_run=34937329430
+artifact=10383922146

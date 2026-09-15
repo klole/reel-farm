@@ -1,0 +1,119 @@
+{
+  "record_kind": "ARCHITECT_PACKET_VALIDATION_NOT_APPLICATION_TEST",
+  "packet": "CH-001R-r10-r1",
+  "passed": 22,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "required canonical documents exist",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "UTF-8 documents contain no null bytes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "fenced code blocks balanced",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "canonical local links resolve",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "repair template has eighteen unique IDs",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "every repair case has a documented requirement",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all new repair template checks start NOT_RUN",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "acceptance/version remain false/none in template",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "future execution identities are not invented",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "missing inner cause is explicitly unresolved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "diagnostics before teardown and hash finalization required",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "partial-start attempt/ownership differs from success",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "source-faithful migration runtime tests required",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "diagnostic-only mode cannot claim runtime repair",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "single conditional fresh dispatch and no historical rerun",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "frozen product and security scope explicit",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "historical inspection passed all checks",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "historical ZIP preserved byte-for-byte",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "selected original reports are unchanged",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "external starting prompt matches canonical bytes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "combined copy includes all canonical sections and no broken relative Markdown links",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "review limitations disclosed",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "runtime_actions": "Documentation generation, archive integrity inspection, and filesystem checks only. No app/database/container/policy/workflow executed by this validator."
+}

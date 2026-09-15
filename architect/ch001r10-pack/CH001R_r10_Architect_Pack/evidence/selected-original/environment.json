@@ -1,0 +1,75 @@
+{
+  "run_id": "r4-34937329430-1",
+  "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+  "workflow_sha": "0f222800f1e91a18cc2f16824a87c9513cd29026",
+  "host": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v20.19.2",
+    "package_manager": "pnpm@12.3.4",
+    "implementation_commit": "6014a247b124a186a1abfcb6d65a7ef024cf8cfc",
+    "implementation_tree": "6e590387c666ee3672210d022e51fc9283e07737",
+    "tracked_tree_clean": true,
+    "workflow_sha": "0f222800f1e91a18cc2f16824a87c9513cd29026",
+    "docker": {
+      "cli": "28.0.4",
+      "daemon": "28.0.4",
+      "compose": "2.38.2"
+    },
+    "browser": {
+      "managed_path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "selected_path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "executable": true,
+      "identity": {
+        "path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+        "requested_path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+        "browsers_root": "/home/runner/.cache/ms-playwright",
+        "relative_path": "chromium-1243/chrome-linux64/chrome",
+        "revision": "chromium-1243",
+        "platform_directory": "chrome-linux64",
+        "filename": "chrome",
+        "sha256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+        "mode": "0755",
+        "uid": 1001,
+        "gid": 1001,
+        "size_bytes": 293285184
+      },
+      "sandbox_qualification_ready": "1"
+    },
+    "measured": {
+      "platform": "linux",
+      "arch": "x64",
+      "node": "v20.19.2",
+      "pnpm": "12.3.4",
+      "playwright": "1.63.0",
+      "browser": {
+        "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+        "identity": {
+          "path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "requested_path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+          "browsers_root": "/home/runner/.cache/ms-playwright",
+          "relative_path": "chromium-1243/chrome-linux64/chrome",
+          "revision": "chromium-1243",
+          "platform_directory": "chrome-linux64",
+          "filename": "chrome",
+          "sha256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+          "mode": "0755",
+          "uid": 1001,
+          "gid": 1001,
+          "size_bytes": 293285184
+        },
+        "version": "153.0.8010.12",
+        "sandbox_requested": true,
+        "sandbox_qualification_ready": "1"
+      }
+    }
+  },
+  "runtime": {
+    "base_url": "http://127.0.0.1:32923",
+    "compose_project": "oss-ch001-r4-34937329430-1",
+    "port": 32923,
+    "browser_path": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome"
+  },
+  "prerequisite_failures": [],
+  "evidence_boundary": "Public record contains measured non-secret facts only; raw credentials and environment files remain private."
+}

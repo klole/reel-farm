@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "record_kind": "UNEXECUTED_CH001R_R10_CHECKLIST_TEMPLATE",
+  "chapter": "CH-001R-r10",
+  "packet_revision": "r1",
+  "target_application_version": "0.1.0",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "completion_mode": null,
+  "base_commit": null,
+  "packet_commit": null,
+  "implementation_commit": null,
+  "implementation_tree": null,
+  "evidence_commit": null,
+  "workflow_definition_commit": null,
+  "workflow_blob": null,
+  "workflow_sha256": null,
+  "migration_exception": null,
+  "migration_cause_confirmed": false,
+  "migration_repair_runtime_verified": false,
+  "hosted_run_id": null,
+  "hosted_dispatch_count": 0,
+  "proof_invoked": false,
+  "proof_exit_code": null,
+  "original_application_gate_counts": null,
+  "checks": [
+    {
+      "id": "R10-T01",
+      "evidence_class": "historical_artifact",
+      "requirement": "Historical T9 identities and original evidence preserved",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T02",
+      "evidence_class": "final_image_runtime",
+      "requirement": "Actual T9 migration reproduction and stderr",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T03",
+      "evidence_class": "diagnosis_and_source",
+      "requirement": "Cause-backed repair or honest unresolved diagnosis",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T04",
+      "evidence_class": "final_image_runtime",
+      "requirement": "Candidate final-image entrypoint and runtime identity",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T05",
+      "evidence_class": "final_image_runtime",
+      "requirement": "Fresh migration and expected schema/metadata",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T06",
+      "evidence_class": "final_image_runtime",
+      "requirement": "Same-database repeat and sentinel preservation",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T07",
+      "evidence_class": "runtime_or_labeled_fixture",
+      "requirement": "Controlled failure cannot record false completion",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T08",
+      "evidence_class": "executed_control_flow",
+      "requirement": "Partial startup diagnostic and cleanup path",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T09",
+      "evidence_class": "executed_control_flow",
+      "requirement": "Bounded stopped-service logs and safe redaction",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T10",
+      "evidence_class": "control_flow_and_runtime",
+      "requirement": "Owned teardown and sibling/default refusal",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T11",
+      "evidence_class": "executed_control_flow",
+      "requirement": "Primary/secondary failure and timeout precedence",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T12",
+      "evidence_class": "artifact_validation",
+      "requirement": "Final payload manifest binds diagnostics and cleanup",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T13",
+      "evidence_class": "executed_host_commands",
+      "requirement": "Scoped command and CI regressions with actual pinned tools",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T14",
+      "evidence_class": "source_and_hash_review",
+      "requirement": "Frozen security/toolchain/contract and scope comparison",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T15",
+      "evidence_class": "real_docker_fixture",
+      "requirement": "Real partial-startup diagnostics and safe teardown",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T16",
+      "evidence_class": "documentation_review",
+      "requirement": "Truthful status and separation of evidence classes",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T17",
+      "evidence_class": "router_receipt",
+      "requirement": "Publication and workflow identity verified",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    },
+    {
+      "id": "R10-T18",
+      "evidence_class": "router_receipt",
+      "requirement": "Single fresh dispatch and actual outcome preserved",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "actual_evidence": [],
+      "reason": "Template: no new R10 result has been executed or asserted."
+    }
+  ]
+}

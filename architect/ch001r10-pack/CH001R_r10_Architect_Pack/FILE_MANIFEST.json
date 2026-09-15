@@ -1,0 +1,124 @@
+{
+  "packet": "CH-001R-r10-r1",
+  "exclusions": [
+    "FILE_MANIFEST.json",
+    "SHA256SUMS.txt"
+  ],
+  "files": [
+    {
+      "path": "01_REVIEW_VERDICT.md",
+      "bytes": 8617,
+      "sha256": "f8f3730c9d68dcc30c2188621f3b495be2ba786ff1d992e33c21a33159b11e7d"
+    },
+    {
+      "path": "02_LUNA_ASSIGNMENT.md",
+      "bytes": 13974,
+      "sha256": "512e24c6b5c98c11ad199f09f06803faf9ad84a8361484da1031859d9a4bbe5e"
+    },
+    {
+      "path": "03_TEST_EVIDENCE_CONTRACT.md",
+      "bytes": 9038,
+      "sha256": "30afed03c171cb160377c490841a43ca1a6881f738e258887131a1d1715d5fe1"
+    },
+    {
+      "path": "04_ROUTER_HANDOFF.md",
+      "bytes": 4732,
+      "sha256": "c4c191404662749abd7b6043ede63c3fd43f055d33be03b0638211d7e5253d6c"
+    },
+    {
+      "path": "05_HANDOFF_TEMPLATE.md",
+      "bytes": 2769,
+      "sha256": "42fa741f581a032df73f9e6945c1174676f33797184fe31e8e73c11709365589"
+    },
+    {
+      "path": "06_SOURCES.md",
+      "bytes": 4493,
+      "sha256": "0507ff737c25e215b523a9383f8e31c18c9ccb9055c30f25ecdc37e71d398f9e"
+    },
+    {
+      "path": "LUNA_START_PROMPT.md",
+      "bytes": 2398,
+      "sha256": "d94164af1b68831f4d8372d570422509a0f3fa9b98b8460689ed5901e065eef5"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2816,
+      "sha256": "e3663c579c8df3481e11141fd57b0da071fb5b787890999b72f240b56959d9dc"
+    },
+    {
+      "path": "VALIDATION_REPORT.json",
+      "bytes": 2993,
+      "sha256": "189958d686da4525bba6c8339e566b525f82dfd89b9c46b95e94fa2381d50abc"
+    },
+    {
+      "path": "VALIDATION_REPORT.md",
+      "bytes": 1485,
+      "sha256": "8591a4a181898238b4c7dde58707ad5f4cdd5b4a74225b1667d69c6a15fdbe23"
+    },
+    {
+      "path": "evidence/ch001-live-proof-34937329430-1.zip",
+      "bytes": 52987,
+      "sha256": "4b64eb28f946bd74fd67fe14b10200b85886ed28eb42ea2847e71443ac1a96f0"
+    },
+    {
+      "path": "evidence/historical-run-inspection.json",
+      "bytes": 27821,
+      "sha256": "4b88c0b96ab50ccaddc0295c85d8277c98d5760a68bab696f6354fc06125862f"
+    },
+    {
+      "path": "evidence/selected-original/010-compose-up-build.log",
+      "bytes": 69453,
+      "sha256": "7e1b29a3b43d6c5abf6e3185928a6efd482d81c1467293111c1b198520d2d0cb"
+    },
+    {
+      "path": "evidence/selected-original/artifact-manifest.json",
+      "bytes": 5884,
+      "sha256": "530e5fda8cbfdc947f77a54c2da426ce7b7edc6e44a19d50f3c3510053ee4d3a"
+    },
+    {
+      "path": "evidence/selected-original/bootstrap-result.json",
+      "bytes": 11763,
+      "sha256": "22208a5911b503fc55eff8b4b8e235626b511f9b9cb55559e8668784320cd7e1"
+    },
+    {
+      "path": "evidence/selected-original/ci-helper-regressions.log",
+      "bytes": 6001,
+      "sha256": "e47a4f795de1cce1cadf6e7bb04c25c8497bf71912050db5c40f55693c0dad66"
+    },
+    {
+      "path": "evidence/selected-original/ci-result.json",
+      "bytes": 1313,
+      "sha256": "60319c7a41cee11d5e53e4474158411a1e172cbcccc87b401d04d8c418e99409"
+    },
+    {
+      "path": "evidence/selected-original/command-report.json",
+      "bytes": 8247,
+      "sha256": "85b82b52bf566705630bb19671bebfe6c769ec0ad9d5af0c6704a09e4155d9b4"
+    },
+    {
+      "path": "evidence/selected-original/environment.json",
+      "bytes": 3003,
+      "sha256": "ef04c1e50c51a346c1c782ae120bbf84dac36d0d5d05bb6b50e055d3a8dcf0d0"
+    },
+    {
+      "path": "evidence/selected-original/gate-results.json",
+      "bytes": 30303,
+      "sha256": "e9117b3e5a0ac2eea2b879d5b7d0a129cfaeeea4c0a495d5e2b3d8ef667453ea"
+    },
+    {
+      "path": "evidence/selected-original/proof-result.json",
+      "bytes": 12190,
+      "sha256": "54df42f04b808dcae7a2c09d30cd780c55d817bbe7db6969552451dc188e8914"
+    },
+    {
+      "path": "evidence/selected-original/sandbox-qualification.json",
+      "bytes": 25306,
+      "sha256": "ed74ebdfb50a06077f87b27c4a23ce0744bb2c56ea7b1e94b365ba8132198d8a"
+    },
+    {
+      "path": "templates/r10-results.template.json",
+      "bytes": 6626,
+      "sha256": "878a62d8739ee40141049ac9b433033e21daacc33b8e2042ea330996cbd9e7f1"
+    }
+  ]
+}
