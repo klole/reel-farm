@@ -164,7 +164,7 @@
   "external_actions": {
     "packet_delivered_to_router": true,
     "evidence_pushed": true,
-    "external_message_sent": false,
+    "external_message_sent": true,
     "luna_spawned": false,
     "workflow_submission": true,
     "historical_reruns": 0,

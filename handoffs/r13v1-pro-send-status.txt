@@ -1,0 +1,10 @@
+sent=yes
+variant=short
+observed_at=2026-09-15T17:01:00Z
+detail=confirmed_in_thread; leftover composer draft cleared; V1 hosted outcome posted; Pro generating after send
+thread_url=https://chatgpt.com/c/6aa32649-7154-83e8-9af9-2710e140cdd9
+run_id=34997237592
+classification=LIVE_PROOF_FAILED
+evidence_body=03dbf224f82cba00b51a5c76e8e99552d3cde6d8
+evidence_bind=fb45ebe33d16662702df3bc4e10363fb6ca8b625
+artifact_id=10407819558
