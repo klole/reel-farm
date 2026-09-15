@@ -1,0 +1,79 @@
+{
+  "record_kind": "CH001R_R11_SCOPE_COMPARISON",
+  "baseline_commit": "10db55ff1f942f3b1894699fea3180b69f4afe27",
+  "baseline_tree": "f1c342eef70e7f1d22818b1cbc364a687d34c985",
+  "prior_t10_commit": "ec7cc08d6ed229af9780318858d8051202851746",
+  "candidate_commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "candidate_tree": "9b948f6247c1f7804e34bd22cf3c9ae623bde593",
+  "changed_paths": [
+    "package.json",
+    "pnpm-lock.yaml",
+    "scripts/ch001-harness.ts",
+    "scripts/ch001-migration-verification.d.mts",
+    "scripts/ch001-migration-verification.mjs",
+    "scripts/ch001-proof-boundary.mjs",
+    "scripts/ch001-proof.ts",
+    "scripts/ci/pin-scope.mjs",
+    "scripts/verify-db-module-import.ts",
+    "tests/ci/migration-first.test.mjs",
+    "tests/ci/workflow-validation.test.mjs"
+  ],
+  "authorized_dependency_delta": {
+    "manifest": {
+      "path": "package.json",
+      "dependency": "@oss/db",
+      "specifier": "workspace:*",
+      "other_manifest_fields_changed": false,
+      "baseline_sha256": "4150f4a4cfb483a287b7d0d5e4238e6dc2544edf099b294362f29f95e6804ab5",
+      "candidate_sha256": "bfd6ec10f1b59d1d45e5950d878397aa5553f26d1a8c0e710a9151bacca02684"
+    },
+    "lockfile": {
+      "root_importer_block": [
+        "      '@oss/db':",
+        "        specifier: workspace:*",
+        "        version: link:packages/db"
+      ],
+      "baseline_sha256": "9c49bf356bdd523623b79cf6096df83de51f06b358bffa88391700a4c5719d70",
+      "candidate_sha256_before_install": "77861bac2106333c55ea960422cd0b34bca86dc50db2b7806ad7581c3d975576",
+      "candidate_sha256_after_frozen_install": "77861bac2106333c55ea960422cd0b34bca86dc50db2b7806ad7581c3d975576",
+      "only_application_root_local_link_changed": true
+    }
+  },
+  "pin_guard": {
+    "r7_t11_preserved": true,
+    "r11_t04_exact_allowance": {
+      "dependency": "@oss/db",
+      "specifier": "workspace:*",
+      "lock_link": "link:packages/db"
+    },
+    "negative_controls": [
+      "wrong/missing/extra root dependency",
+      "registry or non-local @oss/db link",
+      "external pg dependency change",
+      "Node/pnpm/runtime pin change",
+      "wrong or missing lock block",
+      "lockfile external dependency, integrity, or metadata change"
+    ]
+  },
+  "unchanged_frozen_surfaces": [
+    { "path": "migrations/0001_ch001.sql", "baseline_blob": "6e92718775356e0c9d207156586dabc38ec2c7ca", "candidate_blob": "6e92718775356e0c9d207156586dabc38ec2c7ca" },
+    { "path": "scripts/migrate.ts", "baseline_blob": "468dd8c82cc2db53da81f50fc65b8548ede706ae", "candidate_blob": "468dd8c82cc2db53da81f50fc65b8548ede706ae" },
+    { "path": "Dockerfile", "baseline_blob": "23cad19d631b5d3048e8b3a899f51d0a63b6de52", "candidate_blob": "23cad19d631b5d3048e8b3a899f51d0a63b6de52" },
+    { "path": "compose.yaml", "baseline_blob": "d4960f322b8ff2a78cc808bec24d5d68e04069b9", "candidate_blob": "d4960f322b8ff2a78cc808bec24d5d68e04069b9" },
+    { "path": "scripts/ch001-sandbox.mjs", "baseline_blob": "da98d60b0d409c9f2538c452374ccdea1d67806f", "candidate_blob": "da98d60b0d409c9f2538c452374ccdea1d67806f" },
+    { "path": "scripts/ci/initialize-sandbox-state.sh", "baseline_blob": "0e4dd049b5a7d77382ae05cd0a3710812d184b87", "candidate_blob": "0e4dd049b5a7d77382ae05cd0a3710812d184b87" },
+    { "path": ".github/workflows/ch001-live-proof.yml", "baseline_blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af", "candidate_blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af", "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d" }
+  ],
+  "original_gate_contract": {
+    "count": 72,
+    "first": "CH001-001",
+    "last": "CH001-072",
+    "ids_unchanged": true,
+    "application_acceptance_changed": false
+  },
+  "runtime_pins": {
+    "node": "20.19.2",
+    "pnpm": "12.3.4",
+    "actionlint": "1.7.7"
+  }
+}

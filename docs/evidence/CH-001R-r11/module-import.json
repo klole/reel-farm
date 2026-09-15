@@ -1,0 +1,36 @@
+{
+  "record_kind": "CH001R_R11_MODULE_IMPORT_SUMMARY",
+  "source_commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "host_post_build": {
+    "run_id": "r11-local-003",
+    "status": "PASS",
+    "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+    "execution": "in-process actual verifier after host build",
+    "resolved_path": "/workspace/projects/reel-farm/packages/db/dist/index.js",
+    "expected_path": "/workspace/projects/reel-farm/packages/db/dist/index.js",
+    "pool_api": { "connect": true, "end": true },
+    "pool_closed": true,
+    "database_connection_attempted": false,
+    "negative_control": {
+      "status": "PASS",
+      "control_kind": "RECORDED_FROZEN_BASELINE_EQUIVALENT",
+      "exit_code": 1,
+      "timed_out": false,
+      "missing_package_error": true,
+      "control": "isolated temporary root with actual scripts/migrate.ts and no root @oss/db link"
+    },
+    "evidence": "artifacts/ch001r11/r11-local-003/public/module-import-verification.json"
+  },
+  "standalone_script": {
+    "command": "node --import tsx scripts/verify-db-module-import.ts --negative-control",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "final_image": {
+    "status": "NOT_RUN",
+    "reason": "Docker/Compose unavailable; final-image command remains implemented and is exercised by the hosted migration prefix.",
+    "resolved_path": null,
+    "container_exit": null
+  },
+  "not_sql_proof": true
+}

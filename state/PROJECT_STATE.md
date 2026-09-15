@@ -1,9 +1,22 @@
-# Project state — CH-001R-r10 checkpoint
+# Project state — CH-001R-r11 checkpoint
 
 **Last updated:** 2026-09-15 UTC
 **State:** `awaiting_review`
 **Product:** Open Slideshow Studio
 **Target application version:** `0.1.0`
+
+## Current CH-001R-r11 root dependency repair and migration-first qualification
+
+- P11 is `10db55ff1f942f3b1894699fea3180b69f4afe27` (tree `f1c342eef70e7f1d22818b1cbc364a687d34c985`). T10 remains `ec7cc08d6ed229af9780318858d8051202851746` (tree `9e43ac5c00801f7d523405dbe5874d64264fa7cc`), with E10 `f512c9c02620ea600404cd304782a37e6689a109` and D1 receipt `ad2aab759391c070808024ff98977f72c8cb8ec5`.
+- T11 implementation is `7d2a128432dd6922bee50fde94c9bd2b1bf5e49f` (tree `9b948f6247c1f7804e34bd22cf3c9ae623bde593`). It adds only the authorized root `@oss/db: workspace:*` dependency/local lock link, the exact pin guard allowance and negative cases, actual module-import verification, migration-first proof coordination, and focused/source-bound regressions.
+- The root lockfile delta is exactly the application-root `@oss/db` link; the candidate frozen install leaves its SHA-256 at `77861bac2106333c55ea960422cd0b34bca86dc50db2b7806ad7581c3d975576`. Migration SQL/script, Dockerfile, Compose, sandbox, external versions, workflow bytes, and the original 72 gate IDs are unchanged.
+- The final host verifier passed: the real built module resolved to `packages/db/dist/index.js`, exposed `pool.connect`/`pool.end`, closed the pool, and made no database connection; the isolated missing-root-link control produced the expected `ERR_MODULE_NOT_FOUND`. The proof coordinator now records this after build and invokes the same verifier from the final image before migration.
+- Source-ready checks passed, including both clean and hosted-like no-node_modules rehearsals: each reported `8/8` file-level and `74/74` nested CI cases with official actionlint `1.7.7`, Node `20.19.2`, and pnpm `12.3.4`.
+- Local proof run `r11-local-003` exited `2` as `BLOCKED_ENVIRONMENT`: host static/module checks passed, the original application ledger is `4 PASS / 0 FAIL / 68 NOT_RUN`, and final-image migration, database, browser, worker, and downstream artifact stages are explicitly NOT_RUN. Docker/Compose was unavailable or denied, loopback allocation returned `EPERM`, and pinned Chromium was unavailable.
+- Completion mode is `IMPLEMENTED_READY_FOR_HOSTED_MIGRATION_VERIFICATION`. Application acceptance remains `false`; accepted version remains `none`; root remains `awaiting_review`. Luna's hosted request count is zero; no publication, dispatch, provider/credential, release, or v0.2 work occurred. Router/architect review is required before the one conditional hosted request.
+- Durable r11 evidence is [`docs/evidence/CH-001R-r11/README.md`](../docs/evidence/CH-001R-r11/README.md); the handoff is [`handoffs/CH-001R-r11.md`](../handoffs/CH-001R-r11.md). E11 is returned after the evidence-only commit and is not embedded self-referentially.
+
+# Project state — CH-001R-r10 checkpoint (historical)
 
 ## Current CH-001R-r10 bounded migration diagnosis and startup cleanup repair
 

@@ -1,4 +1,21 @@
-# Requirement status — CH-001R-r10 checkpoint
+# Requirement status — CH-001R-r11 checkpoint
+
+CH-001R-r11 is a bounded v0.1.0 root workspace dependency repair and migration-first qualification implementation. It does not accept the application or establish a successful final-image migration. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff.
+
+| R11 subset | Status | Evidence / boundary |
+|---|---|---|
+| Exact root runtime dependency and lock delta | `implemented` | Root `@oss/db=workspace:*` and exactly one `link:packages/db` root importer relationship; all other dependency/pin surfaces are unchanged. |
+| Pin guard and negative controls | `passed` | R7-T11 remains intact; R11-T04 rejects wrong/missing/extra root edges, registry links, external/version/metadata drift. |
+| Real host module import and negative control | `passed` | Built `@oss/db` resolves to `packages/db/dist/index.js`, pool API closes without DB connection, and isolated no-link migration import fails as expected. |
+| Migration-first proof implementation | `implemented` | Final-image import, fresh/schema/repeat/controlled-failure stages, persistence before worker readiness, diagnostics, and scoped cleanup are wired and tested. |
+| Migration-first control-flow regressions | `passed` | `4/4` migration-first file tests and full source-bound CI pass; fakes are control-flow-only and no live DB is claimed. |
+| Static and source-bound checks | `passed` | Lint/typecheck/build, unit `20/20`, security `4/4`, pinned actionlint, and both prefixes `8/8` files / `74/74` nested. |
+| Final-image migration fresh/schema/repeat/failure | `not_run` | Docker/Compose unavailable; no image, database, SQLSTATE, marker, sentinel, container exit, or runtime cleanup result is claimed. |
+| Application acceptance | `false` | Accepted application version `none`; root `awaiting_review`; Luna hosted request count `0`. |
+
+The original CH-001 requirements below remain the chapter status scaffold and are not promoted by this implementation-only continuation.
+
+# Requirement status — CH-001R-r10 checkpoint (historical)
 
 CH-001R-r10 is a bounded v0.1.0 migration-failure diagnosis and partial-startup diagnostics/cleanup repair. It does not accept the application or establish a successful final-image migration. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff.
 

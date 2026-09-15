@@ -1,0 +1,16 @@
+{
+  "record_kind": "CH001R_R11_LOCAL_PROOF_MANIFEST_SUMMARY",
+  "run_id": "r11-local-003",
+  "source_commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "local_manifest": "artifacts/ch001r11/r11-local-003/public/artifact-manifest.json",
+  "local_manifest_sha256": "36b05635fef828a5d8b697b8c54d78c5b3d5e09459d91f327779b36659027486",
+  "public_file_count": 31,
+  "manifest_status": "LIVE_PROOF_INCOMPLETE",
+  "retained_records": {
+    "migration_verification_sha256": "b75cea109e3c77362a322554a2141abe96ee1aecd5b7dccf15bf577a80bf4c06",
+    "module_import_verification_sha256": "75ddf738b9186c3485ea6b883d6097a584cb7c7838daeff3ea059e86ddf019b2",
+    "compose_cleanup_sha256": "2a286e4085abcc8d06bfc76a7e12c5439cc27a62e8ae11f77dbdf004312beed6",
+    "migration_container_cleanup_sha256": "a1efa3838568adb28233d43757b6624c615e3121f10f446030bc0240bb0bff36"
+  },
+  "exclusion": "Private raw logs, env files, credentials, cookies, auth storage, and metadata self-references remain excluded from the public manifest."
+}

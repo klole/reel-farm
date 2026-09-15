@@ -1,0 +1,29 @@
+{
+  "record_kind": "CH001R_R11_SOURCE_BOUND_PREFIX_SUMMARY",
+  "mode": "hosted-like",
+  "status": "PASS",
+  "implementation_sha": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "implementation_tree": "9b948f6247c1f7804e34bd22cf3c9ae623bde593",
+  "workflow_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "node": "v20.19.2",
+  "pnpm": "12.3.4",
+  "node_modules_present_before_prefix": false,
+  "actionlint": {
+    "version": "1.7.7",
+    "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "ci_suite": {
+    "command": "node --test tests/ci",
+    "file_level": { "discovered": 8, "executed": 8, "passed": 8, "failed": 0, "skipped": 0 },
+    "nested_cases": { "discovered": 74, "executed": 74, "passed": 74, "failed": 0, "skipped": 0 },
+    "exit_code": 0
+  },
+  "workflow_validation": { "exit_code": 0, "status": "PASS" },
+  "inherited_sandbox_state": true,
+  "sandbox_opt_in": false,
+  "absent_trees": { "proof": true, "proof_public": true, "policy": true, "sandbox_state": true },
+  "full_record": "artifacts/ch001r11/prefix-hosted-like-final.json",
+  "run_id": "110000008",
+  "attempt": "1"
+}

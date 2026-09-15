@@ -1,0 +1,22 @@
+{
+  "record_kind": "CH001R_R11_PROOF_FALLBACK",
+  "run_id": "r11-local-003",
+  "source_commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "command": "CH001_RUN_ID=r11-local-003 CH001_WORKFLOW_SHA=35fa339aac2fcb024cd476ff38d87d27eb6482af ACTIONLINT_BOOTSTRAP_ARCHIVE=/tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz pnpm proof:ch001",
+  "exit_code": 2,
+  "status": "BLOCKED_ENVIRONMENT",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "gate_counts": { "PASS": 4, "FAIL": 0, "NOT_RUN": 68 },
+  "host_static": { "lint": "PASS", "typecheck": "PASS", "build": "PASS", "post_build_module_import": "PASS", "unit": "PASS", "security": "PASS" },
+  "runtime_cases": "NOT_RUN",
+  "environment_failures": [
+    "loopback listen EPERM",
+    "Docker CLI/daemon/Compose unavailable or denied",
+    "pinned Playwright Chromium executable unavailable",
+    "sandboxed browser launch not attempted/qualified"
+  ],
+  "public_record": "artifacts/ch001r11/r11-local-003/public/proof-result.json",
+  "migration_record": "artifacts/ch001r11/r11-local-003/public/migration-verification.json",
+  "cleanup_record": "artifacts/ch001r11/r11-local-003/public/compose-cleanup.json"
+}

@@ -1,5 +1,21 @@
 # Evidence index — CH-001
 
+## CH-001R-r11 root dependency repair and migration-first qualification
+
+| Evidence | Location | State |
+|---|---|---|
+| R11 overview and disposition | [CH-001R-r11 README](../docs/evidence/CH-001R-r11/README.md) | Implemented and ready for hosted migration verification; acceptance false |
+| Source identities and state | [source-identity.json](../docs/evidence/CH-001R-r11/source-identity.json) | P11/T11/workflow/D1 and no-dispatch state recorded |
+| Exact dependency/pin/scope comparison | [scope-comparison.json](../docs/evidence/CH-001R-r11/scope-comparison.json) | Only root `@oss/db` workspace dependency/local link allowed; frozen surfaces unchanged |
+| R11 checklist | [r11-results.json](../docs/evidence/CH-001R-r11/r11-results.json) | `10 PASS / 0 FAIL / 8 NOT_RUN`; router T17/T18 remain NOT_RUN |
+| Module import record | [module-import.json](../docs/evidence/CH-001R-r11/module-import.json) | Real host import and isolated negative control PASS; final-image import NOT_RUN |
+| Migration-first record | [migration-verification.json](../docs/evidence/CH-001R-r11/migration-verification.json) | Runtime stages explicitly NOT_RUN; persistence/worker boundary recorded |
+| Source-bound rehearsals | [prefix-clean.json](../docs/evidence/CH-001R-r11/prefix-clean.json), [prefix-hosted-like.json](../docs/evidence/CH-001R-r11/prefix-hosted-like.json) | Each `8/8` file-level and `74/74` nested, no node_modules |
+| Commands and fallback proof | [commands.log](../docs/evidence/CH-001R-r11/commands.log), [proof-fallback.json](../docs/evidence/CH-001R-r11/proof-fallback.json) | Static/module PASS; local proof exit 2 `BLOCKED_ENVIRONMENT`, `4 PASS / 0 FAIL / 68 NOT_RUN` |
+| Handoff | [handoffs/CH-001R-r11.md](../handoffs/CH-001R-r11.md) | `IMPLEMENTED_READY_FOR_HOSTED_MIGRATION_VERIFICATION`; router/architect review required |
+
+This r11 record preserves the historical r10 and failed hosted run `34946892709` as read-only. Luna did not dispatch, publish, rerun, accept v0.1, use providers, or begin v0.2 work.
+
 ## CH-001R-r10 migration-failure diagnosis and partial-startup cleanup repair
 
 | Evidence | Location | State |

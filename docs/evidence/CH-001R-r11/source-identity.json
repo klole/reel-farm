@@ -1,0 +1,54 @@
+{
+  "record_kind": "CH001R_R11_SOURCE_IDENTITY",
+  "chapter": "CH-001R-r11",
+  "target_application_version": "0.1.0",
+  "packet": {
+    "commit": "10db55ff1f942f3b1894699fea3180b69f4afe27",
+    "tree": "f1c342eef70e7f1d22818b1cbc364a687d34c985"
+  },
+  "starting_source": {
+    "commit": "10db55ff1f942f3b1894699fea3180b69f4afe27",
+    "tree": "f1c342eef70e7f1d22818b1cbc364a687d34c985"
+  },
+  "prior": {
+    "t10_commit": "ec7cc08d6ed229af9780318858d8051202851746",
+    "t10_tree": "9e43ac5c00801f7d523405dbe5874d64264fa7cc",
+    "e10_commit": "f512c9c02620ea600404cd304782a37e6689a109",
+    "d1_receipt": "ad2aab759391c070808024ff98977f72c8cb8ec5"
+  },
+  "t11": {
+    "commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+    "tree": "9b948f6247c1f7804e34bd22cf3c9ae623bde593"
+  },
+  "e11": "returned after the evidence-only commit; not embedded self-referentially",
+  "workflow": {
+    "blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+    "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d"
+  },
+  "historical_negative_baseline": {
+    "run": "34946892709",
+    "artifact": "10387768055",
+    "artifact_sha256": "4c6dae545e0f778ff90bebf9216bd90258ceb41fde228a9fdff50f460a34e685",
+    "rerun": false
+  },
+  "runtime": {
+    "proof_run": "r11-local-003",
+    "proof_exit_code": 2,
+    "proof_status": "BLOCKED_ENVIRONMENT",
+    "migration_runtime_cases": "NOT_RUN",
+    "host_module_import": "PASS",
+    "hosted_request_count": 0
+  },
+  "state": {
+    "application_acceptance": false,
+    "accepted_application_version": "none",
+    "root_state": "awaiting_review"
+  },
+  "external_actions": {
+    "workflow_dispatch": false,
+    "publication": false,
+    "providers": false,
+    "credentials": false,
+    "v0_2": false
+  }
+}

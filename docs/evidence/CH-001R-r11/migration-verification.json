@@ -1,0 +1,57 @@
+{
+  "record_kind": "CH001R_R11_MIGRATION_FIRST_SUMMARY",
+  "source_commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "run_id": "r11-local-003",
+  "status": "NOT_RUN",
+  "classification": "R11_MIGRATION_FIRST",
+  "runtime_cases": "NOT_RUN",
+  "migration_qualified": false,
+  "persisted_before_worker_readiness": true,
+  "worker_readiness_attempted": false,
+  "prebuild_module_import": "PASS; see module-import.json",
+  "ordered_runtime_stages": [
+    "module_import",
+    "build",
+    "database_start",
+    "database_ready",
+    "fresh_precondition",
+    "fresh",
+    "schema",
+    "sentinel",
+    "repeat",
+    "repeat_assertions",
+    "failure_control",
+    "fixture_cleanup"
+  ],
+  "stage_statuses": {
+    "module_import": "NOT_RUN",
+    "build": "NOT_RUN",
+    "database_start": "NOT_RUN",
+    "database_ready": "NOT_RUN",
+    "fresh_precondition": "NOT_RUN",
+    "fresh": "NOT_RUN",
+    "schema": "NOT_RUN",
+    "sentinel": "NOT_RUN",
+    "repeat": "NOT_RUN",
+    "repeat_assertions": "NOT_RUN",
+    "failure_control": "NOT_RUN",
+    "fixture_cleanup": "NOT_RUN"
+  },
+  "reason": "Docker/Compose was unavailable or denied; loopback allocation returned EPERM and no runtime fixture was allocated.",
+  "runtime_records": {
+    "fresh": null,
+    "schema": null,
+    "repeat": null,
+    "failure_control": null,
+    "image": null,
+    "container": null,
+    "database": null
+  },
+  "cleanup": {
+    "status": "NOT_RUN",
+    "project_owned": false,
+    "startup_attempted": false,
+    "migration_containers": "No verified owned Compose project was available for one-off cleanup."
+  },
+  "evidence": "artifacts/ch001r11/r11-local-003/public/migration-verification.json"
+}

@@ -1,0 +1,30 @@
+{
+  "record_kind": "CH001R_R11_RESULTS",
+  "chapter": "CH-001R-r11",
+  "source_commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "source_tree": "9b948f6247c1f7804e34bd22cf3c9ae623bde593",
+  "summary": { "PASS": 10, "FAIL": 0, "NOT_RUN": 8 },
+  "results": [
+    { "case_id": "R11-T01", "status": "PASS", "evidence_class": "source", "command": "git identity and state comparison", "exit": 0, "evidence": "source-identity.json" },
+    { "case_id": "R11-T02", "status": "PASS", "evidence_class": "source", "command": "root manifest exact-delta comparison", "exit": 0, "evidence": "scope-comparison.json" },
+    { "case_id": "R11-T03", "status": "PASS", "evidence_class": "source", "command": "pnpm install --frozen-lockfile", "exit": 0, "evidence": "scope-comparison.json; commands.log" },
+    { "case_id": "R11-T04", "status": "PASS", "evidence_class": "source", "command": "node --test tests/ci/workflow-validation.test.mjs", "exit": 0, "assertions": "14/14 nested in each source-bound rehearsal", "evidence": "prefix-clean.json; prefix-hosted-like.json" },
+    { "case_id": "R11-T05", "status": "PASS", "evidence_class": "actual host import plus negative control", "command": "node --import tsx scripts/verify-db-module-import.ts --negative-control", "exit": 0, "evidence": "module-import.json" },
+    { "case_id": "R11-T06", "status": "PASS", "evidence_class": "source", "command": "rehearse-actionlint-prefix.mjs clean and hosted-like", "exit": 0, "assertions": "8/8 files and 74/74 nested in each mode", "evidence": "prefix-clean.json; prefix-hosted-like.json" },
+    { "case_id": "R11-T07", "status": "PASS", "evidence_class": "source", "command": "pnpm lint; pnpm typecheck; pnpm build; pnpm test:unit; pnpm test:security; node --test tests/ci", "exit": 0, "assertions": "unit 20/20; security 4/4; CI 8/8 files and 74/74 nested", "evidence": "commands.log; prefix-clean.json" },
+    { "case_id": "R11-T08", "status": "PASS", "evidence_class": "control-flow fixture", "command": "node --test tests/ci/migration-first.test.mjs", "exit": 0, "assertions": "4/4 file tests; 74/74 nested aggregate", "evidence": "commands.log; prefix-clean.json" },
+    { "case_id": "R11-T09", "status": "NOT_RUN", "evidence_class": "actual image/database", "command": "final-image module-import invocation", "exit": null, "reason": "Docker/Compose unavailable; no candidate image or container was created.", "evidence": "migration-verification.json" },
+    { "case_id": "R11-T10", "status": "NOT_RUN", "evidence_class": "actual image/database", "command": "shipped migration on fresh owned database", "exit": null, "reason": "Docker/Compose unavailable; no database was allocated.", "evidence": "migration-verification.json" },
+    { "case_id": "R11-T11", "status": "NOT_RUN", "evidence_class": "actual image/database", "command": "schema and 0001_ch001 marker inspection", "exit": null, "reason": "Depends on the unavailable fresh migration run.", "evidence": "migration-verification.json" },
+    { "case_id": "R11-T12", "status": "NOT_RUN", "evidence_class": "actual image/database", "command": "same-database repeat migration", "exit": null, "reason": "Depends on the unavailable fresh migration run.", "evidence": "migration-verification.json" },
+    { "case_id": "R11-T13", "status": "NOT_RUN", "evidence_class": "actual image/database", "command": "restricted-role controlled migration failure", "exit": null, "reason": "Depends on the unavailable Compose/PostgreSQL fixture.", "evidence": "migration-verification.json" },
+    { "case_id": "R11-T14", "status": "NOT_RUN", "evidence_class": "actual image/database", "command": "run-owned diagnostics and cleanup", "exit": null, "reason": "No verified Compose project was allocated; cleanup is recorded as no-startup NOT_RUN.", "evidence": "migration-verification.json" },
+    { "case_id": "R11-T15", "status": "PASS", "evidence_class": "source", "command": "node --test tests/ci", "exit": 0, "assertions": "8/8 files and 74/74 nested", "evidence": "prefix-clean.json; prefix-hosted-like.json" },
+    { "case_id": "R11-T16", "status": "PASS", "evidence_class": "source", "command": "scope/state/handoff review plus git diff --check", "exit": 0, "evidence": "scope-comparison.json; source-identity.json" },
+    { "case_id": "R11-T17", "status": "NOT_RUN", "evidence_class": "router", "command": "router publication identity check", "exit": null, "reason": "Router-owned; Luna did not publish or dispatch.", "evidence": "source-identity.json" },
+    { "case_id": "R11-T18", "status": "NOT_RUN", "evidence_class": "router", "command": "fresh hosted observation or no-request receipt", "exit": null, "reason": "Router-owned; Luna hosted request count is zero.", "evidence": "source-identity.json" }
+  ],
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review"
+}
