@@ -1,0 +1,13 @@
+{
+  "record_kind": "CH001_COMPOSE_STARTUP_STATE",
+  "run_id": "r13-local-20260915c",
+  "project_name": "oss-ch001-r13-local-20260915c",
+  "startup_attempted": false,
+  "status": "NOT_RUN",
+  "reason": "No validated, run-owned Compose startup was attempted.",
+  "diagnostics": {
+    "capture_order": [],
+    "raw_logs_private": true,
+    "public_logs_sanitized": true
+  }
+}

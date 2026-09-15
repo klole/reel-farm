@@ -1,0 +1,17 @@
+{
+  "suite": "render",
+  "command": "pnpm test:render",
+  "run_id": "r13-local-20260915c",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "started_at": "2026-09-15T14:15:52.170Z",
+  "ended_at": "2026-09-15T14:16:14.817Z",
+  "exit_code": 2,
+  "discovered": 0,
+  "executed": 0,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "report_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-render.json",
+  "log_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-render-unavailable.log",
+  "unavailable_reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+}

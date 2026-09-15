@@ -1,3 +1,19 @@
+# Requirement status — CH-001R-r13 checkpoint
+
+CH-001R-r13 is a bounded v0.1.0 source repair for F13-01 fixture-database routing and F13-02 invocation evidence identity. It does not accept the application, establish successful final-image migration, or replace the original 72-gate contract. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted`.
+
+| R13 subset | Status | Evidence / boundary |
+|---|---|---|
+| Fixture database routing and negative witnesses | `passed` | Production command-builder/adapter boundary requires explicit database/user targets and the source regression detects omitted/legacy `oss` routing in empty-main and existing-main witnesses. |
+| Invocation serialization and strict validation | `passed` | Real serializer/validator tests preserve legitimate repeated command text, reject duplicate/missing/stale/reused/missing evidence, and retain legacy duplicate-text rejection. |
+| Required-command failure precedence | `passed` | Pass-then-fail and fail-then-pass required invocation fixtures both remain blocking; raw exits and command text are retained. |
+| Source and source-bound matrix | `passed` | Frozen install, pinned actionlint, complete CI, clean/hosted-like prefixes, lint/typecheck/build, unit `24/24`, security `4/4`, syntax/diff, and real post-build DB import passed. |
+| PostgreSQL/final-image migration and runtime cleanup | `not_run` | Docker/Compose and loopback are unavailable; the corrected capable path is wired but no live SQL, image, container, migration, marker, schema, sentinel, permission, or cleanup result is claimed. |
+| Publication/hosted request | `not_run` | Router-owned; Luna made no push or dispatch and has no hosted run/job/artifact identity. |
+| Application acceptance | `false` | Accepted application version `none`; root `awaiting_review`; providers, publishing, release, and v0.2 remain out of scope. |
+
+The complete repair ledger is [`docs/evidence/CH-001R-r13/r13-results.json`](../docs/evidence/CH-001R-r13/r13-results.json), and the handoff is [`handoffs/CH-001R-r13.md`](../handoffs/CH-001R-r13.md). Historical r12 and original CH-001 status sections below are preserved unchanged.
+
 # Requirement status — CH-001R-r12 checkpoint
 
 CH-001R-r12 is a bounded pre-dispatch migration-proof repair for v0.1.0. It does not accept the application, establish successful final-image migration, or replace the original 72-gate contract. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted`.

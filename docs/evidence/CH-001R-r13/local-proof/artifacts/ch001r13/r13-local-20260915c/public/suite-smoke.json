@@ -1,0 +1,16 @@
+{
+  "suite": "smoke",
+  "command": "pnpm proof:ch001 (owned Compose smoke/lifecycle)",
+  "run_id": "r13-local-20260915c",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "started_at": "2026-09-15T14:15:52.170Z",
+  "ended_at": "2026-09-15T14:16:14.815Z",
+  "exit_code": 1,
+  "discovered": 0,
+  "executed": 0,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "report_path": "artifacts/ch001r13/r13-local-20260915c/public/smoke-results.json",
+  "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/compose.log"
+}

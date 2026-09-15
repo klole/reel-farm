@@ -1,0 +1,735 @@
+CH-001R-r9 source-bound hosted-like prefix
+implementation=6e04b5a5eefe2ef464572da35c88338fa342f525
+tree=405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8
+workflow=.github/workflows/ch001-live-proof.yml
+workflow_sha256=733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d
+cwd=/tmp/ch001r9-prefix-hosted-like-0wACtx/checkout
+node=v20.19.2
+node_modules_present=false
+step=identity body_sha256=845910247da5bc996dc62b7e2b1d39e66702d4440b28c6a727d687039f4df3a9
+set -euo pipefail
+actual_sha="$(git rev-parse HEAD)"
+test "$actual_sha" = "$REQUESTED_SHA"
+git cat-file -e "$REQUESTED_SHA^{commit}"
+git merge-base --is-ancestor "$REQUESTED_SHA" origin/main
+test -z "$(git status --porcelain --untracked-files=no)"
+workflow_blob_sha="$(git rev-parse "$CH001_WORKFLOW_SHA:.github/workflows/ch001-live-proof.yml")"
+workflow_file_sha256="$(sha256sum .github/workflows/ch001-live-proof.yml | awk '{print $1}')"
+
+mkdir -p "$(dirname "$CI_BOOTSTRAP_REPORT")"
+export CH001_IMPLEMENTATION_COMMIT="$actual_sha"
+export CH001_WORKFLOW_BLOB_SHA="$workflow_blob_sha"
+export CH001_WORKFLOW_FILE_SHA256="$workflow_file_sha256"
+node scripts/ci/ci-result.mjs init --report "$CI_BOOTSTRAP_REPORT"
+printf 'Bounded CH-001R-r4 live proof; not v0.1 acceptance.\nImplementation: %s\nWorkflow definition: %s\nWorkflow blob: %s\nRun: %s\n' "$REQUESTED_SHA" "$CH001_WORKFLOW_SHA" "$workflow_blob_sha" "$CH001_RUN_ID" > "$(dirname "$CI_BOOTSTRAP_REPORT")/dispatch.txt"
+
+{
+  printf 'CH001_IMPLEMENTATION_COMMIT=%s\n' "$actual_sha"
+  printf 'CH001_WORKFLOW_BLOB_SHA=%s\n' "$workflow_blob_sha"
+  printf 'CH001_WORKFLOW_FILE_SHA256=%s\n' "$workflow_file_sha256"
+} >> "$GITHUB_ENV"
+bash scripts/ci/initialize-sandbox-state.sh
+
+step=actionlint_bootstrap body_sha256=4261577d40af9b9ced4040512d3bf978203ccc2491d2143a196ccc778f6a3967
+set -euo pipefail
+stage_log="$RUNNER_TEMP/ch001r8-actionlint-bootstrap.log"
+stage_report="$(node --input-type=commonjs -e '
+  const path = require("node:path");
+  const base = process.env.CI_BOOTSTRAP_REPORT;
+  if (typeof base !== "string" || base.length === 0 || /[\0\r\n]/.test(base)) {
+    throw new Error("CI_BOOTSTRAP_REPORT must be a non-empty single-line path.");
+  }
+  process.stdout.write(path.resolve(path.dirname(base), "actionlint-bootstrap.json"));
+')"
+set +e
+actionlint_bin="$(node scripts/ci/actionlint-bootstrap.mjs --report "$stage_report" --print-bin 2>"$stage_log")"
+stage_exit=$?
+if [[ "$stage_exit" -eq 0 ]]; then
+  if [[ "$actionlint_bin" != /* || ! -x "$actionlint_bin" ]]; then
+    printf 'Provisioner did not return an absolute executable path: %s\n' "$actionlint_bin" >> "$stage_log"
+    stage_exit=1
+  else
+    export ACTIONLINT_BIN="$actionlint_bin"
+    if ! grep -Fqx "ACTIONLINT_BIN=$actionlint_bin" "$GITHUB_ENV"; then
+      printf 'Provisioner did not publish its verified path to GITHUB_ENV.\n' >> "$stage_log"
+      stage_exit=1
+    fi
+  fi
+fi
+set -e
+node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name actionlint-bootstrap --exit-code "$stage_exit" --detail-file "$stage_report" --log-file "$stage_log"
+rm -f "$stage_log"
+exit "$stage_exit"
+
+step=workflow_validation body_sha256=a3eabe4cbbfa5699ecf3a90e6c824b99358e60fd6ac9d80bb3f94c1d728e590c
+set -euo pipefail
+stage_log="$RUNNER_TEMP/ch001r8-workflow-validation.log"
+set +e
+node scripts/ci/lint-workflow.mjs 2>&1 | tee "$stage_log"
+stage_exit=${PIPESTATUS[0]}
+set -e
+node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name workflow-validation --exit-code "$stage_exit" --log-file "$stage_log"
+rm -f "$stage_log"
+exit "$stage_exit"
+
+step=ci_helper_tests body_sha256=07a39d433b3622283e331a7d096176003bf38109b9a057ec415164b811c1263a
+set -euo pipefail
+stage_log="$RUNNER_TEMP/ch001r8-ci-helper-regressions.log"
+set +e
+node --test tests/ci 2>&1 | tee "$stage_log"
+stage_exit=${PIPESTATUS[0]}
+set -e
+node scripts/ci/ci-result.mjs record-stage --report "$CI_BOOTSTRAP_REPORT" --name ci-helper-regressions --exit-code "$stage_exit" --log-file "$stage_log"
+rm -f "$stage_log"
+exit "$stage_exit"
+
+--- identity exit=0 ---
+
+
+--- actionlint_bootstrap exit=0 ---
+
+
+--- workflow_validation exit=0 ---
+{
+  "record_kind": "WORKFLOW_STATIC_VALIDATION_INVOCATION",
+  "root": "/tmp/ch001r9-prefix-hosted-like-0wACtx/checkout",
+  "validator": {
+    "name": "actionlint",
+    "version": "1.7.7",
+    "executable": "/tmp/ch001r9-prefix-hosted-like-0wACtx/synthetic runner temp/ch001r8-actionlint-130000002-1-K9bA4H/actionlint",
+    "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "distribution_reference": "https://github.com/rhysd/actionlint/releases/tag/v1.7.7",
+    "archive_reference": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757"
+  },
+  "command": [
+    "/tmp/ch001r9-prefix-hosted-like-0wACtx/synthetic runner temp/ch001r8-actionlint-130000002-1-K9bA4H/actionlint",
+    "-shellcheck=",
+    "-pyflakes=",
+    ".github/workflows/ch001-live-proof.yml"
+  ],
+  "inputs": [
+    {
+      "path": ".github/workflows/ch001-live-proof.yml",
+      "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d"
+    }
+  ]
+}
+
+
+--- ci_helper_tests exit=0 ---
+TAP version 13
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/actionlint-bootstrap.test.mjs
+ok 1 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/actionlint-bootstrap.test.mjs
+  ---
+  duration_ms: 632.552042
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/actionlint-workflow-boundary.test.mjs
+ok 2 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/actionlint-workflow-boundary.test.mjs
+  ---
+  duration_ms: 2529.382997
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/ci-repair.test.mjs
+ok 3 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/ci-repair.test.mjs
+  ---
+  duration_ms: 324.981686
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/compose-diagnostics.test.mjs
+ok 4 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/compose-diagnostics.test.mjs
+  ---
+  duration_ms: 278.978156
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/migration-first.test.mjs
+ok 5 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/migration-first.test.mjs
+  ---
+  duration_ms: 260.027087
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/migration-marker-observer.test.mjs
+ok 6 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/migration-marker-observer.test.mjs
+  ---
+  duration_ms: 255.965139
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/migration-regression-boundary.test.mjs
+ok 7 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/migration-regression-boundary.test.mjs
+  ---
+  duration_ms: 262.192569
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/proof-boundary.test.mjs
+ok 8 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/proof-boundary.test.mjs
+  ---
+  duration_ms: 562.475101
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/sandbox.test.mjs
+ok 9 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/sandbox.test.mjs
+  ---
+  duration_ms: 258.046347
+  ...
+# Subtest: /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/workflow-validation.test.mjs
+ok 10 - /tmp/ch001r9-prefix-hosted-like-0wACtx/checkout/tests/ci/workflow-validation.test.mjs
+  ---
+  duration_ms: 1974.434925
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2543.83422
+
+
+--- nested tests/ci/actionlint-bootstrap.test.mjs ---
+TAP version 13
+# Subtest: pinned actionlint archive is installed, attested, and exported without replacing prior env entries
+ok 1 - pinned actionlint archive is installed, attested, and exported without replacing prior env entries
+  ---
+  duration_ms: 122.9444
+  ...
+# Subtest: archive digest failure stops before extraction and leaves no tool directory
+ok 2 - archive digest failure stops before extraction and leaves no tool directory
+  ---
+  duration_ms: 11.504858
+  ...
+# Subtest: executable digest and version failures are fail-closed after safe extraction
+ok 3 - executable digest and version failures are fail-closed after safe extraction
+  ---
+  duration_ms: 41.159138
+  ...
+# Subtest: unsupported targets, unsafe members, and bounded download failures are rejected
+ok 4 - unsupported targets, unsafe members, and bounded download failures are rejected
+  ---
+  duration_ms: 17.355585
+  ...
+# Subtest: explicit report paths are rejected before provisioning side effects
+ok 5 - explicit report paths are rejected before provisioning side effects
+  ---
+  duration_ms: 10.927803
+  ...
+# Subtest: null report path preserves the supported no-report behavior
+ok 6 - null report path preserves the supported no-report behavior
+  ---
+  duration_ms: 24.755731
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 238.147469
+
+
+--- nested tests/ci/actionlint-workflow-boundary.test.mjs ---
+TAP version 13
+# Subtest: the exact current workflow shell body resolves a raw relative report and records the real PASS attestation
+ok 1 - the exact current workflow shell body resolves a raw relative report and records the real PASS attestation
+  ---
+  duration_ms: 597.564084
+  ...
+# Subtest: the same extracted workflow step handles quoted spaces and an already-absolute report base
+ok 2 - the same extracted workflow step handles quoted spaces and an already-absolute report base
+  ---
+  duration_ms: 1217.384046
+  ...
+# Subtest: the exact T8 workflow body is a historical negative control for the unchanged absolute-path contract
+ok 3 - the exact T8 workflow body is a historical negative control for the unchanged absolute-path contract
+  ---
+  duration_ms: 328.431212
+  ...
+# Subtest: workflow extraction fails closed for ambiguous IDs and unsupported run formatting
+ok 4 - workflow extraction fails closed for ambiguous IDs and unsupported run formatting
+  ---
+  duration_ms: 1.109979
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2155.160424
+
+
+--- nested tests/ci/ci-repair.test.mjs ---
+TAP version 13
+# Subtest: summary formatter treats backticks, substitutions, percent signs, and spaces as data
+ok 1 - summary formatter treats backticks, substitutions, percent signs, and spaces as data
+  ---
+  duration_ms: 9.081111
+  ...
+# Subtest: absent proof remains not invoked with a nullable proof exit and a failing final classification
+ok 2 - absent proof remains not invoked with a nullable proof exit and a failing final classification
+  ---
+  duration_ms: 0.539408
+  ...
+# Subtest: actionlint prerequisite and workflow validation failures remain blocking before proof
+ok 3 - actionlint prerequisite and workflow validation failures remain blocking before proof
+  ---
+  duration_ms: 0.373825
+  ...
+# Subtest: proof exits 1 and 2 remain distinct from bootstrap failure
+ok 4 - proof exits 1 and 2 remain distinct from bootstrap failure
+  ---
+  duration_ms: 0.341193
+  ...
+# Subtest: sandbox qualification and cleanup failures remain visible without erasing the primary result
+ok 5 - sandbox qualification and cleanup failures remain visible without erasing the primary result
+  ---
+  duration_ms: 1.649657
+  ...
+# Subtest: exit 0 requires a fresh, identity-matching proof report and delivered artifact
+ok 6 - exit 0 requires a fresh, identity-matching proof report and delivered artifact
+  ---
+  duration_ms: 0.404843
+  ...
+# Subtest: summary failure is secondary to an earlier live-proof failure
+ok 7 - summary failure is secondary to an earlier live-proof failure
+  ---
+  duration_ms: 0.370172
+  ...
+# Subtest: native archive validation accepts the inspected pnpm/dist layout and safe hardlinks
+ok 8 - native archive validation accepts the inspected pnpm/dist layout and safe hardlinks
+  ---
+  duration_ms: 1.004367
+  ...
+# Subtest: native archive validation rejects traversal, symlinks, and unexpected members
+ok 9 - native archive validation rejects traversal, symlinks, and unexpected members
+  ---
+  duration_ms: 1.188629
+  ...
+# Subtest: pin parsing and target selection fail closed for drift and unsupported targets
+ok 10 - pin parsing and target selection fail closed for drift and unsupported targets
+  ---
+  duration_ms: 9.879899
+  ...
+# Subtest: wrong archive digest is rejected before extraction or execution
+ok 11 - wrong archive digest is rejected before extraction or execution
+  ---
+  duration_ms: 12.309071
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 48.136212
+
+
+--- nested tests/ci/compose-diagnostics.test.mjs ---
+TAP version 13
+# Subtest: R10-T08 parses Compose JSON arrays and JSON-lines without treating malformed output as empty
+ok 1 - R10-T08 parses Compose JSON arrays and JSON-lines without treating malformed output as empty
+  ---
+  duration_ms: 2.407792
+  ...
+# Subtest: R10-T09 redacts credentials, connection strings, bearer tokens, and cookies while preserving useful errors
+ok 2 - R10-T09 redacts credentials, connection strings, bearer tokens, and cookies while preserving useful errors
+  ---
+  duration_ms: 0.661956
+  ...
+# Subtest: R10-T08/R10-T09/R10-T11 capture stopped migration diagnostics before scoped cleanup
+ok 3 - R10-T08/R10-T09/R10-T11 capture stopped migration diagnostics before scoped cleanup
+  ---
+  duration_ms: 19.301317
+  ...
+# Subtest: R10-T10 refuses preexisting project state and never tears down an unowned project
+ok 4 - R10-T10 refuses preexisting project state and never tears down an unowned project
+  ---
+  duration_ms: 2.695408
+  ...
+# Subtest: R10-T10/R10-T12 early refusal writes honest no-startup evidence
+ok 5 - R10-T10/R10-T12 early refusal writes honest no-startup evidence
+  ---
+  duration_ms: 2.311726
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 33.921038
+
+
+--- nested tests/ci/migration-first.test.mjs ---
+TAP version 13
+# Subtest: R11-T08 migration-first control flow persists before worker readiness and orders all qualification stages
+ok 1 - R11-T08 migration-first control flow persists before worker readiness and orders all qualification stages
+  ---
+  duration_ms: 3.847057
+  ...
+# Subtest: R11-T08 migration-first stops before repeat/worker readiness after fresh, schema, or unknown-exit failure
+ok 2 - R11-T08 migration-first stops before repeat/worker readiness after fresh, schema, or unknown-exit failure
+  ---
+  duration_ms: 1.073145
+  ...
+# Subtest: R11-T08 migration-first preserves completed migration results when fixture cleanup fails
+ok 3 - R11-T08 migration-first preserves completed migration results when fixture cleanup fails
+  ---
+  duration_ms: 0.422273
+  ...
+# Subtest: R12-T09 build and database-start stages remain CLI-only while migration terminals require an inspected container
+ok 4 - R12-T09 build and database-start stages remain CLI-only while migration terminals require an inspected container
+  ---
+  duration_ms: 0.448113
+  ...
+# Subtest: R11-T08 migration-first cleans a partially allocated sentinel and rejects false controlled-failure evidence
+ok 5 - R11-T08 migration-first cleans a partially allocated sentinel and rejects false controlled-failure evidence
+  ---
+  duration_ms: 0.327353
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16.527983
+
+
+--- nested tests/ci/migration-marker-observer.test.mjs ---
+TAP version 13
+# Subtest: R12-T02/T03 absent marker observation is catalog-only and never executes a missing relation COUNT
+ok 1 - R12-T02/T03 absent marker observation is catalog-only and never executes a missing relation COUNT
+  ---
+  duration_ms: 2.64701
+  ...
+# Subtest: R12-T03 shared observer performs a separate COUNT only after presence and distinguishes empty from positive markers
+ok 2 - R12-T03 shared observer performs a separate COUNT only after presence and distinguishes empty from positive markers
+  ---
+  duration_ms: 0.509919
+  ...
+# Subtest: R12-T04 observer failures fail closed without publishing query output
+ok 3 - R12-T04 observer failures fail closed without publishing query output
+  ---
+  duration_ms: 1.590607
+  ...
+# Subtest: R12-T06/T07 container and image projections publish selected process facts without raw environment, host, labels, or mount sources
+ok 4 - R12-T06/T07 container and image projections publish selected process facts without raw environment, host, labels, or mount sources
+  ---
+  duration_ms: 1.152672
+  ...
+# Subtest: R12-T08 final-image import has one effective verdict requiring CLI, child report, and inspected terminal identity
+ok 5 - R12-T08 final-image import has one effective verdict requiring CLI, child report, and inspected terminal identity
+  ---
+  duration_ms: 0.76672
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17.532372
+
+
+--- nested tests/ci/migration-regression-boundary.test.mjs ---
+TAP version 13
+# Subtest: R13-T02/T03 production migration adapter requires explicit targets and preserves database/user argv
+ok 1 - R13-T02/T03 production migration adapter requires explicit targets and preserves database/user argv
+  ---
+  duration_ms: 2.015536
+  ...
+# Subtest: R13-T02 existing-main witness detects a wrong-database ACL mutation even if the main table would let it succeed
+ok 2 - R13-T02 existing-main witness detects a wrong-database ACL mutation even if the main table would let it succeed
+  ---
+  duration_ms: 1.056924
+  ...
+# Subtest: R13-T03 production adapter drives the unchanged observer through the fixture database and user
+ok 3 - R13-T03 production adapter drives the unchanged observer through the fixture database and user
+  ---
+  duration_ms: 0.712102
+  ...
+# Subtest: R13-T04 frozen T12 omission is tied to the old call site while the candidate requires an explicit local target
+ok 4 - R13-T04 frozen T12 omission is tied to the old call site while the candidate requires an explicit local target
+  ---
+  duration_ms: 12.280369
+  ...
+# Subtest: R13-T04 production observer error stops before migration and keeps cleanup ordering visible
+ok 5 - R13-T04 production observer error stops before migration and keeps cleanup ordering visible
+  ---
+  duration_ms: 1.493755
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23.134104
+
+
+--- nested tests/ci/proof-boundary.test.mjs ---
+TAP version 13
+# Subtest: R5-T01 old boundary: proof/public created before preparation is rejected
+ok 1 - R5-T01 old boundary: proof/public created before preparation is rejected
+  ---
+  duration_ms: 10.041116
+  ...
+# Subtest: R5-T02 corrected workflow setup initializes bootstrap output without populating proof
+ok 2 - R5-T02 corrected workflow setup initializes bootstrap output without populating proof
+  ---
+  duration_ms: 109.975913
+  ...
+# Subtest: R5-T03 corrected handoff: coordinator preparation creates its owned children
+ok 3 - R5-T03 corrected handoff: coordinator preparation creates its owned children
+  ---
+  duration_ms: 2.172384
+  ...
+# Subtest: R5-T04 an empty preexisting public child still refuses the proof root
+ok 4 - R5-T04 an empty preexisting public child still refuses the proof root
+  ---
+  duration_ms: 2.167135
+  ...
+# Subtest: R5-T05 refusal preserves prior evidence bytes and does not write a failure report
+ok 5 - R5-T05 refusal preserves prior evidence bytes and does not write a failure report
+  ---
+  duration_ms: 5.966688
+  ...
+# Subtest: R5-T06 repeating the same initialization is rejected without implicit resumption
+ok 6 - R5-T06 repeating the same initialization is rejected without implicit resumption
+  ---
+  duration_ms: 2.663079
+  ...
+# Subtest: R5-T07 a separate run succeeds without touching its sibling evidence
+ok 7 - R5-T07 a separate run succeeds without touching its sibling evidence
+  ---
+  duration_ms: 3.534573
+  ...
+# Subtest: R5-T08 quoted repository and run-parent paths are handled correctly
+ok 8 - R5-T08 quoted repository and run-parent paths are handled correctly
+  ---
+  duration_ms: 2.92427
+  ...
+# Subtest: R5-T09 invalid run IDs and outside-repository evidence paths remain rejected
+ok 9 - R5-T09 invalid run IDs and outside-repository evidence paths remain rejected
+  ---
+  duration_ms: 1.226085
+  ...
+# Subtest: R5-T10 refusal propagation keeps the actual child exit and does not claim app tests ran
+ok 10 - R5-T10 refusal propagation keeps the actual child exit and does not claim app tests ran
+  ---
+  duration_ms: 187.178204
+  ...
+# Subtest: R5-T11 failure after successful preparation writes only the owned run report
+ok 11 - R5-T11 failure after successful preparation writes only the owned run report
+  ---
+  duration_ms: 3.558254
+  ...
+# Subtest: R5-T12 existing CI regression command remains wired alongside the boundary suite
+ok 12 - R5-T12 existing CI regression command remains wired alongside the boundary suite
+  ---
+  duration_ms: 0.91653
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 338.918552
+
+
+--- nested tests/ci/sandbox.test.mjs ---
+TAP version 13
+# Subtest: R6-T01 resolves the exact pinned Playwright executable and records measured identity
+ok 1 - R6-T01 resolves the exact pinned Playwright executable and records measured identity
+  ---
+  duration_ms: 14.856778
+  ...
+# Subtest: R6-T02 rejects a same-name or external browser that is not Playwright's canonical executable
+ok 2 - R6-T02 rejects a same-name or external browser that is not Playwright's canonical executable
+  ---
+  duration_ms: 11.211311
+  ...
+# Subtest: R6-T03 rejects a managed-layout symlink that resolves outside the pinned browser root
+ok 3 - R6-T03 rejects a managed-layout symlink that resolves outside the pinned browser root
+  ---
+  duration_ms: 6.360052
+  ...
+# Subtest: R6-T04 generates only the exact temporary AppArmor userns exception
+ok 4 - R6-T04 generates only the exact temporary AppArmor userns exception
+  ---
+  duration_ms: 0.50161
+  ...
+# Subtest: R6-T05 rejects profile and attachment injection before policy construction
+ok 5 - R6-T05 rejects profile and attachment injection before policy construction
+  ---
+  duration_ms: 0.585813
+  ...
+# Subtest: R6-T06 uses a run-owned profile path and does not overwrite an existing name
+ok 6 - R6-T06 uses a run-owned profile path and does not overwrite an existing name
+  ---
+  duration_ms: 5.243788
+  ...
+# Subtest: R6-T06 distinguishes a working sandbox, a safe policy block, and an unsafe unknown cause
+ok 7 - R6-T06 distinguishes a working sandbox, a safe policy block, and an unsafe unknown cause
+  ---
+  duration_ms: 0.370651
+  ...
+# Subtest: R6-T07 permits policy setup only for the explicitly opted-in hosted dispatch context
+ok 8 - R6-T07 permits policy setup only for the explicitly opted-in hosted dispatch context
+  ---
+  duration_ms: 0.630291
+  ...
+# Subtest: R6-T07 refuses an existing profile and records failed partial ownership without claiming it loaded
+ok 9 - R6-T07 refuses an existing profile and records failed partial ownership without claiming it loaded
+  ---
+  duration_ms: 3.836341
+  ...
+# Subtest: R6-T08 cleanup decision removes only owned unchanged files and is idempotent
+ok 10 - R6-T08 cleanup decision removes only owned unchanged files and is idempotent
+  ---
+  duration_ms: 1.354069
+  ...
+# Subtest: R6-T08 launch options preserve Chromium sandboxing and use a narrow environment
+ok 11 - R6-T08 launch options preserve Chromium sandboxing and use a narrow environment
+  ---
+  duration_ms: 0.278708
+  ...
+# Subtest: R6-T09 records a positive effective sandbox observation only when launch evidence supports it
+ok 12 - R6-T09 records a positive effective sandbox observation only when launch evidence supports it
+  ---
+  duration_ms: 2.331475
+  ...
+# Subtest: R6-T10 classifies sandbox launch failures without authorizing a bypass
+ok 13 - R6-T10 classifies sandbox launch failures without authorizing a bypass
+  ---
+  duration_ms: 0.752087
+  ...
+# Subtest: R6-T10 rejects a full-Chrome launch path paired with a separately installed headless-shell executable
+ok 14 - R6-T10 rejects a full-Chrome launch path paired with a separately installed headless-shell executable
+  ---
+  duration_ms: 3.282625
+  ...
+# Subtest: R6-T11 all host launch helpers use the qualified path or the image-local managed browser
+ok 15 - R6-T11 all host launch helpers use the qualified path or the image-local managed browser
+  ---
+  duration_ms: 1.341346
+  ...
+# Subtest: R6-T12 workflow keeps proof ownership separate from sandbox diagnostics and cleanup
+ok 16 - R6-T12 workflow keeps proof ownership separate from sandbox diagnostics and cleanup
+  ---
+  duration_ms: 0.916198
+  ...
+# Subtest: R6-T13 policy records bind the executable digest and both full commit identities
+ok 17 - R6-T13 policy records bind the executable digest and both full commit identities
+  ---
+  duration_ms: 6.797004
+  ...
+# Subtest: R6-T14 a failed fake launch remains a blocked sandbox result
+ok 18 - R6-T14 a failed fake launch remains a blocked sandbox result
+  ---
+  duration_ms: 0.991841
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 68.787109
+
+
+--- nested tests/ci/workflow-validation.test.mjs ---
+TAP version 13
+# Subtest: R7-T01 rejects the complete frozen T6 workflow for the job-level runner context
+ok 1 - R7-T01 rejects the complete frozen T6 workflow for the job-level runner context
+  ---
+  duration_ms: 162.768946
+  ...
+# Subtest: R7-T02 accepts the complete repaired workflow with context checks enabled
+ok 2 - R7-T02 accepts the complete repaired workflow with context checks enabled
+  ---
+  duration_ms: 127.579957
+  ...
+# Subtest: R7-T03 fails closed for missing tools, tool failures, zero inputs, and malformed YAML
+ok 3 - R7-T03 fails closed for missing tools, tool failures, zero inputs, and malformed YAML
+  ---
+  duration_ms: 618.163417
+  ...
+# Subtest: R7-T04 uses actual actionlint semantics for missing steps and supported runtime context
+ok 4 - R7-T04 uses actual actionlint semantics for missing steps and supported runtime context
+  ---
+  duration_ms: 252.773401
+  ...
+# Subtest: R7-T05 transfers one run-owned absolute path to independent qualification and cleanup consumers
+ok 5 - R7-T05 transfers one run-owned absolute path to independent qualification and cleanup consumers
+  ---
+  duration_ms: 169.108133
+  ...
+# Subtest: R7-T06 keeps spaces and shell-looking values literal without evaluating the environment file
+ok 6 - R7-T06 keeps spaces and shell-looking values literal without evaluating the environment file
+  ---
+  duration_ms: 6.353111
+  ...
+# Subtest: R8-T06 keeps missing RUNNER_TEMP absent under a hosted-like parent
+ok 7 - R8-T06 keeps missing RUNNER_TEMP absent under a hosted-like parent
+  ---
+  duration_ms: 88.615791
+  ...
+# Subtest: R8-T07 keeps missing GITHUB_ENV absent under a hosted-like parent
+ok 8 - R8-T07 keeps missing GITHUB_ENV absent under a hosted-like parent
+  ---
+  duration_ms: 87.262851
+  ...
+# Subtest: R8-T08 rejects invalid runtime inputs before changing any environment entries
+ok 9 - R8-T08 rejects invalid runtime inputs before changing any environment entries
+  ---
+  duration_ms: 28.090722
+  ...
+# Subtest: R8-T09 detects the old second environment merge as a real contamination
+ok 10 - R8-T09 detects the old second environment merge as a real contamination
+  ---
+  duration_ms: 182.793178
+  ...
+# Subtest: R7-T08 initialization creates no proof or policy tree and preserves prior evidence
+ok 11 - R7-T08 initialization creates no proof or policy tree and preserves prior evidence
+  ---
+  duration_ms: 6.322717
+  ...
+# Subtest: R7-T09 preserves explicit opt-in, public/manual guard, exact sandbox wiring, and owned cleanup
+ok 12 - R7-T09 preserves explicit opt-in, public/manual guard, exact sandbox wiring, and owned cleanup
+  ---
+  duration_ms: 1.852139
+  ...
+# Subtest: R7-T11 keeps toolchain, dependency, native release, and runtime pins unchanged apart from one script
+ok 13 - R7-T11 keeps toolchain, dependency, native release, and runtime pins unchanged apart from one script
+  ---
+  duration_ms: 36.988816
+  ...
+# Subtest: R11-T04 pin guard rejects wrong or missing workspace dependency forms and unrelated root changes
+ok 14 - R11-T04 pin guard rejects wrong or missing workspace dependency forms and unrelated root changes
+  ---
+  duration_ms: 26.244901
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1808.649736

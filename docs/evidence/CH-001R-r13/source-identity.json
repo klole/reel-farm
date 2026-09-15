@@ -1,0 +1,101 @@
+{
+  "chapter": "CH-001R-r13",
+  "target_application": "Open Slideshow Studio",
+  "target_version": "0.1.0",
+  "status": "awaiting_review",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "starting_identity": {
+    "commit": "34be09f3a211aae01582270708b565b4a7cce539",
+    "tree": "634a57f4d33b83e8884abd71fe797a126dedb14b",
+    "parent": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d",
+    "description": "P13 CH-001R-r13 architect pack head"
+  },
+  "canonical_baseline": {
+    "e12": {
+      "commit": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d",
+      "tree": "71ce94e0897a2c49edf1b9f7e372fcc85e68751d",
+      "description": "canonical r12 evidence/state"
+    },
+    "t12": {
+      "commit": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+      "tree": "ef10ce662f60c42f0c566c0d13cf0c698710ccd9",
+      "description": "r12 implementation"
+    },
+    "p12": {
+      "commit": "c7e63600fe7a3cacc6fe469763abbca92c1615b0",
+      "tree": "ff246b0042d9d0fc9fb32cf4ed225b80e5792dd7",
+      "description": "r12 architect pack"
+    }
+  },
+  "implementation_identity": {
+    "commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "tree": "405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8",
+    "parent": "34be09f3a211aae01582270708b565b4a7cce539",
+    "description": "Repair r13 fixture routing and invocation evidence"
+  },
+  "prior_ancestry": {
+    "p11": {
+      "commit": "10db55ff1f942f3b1894699fea3180b69f4afe27",
+      "tree": "f1c342eef70e7f1d22818b1cbc364a687d34c985",
+      "ancestor_of_t13": true
+    },
+    "t11": {
+      "commit": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+      "tree": "9b948f6247c1f7804e34bd22cf3c9ae623bde593",
+      "ancestor_of_t13": true
+    },
+    "e11": {
+      "commit": "323947cba4197689f40c9084f38629244d58792f",
+      "tree": "441bf4d74319d4a7da1313d0e7675747f0f3432c",
+      "ancestor_of_t13": true
+    },
+    "prior_router_documentation": {
+      "commit": "a7c239c0164ff456448e11684c593153e6fa8240",
+      "ancestor_of_t13": true
+    }
+  },
+  "workflow": {
+    "path": ".github/workflows/ch001-live-proof.yml",
+    "blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+    "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+    "current_matches_t11": true,
+    "actionlint": {
+      "version": "1.7.7",
+      "executable_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+      "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757"
+    }
+  },
+  "lockfile": {
+    "path": "pnpm-lock.yaml",
+    "sha256": "77861bac2106333c55ea960422cd0b34bca86dc50db2b7806ad7581c3d975576",
+    "exact_bytes_preserved_from_t12": true
+  },
+  "local_verification": {
+    "run_id": "r13-local-20260915c",
+    "classification": "BLOCKED_ENVIRONMENT",
+    "application_acceptance": false,
+    "gate_counts": {
+      "PASS": 4,
+      "FAIL": 0,
+      "NOT_RUN": 68
+    },
+    "command_record_format": "invocation-v2",
+    "host_capability_limits": [
+      "Docker/Compose executable or daemon unavailable",
+      "loopback port allocation denied with EPERM",
+      "pinned Chromium executable unavailable"
+    ]
+  },
+  "external_actions": {
+    "github_push": false,
+    "workflow_dispatch": false,
+    "hosted_request_count": 0,
+    "providers_or_publishing": false,
+    "credentials": false,
+    "historical_t12_or_earlier_rerun": false,
+    "v0_2_work": false,
+    "agent_spawn": false
+  },
+  "evidence_commit": "returned externally after commit; intentionally not embedded to avoid self-reference"
+}

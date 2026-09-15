@@ -1,0 +1,110 @@
+{
+  "chapter": "CH-001R-r13",
+  "baseline": {
+    "canonical_e12": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d",
+    "t12_implementation": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+    "t12_tree": "ef10ce662f60c42f0c566c0d13cf0c698710ccd9"
+  },
+  "pack_ancestor": {
+    "p13": "34be09f3a211aae01582270708b565b4a7cce539",
+    "p13_tree": "634a57f4d33b83e8884abd71fe797a126dedb14b",
+    "parent": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d",
+    "purpose": "architect packet only; no implementation or runtime behavior"
+  },
+  "implementation": {
+    "t13": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "t13_tree": "405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8",
+    "parent": "34be09f3a211aae01582270708b565b4a7cce539"
+  },
+  "changed_files": {
+    "added": [
+      "scripts/ch001-command-records.d.mts",
+      "scripts/ch001-command-records.mjs",
+      "scripts/ch001-migration-command.d.mts",
+      "scripts/ch001-migration-command.mjs",
+      "tests/ci/migration-regression-boundary.test.mjs"
+    ],
+    "modified": [
+      "scripts/ch001-harness.ts",
+      "scripts/ch001-migration-marker-observer.d.mts",
+      "scripts/ch001-migration-marker-observer.mjs",
+      "scripts/ch001-proof.ts",
+      "tests/unit/verifier.test.ts"
+    ],
+    "implementation_file_count": 10
+  },
+  "repair_scope": {
+    "F13-01": {
+      "production_boundary": "scripts/ch001-migration-command.mjs and the existing marker-regression setup path",
+      "behavior": "explicit non-empty database and user targets are required; maintenance operations use oss and fixture-local table/ACL/observer operations use fixtureDatabase",
+      "negative_witnesses": [
+        "empty-main wrong-database ACL target",
+        "existing-main wrong-database ACL target",
+        "frozen T12 omitted-target runSetup call"
+      ]
+    },
+    "F13-02": {
+      "production_boundary": "scripts/ch001-command-records.mjs and invocation-v2 validation in scripts/ch001-harness.ts",
+      "behavior": "captured invocationId values, exact repeated command text, distinct logs/times/exits, child binding checks, stale/missing evidence rejection, all-matching required-command failure retention",
+      "legacy_behavior": "legacy-v1 duplicate command-text rejection remains explicit and historical reports are not rewritten"
+    }
+  },
+  "frozen_surface_sha256": {
+    "package.json": {
+      "sha256": "bfd6ec10f1b59d1d45e5950d878397aa5553f26d1a8c0e710a9151bacca02684",
+      "matches_t12": true
+    },
+    "pnpm-lock.yaml": {
+      "sha256": "77861bac2106333c55ea960422cd0b34bca86dc50db2b7806ad7581c3d975576",
+      "matches_t12": true
+    },
+    "scripts/migrate.ts": {
+      "sha256": "4585fe9a62b2389fb4216bc5269fdf35f9d983382e61f238555e942d6403e768",
+      "matches_t12": true
+    },
+    "migrations/0001_ch001.sql": {
+      "sha256": "37098e7d7d8f0128e76913bfcc9685118607b24565eb25eccb464a2ce90d0b2e",
+      "matches_t12": true
+    },
+    "Dockerfile": {
+      "sha256": "2dbc57859851533903a758cb7f904a13d17a3a2a585b806cc693c57884d8d7b8",
+      "matches_t12": true
+    },
+    "compose.yaml": {
+      "sha256": "41e078d39e0535492a4bc2d8b26c49ee6bfdccc50afcc8c0625720f197e61e35",
+      "matches_t12": true
+    },
+    ".github/workflows/ch001-live-proof.yml": {
+      "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+      "matches_t12": true
+    },
+    "apps/worker/src/index.ts": {
+      "sha256": "61722e5fb755e29f00d1e9bcecec9040b4f04022d042813d07602b37a00a5d8a",
+      "matches_t12": true
+    },
+    "scripts/ch001-sandbox.mjs": {
+      "sha256": "278910d588524884f821c25febc5856b350d71ce7c386ffdea036fb5df29262e",
+      "matches_t12": true
+    }
+  },
+  "contract_boundaries": {
+    "original_gate_contract": "architect/Luna_CH001_v0.1.0_Pack/gate-results.template.json",
+    "original_gate_ids": "CH001-001 through CH001-072 exactly once",
+    "original_gate_semantics_changed": false,
+    "dependency_or_tool_pin_changes": false,
+    "migration_sql_or_entrypoint_changes": false,
+    "docker_or_compose_changes": false,
+    "workflow_bytes_changed": false,
+    "worker_or_sandbox_security_changed": false,
+    "application_feature_changes": false,
+    "providers_or_publishing_added": false
+  },
+  "scope_violations": [],
+  "external_writes": {
+    "push": false,
+    "workflow_dispatch": false,
+    "provider_or_publishing": false,
+    "agent_spawn": false,
+    "historical_job_rerun": false
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "run_id": "r13-local-20260915c",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "findings": [
+    {
+      "id": "R01",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R02",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R03",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R04",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R05",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R06",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R07",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R08",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R09",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R10",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "R11",
+      "status": "OPEN",
+      "test_reference": null,
+      "repair_or_disproof": "This bounded proof does not close the original acceptance findings; architect review remains required."
+    },
+    {
+      "id": "U01",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U02",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U03",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U04",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U05",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U06",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U07",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    },
+    {
+      "id": "U08",
+      "status": "OBSERVED",
+      "test_reference": null,
+      "repair_or_disproof": "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports."
+    }
+  ]
+}

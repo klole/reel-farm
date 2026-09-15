@@ -1,0 +1,235 @@
+{
+  "run_id": "r13-local-20260915c",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "command_record_format": "invocation-v2",
+  "commands": [
+    {
+      "invocationId": "r13-local-20260915c-30-003",
+      "command": "docker version --format {{.Server.Version}}",
+      "startedAt": "2026-09-15T14:15:52.200Z",
+      "endedAt": "2026-09-15T14:15:52.203Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/001-docker-version.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-004",
+      "command": "docker info --format {{.ServerVersion}}",
+      "startedAt": "2026-09-15T14:15:52.204Z",
+      "endedAt": "2026-09-15T14:15:52.207Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/002-docker-info.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-005",
+      "command": "docker compose version --short",
+      "startedAt": "2026-09-15T14:15:52.209Z",
+      "endedAt": "2026-09-15T14:15:52.212Z",
+      "exitCode": 1,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/003-compose-version.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-007",
+      "command": "pnpm lint",
+      "startedAt": "2026-09-15T14:15:52.227Z",
+      "endedAt": "2026-09-15T14:15:55.089Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/004-host-lint.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-008",
+      "command": "pnpm typecheck",
+      "startedAt": "2026-09-15T14:15:55.090Z",
+      "endedAt": "2026-09-15T14:15:57.224Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/005-host-typecheck.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-009",
+      "command": "pnpm build",
+      "startedAt": "2026-09-15T14:15:57.225Z",
+      "endedAt": "2026-09-15T14:16:12.125Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/006-host-build.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-010",
+      "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+      "startedAt": "2026-09-15T14:16:12.127Z",
+      "endedAt": "2026-09-15T14:16:12.528Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/007-post-build-db-module-import.log"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-011",
+      "command": "pnpm test:unit",
+      "startedAt": "2026-09-15T14:16:12.529Z",
+      "endedAt": "2026-09-15T14:16:14.098Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/008-host-unit.log",
+      "reportPath": "artifacts/ch001r13/r13-local-20260915c/public/unit-results.json"
+    },
+    {
+      "invocationId": "r13-local-20260915c-30-012",
+      "command": "pnpm test:security",
+      "startedAt": "2026-09-15T14:16:14.100Z",
+      "endedAt": "2026-09-15T14:16:14.798Z",
+      "exitCode": 0,
+      "logPath": "artifacts/ch001r13/r13-local-20260915c/public/commands/009-host-security.log",
+      "reportPath": "artifacts/ch001r13/r13-local-20260915c/public/security-results.json"
+    }
+  ],
+  "child_invocations": [
+    {
+      "id": "r13-local-20260915c-30-003",
+      "command": "docker version --format {{.Server.Version}}",
+      "started_at": "2026-09-15T14:15:52.200Z",
+      "ended_at": "2026-09-15T14:15:52.203Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/001-docker-version.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-004",
+      "command": "docker info --format {{.ServerVersion}}",
+      "started_at": "2026-09-15T14:15:52.204Z",
+      "ended_at": "2026-09-15T14:15:52.207Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/002-docker-info.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-005",
+      "command": "docker compose version --short",
+      "started_at": "2026-09-15T14:15:52.209Z",
+      "ended_at": "2026-09-15T14:15:52.212Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/003-compose-version.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-007",
+      "command": "pnpm lint",
+      "started_at": "2026-09-15T14:15:52.227Z",
+      "ended_at": "2026-09-15T14:15:55.089Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/004-host-lint.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-008",
+      "command": "pnpm typecheck",
+      "started_at": "2026-09-15T14:15:55.090Z",
+      "ended_at": "2026-09-15T14:15:57.224Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/005-host-typecheck.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-009",
+      "command": "pnpm build",
+      "started_at": "2026-09-15T14:15:57.225Z",
+      "ended_at": "2026-09-15T14:16:12.125Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/006-host-build.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-010",
+      "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+      "started_at": "2026-09-15T14:16:12.127Z",
+      "ended_at": "2026-09-15T14:16:12.528Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/007-post-build-db-module-import.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525"
+    },
+    {
+      "id": "r13-local-20260915c-30-011",
+      "command": "pnpm test:unit",
+      "started_at": "2026-09-15T14:16:12.529Z",
+      "ended_at": "2026-09-15T14:16:14.098Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/008-host-unit.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "report_path": "artifacts/ch001r13/r13-local-20260915c/public/unit-results.json"
+    },
+    {
+      "id": "r13-local-20260915c-30-012",
+      "command": "pnpm test:security",
+      "started_at": "2026-09-15T14:16:14.100Z",
+      "ended_at": "2026-09-15T14:16:14.798Z",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/009-host-security.log",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "report_path": "artifacts/ch001r13/r13-local-20260915c/public/security-results.json"
+    }
+  ],
+  "suites": [
+    {
+      "suite": "smoke",
+      "command": "pnpm proof:ch001 (owned Compose smoke/lifecycle)",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T14:15:52.170Z",
+      "ended_at": "2026-09-15T14:16:14.815Z",
+      "exit_code": 1,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r13/r13-local-20260915c/public/smoke-results.json",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/commands/compose.log"
+    },
+    {
+      "suite": "integration",
+      "command": "pnpm test:integration",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T14:15:52.170Z",
+      "ended_at": "2026-09-15T14:16:14.816Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-integration.json",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-integration-unavailable.log",
+      "unavailable_reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    {
+      "suite": "e2e",
+      "command": "pnpm test:e2e",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T14:15:52.170Z",
+      "ended_at": "2026-09-15T14:16:14.817Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-e2e.json",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-e2e-unavailable.log",
+      "unavailable_reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    {
+      "suite": "render",
+      "command": "pnpm test:render",
+      "run_id": "r13-local-20260915c",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "started_at": "2026-09-15T14:15:52.170Z",
+      "ended_at": "2026-09-15T14:16:14.817Z",
+      "exit_code": 2,
+      "discovered": 0,
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "report_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-render.json",
+      "log_path": "artifacts/ch001r13/r13-local-20260915c/public/suite-render-unavailable.log",
+      "unavailable_reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    }
+  ]
+}

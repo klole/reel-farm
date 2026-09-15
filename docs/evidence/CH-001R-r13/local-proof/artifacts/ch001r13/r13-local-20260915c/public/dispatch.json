@@ -1,0 +1,9 @@
+{
+  "profile": "CH-001R-r13 bounded source repair qualification",
+  "run_id": "r13-local-20260915c",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "workflow_sha": null,
+  "compose_project": "oss-ch001-r13-local-20260915c",
+  "base_url": "http://127.0.0.1:0",
+  "scope": "local synthetic owner, local synthetic image fixtures, no providers or publishing"
+}

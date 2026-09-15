@@ -1,0 +1,17 @@
+{
+  "run_id": "r13-local-20260915c",
+  "status": "sanitized",
+  "redactions": [
+    "synthetic bootstrap token",
+    "synthetic auth secret",
+    "synthetic owner password",
+    "PostgreSQL connection strings"
+  ],
+  "excluded": [
+    "private/",
+    "*.env",
+    "cookies",
+    "auth storage state"
+  ],
+  "public_root": "artifacts/ch001r13/r13-local-20260915c/public"
+}

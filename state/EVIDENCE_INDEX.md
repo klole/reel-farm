@@ -1,3 +1,18 @@
+# Evidence index — CH-001R-r13 bounded source repair
+
+| Evidence | Location | State |
+|---|---|---|
+| R13 overview and disposition | [CH-001R-r13 README](../docs/evidence/CH-001R-r13/README.md) | Implemented source repair; ready for router publication/review; acceptance false |
+| Source identities and ancestry | [source-identity.json](../docs/evidence/CH-001R-r13/source-identity.json) | Canonical E12, actual P13/T13, workflow/lock, host boundary, no dispatch |
+| Exact scope and frozen hashes | [scope-comparison.json](../docs/evidence/CH-001R-r13/scope-comparison.json) | Ten bounded implementation files; frozen application/runtime surfaces unchanged |
+| Complete r13 checklist | [r13-results.json](../docs/evidence/CH-001R-r13/r13-results.json) | `9 PASS / 0 FAIL / 5 NOT_RUN`; runtime/router rows remain honest |
+| Source/local commands | [commands.md](../docs/evidence/CH-001R-r13/commands.md) | Pinned source matrix, adapter/evidence regressions, and blocked local runtime recorded |
+| Source-bound prefixes | [clean](../docs/evidence/CH-001R-r13/prefix-clean-t13.json), [hosted-like](../docs/evidence/CH-001R-r13/prefix-hosted-like-t13.json) | Each 10/10 file-level and 85/85 nested; final T13 identity bound |
+| Sanitized local public evidence | [local-proof](../docs/evidence/CH-001R-r13/local-proof/) | Retrievable reports/logs; Docker/Compose, loopback, and Chromium unavailable; runtime NOT_RUN |
+| Handoff | [handoffs/CH-001R-r13.md](../handoffs/CH-001R-r13.md) | `READY_FOR_ROUTER_PUBLISH`; router/architect review required |
+
+This r13 continuation preserves r12's observer/projection/verdict safeguards, r11 workspace dependency/lock, migration SQL/command, Docker/Compose/workflow, pins, worker sandbox, and original 72-gate contract. Luna did not push, dispatch, publish, use providers/credentials, rerun T11/T12, or begin v0.2 work. E13 is returned externally after the evidence commit and is not embedded self-referentially.
+
 # Evidence index — CH-001
 
 ## CH-001R-r12 bounded migration-proof repair

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "record_kind": "ACTIONLINT_BOOTSTRAP_ATTESTATION",
+  "phase": "CH-001R-r8",
+  "status": "PASS",
+  "error_classification": null,
+  "error": null,
+  "actual_exit": 0,
+  "root": "/tmp/ch001r9-prefix-hosted-like-0wACtx/checkout",
+  "platform": {
+    "operating_system": "linux",
+    "architecture": "x64",
+    "distribution_architecture": "amd64"
+  },
+  "run_id": "130000002",
+  "run_attempt": "1",
+  "run_key": "r4-130000002-1",
+  "checkout_identity": {
+    "requested_implementation_sha": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "actual_checkout_sha": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "workflow_definition_sha": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+    "workflow_blob_sha": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+    "workflow_file_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+    "repository": "klole/reel-farm"
+  },
+  "version": "1.7.7",
+  "archive": {
+    "name": "actionlint_1.7.7_linux_amd64.tar.gz",
+    "url": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "expected_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "measured_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "source": "local_override",
+    "path": "/tmp/actionlint-r7.3YgGWu/actionlint_1.7.7_linux_amd64.tar.gz",
+    "download_attempts": null
+  },
+  "executable": {
+    "name": "actionlint",
+    "expected_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "measured_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "path": "/tmp/ch001r9-prefix-hosted-like-0wACtx/synthetic runner temp/ch001r8-actionlint-130000002-1-K9bA4H/actionlint",
+    "observed_version": "1.7.7",
+    "version_output": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n",
+    "actual_exit": 0
+  },
+  "tool_directory": "/tmp/ch001r9-prefix-hosted-like-0wACtx/synthetic runner temp/ch001r8-actionlint-130000002-1-K9bA4H",
+  "bin_dir": "/tmp/ch001r9-prefix-hosted-like-0wACtx/synthetic runner temp/ch001r8-actionlint-130000002-1-K9bA4H",
+  "github_env": "/tmp/ch001r9-prefix-hosted-like-0wACtx/synthetic github env",
+  "path_updated": true,
+  "started_at": "2026-09-15T14:15:36.120Z",
+  "ended_at": "2026-09-15T14:15:36.298Z"
+}

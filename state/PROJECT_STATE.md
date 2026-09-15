@@ -1,3 +1,21 @@
+# Project state — CH-001R-r13 checkpoint
+
+**Last updated:** 2026-09-15 UTC
+**State:** `awaiting_review`
+**Product:** Open Slideshow Studio
+**Target application version:** `0.1.0`
+
+## Current CH-001R-r13 bounded source repair
+
+- P13 is `34be09f3a211aae01582270708b565b4a7cce539` (tree `634a57f4d33b83e8884abd71fe797a126dedb14b`) and is directly based on canonical E12 `b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d` (tree `71ce94e0897a2c49edf1b9f7e372fcc85e68751d`). T13 is `6e04b5a5eefe2ef464572da35c88338fa342f525` (tree `405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8`), directly based on P13.
+- F13-01 now requires explicit database/user targets at the real local migration command-builder/adapter boundary. Fixture table, ACL, observer, and denied-observer work is bound to `fixtureDatabase`; maintenance role/database setup and cleanup remain on `oss`. Empty-main, existing-main, omitted-target, early-stop, and cleanup witnesses are source-tested.
+- F13-02 now preserves captured invocation IDs and exact repeated command text in r13 records, emits matching child invocations, rejects duplicate/missing/mixed/stale/reused/missing evidence, checks every matching required command, and keeps legacy duplicate-text behavior explicit.
+- Source matrix passed on Node `20.19.2`, pnpm `12.3.4`, actionlint `1.7.7`; both detached source prefixes passed 10/10 modules and 85/85 nested cases with no node_modules. Unit was 24/24 and security 4/4; post-build unaliased DB import and negative control passed.
+- Local run `r13-local-20260915c` exited `2` as `BLOCKED_ENVIRONMENT`: Docker/Compose, loopback, and pinned Chromium were unavailable. Runtime rows are NOT_RUN; no migration or application acceptance is claimed. The local report uses strict `invocation-v2` records and is sanitized under [`docs/evidence/CH-001R-r13/`](../docs/evidence/CH-001R-r13/).
+- R13 checklist is `9 PASS / 0 FAIL / 5 NOT_RUN` in [`docs/evidence/CH-001R-r13/r13-results.json`](../docs/evidence/CH-001R-r13/r13-results.json). `application_acceptance=false`; accepted version `none`; root remains `awaiting_review`; Luna hosted request count is `0`. Router state is `READY_FOR_ROUTER_PUBLISH`; router/architect review is required.
+
+Historical r12 and earlier sections below are preserved.
+
 # Project state — CH-001R-r12 checkpoint
 
 **Last updated:** 2026-09-15 UTC

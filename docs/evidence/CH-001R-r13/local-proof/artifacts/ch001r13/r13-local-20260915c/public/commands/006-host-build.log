@@ -1,0 +1,8 @@
+$ pnpm --filter @oss/contracts build && pnpm --filter @oss/db build && pnpm --filter @oss/storage build && pnpm --filter @oss/renderer build && pnpm --filter @oss/core build && pnpm --filter @oss/web build && pnpm --filter @oss/worker build
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+$ next build
+$ tsc -p tsconfig.json

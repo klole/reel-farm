@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001R_R13_REPAIR_CHECKLIST_NOT_APPLICATION_ACCEPTANCE",
+  "chapter": "CH-001R-r13",
+  "packet_revision": "r1",
+  "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "implementation_tree": "405a6ddc15d54ed7f9b31ce08c53af98afcd8cf8",
+  "evidence_commit": "returned externally after commit; intentionally not embedded to avoid self-reference",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "hosted_request_count": 0,
+  "hosted_run_id": null,
+  "runtime_migration_qualified": null,
+  "rows": [
+    {
+      "id": "R13-T01",
+      "class": "SOURCE",
+      "title": "Canonical baseline and frozen scope",
+      "status": "PASS",
+      "command_or_case": "git show identity/tree checks; sha256sum frozen surfaces; git diff --name-status P13..T13",
+      "environment": "Node 20.19.2 / pnpm 12.3.4; repository source",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["source-identity.json", "scope-comparison.json"],
+      "reason": "Canonical E12, actual P13, and actual T13 are recorded; the ten-file implementation delta is bounded and dependency, lock, migration, Docker/Compose, workflow, worker/sandbox, pins, and original 72-gate surfaces are unchanged."
+    },
+    {
+      "id": "R13-T02",
+      "class": "SOURCE",
+      "title": "Database-aware negative witness",
+      "status": "PASS",
+      "command_or_case": "node --test tests/ci/migration-regression-boundary.test.mjs; production adapter boundary with empty-main and existing-main database-aware fakes",
+      "environment": "Dependency-free pre-install Node test path; no PostgreSQL claim",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["commands.md", "prefix-clean-t13.commands.log", "prefix-hosted-like-t13.commands.log", "scope-comparison.json"],
+      "reason": "The actual production command builder/adapter rejects omitted targets and detects the old oss target for fixture-local ACL work in both main-database witnesses; the frozen T12 omitted-target call site is tied to the test."
+    },
+    {
+      "id": "R13-T03",
+      "class": "SOURCE",
+      "title": "Explicit targets for every fixture operation",
+      "status": "PASS",
+      "command_or_case": "node --test tests/ci/migration-regression-boundary.test.mjs; explicit -d/-U assertions for maintenance, fixture, observer, denied observer, ACL, and cleanup operations",
+      "environment": "Dependency-free pre-install Node test path; no PostgreSQL claim",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["commands.md", "prefix-clean-t13.commands.log", "prefix-hosted-like-t13.commands.log"],
+      "reason": "Every local setup/cleanup call supplies a required database and user; fixture-table and schema-local operations are bound to fixtureDatabase while role/database administration remains on oss."
+    },
+    {
+      "id": "R13-T04",
+      "class": "SOURCE",
+      "title": "Main database and failure preservation",
+      "status": "PASS",
+      "command_or_case": "node --test tests/ci/migration-regression-boundary.test.mjs; early-stop and cleanup-order assertions",
+      "environment": "Dependency-free pre-install Node test path; no PostgreSQL claim",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["commands.md", "prefix-clean-t13.commands.log", "prefix-hosted-like-t13.commands.log"],
+      "reason": "Wrong-database writes are rejected without seeding or migrating the real main database; fixture setup failures stop later regression stages and preserve cleanup/failure observations."
+    },
+    {
+      "id": "R13-T05",
+      "class": "SOURCE",
+      "title": "Invocation record serialization",
+      "status": "PASS",
+      "command_or_case": "pnpm test:unit -- --reporter=verbose; serializer/child_invocations repeated-command fixture",
+      "environment": "Node 20.19.2 / pnpm 12.3.4; real serializer and validator path",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["local-proof/artifacts/ch001r13/r13-local-20260915c/public/command-report.json", "local-proof/artifacts/ch001r13/r13-local-20260915c/public/unit-results.json", "prefix-clean-t13.commands.log"],
+      "reason": "The r13 command report retains invocation-v2 IDs, exact repeated command text, actual exits/times, distinct public logs, and matching child invocation bindings."
+    },
+    {
+      "id": "R13-T06",
+      "class": "SOURCE",
+      "title": "Strict command-record validation",
+      "status": "PASS",
+      "command_or_case": "pnpm test:unit -- --reporter=verbose; duplicate/missing/mixed ID, stale binding, reused log, missing evidence, and legacy duplicate-text cases",
+      "environment": "Node 20.19.2 / pnpm 12.3.4; real validateEvidencePackage/validateCommandRecords path",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["local-proof/artifacts/ch001r13/r13-local-20260915c/public/unit-results.json", "commands.md"],
+      "reason": "New-format identity/evidence failures are rejected while legitimate repeats pass; legacy report duplicate-text behavior remains explicit and historical reports are not rewritten."
+    },
+    {
+      "id": "R13-T07",
+      "class": "SOURCE",
+      "title": "Failure cannot be hidden by repetition",
+      "status": "PASS",
+      "command_or_case": "pnpm test:unit -- --reporter=verbose; required-command pass-then-fail and fail-then-pass fixtures",
+      "environment": "Node 20.19.2 / pnpm 12.3.4; strict required-command validation",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["local-proof/artifacts/ch001r13/r13-local-20260915c/public/unit-results.json", "local-proof/artifacts/ch001r13/r13-local-20260915c/public/command-report.json"],
+      "reason": "All matching required invocations are evaluated; no later success hides an earlier failure and no earlier success hides a later failure."
+    },
+    {
+      "id": "R13-T08",
+      "class": "SOURCE",
+      "title": "Pinned complete source qualification",
+      "status": "PASS",
+      "command_or_case": "Frozen install; pinned actionlint/workflow validation; node --test tests/ci; clean and hosted-like prefixes; lint/typecheck/build/unit/security; post-build DB import; syntax/diff",
+      "environment": "Node 20.19.2 / pnpm 12.3.4 / actionlint 1.7.7",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["commands.md", "prefix-clean-t13.json", "prefix-hosted-like-t13.json", "local-proof/artifacts/ch001r13/r13-local-20260915c/public/"],
+      "reason": "All required source checks passed. Both detached prefixes had no node_modules and reported 10/10 CI modules and 85/85 nested cases; unit was 24/24 and security was 4/4."
+    },
+    {
+      "id": "R13-T09",
+      "class": "RUNTIME",
+      "title": "Actual fixture regression in PostgreSQL",
+      "status": "NOT_RUN",
+      "command_or_case": "pnpm proof:ch001 runtime marker observer stage",
+      "environment": "Editing host without usable Docker/Compose or loopback",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["local-proof/artifacts/ch001r13/r13-local-20260915c/public/migration-verification.json", "local-proof/artifacts/ch001r13/r13-local-20260915c/public/suite-integration.json"],
+      "reason": "No PostgreSQL fixture was allocated. Docker/Compose was unavailable and loopback allocation returned EPERM; no SQLSTATE or database result is fabricated."
+    },
+    {
+      "id": "R13-T10",
+      "class": "RUNTIME",
+      "title": "Final-image migration and repeat",
+      "status": "NOT_RUN",
+      "command_or_case": "pnpm proof:ch001 final-image migration-first stages",
+      "environment": "Editing host without usable Docker/Compose or loopback",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["local-proof/artifacts/ch001r13/r13-local-20260915c/public/migration-verification.json", "local-proof/artifacts/ch001r13/r13-local-20260915c/public/compose-startup-state.json"],
+      "reason": "Final-image import, migration, schema, marker, sentinel, repeat, and restricted-role stages were not executable on this host."
+    },
+    {
+      "id": "R13-T11",
+      "class": "RUNTIME",
+      "title": "Real cleanup and evidence finalization",
+      "status": "NOT_RUN",
+      "command_or_case": "pnpm proof:ch001 runtime cleanup/finalization stages",
+      "environment": "No validated Compose startup was attempted",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["local-proof/artifacts/ch001r13/r13-local-20260915c/public/compose-cleanup.json", "local-proof/artifacts/ch001r13/r13-local-20260915c/public/sanitization.json"],
+      "reason": "No runtime fixtures or containers were allocated; the source/local public evidence was sanitized and finalized, but runtime cleanup cannot be claimed."
+    },
+    {
+      "id": "R13-T12",
+      "class": "SOURCE",
+      "title": "Handoff and evidence completeness",
+      "status": "PASS",
+      "command_or_case": "Final T13 identity, source matrix, scope comparison, checklist, sanitized evidence, and handoff assembled before E13 commit",
+      "environment": "Repository source/evidence review",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["README.md", "source-identity.json", "scope-comparison.json", "r13-results.json", "commands.md", "../../../handoffs/CH-001R-r13.md"],
+      "reason": "All rows are retained, source outputs are retrievable, runtime limitations are explicit, evidence is not ignored-only, and no acceptance or synthetic live result is claimed."
+    },
+    {
+      "id": "R13-T13",
+      "class": "ROUTER",
+      "title": "Publication and request ledger",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": "Router-owned publication/ledger boundary",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["source-identity.json", "../../../handoffs/CH-001R-r13.md"],
+      "reason": "Luna did not publish, push, or dispatch. Router must independently verify publication head, workflow bytes, request history, and E13."
+    },
+    {
+      "id": "R13-T14",
+      "class": "ROUTER",
+      "title": "One deliberate fresh T13 outcome",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": "Router-owned hosted request boundary",
+      "implementation_commit": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+      "actual_evidence": ["source-identity.json", "../../../handoffs/CH-001R-r13.md"],
+      "reason": "No fresh hosted request was elected or submitted by Luna; hosted run/job/artifact and downstream outcome are null."
+    }
+  ],
+  "summary": {
+    "PASS": 9,
+    "FAIL": 0,
+    "NOT_RUN": 5
+  }
+}
