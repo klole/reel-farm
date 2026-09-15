@@ -28,6 +28,7 @@ import { readZipEntries } from "../tests/helpers/zip.ts";
 import { assertValidProofRunId, prepareProofEvidenceDirectories, resolveProofEvidenceRoot, writeCoordinatorFailureReport } from "./ch001-proof-boundary.mjs";
 import { assertManagedBrowserIdentity, resolveManagedBrowserExecutable, type ManagedBrowserResolution } from "./ch001-sandbox.mjs";
 import { runMigrationFirstQualification, type MigrationCommandObservation } from "./ch001-migration-verification.mjs";
+import { runDbModuleImportVerification } from "./verify-db-module-import.ts";
 
 type ProcessResult = CommandResult & { invocationId: string };
 type ProofStatus = "PASS" | "FAIL" | "NOT_RUN";
@@ -416,32 +417,42 @@ async function preflight(childEnv: NodeJS.ProcessEnv): Promise<{ dockerReady: bo
   return { dockerReady: dockerReady && identityStatus && trackedStatus.length === 0 && loopbackPortReady, browserReady: browserReady && browserLaunched && sandboxReady && identityStatus && loopbackPortReady, host: { ...host, measured } };
 }
 
-async function postBuildModuleImport(childEnv: NodeJS.ProcessEnv): Promise<void> {
-  const output = await commandStep(
-    "post-build-db-module-import",
-    process.execPath,
-    ["--import", "tsx", "scripts/verify-db-module-import.ts", "--negative-control"],
-    childEnv,
-    { publicLogName: "post-build-db-module-import", timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES }
-  );
+async function postBuildModuleImport(): Promise<void> {
+  const startedAt = new Date().toISOString();
+  const command = "in-process scripts/verify-db-module-import.ts --negative-control";
+  const invocation = invocationId();
   let parsed: Record<string, unknown>;
   try {
-    const lines = output.result.output.trim().split(/\r?\n/).filter(Boolean);
-    const value = JSON.parse(lines.at(-1) ?? "") as unknown;
+    const value = await runDbModuleImportVerification({ negativeControl: true }) as unknown;
     if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("module-import report was not a JSON object");
     parsed = value as Record<string, unknown>;
   } catch (error) {
-    parsed = { status: "FAIL", classification: "MODULE_IMPORT_FAIL", error: `Could not parse the module-import report: ${error instanceof Error ? error.message : String(error)}` };
+    parsed = { status: "FAIL", classification: "MODULE_IMPORT_FAIL", error: `Could not run the module-import verifier: ${error instanceof Error ? error.message : String(error)}` };
   }
+  const result: ProcessResult = {
+    command,
+    startedAt,
+    endedAt: new Date().toISOString(),
+    exitCode: parsed.status === "PASS" ? 0 : 1,
+    output: JSON.stringify(parsed),
+    invocationId: invocation
+  };
+  const publicLogPath = resolve(publicCommandDir, `${String(commandOutputs.length + 1).padStart(3, "0")}-post-build-db-module-import.log`);
+  const privateLogPath = resolve(privateCommandDir, `${String(commandOutputs.length + 1).padStart(3, "0")}-post-build-db-module-import.log`);
+  await writeText(privateLogPath, result.output);
+  await writeText(publicLogPath, redact(result.output));
+  commandOutputs.push({ result, publicLogPath, privateLogPath });
+  stepRecord("post-build-db-module-import", result.exitCode === 0 ? "PASS" : "FAIL", startedAt, result.exitCode === 0 ? undefined : result.output, invocation);
   moduleImportReport = {
     ...parsed,
     run_id: runId,
     implementation_commit: implementationCommit,
-    command: output.result.command,
-    log_path: pathFromRoot(output.publicLogPath)
+    command,
+    execution: "in-process actual verifier after host build",
+    log_path: pathFromRoot(publicLogPath)
   };
   await writeJson(resolve(publicDir, "module-import-verification.json"), moduleImportReport);
-  if (output.result.exitCode !== 0 || moduleImportReport.status !== "PASS") failures.push("post-build @oss/db module-import verification did not pass.");
+  if (result.exitCode !== 0 || moduleImportReport.status !== "PASS") failures.push("post-build @oss/db module-import verification did not pass.");
 }
 
 async function staticChecks(childEnv: NodeJS.ProcessEnv): Promise<void> {
@@ -457,7 +468,7 @@ async function staticChecks(childEnv: NodeJS.ProcessEnv): Promise<void> {
     const output = await commandStep(`host-${item.name}`, item.command, item.args, env, item.reportPath ? { reportPath: pathFromRoot(item.reportPath) } : {});
     if (output.result.exitCode !== 0) failures.push(`${item.name}: command exited ${output.result.exitCode}.`);
     if (item.name === "build") {
-      if (output.result.exitCode === 0) await postBuildModuleImport(childEnv);
+      if (output.result.exitCode === 0) await postBuildModuleImport();
       else {
         moduleImportReport = { status: "NOT_RUN", classification: "MODULE_IMPORT_NOT_RUN", reason: "Post-build module-import verification requires a passing application build.", run_id: runId, implementation_commit: implementationCommit };
         await writeJson(resolve(publicDir, "module-import-verification.json"), moduleImportReport);

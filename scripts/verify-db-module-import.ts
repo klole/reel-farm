@@ -10,7 +10,7 @@ type ChildResult = {
   timed_out: boolean;
 };
 
-type ModuleImportReport = {
+export type ModuleImportReport = {
   schema_version: 1;
   record_kind: "CH001_DB_MODULE_IMPORT";
   classification: "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF" | "MODULE_IMPORT_FAIL";
@@ -100,7 +100,7 @@ async function negativeControl(loaderPath: string): Promise<NonNullable<ModuleIm
   }
 }
 
-async function main(): Promise<ModuleImportReport> {
+export async function runDbModuleImportVerification(options: { negativeControl?: boolean } = {}): Promise<ModuleImportReport> {
   const loaderPath = resolve(root, "node_modules/tsx/dist/loader.mjs");
   if (!(await stat(loaderPath).then(() => true).catch(() => false))) throw new Error(`Pinned tsx loader is missing at ${loaderPath}.`);
   const expectedPath = await realpath(resolve(root, "packages/db/dist/index.js"));
@@ -132,7 +132,7 @@ async function main(): Promise<ModuleImportReport> {
       pool_api: poolApi,
       pool_closed: true
     };
-    if (process.argv.includes("--negative-control")) report.negative_control = await negativeControl(loaderPath);
+    if (options.negativeControl) report.negative_control = await negativeControl(loaderPath);
     if (report.negative_control?.status !== "PASS") {
       report.status = "FAIL";
       report.classification = "MODULE_IMPORT_FAIL";
@@ -155,6 +155,9 @@ async function main(): Promise<ModuleImportReport> {
   }
 }
 
-const report = await main();
-console.log(JSON.stringify(report));
-process.exitCode = report.status === "PASS" ? 0 : 1;
+const invokedAsScript = process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (invokedAsScript) {
+  const report = await runDbModuleImportVerification({ negativeControl: process.argv.includes("--negative-control") });
+  console.log(JSON.stringify(report));
+  process.exitCode = report.status === "PASS" ? 0 : 1;
+}
