@@ -129,7 +129,14 @@ jobs:
         run: |
           set -euo pipefail
           stage_log="$RUNNER_TEMP/ch001r8-actionlint-bootstrap.log"
-          stage_report="$(dirname "$CI_BOOTSTRAP_REPORT")/actionlint-bootstrap.json"
+          stage_report="$(node --input-type=commonjs -e '
+            const path = require("node:path");
+            const base = process.env.CI_BOOTSTRAP_REPORT;
+            if (typeof base !== "string" || base.length === 0 || /[\0\r\n]/.test(base)) {
+              throw new Error("CI_BOOTSTRAP_REPORT must be a non-empty single-line path.");
+            }
+            process.stdout.write(path.resolve(path.dirname(base), "actionlint-bootstrap.json"));
+          ')"
           set +e
           actionlint_bin="$(node scripts/ci/actionlint-bootstrap.mjs --report "$stage_report" --print-bin 2>"$stage_log")"
           stage_exit=$?

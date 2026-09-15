@@ -483,7 +483,8 @@ function contextFor(environment, root, writeGithubEnv) {
 export async function provisionActionlint(options = {}) {
   const environment = options.environment ?? process.env;
   const root = options.root ?? process.cwd();
-  const reportPath = options.reportPath ?? environment.ACTIONLINT_BOOTSTRAP_REPORT ?? null;
+  const requestedReportPath = options.reportPath ?? environment.ACTIONLINT_BOOTSTRAP_REPORT ?? null;
+  const reportPath = requestedReportPath === null ? null : assertAbsolutePath(requestedReportPath, "Actionlint report path");
   const writeGithubEnv = options.writeGithubEnv ?? true;
   let context;
   let platform;

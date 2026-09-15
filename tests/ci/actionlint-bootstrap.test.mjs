@@ -2,7 +2,7 @@
 
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { chmod, lstat, mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { chmod, lstat, mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { promisify } from "node:util";
@@ -183,5 +183,61 @@ test("unsupported targets, unsafe members, and bounded download failures are rej
   assert.throws(() => validateArchiveMembers("actionlint\n", "lrwxrwxrwx runner/runner 10 2026-01-01 00:00:00 actionlint -> marker"), /unsupported|special|member type/i);
   await withTemporaryDirectory(async (directory) => {
     await assertFailure(() => downloadArchive("https://127.0.0.1:1/actionlint.tar.gz", resolve(directory, "missing.tar.gz"), { retries: 1, timeoutMs: 100 }), "DOWNLOAD_FAILURE");
+  });
+});
+
+test("explicit report paths are rejected before provisioning side effects", async () => {
+  const invalidPaths = [
+    ["relative", "reports/actionlint-bootstrap.json"],
+    ["empty", ""],
+    ["newline", `${resolve(tmpdir(), "actionlint-report")}\nSECOND=value`],
+    ["carriage return", `${resolve(tmpdir(), "actionlint-report")}\rSECOND=value`]
+  ];
+  for (const [name, reportPath] of invalidPaths) {
+    await withTemporaryDirectory(async (directory) => {
+      const environment = await makeEnvironment(directory);
+      const before = await readFile(environment.GITHUB_ENV, "utf8");
+      await assertFailure(() => provisionActionlint({
+        root: repositoryRoot,
+        environment,
+        archivePath: resolve(directory, "missing-archive.tar.gz"),
+        reportPath
+      }), "INPUT_INVALID");
+      assert.equal(await readFile(environment.GITHUB_ENV, "utf8"), before, name);
+      assert.deepEqual(await readdir(environment.RUNNER_TEMP), [], name);
+      assert.equal(await stat(resolve(directory, "reports")).catch(() => null), null, name);
+    });
+  }
+
+  await withTemporaryDirectory(async (directory) => {
+    const environment = await makeEnvironment(directory);
+    environment.ACTIONLINT_BOOTSTRAP_REPORT = "relative/actionlint-bootstrap.json";
+    const before = await readFile(environment.GITHUB_ENV, "utf8");
+    await assertFailure(() => provisionActionlint({
+      root: repositoryRoot,
+      environment,
+      archivePath: resolve(directory, "missing-archive.tar.gz")
+    }), "INPUT_INVALID");
+    assert.equal(await readFile(environment.GITHUB_ENV, "utf8"), before);
+    assert.deepEqual(await readdir(environment.RUNNER_TEMP), []);
+    assert.equal(await stat(resolve(directory, "relative")).catch(() => null), null);
+  });
+});
+
+test("null report path preserves the supported no-report behavior", async () => {
+  await withTemporaryDirectory(async (directory) => {
+    const archiveInfo = await makeArchive(directory);
+    const environment = await makeEnvironment(directory);
+    const result = await provisionActionlint({
+      root: repositoryRoot,
+      environment,
+      provenance: provenanceFor(archiveInfo),
+      enforcePinned: false,
+      archivePath: archiveInfo.archive,
+      reportPath: null,
+      writeGithubEnv: false
+    });
+    assert.equal(result.report.status, "PASS");
+    assert.equal(await stat(resolve(directory, "reports")).catch(() => null), null);
   });
 });
