@@ -293,7 +293,12 @@ async function runPrefix(options) {
     const nestedTestOutputs = [];
     for (const testFile of testFiles) {
       const nestedResult = await run(process.execPath, [testFile], { cwd: checkout, environment });
-      const nestedCounts = nodeTestCounts(nestedResult.stdout + nestedResult.stderr);
+      let nestedCounts;
+      try {
+        nestedCounts = nodeTestCounts(nestedResult.stdout + nestedResult.stderr);
+      } catch (error) {
+        throw new Error(`Unable to parse nested CI output for ${testFile}: ${error.message}\n${nestedResult.stdout}\n${nestedResult.stderr}`, { cause: error });
+      }
       nestedTestResults.push({ file: testFile, ...nestedCounts, exit_code: nestedResult.exit_code });
       nestedTestOutputs.push({ file: testFile, stdout: nestedResult.stdout, stderr: nestedResult.stderr });
       if (nestedResult.exit_code !== 0 || nestedCounts.failed !== 0 || nestedCounts.skipped !== 0) throw new Error(`Nested CI test module failed: ${testFile}`);
