@@ -13,6 +13,7 @@ export declare function runMigrationFirstQualification(input: {
     verifyModuleImport: () => Promise<Record<string, unknown>>;
     startDatabase: () => Promise<MigrationCommandObservation>;
     waitForDatabase: () => Promise<Record<string, unknown>>;
+    runMarkerObserverRegression: () => Promise<Record<string, unknown>>;
     confirmFreshMarkerAbsent: () => Promise<Record<string, unknown>>;
     runMigration: (stage: "fresh" | "repeat") => Promise<MigrationCommandObservation>;
     inspectSchema: () => Promise<Record<string, unknown>>;

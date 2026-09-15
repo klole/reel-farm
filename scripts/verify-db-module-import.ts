@@ -35,7 +35,7 @@ export type ModuleImportReport = {
 };
 
 const root = resolve(process.cwd());
-const syntheticDatabaseUrl = "postgresql://r11-import-check:r11-import-check@127.0.0.1:1/r11_import_check";
+const syntheticDatabaseUrl = "postgresql://r12-import-check:r12-import-check@127.0.0.1:1/r12_import_check";
 
 function sanitize(value: unknown): string {
   return String(value ?? "")
@@ -69,7 +69,7 @@ function runChild(command: string, args: string[], cwd: string, environment: Nod
 }
 
 async function negativeControl(loaderPath: string): Promise<NonNullable<ModuleImportReport["negative_control"]>> {
-  const temporary = await mkdtemp(resolve(tmpdir(), "oss-r11-db-import-negative-"));
+  const temporary = await mkdtemp(resolve(tmpdir(), "oss-r12-db-import-negative-"));
   try {
     const scriptDirectory = resolve(temporary, "scripts");
     await mkdir(scriptDirectory, { recursive: true });

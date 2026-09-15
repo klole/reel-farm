@@ -182,7 +182,7 @@ export async function validateEvidencePackage(input: { root: string; report: Evi
   let contract: { ids: string[]; requiredEvidence: Map<string, string> };
   try { contract = await loadOriginalContract(input.root); } catch (error) { return { ok: false, errors: [error instanceof Error ? error.message : "Original acceptance contract could not be loaded."] }; }
 
-  if (!(report.chapter === "CH-001R-r2" || report.chapter === "CH-001R-r3" || report.chapter === "CH-001R-r11") || report.target_application_version !== "0.1.0") errors.push("Report is not for CH-001R-r2, CH-001R-r3, or CH-001R-r11 / v0.1.0.");
+  if (!(report.chapter === "CH-001R-r2" || report.chapter === "CH-001R-r3" || report.chapter === "CH-001R-r11" || report.chapter === "CH-001R-r12") || report.target_application_version !== "0.1.0") errors.push("Report is not for CH-001R-r2, CH-001R-r3, CH-001R-r11, or CH-001R-r12 / v0.1.0.");
   if (!stringValue(report.implementation_commit) || !/^[0-9a-f]{40}$/.test(report.implementation_commit)) errors.push("Report has no full implementation commit.");
   const expectedCommit = stringValue(report.implementation_commit) ? report.implementation_commit : "";
   const commandNames = commands.map((command) => command && typeof command === "object" && typeof command.command === "string" ? command.command : "");

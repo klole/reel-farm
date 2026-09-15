@@ -29,6 +29,9 @@ import { assertValidProofRunId, prepareProofEvidenceDirectories, resolveProofEvi
 import { assertManagedBrowserIdentity, resolveManagedBrowserExecutable, type ManagedBrowserResolution } from "./ch001-sandbox.mjs";
 import { runMigrationFirstQualification, type MigrationCommandObservation } from "./ch001-migration-verification.mjs";
 import { runDbModuleImportVerification } from "./verify-db-module-import.ts";
+import { observeSchemaMigrations, MARKER_COUNT_QUERY, MARKER_PRESENCE_QUERY, type MarkerQueryResult } from "./ch001-migration-marker-observer.mjs";
+import { projectDockerImageInspection, projectMigrationContainerInspection } from "./ch001-container-facts.mjs";
+import { evaluateFinalImageModuleImport } from "./ch001-module-import-verdict.mjs";
 
 type ProcessResult = CommandResult & { invocationId: string };
 type ProofStatus = "PASS" | "FAIL" | "NOT_RUN";
@@ -40,10 +43,10 @@ type HealthDetails = { renderer?: string; database?: string; storage?: string; w
 
 const root = resolve(process.cwd());
 const generatedAt = new Date();
-const runId = process.env.CH001_RUN_ID ?? `r11-local-${generatedAt.toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}`;
+const runId = process.env.CH001_RUN_ID ?? `r12-local-${generatedAt.toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}`;
 assertValidProofRunId(runId);
 
-const evidenceRoot = resolveProofEvidenceRoot(root, process.env.CH001_EVIDENCE_ROOT, runId);
+const evidenceRoot = resolveProofEvidenceRoot(root, process.env.CH001_EVIDENCE_ROOT ?? `artifacts/ch001r12/${runId}`, runId);
 const privateDir = resolve(evidenceRoot, "private");
 const publicDir = resolve(evidenceRoot, "public");
 const privateCommandDir = resolve(privateDir, "commands");
@@ -222,6 +225,31 @@ async function dockerStep(name: string, args: string[], options: { publicLogName
   return commandOutput;
 }
 
+type PrivateCommandOutput = { result: ProcessResult; privateLogPath: string };
+
+async function privateCommandCapture(command: string, args: string[], env: NodeJS.ProcessEnv, options: { timeoutMs?: number; maxOutputBytes?: number } = {}): Promise<PrivateCommandOutput> {
+  const result = await runProcess(command, args, env, options);
+  const privateLogPath = resolve(privateCommandDir, `${invocationNumber.toString().padStart(3, "0")}-${safeName(command)}-${safeName(result.invocationId)}.log`);
+  await writeText(privateLogPath, result.output);
+  return { result, privateLogPath };
+}
+
+async function privateDockerCapture(name: string, args: string[], options: { timeoutMs?: number; maxOutputBytes?: number } = {}): Promise<PrivateCommandOutput> {
+  if (!composeProject) throw new Error("Compose project has not been initialized.");
+  const output = await composeProject.dockerRun(args, { timeoutMs: options.timeoutMs ?? DEFAULT_COMMAND_TIMEOUT_MS, maxOutputBytes: options.maxOutputBytes ?? DEFAULT_COMMAND_MAX_OUTPUT_BYTES });
+  const result: ProcessResult = { ...output, command: redact(output.command), invocationId: invocationId() };
+  const privateLogPath = resolve(privateCommandDir, `${invocationNumber.toString().padStart(3, "0")}-${safeName(name)}.log`);
+  await writeText(privateLogPath, output.output);
+  return { result, privateLogPath };
+}
+
+async function recordPublicProjection(name: string, capture: PrivateCommandOutput, projection: Record<string, unknown>): Promise<string> {
+  const publicLogPath = resolve(publicCommandDir, `${String(commandOutputs.length + 1).padStart(3, "0")}-${safeName(name)}.log`);
+  await writeText(publicLogPath, `${JSON.stringify({ command: capture.result.command, started_at: capture.result.startedAt, ended_at: capture.result.endedAt, exit_code: capture.result.exitCode, timed_out: capture.result.timedOut === true, output_truncated: capture.result.outputTruncated === true, projection }, null, 2)}\n`);
+  commandOutputs.push({ result: capture.result, publicLogPath, privateLogPath: capture.privateLogPath });
+  return publicLogPath;
+}
+
 function stepRecord(name: string, status: ProofStatus, startedAt: string, detail?: string, invocation?: string): void {
   proofSteps.push({ name, status, startedAt, endedAt: new Date().toISOString(), ...(detail ? { detail: redact(detail) } : {}), ...(invocation ? { invocationId: invocation } : {}) });
 }
@@ -380,7 +408,7 @@ async function prepareRun(): Promise<{ composeEnv: NodeJS.ProcessEnv; childEnv: 
   ].join("\n"), 0o600);
   const childEnv = envWithoutNormalDotenv({ E2E_BASE_URL: baseUrl, CH001_EVIDENCE_DIR: publicDir, CH001_PLAYWRIGHT_OUTPUT_DIR: resolve(privateDir, "playwright-output"), CH001_OWNER_EMAIL: ownerEmail, CH001_OWNER_PASSWORD: ownerPassword, CH001_BOOTSTRAP_TOKEN: bootstrapToken, BROWSER_EXECUTABLE_PATH: browserPath });
   const composeEnv: NodeJS.ProcessEnv = { ...childEnv, APP_ORIGIN: baseUrl, CH001_WEB_PORT: String(port), BOOTSTRAP_TOKEN: bootstrapToken, BETTER_AUTH_SECRET: authSecret, RENDERER_BUILD_ID: "oss-renderer-0.1.0", PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright" };
-  await writeJson(resolve(publicDir, "dispatch.json"), { profile: "CH-001R-r11 migration-first qualification", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, compose_project: projectName, base_url: baseUrl, scope: "local synthetic owner, local synthetic image fixtures, no providers or publishing" });
+  await writeJson(resolve(publicDir, "dispatch.json"), { profile: "CH-001R-r12 migration-proof repair qualification", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, compose_project: projectName, base_url: baseUrl, scope: "local synthetic owner, local synthetic image fixtures, no providers or publishing" });
   return { composeEnv, childEnv };
 }
 
@@ -490,12 +518,25 @@ async function composeFacts(): Promise<void> {
   if (imageIds.length < 1) { failures.push("compose images: no built image identity was reported."); return; }
   const imageFacts: Array<Record<string, unknown>> = [];
   for (const imageId of [...new Set(imageIds)]) {
-    const inspect = await commandStep(`image-inspect-${imageId.slice(0, 12)}`, "docker", ["image", "inspect", imageId, "--format", "{{json .}}"], envWithoutNormalDotenv());
-    if (inspect.result.exitCode !== 0) { failures.push(`image inspect ${imageId}: command failed.`); continue; }
+    const inspect = await privateCommandCapture("image-inspect", ["image", "inspect", imageId, "--format", "{{json .}}"], envWithoutNormalDotenv(), { timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+    if (inspect.result.exitCode !== 0 || inspect.result.timedOut === true || inspect.result.outputTruncated === true) {
+      await recordPublicProjection(`image-inspect-${imageId.slice(0, 12)}`, inspect, { inspection_status: "FAIL", reason: "Docker image inspection did not produce a complete result." });
+      stepRecord(`image-inspect-${imageId.slice(0, 12)}`, "FAIL", inspect.result.startedAt, "Docker image inspection did not produce a complete result.", inspect.result.invocationId);
+      failures.push(`image inspect ${imageId}: command failed.`);
+      continue;
+    }
     try {
-      const value = JSON.parse(inspect.result.output.trim()) as { Id?: string; RepoDigests?: string[]; Created?: string; Config?: { User?: string; Env?: string[] } };
-      imageFacts.push({ id: value.Id, repo_digests: value.RepoDigests ?? [], created: value.Created, user: value.Config?.User, environment_keys: (value.Config?.Env ?? []).map((entry) => entry.split("=", 1)[0]).filter((entry) => entry) });
-    } catch { failures.push(`image inspect ${imageId}: JSON was malformed.`); }
+      const value = JSON.parse(inspect.result.output.trim()) as unknown;
+      const projection = projectDockerImageInspection(value, imageId, redact);
+      await recordPublicProjection(`image-inspect-${imageId.slice(0, 12)}`, inspect, projection);
+      stepRecord(`image-inspect-${imageId.slice(0, 12)}`, projection.inspection_status === "PASS" ? "PASS" : "FAIL", inspect.result.startedAt, projection.inspection_status === "PASS" ? undefined : String(projection.reason ?? "Image projection failed."), inspect.result.invocationId);
+      if (projection.inspection_status !== "PASS") { failures.push(`image inspect ${imageId}: projection failed.`); continue; }
+      imageFacts.push(projection);
+    } catch {
+      await recordPublicProjection(`image-inspect-${imageId.slice(0, 12)}`, inspect, { inspection_status: "FAIL", reason: "Docker image inspection JSON was malformed." });
+      stepRecord(`image-inspect-${imageId.slice(0, 12)}`, "FAIL", inspect.result.startedAt, "Docker image inspection JSON was malformed.", inspect.result.invocationId);
+      failures.push(`image inspect ${imageId}: JSON was malformed.`);
+    }
   }
   await writeJson(resolve(publicDir, "image-facts.json"), { compose_project: projectName, images: imageFacts, built_by: "docker compose up --build" });
 }
@@ -549,45 +590,69 @@ function migrationContainerName(stage: string): string {
 }
 
 async function inspectMigrationContainer(name: string): Promise<Record<string, unknown>> {
-  const output = await dockerStep(`migration-container-inspect-${safeName(name)}`, ["container", "inspect", name, "--format", "{{json .}}"], { publicLogName: `migration-container-inspect-${safeName(name)}`, timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-  if (output.result.exitCode !== 0 || output.result.timedOut === true) throw new Error(`Container inspection failed for ${name} (exit ${output.result.exitCode}).`);
-  const value = JSON.parse(output.result.output.trim()) as { Id?: string; Name?: string; Image?: string; State?: { Status?: string; ExitCode?: number; Error?: string; StartedAt?: string; FinishedAt?: string }; Config?: { User?: string; WorkingDir?: string; Path?: string; Args?: string[] } };
-  const state = value.State ?? {};
-  return {
-    id: value.Id ?? null,
-    name: value.Name ?? name,
-    image_id: value.Image ?? null,
-    state: state.Status ?? null,
-    exit_code: Number.isInteger(state.ExitCode) ? state.ExitCode : null,
-    error: state.Error ?? null,
-    started_at: state.StartedAt ?? null,
-    finished_at: state.FinishedAt ?? null,
-    user: value.Config?.User ?? null,
-    working_directory: value.Config?.WorkingDir ?? null,
-    command: [value.Config?.Path, ...(value.Config?.Args ?? [])].filter((part): part is string => typeof part === "string")
-  };
+  const capture = await privateDockerCapture(`migration-container-inspect-${safeName(name)}`, ["container", "inspect", name, "--format", "{{json .}}"], { timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+  if (capture.result.exitCode !== 0 || capture.result.timedOut === true || capture.result.outputTruncated === true) {
+    await recordPublicProjection(`migration-container-inspect-${safeName(name)}`, capture, { inspection_status: "FAIL", reason: "Docker container inspection did not produce a complete result." });
+    stepRecord(`migration-container-inspect-${safeName(name)}`, "FAIL", capture.result.startedAt, "Docker container inspection did not produce a complete result.", capture.result.invocationId);
+    throw new Error(`Container inspection failed for ${name} (exit ${capture.result.exitCode}).`);
+  }
+  let value: unknown;
+  try { value = JSON.parse(capture.result.output.trim()) as unknown; }
+  catch {
+    await recordPublicProjection(`migration-container-inspect-${safeName(name)}`, capture, { inspection_status: "FAIL", reason: "Docker container inspection JSON was malformed." });
+    stepRecord(`migration-container-inspect-${safeName(name)}`, "FAIL", capture.result.startedAt, "Docker container inspection JSON was malformed.", capture.result.invocationId);
+    throw new Error(`Container inspection JSON was malformed for ${name}.`);
+  }
+  const projection = projectMigrationContainerInspection(value, name, redact);
+  await recordPublicProjection(`migration-container-inspect-${safeName(name)}`, capture, projection);
+  stepRecord(`migration-container-inspect-${safeName(name)}`, projection.inspection_status === "PASS" ? "PASS" : "FAIL", capture.result.startedAt, projection.inspection_status === "PASS" ? undefined : String(projection.reason ?? "Container projection failed."), capture.result.invocationId);
+  if (projection.inspection_status !== "PASS") throw new Error(`Container inspection projection failed for ${name}.`);
+  return projection;
 }
 
 async function finalImageModuleImport(): Promise<Record<string, unknown>> {
   if (!composeProject) throw new Error("Compose project has not been initialized.");
   const name = migrationContainerName("module-import");
   migrationContainerNames.push(name);
-  const output = await composeStep("final-image-db-module-import", ["run", "--no-deps", "-T", "--name", name, "-e", "DATABASE_URL=postgresql://r11-import-check:r11-import-check@127.0.0.1:1/r11_import_check", "-e", "DOTENV_CONFIG_PATH=/dev/null", "migrate", "node", "--import", "tsx", "scripts/verify-db-module-import.ts", "--negative-control"], { publicLogName: "final-image-db-module-import", timeoutMs: MIGRATION_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-  let parsed: Record<string, unknown>;
+  const output = await composeStep("final-image-db-module-import", ["run", "--no-deps", "-T", "--name", name, "-e", "DATABASE_URL=postgresql://r12-import-check:r12-import-check@127.0.0.1:1/r12_import_check", "-e", "DOTENV_CONFIG_PATH=/dev/null", "migrate", "node", "--import", "tsx", "scripts/verify-db-module-import.ts", "--negative-control"], { publicLogName: "final-image-db-module-import", timeoutMs: MIGRATION_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+  let parsed: Record<string, unknown> | null = null;
+  let parseError = false;
   try {
     const value = parseJsonOutput(output.result.output);
     if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("final-image module-import report was not an object");
     parsed = value as Record<string, unknown>;
-  } catch (error) {
-    parsed = { status: "FAIL", classification: "MODULE_IMPORT_FAIL", error: `Could not parse final-image module-import output: ${error instanceof Error ? error.message : String(error)}` };
-  }
+  } catch { parseError = true; }
   let container: Record<string, unknown> | null = null;
   let inspectionError: string | null = null;
   try { container = await inspectMigrationContainer(name); } catch (error) { inspectionError = error instanceof Error ? error.message : String(error); }
-  const report: Record<string, unknown> = { ...parsed, run_id: runId, implementation_commit: implementationCommit, final_image: true, command: output.result.command, log_path: pathFromRoot(output.publicLogPath), container, ...(inspectionError ? { container_inspection_error: inspectionError } : {}) };
+  const effective = evaluateFinalImageModuleImport({
+    cli: { exit_code: output.result.exitCode, timed_out: output.result.timedOut === true, output_truncated: output.result.outputTruncated === true },
+    parsed: parseError ? null : parsed,
+    container,
+    inspectionError: inspectionError ? "inspection_failed" : null
+  });
+  const report: Record<string, unknown> = {
+    schema_version: 1,
+    record_kind: "CH001_FINAL_IMAGE_MODULE_IMPORT",
+    run_id: runId,
+    implementation_commit: implementationCommit,
+    final_image: true,
+    command: output.result.command,
+    log_path: pathFromRoot(output.publicLogPath),
+    cli: { ...effective.cli, command: output.result.command, log_path: pathFromRoot(output.publicLogPath) },
+    child_declared_status: parsed?.status ?? null,
+    child_declared_classification: parsed?.classification ?? null,
+    child_report: parsed,
+    container,
+    inspection_error: inspectionError ? "inspection_failed" : null,
+    status: effective.status,
+    classification: effective.classification,
+    effective_verdict: effective.effective_verdict,
+    reasons: effective.reasons
+  };
   moduleImportReport = report;
   await writeJson(resolve(publicDir, "module-import-verification.json"), report);
-  return { ...report, status: report.status === "PASS" && container?.state === "exited" && container?.exit_code === 0 ? "PASS" : "FAIL", ...(inspectionError ? { reason: inspectionError } : {}) };
+  return report;
 }
 
 async function migrationContainerCommand(stage: string, databaseUrl?: string, expectedExitCode = 0): Promise<MigrationCommandObservation> {
@@ -604,8 +669,106 @@ async function migrationContainerCommand(stage: string, databaseUrl?: string, ex
   return migrationObservation(output, { container, ...(inspectionError ? { assertion_ok: false, container_inspection_error: inspectionError } : {}) });
 }
 
-async function migrationSql(name: string, sql: string): Promise<CommandOutput> {
-  return composeStep(name, ["exec", "-T", "db", "psql", "-U", "oss", "-d", "oss", "-v", "ON_ERROR_STOP=1", "-Atc", sql], { publicLogName: name, timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+async function migrationSql(name: string, sql: string, database = "oss", user = "oss", password?: string, verboseErrors = false): Promise<CommandOutput> {
+  const args = ["exec", "-T"];
+  if (password) args.push("-e", `PGPASSWORD=${password}`);
+  args.push("db", "psql", "-U", user, "-d", database, "-v", "ON_ERROR_STOP=1");
+  if (verboseErrors) args.push("-v", "VERBOSITY=verbose");
+  args.push("-Atc", sql);
+  return composeStep(name, args, { publicLogName: name, timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+}
+
+function markerQueryAdapter(label: string, database = "oss", user = "oss", password?: string): (request: { kind: "presence" | "count"; sql: string }) => Promise<MarkerQueryResult> {
+  return async ({ kind, sql }) => {
+    if ((kind === "presence" && sql !== MARKER_PRESENCE_QUERY) || (kind === "count" && sql !== MARKER_COUNT_QUERY)) throw new Error("Marker observer supplied an unexpected fixed query.");
+    const output = await migrationSql(`migration-${safeName(label)}-${kind}`, sql, database, user, password);
+    return { exit_code: output.result.exitCode, timed_out: output.result.timedOut === true, output_truncated: output.result.outputTruncated === true, output: output.result.output, command: output.result.command, log_path: pathFromRoot(output.publicLogPath) };
+  };
+}
+
+const LEGACY_UNSAFE_MARKER_QUERY = "SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END";
+
+async function runMarkerObserverRegression(): Promise<Record<string, unknown>> {
+  const fixtureDatabase = `ch001_r12_marker_${safeName(runId)}`.slice(0, 63);
+  const fixtureRole = `ch001_r12_observer_${safeName(runId)}`.slice(0, 63);
+  const fixturePassword = `R12-${randomBytes(24).toString("base64url")}`;
+  secrets.push(fixturePassword);
+  let databaseCreated = false;
+  let roleCreated = false;
+  const setup: Array<Record<string, unknown>> = [];
+  const cases: Record<string, unknown> = {};
+  const runSetup = async (name: string, sql: string): Promise<boolean> => {
+    const output = await migrationSql(name, sql);
+    const ok = output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true;
+    setup.push({ operation: name, status: ok ? "PASS" : "FAIL", exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
+    return ok;
+  };
+  let failure: string | null = null;
+  try {
+    if (!await runSetup("migration-marker-regression-create-role", `CREATE ROLE ${identifier(fixtureRole)} LOGIN PASSWORD '${fixturePassword}'`)) throw new Error("Observer fixture role setup failed.");
+    roleCreated = true;
+    if (!await runSetup("migration-marker-regression-create-database", `CREATE DATABASE ${identifier(fixtureDatabase)} OWNER oss`)) throw new Error("Observer fixture database setup failed.");
+    databaseCreated = true;
+    if (!await runSetup("migration-marker-regression-grant-connect", `GRANT CONNECT ON DATABASE ${identifier(fixtureDatabase)} TO ${identifier(fixtureRole)}`)) throw new Error("Observer fixture connection grant failed.");
+
+    const absent = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-absent", fixtureDatabase));
+    cases.absent_table = absent;
+    if (absent.status !== "PASS" || absent.table_present !== false || absent.marker_count !== 0 || absent.count_executed !== false) throw new Error("Absent-table observer case did not prove zero without executing COUNT.");
+
+    const legacy = await migrationSql("migration-marker-regression-legacy-absent", LEGACY_UNSAFE_MARKER_QUERY, fixtureDatabase, "oss", undefined, true);
+    const legacySqlstate = legacy.result.output.match(/\b42P01\b/)?.[0] ?? null;
+    cases.legacy_negative_control = { query: LEGACY_UNSAFE_MARKER_QUERY, exit_code: legacy.result.exitCode, timed_out: legacy.result.timedOut === true, output_truncated: legacy.result.outputTruncated === true, sqlstate: legacySqlstate, observed_undefined_table: legacySqlstate === "42P01", log_path: pathFromRoot(legacy.publicLogPath) };
+    if (legacy.result.exitCode === 0 || legacy.result.timedOut === true || legacy.result.outputTruncated === true || legacySqlstate !== "42P01") throw new Error("Historical unsafe absent-table query did not produce a complete PostgreSQL undefined-table failure.");
+
+    const createTable = await migrationSql("migration-marker-regression-create-table", "CREATE TABLE public.schema_migrations (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL)", fixtureDatabase);
+    if (createTable.result.exitCode !== 0) throw new Error("Observer fixture metadata table setup failed.");
+    const empty = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-empty", fixtureDatabase));
+    cases.empty_table = empty;
+    if (empty.status !== "PASS" || empty.table_present !== true || empty.marker_count !== 0 || empty.count_executed !== true) throw new Error("Empty-table observer case did not execute COUNT and prove zero.");
+
+    const insert = await migrationSql("migration-marker-regression-insert-positive", "INSERT INTO public.schema_migrations (id, applied_at) VALUES ('0001_ch001', CURRENT_TIMESTAMP)", fixtureDatabase);
+    if (insert.result.exitCode !== 0) throw new Error("Observer fixture positive-marker setup failed.");
+    const positive = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-positive", fixtureDatabase));
+    cases.positive_marker = positive;
+    if (positive.status !== "FAIL" || positive.observation_status !== "PASS" || positive.marker_count !== 1 || positive.count_executed !== true) throw new Error("Positive-marker observer case did not retain the measured count or fail the no-marker predicate.");
+
+    if (!await runSetup("migration-marker-regression-restrict-role", `REVOKE ALL ON TABLE public.schema_migrations FROM PUBLIC; GRANT USAGE ON SCHEMA public TO ${identifier(fixtureRole)}`)) throw new Error("Observer fixture count-read restriction setup failed.");
+    const denied = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-denied", fixtureDatabase, fixtureRole, fixturePassword));
+    cases.count_denied = denied;
+    if (denied.status !== "FAIL" || denied.marker_count !== null || denied.count_executed !== true) throw new Error("Denied-count observer case did not fail closed with a null count.");
+  } catch (error) {
+    failure = error instanceof Error ? error.message : String(error);
+  }
+
+  const cleanup: Array<Record<string, unknown>> = [];
+  const cleanupOperation = async (name: string, sql: string): Promise<void> => {
+    try {
+      const output = await migrationSql(name, sql);
+      cleanup.push({ operation: name, status: output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true ? "PASS" : "FAIL", exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
+    } catch (error) {
+      cleanup.push({ operation: name, status: "FAIL", error: error instanceof Error ? error.message : String(error) });
+    }
+  };
+  if (databaseCreated) await cleanupOperation("migration-marker-regression-drop-database", `DROP DATABASE IF EXISTS ${identifier(fixtureDatabase)} WITH (FORCE)`);
+  if (roleCreated) await cleanupOperation("migration-marker-regression-drop-role", `DROP ROLE IF EXISTS ${identifier(fixtureRole)}`);
+  const cleanupPassed = cleanup.every((operation) => operation.status === "PASS");
+  const status = !failure && databaseCreated && Object.keys(cases).length === 5 && cleanupPassed ? "PASS" : "FAIL";
+  const result: Record<string, unknown> = {
+    schema_version: 1,
+    record_kind: "CH001_MARKER_OBSERVER_REGRESSION",
+    run_id: runId,
+    implementation_commit: implementationCommit,
+    status,
+    fixture_database: fixtureDatabase,
+    isolated_from_main_database: fixtureDatabase !== "oss",
+    setup,
+    cases,
+    cleanup,
+    ...(failure ? { reason: failure } : {}),
+    ...(status === "FAIL" && !failure && !cleanupPassed ? { reason: "Observer fixture cleanup did not complete." } : {})
+  };
+  await writeJson(resolve(publicDir, "migration-marker-regression.json"), result);
+  return result;
 }
 
 function identifier(value: string): string { return `"${value.replaceAll("\"", "\"\"")}"`; }
@@ -675,7 +838,7 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
     const runCleanup = async (name: string, sql: string): Promise<void> => {
       try {
         const output = await migrationSql(name, sql);
-        operations.push({ operation: name, status: output.result.exitCode === 0 && output.result.timedOut !== true ? "PASS" : "FAIL", exit_code: output.result.exitCode, timed_out: output.result.timedOut === true, log_path: pathFromRoot(output.publicLogPath) });
+        operations.push({ operation: name, status: output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true ? "PASS" : "FAIL", exit_code: output.result.exitCode, timed_out: output.result.timedOut === true, log_path: pathFromRoot(output.publicLogPath) });
       } catch (error) {
         operations.push({ operation: name, status: "FAIL", error: error instanceof Error ? error.message : String(error) });
       }
@@ -713,10 +876,10 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
         return { status: "FAIL", healthy: false, attempts: attempts.length, last: attempts.at(-1) ?? null, reason: error instanceof Error ? error.message : String(error) };
       }
     },
+    runMarkerObserverRegression: async (): Promise<Record<string, unknown>> => runMarkerObserverRegression(),
     confirmFreshMarkerAbsent: async (): Promise<Record<string, unknown>> => {
-      const output = await migrationSql("migration-fresh-precondition", "SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END");
-      const markerCount = Number.parseInt(output.result.output.trim(), 10);
-      return { status: output.result.exitCode === 0 && markerCount === 0 ? "PASS" : "FAIL", marker_count: Number.isInteger(markerCount) ? markerCount : null, log_path: pathFromRoot(output.publicLogPath), ...(markerCount === 0 ? {} : { reason: "The owned database was not fresh before the candidate migration." }) };
+      const observation = await observeSchemaMigrations(markerQueryAdapter("migration-fresh-precondition"));
+      return { ...observation, ...(observation.status === "FAIL" && !observation.reason ? { reason: "The owned database marker absence could not be proven." } : observation.status === "FAIL" && observation.marker_count !== null ? { reason: "The owned database was not fresh before the candidate migration." } : {}) };
     },
     runMigration: async (stage: "fresh" | "repeat"): Promise<MigrationCommandObservation> => migrationContainerCommand(stage),
     inspectSchema: async (): Promise<Record<string, unknown>> => {
@@ -724,7 +887,7 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
       return freshSchema;
     },
     createSentinel: async (): Promise<Record<string, unknown>> => {
-      sentinelSchema = `ch001_r11_${safeName(runId).replaceAll("-", "_")}`.slice(0, 55);
+      sentinelSchema = `ch001_r12_${safeName(runId).replaceAll("-", "_")}`.slice(0, 55);
       sentinelValue = `sentinel_${safeName(runId)}`.slice(0, 120);
       const output = await migrationSql("migration-sentinel-create", `CREATE SCHEMA ${identifier(sentinelSchema)}; CREATE TABLE ${identifier(sentinelSchema)}.sentinel (key TEXT PRIMARY KEY, value TEXT NOT NULL); INSERT INTO ${identifier(sentinelSchema)}.sentinel (key, value) VALUES ('proof', '${sentinelValue}')`);
       return { status: output.result.exitCode === 0 ? "PASS" : "FAIL", fixture_allocated: true, schema: sentinelSchema, value: sentinelValue, log_path: pathFromRoot(output.publicLogPath), ...(output.result.exitCode === 0 ? {} : { reason: "The same-database sentinel fixture could not be created." }) };
@@ -738,15 +901,15 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
       return { status: repeatedSchema.status === "PASS" && markerUnchanged && schemaUnchanged && sentinelPreserved ? "PASS" : "FAIL", fresh_schema_fingerprint: freshSchema?.schema_fingerprint ?? null, repeat_schema_fingerprint: repeatedSchema.schema_fingerprint ?? null, marker_unchanged: markerUnchanged, sentinel_preserved: sentinelPreserved, sentinel_value: sentinel.result.output.trim(), schema: repeatedSchema, sentinel_log_path: pathFromRoot(sentinel.publicLogPath) };
     },
     runFailureControl: async (): Promise<MigrationCommandObservation> => {
-      failureRole = `ch001_r11_role_${safeName(runId)}`.slice(0, 63);
-      failureDatabase = `ch001_r11_db_${safeName(runId)}`.slice(0, 63);
-      const password = `R11-${randomBytes(24).toString("base64url")}`;
+      failureRole = `ch001_r12_role_${safeName(runId)}`.slice(0, 63);
+      failureDatabase = `ch001_r12_db_${safeName(runId)}`.slice(0, 63);
+      const password = `R12-${randomBytes(24).toString("base64url")}`;
       secrets.push(password);
       const setup: Array<Record<string, unknown>> = [];
       const setupStep = async (name: string, sql: string): Promise<boolean> => {
         const output = await migrationSql(name, sql);
         setup.push({ operation: name, status: output.result.exitCode === 0 ? "PASS" : "FAIL", exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
-        return output.result.exitCode === 0 && output.result.timedOut !== true;
+        return output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true;
       };
       if (!await setupStep("migration-failure-control-create-role", `CREATE ROLE ${identifier(failureRole)} LOGIN PASSWORD '${password}'`)) return { cli: { exit_code: 1, timed_out: false, output_excerpt: "Failure-control role setup failed." }, container: { state: "setup_failed", exit_code: null, timed_out: false }, setup, marker_count: null, error_observed: false, assertion_ok: false };
       failureRoleCreated = true;
@@ -754,19 +917,19 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
       failureDatabaseCreated = true;
       if (!await setupStep("migration-failure-control-restrict-schema", `GRANT CONNECT ON DATABASE ${identifier(failureDatabase)} TO ${identifier(failureRole)}`)) return { cli: { exit_code: 1, timed_out: false, output_excerpt: "Failure-control database grant setup failed." }, container: { state: "setup_failed", exit_code: null, timed_out: false }, setup, marker_count: null, error_observed: false, assertion_ok: false };
       const restriction = await composeStep("migration-failure-control-revoke-create", ["exec", "-T", "db", "psql", "-U", "oss", "-d", failureDatabase, "-v", "ON_ERROR_STOP=1", "-Atc", `REVOKE CREATE ON SCHEMA public FROM PUBLIC; REVOKE CREATE ON SCHEMA public FROM ${identifier(failureRole)}; GRANT USAGE ON SCHEMA public TO ${identifier(failureRole)}`], { publicLogName: "migration-failure-control-revoke-create", timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-      setup.push({ operation: "migration-failure-control-revoke-create", status: restriction.result.exitCode === 0 ? "PASS" : "FAIL", exit_code: restriction.result.exitCode, log_path: pathFromRoot(restriction.publicLogPath) });
-      if (restriction.result.exitCode !== 0 || restriction.result.timedOut === true) return { cli: { exit_code: 1, timed_out: false, output_excerpt: "Failure-control schema restriction setup failed." }, container: { state: "setup_failed", exit_code: null, timed_out: false }, setup, marker_count: null, error_observed: false, assertion_ok: false };
+      setup.push({ operation: "migration-failure-control-revoke-create", status: restriction.result.exitCode === 0 && restriction.result.timedOut !== true && restriction.result.outputTruncated !== true ? "PASS" : "FAIL", exit_code: restriction.result.exitCode, log_path: pathFromRoot(restriction.publicLogPath) });
+      if (restriction.result.exitCode !== 0 || restriction.result.timedOut === true || restriction.result.outputTruncated === true) return { cli: { exit_code: 1, timed_out: false, output_excerpt: "Failure-control schema restriction setup failed." }, container: { state: "setup_failed", exit_code: null, timed_out: false }, setup, marker_count: null, error_observed: false, assertion_ok: false };
       const databaseUrl = `postgres://${failureRole}:${password}@db:5432/${failureDatabase}`;
       secrets.push(databaseUrl);
       const migration = await migrationContainerCommand("failure-control", databaseUrl, 1);
-      const marker = await composeStep("migration-failure-control-marker", ["exec", "-T", "db", "psql", "-U", "oss", "-d", failureDatabase, "-Atc", "SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END"], { publicLogName: "migration-failure-control-marker", timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-      const markerCount = Number.parseInt(marker.result.output.trim(), 10);
+      const marker = await observeSchemaMigrations(markerQueryAdapter("migration-failure-control-marker", failureDatabase));
+      const markerCount = marker.marker_count;
       const outputText = String(migration.cli?.output_excerpt ?? "");
       const containerError = String(migration.container?.error ?? "");
       const combinedError = `${outputText}\n${containerError}`;
       const sqlstate = combinedError.match(/\b42501\b/)?.[0] ?? null;
       const errorObserved = /permission denied|insufficient privilege|must be owner|42501/i.test(combinedError);
-      return { ...migration, setup, marker_count: Number.isInteger(markerCount) ? markerCount : null, marker_log_path: pathFromRoot(marker.publicLogPath), error_observed: errorObserved, sqlstate, error_class: errorObserved ? "postgresql_permission_failure" : null, assertion_ok: marker.result.exitCode === 0 && markerCount === 0 };
+      return { ...migration, setup, marker_observation: marker, marker_count: markerCount, marker_log_path: marker.queries.at(-1)?.log_path ?? null, error_observed: errorObserved, sqlstate, error_class: errorObserved ? "postgresql_permission_failure" : null, assertion_ok: marker.status === "PASS" && markerCount === 0 };
     },
     cleanupFixtures: fixtureCleanup
   };
@@ -941,22 +1104,36 @@ async function sourceReview(): Promise<{ path: string; clean: boolean }> {
   if (!dockerfile.includes("USER node") || !dockerfile.includes("libnss3") || !dockerfile.includes("COPY tests ./tests")) violations.push("final image does not include the non-root browser runtime and shipped test sources"); else checks.push("final image installs browser dependencies, ships tests, and runs as existing node user");
   const worker = await read("apps/worker/src/index.ts");
   if (!worker.includes("chromiumSandbox: true") || worker.includes("--no-sandbox")) violations.push("browser sandbox configuration is not explicit and fail-closed"); else checks.push("worker launch explicitly enables Chromium sandbox with no permissive fallback");
+  const proof = await read("scripts/ch001-proof.ts");
+  const observer = await read("scripts/ch001-migration-marker-observer.mjs");
+  const facts = await read("scripts/ch001-container-facts.mjs");
+  const verdict = await read("scripts/ch001-module-import-verdict.mjs");
+  const migrationVerification = await read("scripts/ch001-migration-verification.mjs");
+  const proofImplementation = proof.slice(0, proof.indexOf("async function sourceReview"));
+  const safeFreshProbe = proofImplementation.includes("observeSchemaMigrations(markerQueryAdapter(\"migration-fresh-precondition\"))");
+  const safeFailureProbe = proofImplementation.includes("observeSchemaMigrations(markerQueryAdapter(\"migration-failure-control-marker\", failureDatabase))");
+  if (!observer.includes("MARKER_PRESENCE_QUERY") || !observer.includes("MARKER_COUNT_QUERY") || !observer.includes("pg_catalog.to_regclass('public.schema_migrations')") || !observer.includes("SELECT count(*)::text FROM public.schema_migrations") || !safeFreshProbe || !safeFailureProbe) violations.push("both absent-table probes are not wired to the shared presence-then-count observer"); else checks.push("both absent-table probes use the shared catalog presence-then-count observer and never pre-create metadata");
+  if (proofImplementation.includes("migrationSql(\"migration-fresh-precondition\"") || proofImplementation.includes("migrationSql(\"migration-failure-control-marker\"") || !proofImplementation.includes("runMarkerObserverRegression") || !proofImplementation.includes("LEGACY_UNSAFE_MARKER_QUERY")) violations.push("absent-table probe call sites or the real PostgreSQL observer regression are incomplete"); else checks.push("real PostgreSQL observer regression includes the historical unsafe-query negative control");
+  if (!proofImplementation.includes("privateDockerCapture") || !proofImplementation.includes("projectMigrationContainerInspection") || !facts.includes("value.Path") || !facts.includes("value.Args") || !facts.includes("config.Entrypoint") || !facts.includes("config.Cmd") || facts.includes("Config.Path") || facts.includes("Config.Args")) violations.push("container inspection does not capture privately and project actual process fields"); else checks.push("container inspection privately captures raw JSON and publicly projects actual Path/Args plus configured process fields");
+  if (!facts.includes("environment_keys") || facts.includes("HostConfig") || facts.includes("Source:")) violations.push("container/image fact projection may publish unrestricted environment, host, label, or mount-source data"); else checks.push("public container/image facts exclude unrestricted environment values, host configuration, labels, and mount sources");
+  if (!proofImplementation.includes("evaluateFinalImageModuleImport") || !proofImplementation.includes("moduleImportReport = report") || !proofImplementation.includes("await writeJson(resolve(publicDir, \"module-import-verification.json\"), report)")) violations.push("final-image module-import evidence is not persisted from one effective verdict"); else checks.push("final-image import evidence persists and returns one effective verdict after CLI, child-report, and inspection checks");
+  if (!verdict.includes("inspectionError") || !verdict.includes("identity") || !verdict.includes("output_truncated") || !migrationVerification.includes("container_required: true") || !migrationVerification.includes("container_required: false")) violations.push("CLI-only and strict terminal paths are not separated with required inspection evidence"); else checks.push("CLI-only build/database-start validation is separate from container-required migration terminal validation");
   const state = await read("state/PROJECT_STATE.md");
   if (!/awaiting_review/i.test(state) || !/accepted application version:\s*none/i.test(state)) violations.push("root state is not awaiting review with accepted version unset"); else checks.push("root state remains awaiting review and unaccepted");
   const reportPath = resolve(publicDir, "source-review.md");
-  await writeText(reportPath, ["# CH-001R-r11 source/provenance inspection", "", `Implementation commit: ${implementationCommit}`, `Run ID: ${runId}`, "Evidence type: E1; source-only inspection, not a replacement for runtime/manual proof.", "", ...checks.map((check) => `- PASS — ${check}`), ...violations.map((violation) => `- FAIL — ${violation}`), "", "Pending repository license decision remains recorded; this inspection makes no legal/distribution determination."].join("\n") + "\n");
+  await writeText(reportPath, ["# CH-001R-r12 source/provenance inspection", "", `Implementation commit: ${implementationCommit}`, `Run ID: ${runId}`, "Evidence type: E1; source-only inspection, not a replacement for runtime/manual proof.", "", ...checks.map((check) => `- PASS — ${check}`), ...violations.map((violation) => `- FAIL — ${violation}`), "", "Pending repository license decision remains recorded; this inspection makes no legal/distribution determination."].join("\n") + "\n");
   return { path: pathFromRoot(reportPath), clean: violations.length === 0 };
 }
 
 async function buildGateLedger(source: { path: string; clean: boolean }): Promise<GateRecord[]> {
   let sourceRef;
-  try { sourceRef = await makeEvidenceRef(root, source.path, "E1", "source-review:ch001r11", implementationCommit); } catch { sourceRef = undefined; }
+  try { sourceRef = await makeEvidenceRef(root, source.path, "E1", "source-review:ch001r12", implementationCommit); } catch { sourceRef = undefined; }
   let gateEvidence: GateRecord[] = [];
   try { gateEvidence = await readJsonFile(resolve(publicDir, "gate-evidence.json")) as GateRecord[]; } catch { /* no E2 records if E2E did not reach its final assertion */ }
   const evidence = new Map(gateEvidence.filter((record) => record && typeof record.id === "string").map((record) => [record.id, record]));
   const allProofStepsPass = failures.length === 0;
   const lifecycleEvidence = ["lifecycle.json", "same-data-restart.json", "worker-down.json"].map((name) => resolve(publicDir, name));
-  const gates: GateRecord[] = EXPECTED_GATE_IDS.map((id) => ({ id, status: "NOT_RUN", implementation_commit: implementationCommit, actual_evidence: [], reason: "Not covered by the bounded CH-001R-r11 migration-first profile; no manual acceptance is inferred." }));
+  const gates: GateRecord[] = EXPECTED_GATE_IDS.map((id) => ({ id, status: "NOT_RUN", implementation_commit: implementationCommit, actual_evidence: [], reason: "Not covered by the bounded CH-001R-r12 migration-proof repair profile; no manual acceptance is inferred." }));
   const setPass = (id: string, refs: GateRecord["actual_evidence"], reason: string): void => {
     const gate = gates.find((candidate) => candidate.id === id);
     if (gate && refs.length > 0) { gate.status = "PASS"; gate.actual_evidence = refs; gate.reason = reason; }
@@ -978,7 +1155,7 @@ async function buildGateLedger(source: { path: string; clean: boolean }): Promis
     for (const id of ["CH001-052", "CH001-054", "CH001-059"]) setPass(id, runtimeRefs(id), `Primary authenticated E2E journey recorded ${id}.`);
     setPass("CH001-063", [...await composeRef("compose-migration-rerun.log", "proof:migration-rerun", "E2"), ...await composeRef("migration-metadata.log", "proof:migration-metadata", "E2")], "Migration rerun and metadata were checked against the live PostgreSQL service.");
   }
-  if (source.clean && sourceRef) for (const id of ["CH001-067", "CH001-068", "CH001-069", "CH001-072"]) setPass(id, [sourceRef], "Source-only contract gate assessed by the r11 source review.");
+  if (source.clean && sourceRef) for (const id of ["CH001-067", "CH001-068", "CH001-069", "CH001-072"]) setPass(id, [sourceRef], "Source-only contract gate assessed by the r12 source review.");
   for (const gate of gates) {
     const observed = evidence.get(gate.id);
     if (gate.status === "NOT_RUN" && observed?.status === "FAIL" && observed.implementation_commit === implementationCommit) { gate.status = "FAIL"; gate.actual_evidence = observed.actual_evidence ?? []; gate.reason = observed.reason || "Executed assertion failed in the primary proof run."; }
@@ -1004,7 +1181,7 @@ async function writeMigrationNotRunEvidence(reason: string): Promise<void> {
   const result: Record<string, unknown> = {
     schema_version: 1,
     record_kind: "CH001_MIGRATION_VERIFICATION",
-    classification: "R11_MIGRATION_FIRST",
+    classification: "R12_MIGRATION_FIRST",
     status: "NOT_RUN",
     run_id: runId,
     implementation_commit: implementationCommit,
@@ -1024,6 +1201,7 @@ async function writeMigrationNotRunEvidence(reason: string): Promise<void> {
       build: notRun(reason),
       database_start: notRun(reason),
       database_ready: notRun(reason),
+      marker_observer_regression: notRun(reason),
       fresh_precondition: notRun(reason),
       fresh: notRun(reason),
       schema: notRun(reason),
@@ -1051,27 +1229,45 @@ async function cleanupMigrationContainers(): Promise<void> {
   const operations: Array<Record<string, unknown>> = [];
   for (const name of uniqueNames) {
     try {
-      const before = await composeProject.dockerRun(["container", "inspect", name, "--format", "{{json .}}"], { timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-      if (before.timedOut === true) {
-        operations.push({ name, status: "FAIL", reason: "Pre-cleanup container inspection timed out." });
+      const beforeCapture = await privateDockerCapture(`migration-container-cleanup-before-${safeName(name)}`, ["container", "inspect", name, "--format", "{{json .}}"], { timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+      if (beforeCapture.result.timedOut === true || beforeCapture.result.outputTruncated === true) {
+        await recordPublicProjection(`migration-container-cleanup-before-${safeName(name)}`, beforeCapture, { inspection_status: "FAIL", reason: "Pre-cleanup container inspection was incomplete." });
+        operations.push({ name, status: "FAIL", reason: "Pre-cleanup container inspection was incomplete." });
         continue;
       }
-      if (before.exitCode === 1) {
+      if (beforeCapture.result.exitCode === 1) {
+        await recordPublicProjection(`migration-container-cleanup-before-${safeName(name)}`, beforeCapture, { inspection_status: "PASS", present: false });
         operations.push({ name, status: "PASS", present_before_cleanup: false, absence_verified: true });
         continue;
       }
-      if (before.exitCode !== 0) {
-        operations.push({ name, status: "FAIL", exit_code: before.exitCode, output: redact(before.output).slice(-1_000) });
+      if (beforeCapture.result.exitCode !== 0) {
+        await recordPublicProjection(`migration-container-cleanup-before-${safeName(name)}`, beforeCapture, { inspection_status: "FAIL", reason: "Pre-cleanup container inspection failed." });
+        operations.push({ name, status: "FAIL", reason: "Pre-cleanup container inspection failed.", exit_code: beforeCapture.result.exitCode });
+        continue;
+      }
+      let beforeValue: unknown;
+      try { beforeValue = JSON.parse(beforeCapture.result.output.trim()) as unknown; }
+      catch {
+        await recordPublicProjection(`migration-container-cleanup-before-${safeName(name)}`, beforeCapture, { inspection_status: "FAIL", reason: "Pre-cleanup container inspection JSON was malformed." });
+        operations.push({ name, status: "FAIL", reason: "Pre-cleanup container inspection JSON was malformed." });
+        continue;
+      }
+      const beforeProjection = projectMigrationContainerInspection(beforeValue, name, redact);
+      await recordPublicProjection(`migration-container-cleanup-before-${safeName(name)}`, beforeCapture, beforeProjection);
+      if (beforeProjection.inspection_status !== "PASS") {
+        operations.push({ name, status: "FAIL", reason: "Pre-cleanup container projection failed." });
         continue;
       }
       const removed = await dockerStep(`migration-container-remove-${safeName(name)}`, ["container", "rm", "-f", name], { publicLogName: `migration-container-remove-${safeName(name)}`, timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-      const after = await composeProject.dockerRun(["container", "inspect", name, "--format", "{{json .}}"], { timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
-      operations.push({ name, status: removed.result.exitCode === 0 && removed.result.timedOut !== true && after.exitCode === 1 && after.timedOut !== true ? "PASS" : "FAIL", present_before_cleanup: true, remove_exit_code: removed.result.exitCode, remove_log_path: pathFromRoot(removed.publicLogPath), absence_verified: after.exitCode === 1 && after.timedOut !== true });
+      const afterCapture = await privateDockerCapture(`migration-container-cleanup-after-${safeName(name)}`, ["container", "inspect", name, "--format", "{{json .}}"], { timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+      const absenceVerified = afterCapture.result.exitCode === 1 && afterCapture.result.timedOut !== true && afterCapture.result.outputTruncated !== true;
+      await recordPublicProjection(`migration-container-cleanup-after-${safeName(name)}`, afterCapture, { inspection_status: absenceVerified ? "PASS" : "FAIL", present: absenceVerified ? false : null, absence_verified: absenceVerified });
+      operations.push({ name, status: removed.result.exitCode === 0 && removed.result.timedOut !== true && absenceVerified ? "PASS" : "FAIL", present_before_cleanup: true, remove_exit_code: removed.result.exitCode, remove_log_path: pathFromRoot(removed.publicLogPath), absence_verified: absenceVerified });
     } catch (error) {
-      operations.push({ name, status: "FAIL", error: error instanceof Error ? error.message : String(error) });
+      operations.push({ name, status: "FAIL", error: error instanceof Error ? error.message : "Container cleanup inspection failed." });
     }
   }
-  migrationContainerCleanup = { record_kind: "CH001_MIGRATION_CONTAINER_CLEANUP", run_id: runId, status: operations.every((operation) => operation.status === "PASS") ? "PASS" : "FAIL", containers: operations, cleanup_scope: "explicitly named CH-001R-r11 migration/module-import one-offs only; no global prune" };
+  migrationContainerCleanup = { record_kind: "CH001_MIGRATION_CONTAINER_CLEANUP", run_id: runId, status: operations.every((operation) => operation.status === "PASS") ? "PASS" : "FAIL", containers: operations, cleanup_scope: "explicitly named CH-001R-r12 migration/module-import one-offs only; no global prune" };
   await writeJson(resolve(publicDir, "migration-container-cleanup.json"), migrationContainerCleanup);
   if (migrationContainerCleanup.status === "FAIL") failures.push("One or more named migration one-off containers could not be removed and absence-verified.");
 }
@@ -1176,7 +1372,7 @@ async function finalize(host: Record<string, unknown>, source: { path: string; c
   const commands: CommandRecord[] = commandOutputs.map((output) => ({ command: output.result.command, startedAt: output.result.startedAt, endedAt: output.result.endedAt, exitCode: output.result.exitCode, logPath: pathFromRoot(output.publicLogPath), ...(output.reportPath ? { reportPath: output.reportPath } : {}) }));
   const findingDispositions = [
     ...Array.from({ length: 11 }, (_, index) => ({ id: `R${String(index + 1).padStart(2, "0")}`, status: "OPEN", test_reference: null, repair_or_disproof: "This bounded proof does not close the original acceptance findings; architect review remains required." })),
-    ...Array.from({ length: 8 }, (_, index) => ({ id: `U${String(index + 1).padStart(2, "0")}`, status: "OBSERVED", test_reference: null, repair_or_disproof: "Scoped r11 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports." }))
+    ...Array.from({ length: 8 }, (_, index) => ({ id: `U${String(index + 1).padStart(2, "0")}`, status: "OBSERVED", test_reference: null, repair_or_disproof: "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports." }))
   ];
   await writeJson(resolve(publicDir, "finding-dispositions.json"), { run_id: runId, implementation_commit: implementationCommit, findings: findingDispositions });
   await writeJson(resolve(publicDir, "command-report.json"), { run_id: runId, implementation_commit: implementationCommit, commands, suites: [...suiteReports.values()], child_invocations: commandOutputs.map((output) => ({ id: output.result.invocationId, command: output.result.command, started_at: output.result.startedAt, ended_at: output.result.endedAt })) });
@@ -1185,12 +1381,12 @@ async function finalize(host: Record<string, unknown>, source: { path: string; c
   // circular hash: the gate report points at this manifest, while the
   // manifest binds the stable test/runtime payload files.
   const manifest = await publicManifest();
-  const report: EvidencePackage = { chapter: "CH-001R-r11", target_application_version: "0.1.0", report_kind: "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE", implementation_commit: implementationCommit, evidence_commit: null, generatedAt: new Date().toISOString(), commands, suites: [...suiteReports.values()], gates, findings: findingDispositions.slice(0, 11), artifact_manifest: manifest.ref };
+  const report: EvidencePackage = { chapter: "CH-001R-r12", target_application_version: "0.1.0", report_kind: "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE", implementation_commit: implementationCommit, evidence_commit: null, generatedAt: new Date().toISOString(), commands, suites: [...suiteReports.values()], gates, findings: findingDispositions.slice(0, 11), artifact_manifest: manifest.ref };
   await writeJson(resolve(publicDir, "gate-results.json"), report);
   const validation = await validateEvidencePackage({ root, report, reportPath: pathFromRoot(resolve(publicDir, "gate-results.json")), requireCompleted: false });
   const gateCounts = { PASS: gates.filter((gate) => gate.status === "PASS").length, FAIL: gates.filter((gate) => gate.status === "FAIL").length, NOT_RUN: gates.filter((gate) => gate.status === "NOT_RUN").length };
   const livePass = failures.length === 0 && environmentFailures.length === 0 && validation.errors.filter((error) => !/Every mandatory gate must be PASS|Finding disposition report must contain R01-R11|Finding R\d+ is not closed/.test(error)).length === 0 && gateCounts.FAIL === 0 && await stat(resolve(publicDir, "a-little-room-to-focus.zip")).then(() => true).catch(() => false);
-  const result = { profile: "CH-001R-r11 migration-first qualification", status: livePass ? "LIVE_PROOF_READY_FOR_REVIEW" : environmentFailures.length > 0 && !composeStarted ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: livePass ? 0 : environmentFailures.length > 0 && !composeStarted ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, scope: "migration-first final-image qualification before worker readiness, followed by the existing bounded local app/database/browser/worker journey", prohibited_scope: ["fal.ai", "ScrapeCreators", "TikTok", "publishing", "scheduling", "analytics", "billing", "video", "public deployment", "release", "v0.2"], failures, environment_failures: environmentFailures, gate_counts: gateCounts, validation: { ok: validation.ok, errors: validation.errors }, steps: proofSteps, required_live_artifacts: ["migration-verification.json", "module-import-verification.json", "a-little-room-to-focus.zip", "alternate-4x5.zip", "journey-hashes.json", "lifecycle.json", "same-data-restart.json"], evidence_root: pathFromRoot(publicDir), artifact_manifest: pathFromRoot(resolve(publicDir, "artifact-manifest.json")), artifact_manifest_sha256: await sha256File(resolve(publicDir, "artifact-manifest.json")) };
+  const result = { profile: "CH-001R-r12 migration-proof repair qualification", status: livePass ? "LIVE_PROOF_READY_FOR_REVIEW" : environmentFailures.length > 0 && !composeStarted ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: livePass ? 0 : environmentFailures.length > 0 && !composeStarted ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, scope: "bounded migration-proof repair: isolated marker observer regression, final-image import evidence, strict migration terminals, followed by the existing local app/database/browser/worker journey", prohibited_scope: ["fal.ai", "ScrapeCreators", "TikTok", "publishing", "scheduling", "analytics", "billing", "video", "public deployment", "release", "v0.2"], failures, environment_failures: environmentFailures, gate_counts: gateCounts, validation: { ok: validation.ok, errors: validation.errors }, steps: proofSteps, required_live_artifacts: ["migration-verification.json", "migration-marker-regression.json", "module-import-verification.json", "a-little-room-to-focus.zip", "alternate-4x5.zip", "journey-hashes.json", "lifecycle.json", "same-data-restart.json"], evidence_root: pathFromRoot(publicDir), artifact_manifest: pathFromRoot(resolve(publicDir, "artifact-manifest.json")), artifact_manifest_sha256: await sha256File(resolve(publicDir, "artifact-manifest.json")) };
   await writeJson(resolve(publicDir, "proof-result.json"), result);
   await writeJson(resolve(publicDir, "verifier-result.json"), { ok: validation.ok, strict_acceptance: false, report: pathFromRoot(resolve(publicDir, "gate-results.json")), implementation_commit: implementationCommit, run_id: runId, gate_counts: gateCounts });
   return result.exit_code;
@@ -1221,12 +1417,12 @@ try {
   failures.push(`Coordinator: ${detail}`);
   if (evidenceOwned) await sourceReview().catch(() => undefined);
   await finalizeComposeLifecycle().catch((cleanupError) => failures.push(`Compose finalization failed: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`));
-  await writeCoordinatorFailureReport({ publicDir, ownsEvidence: evidenceOwned, report: { profile: "CH-001R-r11 migration-first qualification", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." } }).catch(() => undefined);
-  console.error(`CH-001R-r11 coordinator error: ${detail}`);
+  await writeCoordinatorFailureReport({ publicDir, ownsEvidence: evidenceOwned, report: { profile: "CH-001R-r12 migration-proof repair qualification", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." } }).catch(() => undefined);
+  console.error(`CH-001R-r12 coordinator error: ${detail}`);
   exitCode = environmentFailures.length > 0 ? 2 : 1;
 } finally {
   await cleanup();
 }
 
-console.error(`CH-001R-r11 proof ${exitCode === 0 ? "ready for review" : exitCode === 2 ? "blocked by environment" : "failed"}; implementation ${implementationCommit}; run ${runId}.`);
+console.error(`CH-001R-r12 proof ${exitCode === 0 ? "ready for review" : exitCode === 2 ? "blocked by environment" : "failed"}; implementation ${implementationCommit}; run ${runId}.`);
 process.exit(exitCode);

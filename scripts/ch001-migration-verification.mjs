@@ -16,29 +16,60 @@ function commandExit(value) {
   return value && Number.isInteger(value.exit_code) ? value.exit_code : null;
 }
 
+function cliObservation(observation, expectedExit) {
+  const cli = observation?.cli ?? observation?.command ?? observation;
+  const cliExit = commandExit(cli);
+  const timedOut = cli?.timed_out === true;
+  const outputTruncated = cli?.output_truncated === true;
+  return {
+    pass: !timedOut && !outputTruncated && cliExit !== null && cliExit === expectedExit && observation?.assertion_ok !== false,
+    cliExit,
+    timedOut,
+    outputTruncated
+  };
+}
+
 function terminalObservation(observation, expectedExit) {
   const cli = observation?.cli ?? observation?.command ?? observation;
-  const container = observation?.container;
+  const container = observation?.container && typeof observation.container === "object" && !Array.isArray(observation.container) ? observation.container : null;
   const cliExit = commandExit(cli);
   const containerExit = commandExit(container);
   const timedOut = cli?.timed_out === true || container?.timed_out === true;
+  const outputTruncated = cli?.output_truncated === true || container?.output_truncated === true;
   const terminalState = container?.state ?? null;
-  const terminal = !timedOut && cliExit !== null && (container ? terminalState === "exited" && containerExit !== null : true);
-  const matches = container
-    ? expectedExit === 0 ? cliExit === 0 && containerExit === 0 : cliExit !== null && cliExit !== 0 && containerExit !== 0
-    : cliExit === expectedExit;
-  return { pass: terminal && matches && observation?.assertion_ok !== false, cliExit, containerExit, timedOut, terminalState };
+  const inspectionStatus = container?.inspection_status ?? null;
+  const identityPresent = typeof container?.id === "string" && container.id.length > 0 && typeof container?.image_id === "string" && container.image_id.length > 0;
+  const terminal = !timedOut && !outputTruncated && cliExit !== null && container !== null && inspectionStatus === "PASS" && identityPresent && terminalState === "exited" && containerExit !== null;
+  const matches = expectedExit === 0 ? cliExit === 0 && containerExit === 0 : cliExit !== 0 && containerExit !== 0;
+  return { pass: terminal && matches && observation?.assertion_ok !== false, cliExit, containerExit, timedOut, outputTruncated, terminalState, inspectionStatus, identityPresent };
+}
+
+function stageFromCliCommand(observation, expectedExit = 0) {
+  const terminal = cliObservation(observation, expectedExit);
+  return {
+    ...(observation && typeof observation === "object" ? observation : {}),
+    expected_exit_code: expectedExit,
+    cli_exit_code: terminal.cliExit,
+    inspected_container_exit_code: null,
+    terminal_state: null,
+    timed_out: terminal.timedOut,
+    output_truncated: terminal.outputTruncated,
+    container_required: false,
+    status: terminal.pass ? STATUS.PASS : STATUS.FAIL
+  };
 }
 
 function stageFromCommand(observation, expectedExit = 0) {
   const terminal = terminalObservation(observation, expectedExit);
   return {
+    ...(observation && typeof observation === "object" ? observation : {}),
     expected_exit_code: expectedExit,
     cli_exit_code: terminal.cliExit,
     inspected_container_exit_code: terminal.containerExit,
     terminal_state: terminal.terminalState,
     timed_out: terminal.timedOut,
-    ...(observation && typeof observation === "object" ? observation : {}),
+    output_truncated: terminal.outputTruncated,
+    container_required: true,
     status: terminal.pass ? STATUS.PASS : STATUS.FAIL
   };
 }
@@ -72,7 +103,7 @@ export async function runMigrationFirstQualification({ identity, adapter, writeR
   const result = {
     schema_version: 1,
     record_kind: "CH001_MIGRATION_VERIFICATION",
-    classification: "R11_MIGRATION_FIRST",
+    classification: "R12_MIGRATION_FIRST",
     run_id: identity.run_id,
     implementation_commit: identity.implementation_commit,
     source_tree: identity.source_tree ?? null,
@@ -91,6 +122,7 @@ export async function runMigrationFirstQualification({ identity, adapter, writeR
       build: notRun("Not reached."),
       database_start: notRun("Not reached."),
       database_ready: notRun("Not reached."),
+      marker_observer_regression: notRun("Not reached."),
       fresh_precondition: notRun("Not reached."),
       fresh: notRun("Not reached."),
       schema: notRun("Not reached."),
@@ -103,90 +135,108 @@ export async function runMigrationFirstQualification({ identity, adapter, writeR
   };
   let fixtureCreated = false;
   let stopReason = "Migration-first qualification did not complete.";
-  const laterStages = ["database_start", "database_ready", "fresh_precondition", "fresh", "schema", "sentinel", "repeat", "failure_control"];
+  const laterStages = ["database_start", "database_ready", "marker_observer_regression", "fresh_precondition", "fresh", "schema", "sentinel", "repeat", "failure_control"];
 
   try {
-    try {
-      result.stages.build = stageFromCommand(await adapter.buildImages());
-    } catch (error) {
-      result.stages.build = { status: STATUS.FAIL, error: errorText(error) };
-    }
+    try { result.stages.build = stageFromCliCommand(await adapter.buildImages()); }
+    catch (error) { result.stages.build = { status: STATUS.FAIL, error: errorText(error) }; }
     if (result.stages.build.status !== STATUS.PASS) {
       stopReason = "Final image build did not reach a measured success.";
       attachFailure(result, "build", result.stages.build.error ?? stopReason);
-    } else {
-      try { result.stages.module_import = stageFromAssertion(await adapter.verifyModuleImport()); }
-      catch (error) { result.stages.module_import = { status: STATUS.FAIL, error: errorText(error) }; }
-      if (result.stages.module_import.status !== STATUS.PASS) {
-        stopReason = "Post-build @oss/db module import in the final image did not pass.";
-        attachFailure(result, "module_import", result.stages.module_import.reason ?? result.stages.module_import.error ?? stopReason);
-      } else {
-        try { result.stages.database_start = stageFromCommand(await adapter.startDatabase()); }
-        catch (error) { result.stages.database_start = { status: STATUS.FAIL, error: errorText(error) }; }
-        if (result.stages.database_start.status !== STATUS.PASS) {
-          stopReason = "The owned database container did not start successfully.";
-          attachFailure(result, "database_start", result.stages.database_start.error ?? stopReason);
-        } else {
-          try { result.stages.database_ready = stageFromAssertion(await adapter.waitForDatabase()); }
-          catch (error) { result.stages.database_ready = { status: STATUS.FAIL, error: errorText(error) }; }
-          if (result.stages.database_ready.status !== STATUS.PASS) {
-            stopReason = "Database readiness was not measured as healthy.";
-            attachFailure(result, "database_ready", result.stages.database_ready.error ?? stopReason);
-          } else {
-            try { result.stages.fresh_precondition = stageFromAssertion(await adapter.confirmFreshMarkerAbsent()); }
-            catch (error) { result.stages.fresh_precondition = { status: STATUS.FAIL, error: errorText(error) }; }
-            if (result.stages.fresh_precondition.status !== STATUS.PASS) {
-              stopReason = "Fresh database marker absence was not proven.";
-              attachFailure(result, "fresh_precondition", result.stages.fresh_precondition.error ?? stopReason);
-            } else {
-              try { result.stages.fresh = stageFromCommand(await adapter.runMigration("fresh")); }
-              catch (error) { result.stages.fresh = { status: STATUS.FAIL, error: errorText(error) }; }
-              if (result.stages.fresh.status !== STATUS.PASS) {
-                stopReason = "Fresh shipped migration did not produce matching CLI and inspected container exit 0.";
-                attachFailure(result, "fresh", result.stages.fresh.error ?? stopReason);
-              } else {
-                try { result.stages.schema = stageFromAssertion(await adapter.inspectSchema()); }
-                catch (error) { result.stages.schema = { status: STATUS.FAIL, error: errorText(error) }; }
-                if (result.stages.schema.status !== STATUS.PASS) {
-                  stopReason = "Fresh migration schema or completion-marker assertions failed.";
-                  attachFailure(result, "schema", result.stages.schema.error ?? stopReason);
-                } else {
-                  try { result.stages.sentinel = stageFromAssertion(await adapter.createSentinel()); fixtureCreated = result.stages.sentinel.status === STATUS.PASS || result.stages.sentinel.fixture_allocated === true; }
-                  catch (error) { result.stages.sentinel = { status: STATUS.FAIL, error: errorText(error) }; }
-                  if (result.stages.sentinel.status !== STATUS.PASS) {
-                    stopReason = "Same-database repeat sentinel setup failed.";
-                    attachFailure(result, "sentinel", result.stages.sentinel.error ?? stopReason);
-                  } else {
-                    try { result.stages.repeat = stageFromCommand(await adapter.runMigration("repeat")); }
-                    catch (error) { result.stages.repeat = { status: STATUS.FAIL, error: errorText(error) }; }
-                    if (result.stages.repeat.status !== STATUS.PASS) {
-                      stopReason = "Same-database repeat migration did not produce matching exit 0.";
-                      attachFailure(result, "repeat", result.stages.repeat.error ?? stopReason);
-                    } else {
-                      try { result.stages.repeat_assertions = stageFromAssertion(await adapter.inspectRepeatState()); }
-                      catch (error) { result.stages.repeat_assertions = { status: STATUS.FAIL, error: errorText(error) }; }
-                      if (result.stages.repeat_assertions.status !== STATUS.PASS) {
-                        stopReason = "Same-database marker, schema, timestamp, or sentinel assertions failed.";
-                        attachFailure(result, "repeat_assertions", result.stages.repeat_assertions.error ?? stopReason);
-                      } else {
-                        try {
-                          const failureObservation = await adapter.runFailureControl();
-                          result.stages.failure_control = { ...failureObservation, status: isSuccessfulExpectedFailure(failureObservation) ? STATUS.PASS : STATUS.FAIL };
-                        }
-                        catch (error) { result.stages.failure_control = { status: STATUS.FAIL, error: errorText(error) }; }
-                        if (!isSuccessfulExpectedFailure(result.stages.failure_control)) {
-                          stopReason = "Controlled SQL/permission failure did not remain a nonzero failure without a completion marker.";
-                          attachFailure(result, "failure_control", result.stages.failure_control.error ?? stopReason);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+      return result;
+    }
+
+    try { result.stages.module_import = stageFromAssertion(await adapter.verifyModuleImport()); }
+    catch (error) { result.stages.module_import = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.module_import.status !== STATUS.PASS) {
+      stopReason = "Post-build @oss/db module import in the final image did not pass.";
+      attachFailure(result, "module_import", result.stages.module_import.reason ?? result.stages.module_import.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.database_start = stageFromCliCommand(await adapter.startDatabase()); }
+    catch (error) { result.stages.database_start = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.database_start.status !== STATUS.PASS) {
+      stopReason = "The owned database container did not start successfully.";
+      attachFailure(result, "database_start", result.stages.database_start.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.database_ready = stageFromAssertion(await adapter.waitForDatabase()); }
+    catch (error) { result.stages.database_ready = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.database_ready.status !== STATUS.PASS) {
+      stopReason = "Database readiness was not measured as healthy.";
+      attachFailure(result, "database_ready", result.stages.database_ready.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.marker_observer_regression = stageFromAssertion(await adapter.runMarkerObserverRegression()); }
+    catch (error) { result.stages.marker_observer_regression = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.marker_observer_regression.status !== STATUS.PASS) {
+      stopReason = "The isolated PostgreSQL marker-observer regression did not pass.";
+      attachFailure(result, "marker_observer_regression", result.stages.marker_observer_regression.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.fresh_precondition = stageFromAssertion(await adapter.confirmFreshMarkerAbsent()); }
+    catch (error) { result.stages.fresh_precondition = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.fresh_precondition.status !== STATUS.PASS) {
+      stopReason = "Fresh database marker absence was not proven.";
+      attachFailure(result, "fresh_precondition", result.stages.fresh_precondition.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.fresh = stageFromCommand(await adapter.runMigration("fresh")); }
+    catch (error) { result.stages.fresh = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.fresh.status !== STATUS.PASS) {
+      stopReason = "Fresh shipped migration did not produce matching CLI and inspected container exit 0.";
+      attachFailure(result, "fresh", result.stages.fresh.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.schema = stageFromAssertion(await adapter.inspectSchema()); }
+    catch (error) { result.stages.schema = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.schema.status !== STATUS.PASS) {
+      stopReason = "Fresh migration schema or completion-marker assertions failed.";
+      attachFailure(result, "schema", result.stages.schema.error ?? stopReason);
+      return result;
+    }
+
+    try {
+      result.stages.sentinel = stageFromAssertion(await adapter.createSentinel());
+      fixtureCreated = result.stages.sentinel.status === STATUS.PASS || result.stages.sentinel.fixture_allocated === true;
+    }
+    catch (error) { result.stages.sentinel = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.sentinel.status !== STATUS.PASS) {
+      stopReason = "Same-database repeat sentinel setup failed.";
+      attachFailure(result, "sentinel", result.stages.sentinel.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.repeat = stageFromCommand(await adapter.runMigration("repeat")); }
+    catch (error) { result.stages.repeat = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.repeat.status !== STATUS.PASS) {
+      stopReason = "Same-database repeat migration did not produce matching exit 0.";
+      attachFailure(result, "repeat", result.stages.repeat.error ?? stopReason);
+      return result;
+    }
+
+    try { result.stages.repeat_assertions = stageFromAssertion(await adapter.inspectRepeatState()); }
+    catch (error) { result.stages.repeat_assertions = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (result.stages.repeat_assertions.status !== STATUS.PASS) {
+      stopReason = "Same-database marker, schema, timestamp, or sentinel assertions failed.";
+      attachFailure(result, "repeat_assertions", result.stages.repeat_assertions.error ?? stopReason);
+      return result;
+    }
+
+    try {
+      const failureObservation = await adapter.runFailureControl();
+      result.stages.failure_control = { ...failureObservation, status: isSuccessfulExpectedFailure(failureObservation) ? STATUS.PASS : STATUS.FAIL };
+    }
+    catch (error) { result.stages.failure_control = { status: STATUS.FAIL, error: errorText(error) }; }
+    if (!isSuccessfulExpectedFailure(result.stages.failure_control)) {
+      stopReason = "Controlled SQL/permission failure did not remain a nonzero failure without a completion marker.";
+      attachFailure(result, "failure_control", result.stages.failure_control.error ?? stopReason);
     }
   } finally {
     markLaterStages(result, [...laterStages, "repeat_assertions"], stopReason);
@@ -197,7 +247,7 @@ export async function runMigrationFirstQualification({ identity, adapter, writeR
       result.stages.fixture_cleanup = { status: STATUS.FAIL, error: errorText(error) };
     }
     if (result.stages.fixture_cleanup.status === STATUS.FAIL) attachFailure(result, "fixture_cleanup", result.stages.fixture_cleanup.error ?? "Migration fixture cleanup failed.");
-    const required = ["module_import", "build", "database_start", "database_ready", "fresh_precondition", "fresh", "schema", "sentinel", "repeat", "repeat_assertions", "failure_control"];
+    const required = ["module_import", "build", "database_start", "database_ready", "marker_observer_regression", "fresh_precondition", "fresh", "schema", "sentinel", "repeat", "repeat_assertions", "failure_control"];
     result.migration_qualified = result.failures.length === 0 && required.every((name) => result.stages[name]?.status === STATUS.PASS) && result.stages.fixture_cleanup.status !== STATUS.FAIL;
     result.status = result.migration_qualified ? STATUS.PASS : STATUS.FAIL;
     result.persisted_before_worker_readiness = true;
