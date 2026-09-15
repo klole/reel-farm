@@ -1,0 +1,10 @@
+downloaded=yes
+files:
+CH001R_r12_Architect_Pack.zip 29445 bytes
+LUNA_CH001R12_COMPLETE.md 44549 bytes
+LUNA_CH001R12_START_PROMPT.md 1883 bytes
+01_REVIEW_VERDICT.md 8306 bytes
+starter-ch001r12-luna.md 1883 bytes
+unzip_ok=yes
+any missing files: none
+observed_at 2026-09-15T11:21:43Z

@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "record_kind": "REPAIR_CHECKLIST_NOT_APPLICATION_ACCEPTANCE",
+  "chapter": "CH-001R-r12",
+  "packet_revision": "r1",
+  "implementation_commit": null,
+  "implementation_tree": null,
+  "evidence_commit": null,
+  "generated_at_utc": null,
+  "completion_mode": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 18
+  },
+  "checks": [
+    {
+      "id": "R12-T01",
+      "title": "Identity and frozen scope",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T02",
+      "title": "One shared marker observer",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T03",
+      "title": "Presence/count boundary cases",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T04",
+      "title": "Unknown observations fail closed",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T05",
+      "title": "Real PostgreSQL semantics",
+      "evidence_class": "RUNTIME",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T06",
+      "title": "Inspection public allowlist",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T07",
+      "title": "Accurate selected container facts",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T08",
+      "title": "Import verdict consistency",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T09",
+      "title": "Strict migration terminal predicates",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T10",
+      "title": "Controller and evidence ordering",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T11",
+      "title": "Pinned full source matrix",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T12",
+      "title": "Real post-build workspace import",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T13",
+      "title": "Final-image fresh/schema proof",
+      "evidence_class": "RUNTIME",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T14",
+      "title": "Repeat and permission-failure proof",
+      "evidence_class": "RUNTIME",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T15",
+      "title": "Live cleanup and artifact integrity",
+      "evidence_class": "RUNTIME",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T16",
+      "title": "Evidence/handoff completeness",
+      "evidence_class": "SOURCE",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T17",
+      "title": "Publication and request ledger",
+      "evidence_class": "ROUTER",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    },
+    {
+      "id": "R12-T18",
+      "title": "One deliberate fresh candidate outcome",
+      "evidence_class": "ROUTER",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "exit_code": null,
+      "actual_evidence": [],
+      "note": "Template; no execution claimed."
+    }
+  ],
+  "hosted": {
+    "request_count": 0,
+    "run_id": null,
+    "attempt": null,
+    "definition_sha": null,
+    "input_sha": null,
+    "checkout_sha": null,
+    "proof_invoked": null,
+    "proof_exit_code": null,
+    "classification": null,
+    "artifact_id": null
+  },
+  "original_application_gate_counts": null
+}

@@ -1,0 +1,13 @@
+T11=7d2a128432dd6922bee50fde94c9bd2b1bf5e49f
+scripts/ch001-proof.ts blob=2e0e533d367bcd685a52ee25d3ddb24f41332df7
+scripts/ch001-migration-verification.mjs blob=51155d31ee88e03a9cb5dd0f510d6f270a96b473
+
+Inspected source facts, not runtime results:
+1. confirmFreshMarkerAbsent and runFailureControl use the same unsafe CASE query.
+2. inspectMigrationContainer invokes dockerStep with [container, inspect, name, --format, {{json .}}].
+3. dockerStep writes redact(output.output) to publicLogPath before inspectMigrationContainer parses/project-selects it.
+4. inspectMigrationContainer reads value.Config?.Path and value.Config?.Args for command.
+5. finalImageModuleImport writes report to module-import-verification.json, then computes a distinct returned status from report and container without the CLI exit/timeout condition.
+6. terminalObservation treats missing container as CLI-only, also via isSuccessfulMigrationTerminal and expected-failure validation.
+7. Current migrationContainerCommand guards an inspection exception with assertion_ok=false; no universal production false-pass claim is made.
+8. Existing controller tests return fake successful marker observations; they do not execute these SQL statements.

@@ -1,0 +1,47 @@
+{
+  "assignment": "CH-001R-r12",
+  "packet_revision": "r1",
+  "reviewed_at_utc": "2026-09-15T10:58:40Z",
+  "reviewed_implementation": "7d2a128432dd6922bee50fde94c9bd2b1bf5e49f",
+  "reviewed_evidence": "323947cba4197689f40c9084f38629244d58792f",
+  "observed_publication_head": "a7c239c0164ff456448e11684c593153e6fa8240",
+  "target_application_version": "0.1.0",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "unchanged_t11_dispatch": "HOLD_SUPERSEDED_UNSPENT_ALLOWANCE",
+  "new_candidate_identity": null,
+  "router_max_fresh_candidate_requests": 1,
+  "luna_may_dispatch": false,
+  "architect_dispatched": false,
+  "repair_findings": [
+    "F12-01",
+    "F12-02",
+    "F12-03"
+  ],
+  "allowed_surfaces": [
+    "migration-marker query adapter/helper",
+    "selected migration-container inspection and public logging boundary",
+    "effective module-import verdict and terminal predicates",
+    "adjacent types and actual-boundary tests",
+    "installed real SQL regression and minimal coordinator wiring",
+    "evidence, handoff and awaiting-review state"
+  ],
+  "frozen_surfaces": [
+    "package.json at T11",
+    "pnpm-lock.yaml at T11",
+    "scripts/migrate.ts",
+    "migrations/",
+    "Dockerfile",
+    "compose.yaml",
+    ".github/workflows/ch001-live-proof.yml",
+    "external dependencies and tool/runtime pins",
+    "browser sandbox and worker isolation",
+    "application editor/renderer/features",
+    "original 72 acceptance gate IDs/requirements/strict semantics"
+  ],
+  "workflow_blob": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+  "workflow_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "old_runs_may_be_rerun": false,
+  "unspent_t11_permission_additive": false
+}

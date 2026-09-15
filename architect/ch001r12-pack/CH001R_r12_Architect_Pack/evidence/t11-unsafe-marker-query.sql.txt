@@ -1,0 +1,6 @@
+-- Historical T11 SQL excerpt, NOT executed by the architect.
+-- T11 scripts/ch001-proof.ts: confirmFreshMarkerAbsent and failure-control marker.
+-- Read-only negative-control input; use only on an explicitly disposable fixture.
+-- Expected when public.schema_migrations is absent: undefined_table / 42P01.
+-- Never create the application's metadata table just to make this query pass.
+SELECT CASE WHEN to_regclass('public.schema_migrations') IS NULL THEN 0 WHEN EXISTS (SELECT 1 FROM schema_migrations) THEN 1 ELSE 0 END;

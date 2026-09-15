@@ -1,0 +1,82 @@
+{
+  "record_kind": "DOCUMENT_CHECKS_ONLY",
+  "generated_at_utc": "2026-09-15T10:58:40Z",
+  "application_tests_run": false,
+  "postgresql_executed": false,
+  "results": [
+    {
+      "name": "required_documents",
+      "status": "PASS",
+      "detail": "Eight reading-order documents exist."
+    },
+    {
+      "name": "json_parse",
+      "status": "PASS",
+      "detail": "All scope/receipt/template JSON objects parsed."
+    },
+    {
+      "name": "checklist_ids",
+      "status": "PASS",
+      "detail": "18 unique ordered repair IDs; separate from original CH001 gates."
+    },
+    {
+      "name": "unrun_template",
+      "status": "PASS",
+      "detail": "No prospective case prefilled as passed."
+    },
+    {
+      "name": "acceptance_state",
+      "status": "PASS",
+      "detail": "False acceptance and awaiting review retained."
+    },
+    {
+      "name": "held_dispatch",
+      "status": "PASS",
+      "detail": "Unchanged T11 request explicitly held."
+    },
+    {
+      "name": "single_candidate_not_additive",
+      "status": "PASS",
+      "detail": "T12 path replaces unspent T11 permission."
+    },
+    {
+      "name": "frozen_dependency_and_lock",
+      "status": "PASS",
+      "detail": "Dependency repair and exact T11 lock remain frozen."
+    },
+    {
+      "name": "honest_runtime_limit",
+      "status": "PASS",
+      "detail": "SQL finding not labeled a runtime reproduction."
+    },
+    {
+      "name": "relative_links",
+      "status": "PASS",
+      "detail": "All internal Markdown links resolve inside ZIP."
+    },
+    {
+      "name": "workflow_identity",
+      "status": "PASS",
+      "detail": "Existing workflow blob/hash recorded."
+    },
+    {
+      "name": "inert_historical_sql",
+      "status": "PASS",
+      "detail": "Historical SQL is labeled inert/unexecuted and not a production migration file."
+    },
+    {
+      "name": "transfer_documents",
+      "status": "PASS",
+      "detail": "Transferable complete assignment and prompt created."
+    },
+    {
+      "name": "no_agent_or_dispatch_action",
+      "status": "PASS",
+      "detail": "Review made read-only GitHub calls; no repository write, agent send or workflow dispatch."
+    }
+  ],
+  "summary": {
+    "PASS": 14,
+    "FAIL": 0
+  }
+}
