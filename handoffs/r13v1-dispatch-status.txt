@@ -1,0 +1,15 @@
+assignment=CH-001R-r13-V1
+route=HOSTED_T13_VERIFICATION
+dispatch_submitted=yes
+run_id=34997237592
+implementation_sha=6e04b5a5eefe2ef464572da35c88338fa342f525
+definition_head=57e4ae456a73aedd58b25ba41e08b7320214eba0
+pack_commit=57e4ae456a73aedd58b25ba41e08b7320214eba0
+submitted_at=2026-09-15T16:47:42Z
+url=https://github.com/klole/reel-farm/actions/runs/34997237592
+purpose=verify_fixture_database_binding_and_invocation_evidence
+application_acceptance=false
+root_state=awaiting_review
+luna_spawned=no
+pro_message_sent=no
+note=One-request r13/T13 allowance consumed by this submission. Do not re-dispatch. Router stopped without waiting for full CI.

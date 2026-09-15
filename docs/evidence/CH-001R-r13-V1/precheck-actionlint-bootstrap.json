@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "record_kind": "ACTIONLINT_BOOTSTRAP_ATTESTATION",
+  "phase": "CH-001R-r8",
+  "status": "PASS",
+  "error_classification": null,
+  "error": null,
+  "actual_exit": 0,
+  "root": "/workspace/projects/reel-farm",
+  "platform": {
+    "operating_system": "linux",
+    "architecture": "x64",
+    "distribution_architecture": "amd64"
+  },
+  "run_id": "999001015",
+  "run_attempt": "1",
+  "run_key": null,
+  "checkout_identity": {
+    "requested_implementation_sha": null,
+    "actual_checkout_sha": null,
+    "workflow_definition_sha": null,
+    "workflow_blob_sha": null,
+    "workflow_file_sha256": null,
+    "repository": "klole/reel-farm"
+  },
+  "version": "1.7.7",
+  "archive": {
+    "name": "actionlint_1.7.7_linux_amd64.tar.gz",
+    "url": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+    "expected_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "measured_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "source": "downloaded_archive",
+    "path": "/tmp/r10d1-actionlint/runner-temp/ch001r8-actionlint-999001015-1-3AaOrz/actionlint_1.7.7_linux_amd64.tar.gz",
+    "download_attempts": 1
+  },
+  "executable": {
+    "name": "actionlint",
+    "expected_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "measured_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "path": "/tmp/r10d1-actionlint/runner-temp/ch001r8-actionlint-999001015-1-3AaOrz/actionlint",
+    "observed_version": "1.7.7",
+    "version_output": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n",
+    "actual_exit": 0
+  },
+  "tool_directory": "/tmp/r10d1-actionlint/runner-temp/ch001r8-actionlint-999001015-1-3AaOrz",
+  "bin_dir": "/tmp/r10d1-actionlint/runner-temp/ch001r8-actionlint-999001015-1-3AaOrz",
+  "github_env": "/tmp/r10d1-actionlint/github.env",
+  "path_updated": true,
+  "started_at": "2026-09-15T16:46:05.629Z",
+  "ended_at": "2026-09-15T16:46:06.171Z"
+}

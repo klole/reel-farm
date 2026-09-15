@@ -1,0 +1,24 @@
+{
+  "assignment": "CH-001R-r13-V1",
+  "authorization_revision": "r1",
+  "purpose": "verify_fixture_database_binding_and_invocation_evidence",
+  "implementation_sha": "6e04b5a5eefe2ef464572da35c88338fa342f525",
+  "sandbox_qualification": true,
+  "definition_head": "57e4ae456a73aedd58b25ba41e08b7320214eba0",
+  "reviewed_E13": "d1ab7226b71e93235a9761f1432b6fb7be198609",
+  "workflow_blob_sha": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+  "workflow_file_sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+  "actionlint": {
+    "version": "1.7.7",
+    "status": "PASS",
+    "exit_code": 0
+  },
+  "prior_T13_workflow_dispatch_count": 0,
+  "submission_started": true,
+  "intended_at": "2026-09-15T16:47:28Z",
+  "command": "gh workflow run ch001-live-proof.yml --repo klole/reel-farm --ref main -f implementation_sha=6e04b5a5eefe2ef464572da35c88338fa342f525 -f sandbox_qualification=true",
+  "submission_started_utc": "2026-09-15T16:47:42Z",
+  "dispatch_submitted": true,
+  "run_id": 34997237592,
+  "run_url": "https://github.com/klole/reel-farm/actions/runs/34997237592"
+}
