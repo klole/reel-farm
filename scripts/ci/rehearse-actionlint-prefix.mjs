@@ -235,6 +235,8 @@ async function runPrefix(options) {
     };
     if (options.mode === "hosted-like") environment.CH001_SANDBOX_STATE_DIR = resolve(temporary, "inherited sandbox state");
     if (requestedArchive) environment.ACTIONLINT_BOOTSTRAP_ARCHIVE = requestedArchive.path;
+    await mkdir(environment.HOME, { recursive: true });
+    await mkdir(environment.TMPDIR, { recursive: true });
 
     const initialEnvironmentFile = await readFile(commandFiles.github_env, "utf8");
     const stepResults = [];
