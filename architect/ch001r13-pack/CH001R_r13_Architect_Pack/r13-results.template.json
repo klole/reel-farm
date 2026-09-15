@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001R_R13_REPAIR_CHECKLIST_NOT_APPLICATION_ACCEPTANCE",
+  "chapter": "CH-001R-r13",
+  "packet_revision": "r1",
+  "implementation_commit": null,
+  "implementation_tree": null,
+  "evidence_commit": null,
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "hosted_request_count": 0,
+  "hosted_run_id": null,
+  "runtime_migration_qualified": null,
+  "rows": [
+    {
+      "id": "R13-T01",
+      "class": "SOURCE",
+      "title": "Canonical baseline and frozen scope",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Resolve full E12; record real P13/T13; preserve dependency, lock, migration, runtime, workflow and 72-gate surfaces."
+    },
+    {
+      "id": "R13-T02",
+      "class": "SOURCE",
+      "title": "Database-aware negative witness",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Old omitted-target behavior selects oss and is rejected by the real adapter boundary test. No PostgreSQL runtime result is claimed by the fake."
+    },
+    {
+      "id": "R13-T03",
+      "class": "SOURCE",
+      "title": "Explicit targets for every fixture operation",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Assert the final psql -d and user values for maintenance, table/schema ACL, observer, and cleanup operations; no default leaks into table-local work."
+    },
+    {
+      "id": "R13-T04",
+      "class": "SOURCE",
+      "title": "Main database and failure preservation",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Empty-main and existing-main fixtures detect wrong-database writes; setup failure stops later stages; cleanup remains scoped and failures retained."
+    },
+    {
+      "id": "R13-T05",
+      "class": "SOURCE",
+      "title": "Invocation record serialization",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Two identical command texts retain two actual unique IDs, actual exits, timestamps and distinct logs; serializer agrees with child_invocations."
+    },
+    {
+      "id": "R13-T06",
+      "class": "SOURCE",
+      "title": "Strict command-record validation",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Legitimate repeats accepted; duplicated/missing/mixed IDs, reused captured records/logs, missing/stale evidence rejected; historical validation stays explicit."
+    },
+    {
+      "id": "R13-T07",
+      "class": "SOURCE",
+      "title": "Failure cannot be hidden by repetition",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Pass-then-fail and fail-then-pass required-command sequences both remain blocking; expected SQL negatives keep raw exits and checked expectations."
+    },
+    {
+      "id": "R13-T08",
+      "class": "SOURCE",
+      "title": "Pinned complete source qualification",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Frozen install, real actionlint, CI, clean/hosted-like no-node_modules prefixes, lint/typecheck/build/unit/security, real DB import, syntax and diff; actual logs."
+    },
+    {
+      "id": "R13-T09",
+      "class": "RUNTIME",
+      "title": "Actual fixture regression in PostgreSQL",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Correct database ACL, absent/legacy/empty/positive/denied observations; main marker absent; fixture cleanup; no fabricated SQLSTATE."
+    },
+    {
+      "id": "R13-T10",
+      "class": "RUNTIME",
+      "title": "Final-image migration and repeat",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Actual fresh/repeat CLI and container exits, schema/single marker/time/sentinel invariants, restricted-role failure/no marker, before worker readiness."
+    },
+    {
+      "id": "R13-T11",
+      "class": "RUNTIME",
+      "title": "Real cleanup and evidence finalization",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Safe projections and scoped cleanup; repeated commands do not cause bogus duplicate errors; identities/manifest/logs intact; actual downstream outcome retained."
+    },
+    {
+      "id": "R13-T12",
+      "class": "SOURCE",
+      "title": "Handoff and evidence completeness",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. All rows retained; actual T13 identity and source outputs retrievable; no future E SHA, ignored-only evidence, synthetic live proof or acceptance claim."
+    },
+    {
+      "id": "R13-T13",
+      "class": "ROUTER",
+      "title": "Publication and request ledger",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. Canonical T13/E13 ancestry/workflow bytes/source checks; old T12 permission closed; no outstanding or ambiguous conflicting request."
+    },
+    {
+      "id": "R13-T14",
+      "class": "ROUTER",
+      "title": "One deliberate fresh T13 outcome",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "environment": null,
+      "implementation_commit": null,
+      "actual_evidence": [],
+      "reason": "Template: no execution is implied. At most one fresh submission; actual run/job/artifact and migration/downstream result captured separately; no automatic acceptance or retry."
+    }
+  ],
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 14
+  }
+}

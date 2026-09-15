@@ -1,0 +1,121 @@
+{
+  "record_kind": "PACKET_DOCUMENT_CHECKS_ONLY",
+  "generated_at_utc": "2026-09-15T13:20:45Z",
+  "application_tests_run": false,
+  "summary": {
+    "PASS": 22,
+    "FAIL": 0
+  },
+  "checks": [
+    {
+      "check": "all canonical commit IDs have 40 hex characters",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "recorded digests have 64 hex characters",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "E12 prefix correction is explicit",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "required packet documents present",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "both blocking findings included in assignment",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "unchanged T12 held",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "application acceptance remains false",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "all checklist rows unique and unexecuted",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "all checklist IDs in matrix",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no invented future implementation SHA",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "source-only and runtime evidence separated",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "known fixes explicitly frozen",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "legacy record compatibility required",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no hidden earlier required-command failure allowed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "one conditional fresh request and no reruns",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "dispatch purpose not unsupported workflow input",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no runtime execution claimed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "relative Markdown document links resolve",
+      "status": "PASS",
+      "detail": "6 checked"
+    },
+    {
+      "check": "single-file packet includes all document anchors",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "packet JSON is parseable",
+      "status": "PASS",
+      "detail": "3 checked"
+    },
+    {
+      "check": "runtime rows remain unclaimed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no font or executable payloads",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

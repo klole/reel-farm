@@ -1,0 +1,72 @@
+{
+  "record_kind": "ARCHITECT_SOURCE_REVIEW_NOT_RUNTIME_PROOF",
+  "assignment": "CH-001R-r13-r1",
+  "issued_at_utc": "2026-09-15T13:20:45Z",
+  "decision": "HOLD_T12_SOURCE_REPAIR_REQUIRED",
+  "next_actor": "Luna MAX via router",
+  "source": {
+    "P12": "c7e63600fe7a3cacc6fe469763abbca92c1615b0",
+    "T12": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+    "T12_tree_reported": "ef10ce662f60c42f0c566c0d13cf0c698710ccd9",
+    "E12_supplied_prefix": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2",
+    "E12_canonical": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d",
+    "E12_tree_api": "71ce94e0897a2c49edf1b9f7e372fcc85e68751c",
+    "main_at_read": "b660df14eaed8892d6ce1b8c4d5fc70ce2bfad2d",
+    "E12_direct_parent_api": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+    "workflow_blob_recorded": "35fa339aac2fcb024cd476ff38d87d27eb6482af",
+    "workflow_sha256_recorded_not_rehashed": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+    "P12_to_T12_changed_files_api": 13,
+    "T12_to_E12_scope_api": "evidence/handoff/state only"
+  },
+  "observations": [
+    {
+      "id": "F13-01",
+      "basis": "source call chain + PostgreSQL connection semantics",
+      "observed_in_hosted_run": false,
+      "finding": "marker regression table/schema ACL setup defaults to main oss instead of fixtureDatabase before the main migration"
+    },
+    {
+      "id": "F13-02",
+      "basis": "source serializer, repeated query construction and validation predicate",
+      "observed_in_hosted_run": false,
+      "finding": "distinct repeated queries lose invocationId in command records and are rejected as duplicate command text"
+    }
+  ],
+  "reported_local_results_not_architect_reruns": {
+    "repair_ledger": {
+      "PASS": 12,
+      "FAIL": 0,
+      "NOT_RUN": 6
+    },
+    "ci_file_level": 9,
+    "ci_nested": 80,
+    "unit": 20,
+    "security": 4,
+    "module_import": "PASS_NOT_DATABASE_PROOF",
+    "proof": "BLOCKED_ENVIRONMENT",
+    "runtime_migration": "NOT_RUN"
+  },
+  "hosted_observation": {
+    "query_created_at_or_after": "2026-09-15T10:39:29Z",
+    "event": "workflow_dispatch",
+    "total_count": 0,
+    "point_in_time_only": true,
+    "new_T12_run_id": null,
+    "new_T12_artifact_id": null
+  },
+  "architect_execution": {
+    "repository_tests_run": false,
+    "actionlint_run": false,
+    "postgresql_run": false,
+    "docker_run": false,
+    "hosted_dispatch_count": 0,
+    "historical_rerun_count": 0,
+    "repository_writes": false,
+    "external_agent_forwarding": false,
+    "local_node_observed": "22.16.0",
+    "clone_attempt": "read-only clone failed: DNS could not resolve github.com; source read through connector"
+  },
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review"
+}
