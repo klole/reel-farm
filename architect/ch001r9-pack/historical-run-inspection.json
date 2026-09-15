@@ -1,0 +1,135 @@
+{
+  "record_kind": "ARCHITECT_HISTORICAL_ARTIFACT_INSPECTION",
+  "source_run_id": 34928718810,
+  "source_attempt": 1,
+  "job_id": 104252240220,
+  "requested_implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "actual_checkout_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "workflow_definition_sha": "d04a0a70d890890132041061be87742396c1909e",
+  "workflow_blob_sha": "fb4d3e4ee58eff81e43395fa6df99c53b65de417",
+  "artifact_id_github_verified": 10380711446,
+  "artifact_id_in_router_message": 10380718846,
+  "artifact_id_discrepancy": "Use the actual API-listed and downloaded ID. Router message ID is preserved as supplied, not treated as authoritative.",
+  "artifact_name": "ch001-live-proof-34928718810-1",
+  "archive_bytes": 5558,
+  "archive_sha256": "3c3905e781479fb627481c6bbf5a0bbea03ae1ab93d323cfda5b1475415db92f",
+  "github_expires_at": "2026-09-29T04:24:53Z",
+  "result": {
+    "classification": "CI_BOOTSTRAP_FAILURE",
+    "failed_stage": "actionlint-bootstrap",
+    "bootstrap_exit_code": 1,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "application_gate_counts": null,
+    "application_acceptance": false,
+    "accepted_application_version": "none"
+  },
+  "checks": [
+    {
+      "name": "ZIP integrity",
+      "pass": true
+    },
+    {
+      "name": "Archive length",
+      "pass": true
+    },
+    {
+      "name": "Archive SHA-256",
+      "pass": true
+    },
+    {
+      "name": "Archive path safety",
+      "pass": true
+    },
+    {
+      "name": "Unique member paths",
+      "pass": true
+    },
+    {
+      "name": "Requested and checked-out T8",
+      "pass": true
+    },
+    {
+      "name": "E8 workflow definition",
+      "pass": true
+    },
+    {
+      "name": "Workflow blob identity",
+      "pass": true
+    },
+    {
+      "name": "Primary failure and actual exit",
+      "pass": true
+    },
+    {
+      "name": "Proof absent",
+      "pass": true
+    },
+    {
+      "name": "No application gate ledger",
+      "pass": true
+    },
+    {
+      "name": "Sandbox not run",
+      "pass": true
+    },
+    {
+      "name": "Acceptance remains false",
+      "pass": true
+    },
+    {
+      "name": "Failure log matches",
+      "pass": true
+    }
+  ],
+  "members": [
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34928718810-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 6010,
+      "sha256": "5d34eb9f133f41e55a955ea74c6ba9c051797bd00f69e7c2a2b3bf5cd49e30e3"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34928718810-1/bootstrap/public/ci-result.json",
+      "bytes": 1342,
+      "sha256": "daeff21cb2feedade8a3bea19a6f8ed8b2bf8917ffaf58c11f031e0475a18a4d"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34928718810-1/bootstrap/public/commands/actionlint-bootstrap.log",
+      "bytes": 79,
+      "sha256": "fb034cc60766cc5c110b445b174b5d099eddda0999ae5ed7b609c28f2a3c2448"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34928718810-1/bootstrap/public/commands/sandbox-cleanup.log",
+      "bytes": 53,
+      "sha256": "7a061ed3fbc0f807e57447d18c1b82d4fc9cbd49da0256717d14192ad7fe1b4e"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34928718810-1/bootstrap/public/dispatch.txt",
+      "bytes": 249,
+      "sha256": "e1ab0dd659133e1f50d24e58f89dcb22b97af6c339e742d1a51f39f52a3a19ab"
+    },
+    {
+      "path": "reel-farm/reel-farm/artifacts/ch001r4/r4-34928718810-1/bootstrap/public/sandbox-qualification.json",
+      "bytes": 2697,
+      "sha256": "c21c349af8964387606f5ba79f486d1eb63dcd85d15b4c9753c588aa9f970fce"
+    },
+    {
+      "path": "_temp/ch001r4/r4-34928718810-1/bootstrap/public/bootstrap-result.json",
+      "bytes": 689,
+      "sha256": "328db266d426b32b92c5d095ebb1a5bcc4e94b657cf6151a0a9ca612685b5d67"
+    },
+    {
+      "path": "_temp/ch001r4/r4-34928718810-1/bootstrap/public/dispatch.txt",
+      "bytes": 193,
+      "sha256": "2630d65b03adb70b049ad571b97b1b5b9a8ed2098351a72d6791ce0bcedd2798"
+    }
+  ],
+  "caveats": [
+    "This checks downloaded historical bytes, not a rerun.",
+    "The archive captures artifact_delivery=PENDING before upload receipt was written. The successful archive download is independent evidence of delivery.",
+    "sandbox-qualification.json was emitted by cleanup and is NOT_RUN, not a successful probe.",
+    "Requested sandbox=true and null policy readings do not establish effective sandboxing.",
+    "No actionlint-bootstrap.json exists; do not infer whether its download/verification partially completed.",
+    "No new hosted application gate counts exist; historical local 4/0/68 is not this run."
+  ]
+}

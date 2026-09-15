@@ -1,0 +1,101 @@
+{
+  "record_kind": "ARCHITECT_REFERENCE_PATH_DIAGNOSTIC",
+  "scope": "reference shell resolver plus inspected path-check excerpt only; NOT complete T8 bootstrap, NOT full workflow, NOT actionlint, NOT application proof",
+  "node": "v22.16.0",
+  "python": "3.13.5",
+  "checks": [
+    {
+      "name": "T8 relative caller value is rejected by the inspected guard excerpt",
+      "pass": true,
+      "detail": {
+        "path": "artifacts/ch001r4/r4-34928718810-1/bootstrap/public/actionlint-bootstrap.json",
+        "guard_exit": 1
+      }
+    },
+    {
+      "name": "Relative report root resolves to the same workspace location",
+      "pass": true,
+      "detail": {
+        "guard_exit": 0,
+        "expected_basename": "actionlint-bootstrap.json"
+      }
+    },
+    {
+      "name": "Spaces in checkout path stay intact",
+      "pass": true,
+      "detail": {
+        "space_preserved": true
+      }
+    },
+    {
+      "name": "Already-absolute report root is not double-prefixed",
+      "pass": true,
+      "detail": {
+        "exit": 0
+      }
+    },
+    {
+      "name": "missing report root rejected",
+      "pass": true,
+      "detail": {
+        "exit": 1
+      }
+    },
+    {
+      "name": "empty report root rejected",
+      "pass": true,
+      "detail": {
+        "exit": 1
+      }
+    },
+    {
+      "name": "newline report root rejected",
+      "pass": true,
+      "detail": {
+        "exit": 1
+      }
+    },
+    {
+      "name": "carriage-return report root rejected",
+      "pass": true,
+      "detail": {
+        "exit": 1
+      }
+    },
+    {
+      "name": "Shell-looking text is not evaluated",
+      "pass": true,
+      "detail": {
+        "marker_created": false
+      }
+    },
+    {
+      "name": "Resolver creates no evidence, tool, or policy trees",
+      "pass": true,
+      "detail": {
+        "files_created": []
+      }
+    }
+  ],
+  "executed": 10,
+  "passed": 10,
+  "failed": 0,
+  "reference_hashes": {
+    "resolve-actionlint-report.reference.sh": "9498809245dbea198ed0e17085bcda219529a180cc8a318ddb612145583d16d4",
+    "T8-report-guard.excerpt.mjs": "3f86089d7614d6426db1ece76ad982d3e6e52bd3d15ff86b259a67d9561f1b49"
+  },
+  "not_run": [
+    "full actionlint binary validation",
+    "full real bootstrap/reporter step",
+    "repository pnpm tests",
+    "Docker/Compose",
+    "Chromium/AppArmor",
+    "hosted proof"
+  ],
+  "external_actions": {
+    "network": false,
+    "github_write": false,
+    "dispatch": false,
+    "sudo": false
+  }
+}

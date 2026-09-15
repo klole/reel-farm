@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "phase": "CH-001R-r6",
+  "run_id": "r4-34928718810-1",
+  "context": "host-proof-browser",
+  "implementation_commit": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "workflow_definition_commit": "d04a0a70d890890132041061be87742396c1909e",
+  "requested_implementation_sha": "0144f6c41ae4c6143a2dc46fe22d59d453ce8763",
+  "context_guard": null,
+  "selected_executable": {
+    "path": null,
+    "sha256": null
+  },
+  "uid": 1001,
+  "apparmor_enabled": null,
+  "restriction_before": {
+    "apparmor_restrict_unprivileged_userns": null,
+    "unprivileged_userns_clone": null,
+    "max_user_namespaces": null
+  },
+  "restriction_after": {
+    "apparmor_restrict_unprivileged_userns": null,
+    "unprivileged_userns_clone": null,
+    "max_user_namespaces": null
+  },
+  "default_probe": {
+    "sandbox_requested": true,
+    "launch_succeeded": false,
+    "sandbox_observed": null,
+    "browser_version": null,
+    "error": null
+  },
+  "policy": {
+    "decision": "NOT_RUN",
+    "policy_changed": false,
+    "profile_name": null,
+    "profile_path": null,
+    "attachment": null,
+    "sha256": null,
+    "loaded": false
+  },
+  "qualified_probe": {
+    "sandbox_requested": true,
+    "launch_succeeded": false,
+    "sandbox_observed": null,
+    "browser_version": null,
+    "diagnostic_evidence": []
+  },
+  "cleanup": {
+    "status": "NOT_RUN_NO_OWNED_POLICY",
+    "owned_resources_removed": null,
+    "ownership_record": null
+  },
+  "global_policy": {
+    "before": null,
+    "after_policy": null,
+    "after_cleanup": {
+      "apparmor_restrict_unprivileged_userns": null,
+      "unprivileged_userns_clone": null,
+      "max_user_namespaces": null
+    },
+    "unchanged": true,
+    "apparmor_after_cleanup": null
+  },
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "status": "NOT_RUN",
+  "error_classification": null,
+  "error": null,
+  "limitations": [],
+  "launch_site_coverage": [
+    {
+      "site": "scripts/ch001-proof.ts host preflight",
+      "executable_source": "BROWSER_EXECUTABLE_PATH from qualified workflow path",
+      "sandbox_requested": true
+    },
+    {
+      "site": "playwright.config.ts host E2E/render",
+      "executable_source": "BROWSER_EXECUTABLE_PATH from qualified workflow path",
+      "sandbox_requested": true
+    },
+    {
+      "site": "scripts/ch001-lifecycle.ts host lifecycle",
+      "executable_source": "BROWSER_EXECUTABLE_PATH from qualified workflow path",
+      "sandbox_requested": true
+    },
+    {
+      "site": "apps/worker/src/index.ts container worker",
+      "executable_source": "image-local Playwright managed executable",
+      "sandbox_requested": true,
+      "separate_context": true
+    }
+  ]
+}

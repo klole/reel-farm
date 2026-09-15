@@ -1,0 +1,78 @@
+{
+  "record_kind": "PACKET_STRUCTURE_VALIDATION",
+  "scope": "documentation/reference/archive integrity only; NOT application validation",
+  "checks": [
+    {
+      "name": "All canonical packet documents exist",
+      "pass": true
+    },
+    {
+      "name": "All local Markdown file links resolve",
+      "pass": true
+    },
+    {
+      "name": "Complete reading copy contains all canonical sections",
+      "pass": true
+    },
+    {
+      "name": "Core document links in complete copy use internal anchors",
+      "pass": true
+    },
+    {
+      "name": "No incomplete runtime identifiers are claimed as actual",
+      "pass": true
+    },
+    {
+      "name": "14 unique R9 IDs with explicit NOT_RUN template values",
+      "pass": true
+    },
+    {
+      "name": "Template preserves application nonacceptance and no hosted result",
+      "pass": true
+    },
+    {
+      "name": "Historical artifact verification actually passed",
+      "pass": true
+    },
+    {
+      "name": "Artifact ID discrepancy is preserved",
+      "pass": true
+    },
+    {
+      "name": "Original downloaded artifact matches inspected digest",
+      "pass": true
+    },
+    {
+      "name": "Reference diagnostics executed and are labeled limited",
+      "pass": true
+    },
+    {
+      "name": "Reference code hashes match executed diagnostics",
+      "pass": true
+    },
+    {
+      "name": "Starter matches the packet copy",
+      "pass": true
+    },
+    {
+      "name": "Historical reports remain nonaccepted/no proof",
+      "pass": true
+    },
+    {
+      "name": "No binaries other than the original historical artifact are packaged",
+      "pass": true
+    },
+    {
+      "name": "Original CH001 acceptance gate names are not replaced",
+      "pass": true
+    }
+  ],
+  "passed": 16,
+  "failed": 0,
+  "main_document_words": 4686,
+  "complete_markdown_words": 6115,
+  "full_actionlint_executed": false,
+  "full_project_tests_executed": false,
+  "github_write": false,
+  "hosted_dispatch": false
+}

@@ -1,0 +1,123 @@
+{
+  "record_kind": "R9_REPAIR_CHECKLIST_TEMPLATE",
+  "phase": "CH-001R-r9",
+  "base_commit": "d04a0a70d890890132041061be87742396c1909e",
+  "implementation_commit": null,
+  "implementation_tree": null,
+  "evidence_commit": null,
+  "workflow_blob": null,
+  "workflow_sha256": null,
+  "target_application_version": "0.1.0",
+  "application_acceptance": false,
+  "accepted_application_version": "none",
+  "root_state": "awaiting_review",
+  "checks": [
+    {
+      "id": "R9-T01",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T02",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T03",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T04",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T05",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T06",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T07",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T08",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T09",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T10",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T11",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T12",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T13",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    },
+    {
+      "id": "R9-T14",
+      "status": "NOT_RUN",
+      "command_or_case": null,
+      "evidence": [],
+      "note": "Luna/router must fill from actual execution; not an application gate."
+    }
+  ],
+  "hosted": {
+    "dispatch_submitted": false,
+    "run_id": null,
+    "job_id": null,
+    "artifact_id": null,
+    "proof_invoked": false,
+    "proof_exit_code": null,
+    "application_gate_counts": null
+  }
+}
