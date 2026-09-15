@@ -298,7 +298,7 @@ async function runPrefix(options) {
       try {
         nestedCounts = nodeTestCounts(nestedResult.stdout + nestedResult.stderr);
       } catch (error) {
-        throw new Error(`Unable to parse nested CI output for ${testFile}: ${error.message}\nchild_error=${nestedResult.error_message ?? "none"}\n${nestedResult.stdout}\n${nestedResult.stderr}`, { cause: error });
+        throw new Error(`Unable to parse nested CI output for ${testFile}: ${error.message}\nchild_exit=${nestedResult.exit_code}\nchild_error=${nestedResult.error_message ?? "none"}\ncommand=${JSON.stringify(nestedResult.command)}\n${nestedResult.stdout}\n${nestedResult.stderr}`, { cause: error });
       }
       nestedTestResults.push({ file: testFile, ...nestedCounts, exit_code: nestedResult.exit_code });
       nestedTestOutputs.push({ file: testFile, stdout: nestedResult.stdout, stderr: nestedResult.stderr });
