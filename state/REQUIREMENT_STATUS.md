@@ -1,3 +1,18 @@
+# Requirement status — CH-001R-r12 checkpoint
+
+CH-001R-r12 is a bounded pre-dispatch migration-proof repair for v0.1.0. It does not accept the application, establish successful final-image migration, or replace the original 72-gate contract. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted`.
+
+| R12 subset | Status | Evidence / boundary |
+|---|---|---|
+| Shared absent-table observer and fail-closed SQL boundaries | `passed` | Separate catalog presence/count statements, valid bindings, skipped COUNT on absence, strict malformed/timeout/truncation/denied handling, and focused observer regressions. |
+| Container/image projection and process identity | `passed` | Private raw capture plus selected public projection; actual top-level `Path`/`Args` are distinguished from configured fields and sensitive fields are excluded. |
+| Effective final-image import and strict terminal verdicts | `implemented` | CLI/child/container evidence is combined into one persisted/returned verdict; strict migration terminal checks require inspected exited containers. |
+| Source and source-bound matrix | `passed` | Frozen install, pinned actionlint, CI/prefixes, lint/typecheck/build, unit `20/20`, security `4/4`, syntax/diff, and real post-build workspace import passed. |
+| Real PostgreSQL/final-image migration and cleanup | `not_run` | Docker/Compose is unavailable; observer regression and migration-first runtime stages are wired but no live SQL, image, container, marker, schema, sentinel, SQLSTATE, or cleanup result is claimed. |
+| Application acceptance | `false` | Accepted application version `none`; root `awaiting_review`; no hosted request or dispatch by Luna. |
+
+The complete repair ledger is [`docs/evidence/CH-001R-r12/r12-results.json`](../docs/evidence/CH-001R-r12/r12-results.json), and the handoff is [`handoffs/CH-001R-r12.md`](../handoffs/CH-001R-r12.md). Historical r11 and original CH-001 status sections below are preserved unchanged.
+
 # Requirement status — CH-001R-r11 checkpoint
 
 CH-001R-r11 is a bounded v0.1.0 root workspace dependency repair and migration-first qualification implementation. It does not accept the application or establish a successful final-image migration. Parent requirements remain partial/unreviewed; no parent requirement is marked `accepted` by this handoff.

@@ -1,5 +1,20 @@
 # Evidence index — CH-001
 
+## CH-001R-r12 bounded migration-proof repair
+
+| Evidence | Location | State |
+|---|---|---|
+| R12 overview and disposition | [CH-001R-r12 README](../docs/evidence/CH-001R-r12/README.md) | Implemented; ready for hosted migration verification; acceptance false |
+| Source identity and ancestry | [source-identity.json](../docs/evidence/CH-001R-r12/source-identity.json) | T12/P11/T11/E11/router/workflow/lock identities recorded; no dispatch |
+| Exact scope and frozen hashes | [scope-comparison.json](../docs/evidence/CH-001R-r12/scope-comparison.json) | 13 bounded implementation files; frozen surfaces unchanged |
+| Complete r12 checklist | [r12-results.json](../docs/evidence/CH-001R-r12/r12-results.json) | `12 PASS / 0 FAIL / 6 NOT_RUN`; runtime/router rows remain honest |
+| Source/local commands | [commands.md](../docs/evidence/CH-001R-r12/commands.md) | Pinned source matrix and blocked local coordinator outcome recorded |
+| Source-bound prefixes | [clean](../docs/evidence/CH-001R-r12/prefix-clean-t12.json), [hosted-like](../docs/evidence/CH-001R-r12/prefix-hosted-like-t12.json) | Each `9/9` file-level and `80/80` nested; final T12 identity bound |
+| Sanitized local public evidence | [local-proof](../docs/evidence/CH-001R-r12/local-proof/) | Retrievable reports/logs; Docker/Compose and Chromium unavailable; migration stages NOT_RUN |
+| Handoff | [handoffs/CH-001R-r12.md](../handoffs/CH-001R-r12.md) | `IMPLEMENTED_READY_FOR_HOSTED_MIGRATION_VERIFICATION`; router/architect review required |
+
+This r12 record preserves T11 root workspace dependency/lock bytes, migration/Docker/Compose/workflow/security surfaces, the original 72-gate contract, and prior history. Luna did not push, dispatch, publish, use providers/credentials, or rerun historical run `34946892709`. The E12 evidence/state SHA is returned externally after commit and is not embedded self-referentially.
+
 ## CH-001R-r11 root dependency repair and migration-first qualification
 
 | Evidence | Location | State |

@@ -1,0 +1,9 @@
+{
+  "profile": "CH-001R-r12 migration-proof repair qualification",
+  "run_id": "r12-local-20260915c",
+  "implementation_commit": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+  "workflow_sha": null,
+  "compose_project": "oss-ch001-r12-local-20260915c",
+  "base_url": "http://127.0.0.1:0",
+  "scope": "local synthetic owner, local synthetic image fixtures, no providers or publishing"
+}

@@ -1,3 +1,19 @@
+# Project state — CH-001R-r12 checkpoint
+
+**Last updated:** 2026-09-15 UTC
+**State:** `awaiting_review`
+**Product:** Open Slideshow Studio
+**Target application version:** `0.1.0`
+
+## Current CH-001R-r12 bounded migration-proof repair
+
+- T12 implementation is `cc9da96079fc681ce162a99bd4e3df21f05cb382` (tree `ef10ce662f60c42f0c566c0d13cf0c698710ccd9`), directly based on the r12 architect-pack head `c7e63600fe7a3cacc6fe469763abbca92c1615b0` (tree `ff246b0042d9d0fc9fb32cf4ed225b80e5792dd7`). P11/T11/E11 and later router documentation remain ancestors.
+- This bounded repair fixes both absent-table probes with a shared read-only presence-then-count observer, adds a real PostgreSQL observer regression to the capable path, projects container facts before public logging, separates actual process identity from configured command fields, and computes one persisted/returned effective final-image import verdict. Strict migration terminal stages require inspected exited containers; build and database-start checks remain CLI-only.
+- Source checks passed: frozen install, pinned workflow lint/actionlint, complete CI and both source-bound prefixes (9/9 file-level and 80/80 nested each), lint, typecheck, production build, unit `20/20`, security `4/4`, syntax/diff checks, and the real post-build unaliased `@oss/db` import with isolated missing-link control.
+- Local coordinator run `r12-local-20260915c` exited `2` as `BLOCKED_ENVIRONMENT`. Docker/Compose was unavailable, loopback allocation returned `EPERM`, and pinned Chromium was unavailable. Final-image import, PostgreSQL observer regression, migration, schema, repeat, permission, cleanup, worker, browser, and application stages are explicitly `NOT_RUN`; no migration success is claimed.
+- R12 checklist is `12 PASS / 0 FAIL / 6 NOT_RUN` in [`docs/evidence/CH-001R-r12/r12-results.json`](../docs/evidence/CH-001R-r12/r12-results.json). Public sanitized reports/logs are committed under [`docs/evidence/CH-001R-r12/`](../docs/evidence/CH-001R-r12/); handoff is [`handoffs/CH-001R-r12.md`](../handoffs/CH-001R-r12.md).
+- Completion mode is `IMPLEMENTED_READY_FOR_HOSTED_MIGRATION_VERIFICATION`. `application_acceptance=false`; accepted version remains `none`; root remains `awaiting_review`. E12 is returned externally after the evidence commit and is not embedded self-referentially. Luna made no push or dispatch and did not rerun `34946892709`; router/architect review is required.
+
 # Project state — CH-001R-r11 checkpoint
 
 **Last updated:** 2026-09-15 UTC

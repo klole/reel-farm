@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001_DB_MODULE_IMPORT",
+  "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+  "status": "PASS",
+  "implementation_context": "root/scripts context after frozen install and build",
+  "database_connection_attempted": false,
+  "dotenv_suppressed": true,
+  "node_path_present": false,
+  "resolved_path": "/workspace/projects/reel-farm/packages/db/dist/index.js",
+  "expected_path": "/workspace/projects/reel-farm/packages/db/dist/index.js",
+  "pool_api": {
+    "connect": true,
+    "end": true
+  },
+  "pool_closed": true,
+  "negative_control": {
+    "status": "PASS",
+    "control_kind": "RECORDED_FROZEN_BASELINE_EQUIVALENT",
+    "exit_code": 1,
+    "timed_out": false,
+    "missing_package_error": true,
+    "output_excerpt": "\nnode:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /tmp/oss-r12-db-import-negative-WgXeQm/scripts/migrate.ts\n    at packageResolve (node:internal/modules/esm/resolve:873:9)\n    at moduleResolve (node:internal/modules/esm/resolve:946:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1188:11)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at resolveBase (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\n    at resolveDirectory (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\n    at resolveTsPaths (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\n    at resolve (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v20.19.2\n"
+  },
+  "run_id": "r12-local-20260915c",
+  "implementation_commit": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+  "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+  "execution": "in-process actual verifier after host build",
+  "log_path": "artifacts/ch001r12/r12-local-20260915c/public/commands/007-post-build-db-module-import.log"
+}

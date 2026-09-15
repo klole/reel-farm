@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "record_kind": "CH001_MIGRATION_VERIFICATION",
+  "classification": "R12_MIGRATION_FIRST",
+  "status": "NOT_RUN",
+  "run_id": "r12-local-20260915c",
+  "implementation_commit": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+  "source_tree": "ef10ce662f60c42f0c566c0d13cf0c698710ccd9",
+  "image": null,
+  "database": null,
+  "started_at": "2026-09-15T12:05:46.414Z",
+  "ended_at": "2026-09-15T12:05:46.414Z",
+  "persisted_before_worker_readiness": true,
+  "worker_readiness_attempted": false,
+  "migration_qualified": false,
+  "runtime_cases": "NOT_RUN",
+  "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe.",
+  "prebuild_module_import": {
+    "schema_version": 1,
+    "record_kind": "CH001_DB_MODULE_IMPORT",
+    "classification": "MODULE_IMPORT_PASS_NOT_DATABASE_PROOF",
+    "status": "PASS",
+    "implementation_context": "root/scripts context after frozen install and build",
+    "database_connection_attempted": false,
+    "dotenv_suppressed": true,
+    "node_path_present": false,
+    "resolved_path": "/workspace/projects/reel-farm/packages/db/dist/index.js",
+    "expected_path": "/workspace/projects/reel-farm/packages/db/dist/index.js",
+    "pool_api": {
+      "connect": true,
+      "end": true
+    },
+    "pool_closed": true,
+    "negative_control": {
+      "status": "PASS",
+      "control_kind": "RECORDED_FROZEN_BASELINE_EQUIVALENT",
+      "exit_code": 1,
+      "timed_out": false,
+      "missing_package_error": true,
+      "output_excerpt": "\nnode:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@oss/db' imported from /tmp/oss-r12-db-import-negative-WgXeQm/scripts/migrate.ts\n    at packageResolve (node:internal/modules/esm/resolve:873:9)\n    at moduleResolve (node:internal/modules/esm/resolve:946:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1188:11)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at resolveBase (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10334)\n    at resolveDirectory (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:11421)\n    at resolveTsPaths (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13062)\n    at resolve (file:///workspace/projects/reel-farm/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:14748)\n    at nextResolve (node:internal/modules/esm/hooks:864:28)\n    at Hooks.resolve (node:internal/modules/esm/hooks:306:30) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v20.19.2\n"
+    },
+    "run_id": "r12-local-20260915c",
+    "implementation_commit": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+    "command": "in-process scripts/verify-db-module-import.ts --negative-control",
+    "execution": "in-process actual verifier after host build",
+    "log_path": "artifacts/ch001r12/r12-local-20260915c/public/commands/007-post-build-db-module-import.log"
+  },
+  "stages": {
+    "module_import": {
+      "status": "NOT_RUN",
+      "reason": "Final-image module-import verification requires Docker and was not run."
+    },
+    "build": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "database_start": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "database_ready": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "marker_observer_regression": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "fresh_precondition": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "fresh": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "schema": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "sentinel": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "repeat": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "repeat_assertions": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "failure_control": {
+      "status": "NOT_RUN",
+      "reason": "Loopback port allocation was denied: listen EPERM: operation not permitted 127.0.0.1 Docker daemon/Compose is unavailable or denied on this host. Pinned managed Chromium identity could not be qualified: ENOENT: no such file or directory, realpath '/home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome' Pinned Playwright Chromium is not executable at /home/box/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome. Pinned Chromium identity was not qualified; no browser launch was attempted. Pinned Chromium executable was found but did not complete a sandboxed launch probe."
+    },
+    "fixture_cleanup": {
+      "status": "NOT_RUN",
+      "reason": "No runtime fixtures were allocated."
+    }
+  },
+  "failures": [],
+  "primary_failure": null
+}

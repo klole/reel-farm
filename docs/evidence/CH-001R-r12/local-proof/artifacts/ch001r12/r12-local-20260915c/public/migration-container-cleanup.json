@@ -1,0 +1,6 @@
+{
+  "record_kind": "CH001_MIGRATION_CONTAINER_CLEANUP",
+  "run_id": "r12-local-20260915c",
+  "status": "NOT_RUN",
+  "reason": "No verified owned Compose project was available for one-off migration cleanup."
+}

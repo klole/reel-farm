@@ -1,0 +1,83 @@
+{
+  "chapter": "CH-001R-r12",
+  "implementation_commit": "cc9da96079fc681ce162a99bd4e3df21f05cb382",
+  "implementation_tree": "ef10ce662f60c42f0c566c0d13cf0c698710ccd9",
+  "parent_commit": "c7e63600fe7a3cacc6fe469763abbca92c1615b0",
+  "changed_files": {
+    "added": [
+      "scripts/ch001-container-facts.d.mts",
+      "scripts/ch001-container-facts.mjs",
+      "scripts/ch001-migration-marker-observer.d.mts",
+      "scripts/ch001-migration-marker-observer.mjs",
+      "scripts/ch001-module-import-verdict.d.mts",
+      "scripts/ch001-module-import-verdict.mjs",
+      "tests/ci/migration-marker-observer.test.mjs"
+    ],
+    "modified": [
+      "scripts/ch001-harness.ts",
+      "scripts/ch001-migration-verification.d.mts",
+      "scripts/ch001-migration-verification.mjs",
+      "scripts/ch001-proof.ts",
+      "scripts/verify-db-module-import.ts",
+      "tests/ci/migration-first.test.mjs"
+    ]
+  },
+  "frozen_surface_sha256": {
+    "package.json": {
+      "sha256": "bfd6ec10f1b59d1d45e5950d878397aa5553f26d1a8c0e710a9151bacca02684",
+      "matches_t11": true
+    },
+    "pnpm-lock.yaml": {
+      "sha256": "77861bac2106333c55ea960422cd0b34bca86dc50db2b7806ad7581c3d975576",
+      "matches_t11": true
+    },
+    "scripts/migrate.ts": {
+      "sha256": "4585fe9a62b2389fb4216bc5269fdf35f9d983382e61f238555e942d6403e768",
+      "matches_t11": true
+    },
+    "migrations/0001_ch001.sql": {
+      "sha256": "37098e7d7d8f0128e76913bfcc9685118607b24565eb25eccb464a2ce90d0b2e",
+      "matches_t11": true
+    },
+    "Dockerfile": {
+      "sha256": "2dbc57859851533903a758cb7f904a13d17a3a2a585b806cc693c57884d8d7b8",
+      "matches_t11": true
+    },
+    "compose.yaml": {
+      "sha256": "41e078d39e0535492a4bc2d8b26c49ee6bfdccc50afcc8c0625720f197e61e35",
+      "matches_t11": true
+    },
+    ".github/workflows/ch001-live-proof.yml": {
+      "sha256": "733643038bc7bc162265abf895e5348b1a0ca9039675740a77e0f5798b3efd2d",
+      "matches_t11": true
+    },
+    "apps/worker/src/index.ts": {
+      "sha256": "61722e5fb755e29f00d1e9bcecec9040b4f04022d042813d07602b37a00a5d8a",
+      "matches_t11": true
+    },
+    "scripts/ch001-sandbox.mjs": {
+      "sha256": "278910d588524884f821c25febc5856b350d71ce7c386ffdea036fb5df29262e",
+      "matches_t11": true
+    }
+  },
+  "contract_boundaries": {
+    "original_gate_contract": "architect/Luna_CH001_v0.1.0_Pack/gate-results.template.json",
+    "original_gate_ids": "CH001-001 through CH001-072 exactly once",
+    "original_gate_semantics_changed": false,
+    "harness_change": "Admits CH-001R-r12 source/runtime repair checks without changing the original 72 gate definitions or semantics.",
+    "root_workspace_db_fix_preserved": true,
+    "dependency_or_tool_pin_changes": false,
+    "application_feature_changes": false,
+    "migration_sql_or_entrypoint_changes": false,
+    "docker_or_compose_changes": false,
+    "workflow_bytes_changed": false,
+    "worker_or_sandbox_security_changed": false
+  },
+  "scope_violations": [],
+  "external_writes": {
+    "push": false,
+    "workflow_dispatch": false,
+    "provider_or_publishing": false,
+    "agent_spawn": false
+  }
+}
