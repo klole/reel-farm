@@ -114,7 +114,7 @@
   "evidence": {
     "public_manifest": "docs/evidence/CH-001R-r10-D1/artifact-manifest.json",
     "public_manifest_sha256": "62f8620bfe5496471901156488b5367cbf9266277724625c8b0f9137f2697b06",
-    "receipt_commit": null,
+    "receipt_commit": "ad2aab759391c070808024ff98977f72c8cb8ec5",
     "local_history_files_retrieved": [],
     "public_files": [
       {

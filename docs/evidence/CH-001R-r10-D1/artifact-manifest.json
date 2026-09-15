@@ -36,15 +36,15 @@
     "sha256": "3fae3d5cf94eb03d4d857b2ec25f872525c791a5f734eb9201156f997ab4ec56"
   },
   "router-receipt.json": {
-    "bytes": 8610,
-    "sha256": "274822ebdd34b1be5358baa9590203b0b41c5eee413ceee3ad48c14d3e9d6952"
+    "bytes": 8648,
+    "sha256": "1fa9f6ff68bce346584dda61a1a11b0f7f518bd118c0a8de29eab015a184857f"
   },
   "router-receipt.filled.json": {
-    "bytes": 8610,
-    "sha256": "274822ebdd34b1be5358baa9590203b0b41c5eee413ceee3ad48c14d3e9d6952"
+    "bytes": 8648,
+    "sha256": "1fa9f6ff68bce346584dda61a1a11b0f7f518bd118c0a8de29eab015a184857f"
   },
   "ROUTER_FINAL_MESSAGE.txt": {
-    "bytes": 1067,
-    "sha256": "ae8670bd66e79e9d66112196e5cfdbeebba7790909dc8682a3ad9e4b95deb5af"
+    "bytes": 1056,
+    "sha256": "a093d6a0c66ffb99549c45eeaded4f5fec21d5e461266e44e81bbe79b0577926"
   }
 }
