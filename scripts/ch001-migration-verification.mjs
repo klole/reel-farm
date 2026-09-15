@@ -151,7 +151,7 @@ export async function runMigrationFirstQualification({ identity, adapter, writeR
                   stopReason = "Fresh migration schema or completion-marker assertions failed.";
                   attachFailure(result, "schema", result.stages.schema.error ?? stopReason);
                 } else {
-                  try { result.stages.sentinel = stageFromAssertion(await adapter.createSentinel()); fixtureCreated = result.stages.sentinel.status === STATUS.PASS; }
+                  try { result.stages.sentinel = stageFromAssertion(await adapter.createSentinel()); fixtureCreated = result.stages.sentinel.status === STATUS.PASS || result.stages.sentinel.fixture_allocated === true; }
                   catch (error) { result.stages.sentinel = { status: STATUS.FAIL, error: errorText(error) }; }
                   if (result.stages.sentinel.status !== STATUS.PASS) {
                     stopReason = "Same-database repeat sentinel setup failed.";

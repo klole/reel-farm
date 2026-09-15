@@ -716,7 +716,7 @@ async function composeJourney(composeEnv: NodeJS.ProcessEnv, childEnv: NodeJS.Pr
       sentinelSchema = `ch001_r11_${safeName(runId).replaceAll("-", "_")}`.slice(0, 55);
       sentinelValue = `sentinel_${safeName(runId)}`.slice(0, 120);
       const output = await migrationSql("migration-sentinel-create", `CREATE SCHEMA ${identifier(sentinelSchema)}; CREATE TABLE ${identifier(sentinelSchema)}.sentinel (key TEXT PRIMARY KEY, value TEXT NOT NULL); INSERT INTO ${identifier(sentinelSchema)}.sentinel (key, value) VALUES ('proof', '${sentinelValue}')`);
-      return { status: output.result.exitCode === 0 ? "PASS" : "FAIL", schema: sentinelSchema, value: sentinelValue, log_path: pathFromRoot(output.publicLogPath), ...(output.result.exitCode === 0 ? {} : { reason: "The same-database sentinel fixture could not be created." }) };
+      return { status: output.result.exitCode === 0 ? "PASS" : "FAIL", fixture_allocated: true, schema: sentinelSchema, value: sentinelValue, log_path: pathFromRoot(output.publicLogPath), ...(output.result.exitCode === 0 ? {} : { reason: "The same-database sentinel fixture could not be created." }) };
     },
     inspectRepeatState: async (): Promise<Record<string, unknown>> => {
       const repeatedSchema = await inspectMigrationSchema("repeat");
