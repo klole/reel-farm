@@ -14,6 +14,8 @@ function resultValue(result, camelCase, snakeCase, fallback = null) {
 
 function queryEvidence(kind, sql, result, parsedValue = null, countAttempted = false) {
   const output = resultValue(result, "output", "output", "");
+  const database = resultValue(result, "database", "database");
+  const user = resultValue(result, "user", "user");
   return {
     kind,
     sql,
@@ -23,7 +25,9 @@ function queryEvidence(kind, sql, result, parsedValue = null, countAttempted = f
     output_line_count: typeof output === "string" ? output.split(/\r?\n/).filter((line) => line.trim().length > 0).length : null,
     parsed_value: parsedValue,
     count_attempted: countAttempted,
-    log_path: resultValue(result, "logPath", "log_path")
+    log_path: resultValue(result, "logPath", "log_path"),
+    ...(typeof database === "string" && database.length > 0 ? { database } : {}),
+    ...(typeof user === "string" && user.length > 0 ? { user } : {})
   };
 }
 

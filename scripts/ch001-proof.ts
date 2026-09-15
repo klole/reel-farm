@@ -32,6 +32,8 @@ import { runDbModuleImportVerification } from "./verify-db-module-import.ts";
 import { observeSchemaMigrations, MARKER_COUNT_QUERY, MARKER_PRESENCE_QUERY, type MarkerQueryResult } from "./ch001-migration-marker-observer.mjs";
 import { projectDockerImageInspection, projectMigrationContainerInspection } from "./ch001-container-facts.mjs";
 import { evaluateFinalImageModuleImport } from "./ch001-module-import-verdict.mjs";
+import { createMigrationSqlAdapter } from "./ch001-migration-command.mjs";
+import { serializeCommandEvidence } from "./ch001-command-records.mjs";
 
 type ProcessResult = CommandResult & { invocationId: string };
 type ProofStatus = "PASS" | "FAIL" | "NOT_RUN";
@@ -43,10 +45,10 @@ type HealthDetails = { renderer?: string; database?: string; storage?: string; w
 
 const root = resolve(process.cwd());
 const generatedAt = new Date();
-const runId = process.env.CH001_RUN_ID ?? `r12-local-${generatedAt.toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}`;
+const runId = process.env.CH001_RUN_ID ?? `r13-local-${generatedAt.toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}`;
 assertValidProofRunId(runId);
 
-const evidenceRoot = resolveProofEvidenceRoot(root, process.env.CH001_EVIDENCE_ROOT ?? `artifacts/ch001r12/${runId}`, runId);
+const evidenceRoot = resolveProofEvidenceRoot(root, process.env.CH001_EVIDENCE_ROOT ?? `artifacts/ch001r13/${runId}`, runId);
 const privateDir = resolve(evidenceRoot, "private");
 const publicDir = resolve(evidenceRoot, "public");
 const privateCommandDir = resolve(privateDir, "commands");
@@ -408,7 +410,7 @@ async function prepareRun(): Promise<{ composeEnv: NodeJS.ProcessEnv; childEnv: 
   ].join("\n"), 0o600);
   const childEnv = envWithoutNormalDotenv({ E2E_BASE_URL: baseUrl, CH001_EVIDENCE_DIR: publicDir, CH001_PLAYWRIGHT_OUTPUT_DIR: resolve(privateDir, "playwright-output"), CH001_OWNER_EMAIL: ownerEmail, CH001_OWNER_PASSWORD: ownerPassword, CH001_BOOTSTRAP_TOKEN: bootstrapToken, BROWSER_EXECUTABLE_PATH: browserPath });
   const composeEnv: NodeJS.ProcessEnv = { ...childEnv, APP_ORIGIN: baseUrl, CH001_WEB_PORT: String(port), BOOTSTRAP_TOKEN: bootstrapToken, BETTER_AUTH_SECRET: authSecret, RENDERER_BUILD_ID: "oss-renderer-0.1.0", PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright" };
-  await writeJson(resolve(publicDir, "dispatch.json"), { profile: "CH-001R-r12 migration-proof repair qualification", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, compose_project: projectName, base_url: baseUrl, scope: "local synthetic owner, local synthetic image fixtures, no providers or publishing" });
+  await writeJson(resolve(publicDir, "dispatch.json"), { profile: "CH-001R-r13 bounded source repair qualification", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, compose_project: projectName, base_url: baseUrl, scope: "local synthetic owner, local synthetic image fixtures, no providers or publishing" });
   return { composeEnv, childEnv };
 }
 
@@ -669,20 +671,17 @@ async function migrationContainerCommand(stage: string, databaseUrl?: string, ex
   return migrationObservation(output, { container, ...(inspectionError ? { assertion_ok: false, container_inspection_error: inspectionError } : {}) });
 }
 
+const migrationSqlAdapter = createMigrationSqlAdapter<CommandOutput>(async (name, args) => composeStep(name, args, { publicLogName: name, timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES }));
+
 async function migrationSql(name: string, sql: string, database = "oss", user = "oss", password?: string, verboseErrors = false): Promise<CommandOutput> {
-  const args = ["exec", "-T"];
-  if (password) args.push("-e", `PGPASSWORD=${password}`);
-  args.push("db", "psql", "-U", user, "-d", database, "-v", "ON_ERROR_STOP=1");
-  if (verboseErrors) args.push("-v", "VERBOSITY=verbose");
-  args.push("-Atc", sql);
-  return composeStep(name, args, { publicLogName: name, timeoutMs: SHORT_COMMAND_TIMEOUT_MS, maxOutputBytes: SHORT_COMMAND_MAX_OUTPUT_BYTES });
+  return migrationSqlAdapter(name, sql, database, user, password, verboseErrors);
 }
 
 function markerQueryAdapter(label: string, database = "oss", user = "oss", password?: string): (request: { kind: "presence" | "count"; sql: string }) => Promise<MarkerQueryResult> {
   return async ({ kind, sql }) => {
     if ((kind === "presence" && sql !== MARKER_PRESENCE_QUERY) || (kind === "count" && sql !== MARKER_COUNT_QUERY)) throw new Error("Marker observer supplied an unexpected fixed query.");
     const output = await migrationSql(`migration-${safeName(label)}-${kind}`, sql, database, user, password);
-    return { exit_code: output.result.exitCode, timed_out: output.result.timedOut === true, output_truncated: output.result.outputTruncated === true, output: output.result.output, command: output.result.command, log_path: pathFromRoot(output.publicLogPath) };
+    return { exit_code: output.result.exitCode, timed_out: output.result.timedOut === true, output_truncated: output.result.outputTruncated === true, output: output.result.output, command: output.result.command, log_path: pathFromRoot(output.publicLogPath), database, user };
   };
 }
 
@@ -697,19 +696,19 @@ async function runMarkerObserverRegression(): Promise<Record<string, unknown>> {
   let roleCreated = false;
   const setup: Array<Record<string, unknown>> = [];
   const cases: Record<string, unknown> = {};
-  const runSetup = async (name: string, sql: string): Promise<boolean> => {
-    const output = await migrationSql(name, sql);
+  const runSetup = async (name: string, sql: string, database: string, user: string): Promise<boolean> => {
+    const output = await migrationSql(name, sql, database, user);
     const ok = output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true;
-    setup.push({ operation: name, status: ok ? "PASS" : "FAIL", exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
+    setup.push({ operation: name, status: ok ? "PASS" : "FAIL", database, user, exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
     return ok;
   };
   let failure: string | null = null;
   try {
-    if (!await runSetup("migration-marker-regression-create-role", `CREATE ROLE ${identifier(fixtureRole)} LOGIN PASSWORD '${fixturePassword}'`)) throw new Error("Observer fixture role setup failed.");
+    if (!await runSetup("migration-marker-regression-create-role", `CREATE ROLE ${identifier(fixtureRole)} LOGIN PASSWORD '${fixturePassword}'`, "oss", "oss")) throw new Error("Observer fixture role setup failed.");
     roleCreated = true;
-    if (!await runSetup("migration-marker-regression-create-database", `CREATE DATABASE ${identifier(fixtureDatabase)} OWNER oss`)) throw new Error("Observer fixture database setup failed.");
+    if (!await runSetup("migration-marker-regression-create-database", `CREATE DATABASE ${identifier(fixtureDatabase)} OWNER oss`, "oss", "oss")) throw new Error("Observer fixture database setup failed.");
     databaseCreated = true;
-    if (!await runSetup("migration-marker-regression-grant-connect", `GRANT CONNECT ON DATABASE ${identifier(fixtureDatabase)} TO ${identifier(fixtureRole)}`)) throw new Error("Observer fixture connection grant failed.");
+    if (!await runSetup("migration-marker-regression-grant-connect", `GRANT CONNECT ON DATABASE ${identifier(fixtureDatabase)} TO ${identifier(fixtureRole)}`, "oss", "oss")) throw new Error("Observer fixture connection grant failed.");
 
     const absent = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-absent", fixtureDatabase));
     cases.absent_table = absent;
@@ -720,19 +719,21 @@ async function runMarkerObserverRegression(): Promise<Record<string, unknown>> {
     cases.legacy_negative_control = { query: LEGACY_UNSAFE_MARKER_QUERY, exit_code: legacy.result.exitCode, timed_out: legacy.result.timedOut === true, output_truncated: legacy.result.outputTruncated === true, sqlstate: legacySqlstate, observed_undefined_table: legacySqlstate === "42P01", log_path: pathFromRoot(legacy.publicLogPath) };
     if (legacy.result.exitCode === 0 || legacy.result.timedOut === true || legacy.result.outputTruncated === true || legacySqlstate !== "42P01") throw new Error("Historical unsafe absent-table query did not produce a complete PostgreSQL undefined-table failure.");
 
-    const createTable = await migrationSql("migration-marker-regression-create-table", "CREATE TABLE public.schema_migrations (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL)", fixtureDatabase);
+    const createTable = await migrationSql("migration-marker-regression-create-table", "CREATE TABLE public.schema_migrations (id TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL)", fixtureDatabase, "oss");
+    setup.push({ operation: "migration-marker-regression-create-table", status: createTable.result.exitCode === 0 && createTable.result.timedOut !== true && createTable.result.outputTruncated !== true ? "PASS" : "FAIL", database: fixtureDatabase, user: "oss", exit_code: createTable.result.exitCode, log_path: pathFromRoot(createTable.publicLogPath) });
     if (createTable.result.exitCode !== 0) throw new Error("Observer fixture metadata table setup failed.");
     const empty = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-empty", fixtureDatabase));
     cases.empty_table = empty;
     if (empty.status !== "PASS" || empty.table_present !== true || empty.marker_count !== 0 || empty.count_executed !== true) throw new Error("Empty-table observer case did not execute COUNT and prove zero.");
 
-    const insert = await migrationSql("migration-marker-regression-insert-positive", "INSERT INTO public.schema_migrations (id, applied_at) VALUES ('0001_ch001', CURRENT_TIMESTAMP)", fixtureDatabase);
+    const insert = await migrationSql("migration-marker-regression-insert-positive", "INSERT INTO public.schema_migrations (id, applied_at) VALUES ('0001_ch001', CURRENT_TIMESTAMP)", fixtureDatabase, "oss");
+    setup.push({ operation: "migration-marker-regression-insert-positive", status: insert.result.exitCode === 0 && insert.result.timedOut !== true && insert.result.outputTruncated !== true ? "PASS" : "FAIL", database: fixtureDatabase, user: "oss", exit_code: insert.result.exitCode, log_path: pathFromRoot(insert.publicLogPath) });
     if (insert.result.exitCode !== 0) throw new Error("Observer fixture positive-marker setup failed.");
     const positive = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-positive", fixtureDatabase));
     cases.positive_marker = positive;
     if (positive.status !== "FAIL" || positive.observation_status !== "PASS" || positive.marker_count !== 1 || positive.count_executed !== true) throw new Error("Positive-marker observer case did not retain the measured count or fail the no-marker predicate.");
 
-    if (!await runSetup("migration-marker-regression-restrict-role", `REVOKE ALL ON TABLE public.schema_migrations FROM PUBLIC; GRANT USAGE ON SCHEMA public TO ${identifier(fixtureRole)}`)) throw new Error("Observer fixture count-read restriction setup failed.");
+    if (!await runSetup("migration-marker-regression-restrict-role", `REVOKE ALL ON TABLE public.schema_migrations FROM PUBLIC; GRANT USAGE ON SCHEMA public TO ${identifier(fixtureRole)}`, fixtureDatabase, "oss")) throw new Error("Observer fixture count-read restriction setup failed.");
     const denied = await observeSchemaMigrations(markerQueryAdapter("migration-marker-regression-denied", fixtureDatabase, fixtureRole, fixturePassword));
     cases.count_denied = denied;
     if (denied.status !== "FAIL" || denied.marker_count !== null || denied.count_executed !== true) throw new Error("Denied-count observer case did not fail closed with a null count.");
@@ -741,16 +742,16 @@ async function runMarkerObserverRegression(): Promise<Record<string, unknown>> {
   }
 
   const cleanup: Array<Record<string, unknown>> = [];
-  const cleanupOperation = async (name: string, sql: string): Promise<void> => {
+  const cleanupOperation = async (name: string, sql: string, database: string, user: string): Promise<void> => {
     try {
-      const output = await migrationSql(name, sql);
-      cleanup.push({ operation: name, status: output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true ? "PASS" : "FAIL", exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
+      const output = await migrationSql(name, sql, database, user);
+      cleanup.push({ operation: name, status: output.result.exitCode === 0 && output.result.timedOut !== true && output.result.outputTruncated !== true ? "PASS" : "FAIL", database, user, exit_code: output.result.exitCode, log_path: pathFromRoot(output.publicLogPath) });
     } catch (error) {
-      cleanup.push({ operation: name, status: "FAIL", error: error instanceof Error ? error.message : String(error) });
+      cleanup.push({ operation: name, status: "FAIL", database, user, error: error instanceof Error ? error.message : String(error) });
     }
   };
-  if (databaseCreated) await cleanupOperation("migration-marker-regression-drop-database", `DROP DATABASE IF EXISTS ${identifier(fixtureDatabase)} WITH (FORCE)`);
-  if (roleCreated) await cleanupOperation("migration-marker-regression-drop-role", `DROP ROLE IF EXISTS ${identifier(fixtureRole)}`);
+  if (databaseCreated) await cleanupOperation("migration-marker-regression-drop-database", `DROP DATABASE IF EXISTS ${identifier(fixtureDatabase)} WITH (FORCE)`, "oss", "oss");
+  if (roleCreated) await cleanupOperation("migration-marker-regression-drop-role", `DROP ROLE IF EXISTS ${identifier(fixtureRole)}`, "oss", "oss");
   const cleanupPassed = cleanup.every((operation) => operation.status === "PASS");
   const status = !failure && databaseCreated && Object.keys(cases).length === 5 && cleanupPassed ? "PASS" : "FAIL";
   const result: Record<string, unknown> = {
@@ -1121,19 +1122,19 @@ async function sourceReview(): Promise<{ path: string; clean: boolean }> {
   const state = await read("state/PROJECT_STATE.md");
   if (!/awaiting_review/i.test(state) || !/accepted application version:\s*none/i.test(state)) violations.push("root state is not awaiting review with accepted version unset"); else checks.push("root state remains awaiting review and unaccepted");
   const reportPath = resolve(publicDir, "source-review.md");
-  await writeText(reportPath, ["# CH-001R-r12 source/provenance inspection", "", `Implementation commit: ${implementationCommit}`, `Run ID: ${runId}`, "Evidence type: E1; source-only inspection, not a replacement for runtime/manual proof.", "", ...checks.map((check) => `- PASS — ${check}`), ...violations.map((violation) => `- FAIL — ${violation}`), "", "Pending repository license decision remains recorded; this inspection makes no legal/distribution determination."].join("\n") + "\n");
+  await writeText(reportPath, ["# CH-001R-r13 source/provenance inspection", "", `Implementation commit: ${implementationCommit}`, `Run ID: ${runId}`, "Evidence type: E1; source-only inspection, not a replacement for runtime/manual proof.", "", ...checks.map((check) => `- PASS — ${check}`), ...violations.map((violation) => `- FAIL — ${violation}`), "", "Pending repository license decision remains recorded; this inspection makes no legal/distribution determination."].join("\n") + "\n");
   return { path: pathFromRoot(reportPath), clean: violations.length === 0 };
 }
 
 async function buildGateLedger(source: { path: string; clean: boolean }): Promise<GateRecord[]> {
   let sourceRef;
-  try { sourceRef = await makeEvidenceRef(root, source.path, "E1", "source-review:ch001r12", implementationCommit); } catch { sourceRef = undefined; }
+  try { sourceRef = await makeEvidenceRef(root, source.path, "E1", "source-review:ch001r13", implementationCommit); } catch { sourceRef = undefined; }
   let gateEvidence: GateRecord[] = [];
   try { gateEvidence = await readJsonFile(resolve(publicDir, "gate-evidence.json")) as GateRecord[]; } catch { /* no E2 records if E2E did not reach its final assertion */ }
   const evidence = new Map(gateEvidence.filter((record) => record && typeof record.id === "string").map((record) => [record.id, record]));
   const allProofStepsPass = failures.length === 0;
   const lifecycleEvidence = ["lifecycle.json", "same-data-restart.json", "worker-down.json"].map((name) => resolve(publicDir, name));
-  const gates: GateRecord[] = EXPECTED_GATE_IDS.map((id) => ({ id, status: "NOT_RUN", implementation_commit: implementationCommit, actual_evidence: [], reason: "Not covered by the bounded CH-001R-r12 migration-proof repair profile; no manual acceptance is inferred." }));
+  const gates: GateRecord[] = EXPECTED_GATE_IDS.map((id) => ({ id, status: "NOT_RUN", implementation_commit: implementationCommit, actual_evidence: [], reason: "Not covered by the bounded CH-001R-r13 source-repair qualification profile; no manual acceptance is inferred." }));
   const setPass = (id: string, refs: GateRecord["actual_evidence"], reason: string): void => {
     const gate = gates.find((candidate) => candidate.id === id);
     if (gate && refs.length > 0) { gate.status = "PASS"; gate.actual_evidence = refs; gate.reason = reason; }
@@ -1369,24 +1370,25 @@ async function finalize(host: Record<string, unknown>, source: { path: string; c
   await artifactChecks();
   await writeJson(resolve(publicDir, "environment.json"), { run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, host, runtime: { base_url: baseUrl, compose_project: projectName, port, browser_path: browserPath }, migration_qualification: { status: migrationQualification?.status ?? "NOT_RUN", path: pathFromRoot(resolve(publicDir, "migration-verification.json")) }, prerequisite_failures: environmentFailures, evidence_boundary: "Public record contains measured non-secret facts only; raw credentials and environment files remain private." });
   const gates = await buildGateLedger(source);
-  const commands: CommandRecord[] = commandOutputs.map((output) => ({ command: output.result.command, startedAt: output.result.startedAt, endedAt: output.result.endedAt, exitCode: output.result.exitCode, logPath: pathFromRoot(output.publicLogPath), ...(output.reportPath ? { reportPath: output.reportPath } : {}) }));
+  const commandEvidence = serializeCommandEvidence(commandOutputs, pathFromRoot, { runId, implementationCommit });
+  const commands: CommandRecord[] = commandEvidence.commands;
   const findingDispositions = [
     ...Array.from({ length: 11 }, (_, index) => ({ id: `R${String(index + 1).padStart(2, "0")}`, status: "OPEN", test_reference: null, repair_or_disproof: "This bounded proof does not close the original acceptance findings; architect review remains required." })),
     ...Array.from({ length: 8 }, (_, index) => ({ id: `U${String(index + 1).padStart(2, "0")}`, status: "OBSERVED", test_reference: null, repair_or_disproof: "Scoped r12 repair is implemented; live result or remaining gap is recorded in proof-result.json and command reports." }))
   ];
   await writeJson(resolve(publicDir, "finding-dispositions.json"), { run_id: runId, implementation_commit: implementationCommit, findings: findingDispositions });
-  await writeJson(resolve(publicDir, "command-report.json"), { run_id: runId, implementation_commit: implementationCommit, commands, suites: [...suiteReports.values()], child_invocations: commandOutputs.map((output) => ({ id: output.result.invocationId, command: output.result.command, started_at: output.result.startedAt, ended_at: output.result.endedAt })) });
+  await writeJson(resolve(publicDir, "command-report.json"), { run_id: runId, implementation_commit: implementationCommit, ...commandEvidence, commands, suites: [...suiteReports.values()] });
   await sanitizePublic();
   // Metadata files are excluded from the payload allowlist to avoid a
   // circular hash: the gate report points at this manifest, while the
   // manifest binds the stable test/runtime payload files.
   const manifest = await publicManifest();
-  const report: EvidencePackage = { chapter: "CH-001R-r12", target_application_version: "0.1.0", report_kind: "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE", implementation_commit: implementationCommit, evidence_commit: null, generatedAt: new Date().toISOString(), commands, suites: [...suiteReports.values()], gates, findings: findingDispositions.slice(0, 11), artifact_manifest: manifest.ref };
+  const report: EvidencePackage = { chapter: "CH-001R-r13", command_record_format: commandEvidence.command_record_format, run_id: runId, child_invocations: commandEvidence.child_invocations, target_application_version: "0.1.0", report_kind: "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE", implementation_commit: implementationCommit, evidence_commit: null, generatedAt: new Date().toISOString(), commands, suites: [...suiteReports.values()], gates, findings: findingDispositions.slice(0, 11), artifact_manifest: manifest.ref };
   await writeJson(resolve(publicDir, "gate-results.json"), report);
   const validation = await validateEvidencePackage({ root, report, reportPath: pathFromRoot(resolve(publicDir, "gate-results.json")), requireCompleted: false });
   const gateCounts = { PASS: gates.filter((gate) => gate.status === "PASS").length, FAIL: gates.filter((gate) => gate.status === "FAIL").length, NOT_RUN: gates.filter((gate) => gate.status === "NOT_RUN").length };
   const livePass = failures.length === 0 && environmentFailures.length === 0 && validation.errors.filter((error) => !/Every mandatory gate must be PASS|Finding disposition report must contain R01-R11|Finding R\d+ is not closed/.test(error)).length === 0 && gateCounts.FAIL === 0 && await stat(resolve(publicDir, "a-little-room-to-focus.zip")).then(() => true).catch(() => false);
-  const result = { profile: "CH-001R-r12 migration-proof repair qualification", status: livePass ? "LIVE_PROOF_READY_FOR_REVIEW" : environmentFailures.length > 0 && !composeStarted ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: livePass ? 0 : environmentFailures.length > 0 && !composeStarted ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, scope: "bounded migration-proof repair: isolated marker observer regression, final-image import evidence, strict migration terminals, followed by the existing local app/database/browser/worker journey", prohibited_scope: ["fal.ai", "ScrapeCreators", "TikTok", "publishing", "scheduling", "analytics", "billing", "video", "public deployment", "release", "v0.2"], failures, environment_failures: environmentFailures, gate_counts: gateCounts, validation: { ok: validation.ok, errors: validation.errors }, steps: proofSteps, required_live_artifacts: ["migration-verification.json", "migration-marker-regression.json", "module-import-verification.json", "a-little-room-to-focus.zip", "alternate-4x5.zip", "journey-hashes.json", "lifecycle.json", "same-data-restart.json"], evidence_root: pathFromRoot(publicDir), artifact_manifest: pathFromRoot(resolve(publicDir, "artifact-manifest.json")), artifact_manifest_sha256: await sha256File(resolve(publicDir, "artifact-manifest.json")) };
+  const result = { profile: "CH-001R-r13 bounded source repair qualification", status: livePass ? "LIVE_PROOF_READY_FOR_REVIEW" : environmentFailures.length > 0 && !composeStarted ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: livePass ? 0 : environmentFailures.length > 0 && !composeStarted ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, scope: "bounded r13 source repair: explicit fixture database routing and invocation-preserving evidence, followed by the existing r12 migration-first/application proof path", prohibited_scope: ["fal.ai", "ScrapeCreators", "TikTok", "publishing", "scheduling", "analytics", "billing", "video", "public deployment", "release", "v0.2"], failures, environment_failures: environmentFailures, gate_counts: gateCounts, validation: { ok: validation.ok, errors: validation.errors }, steps: proofSteps, required_live_artifacts: ["migration-verification.json", "migration-marker-regression.json", "module-import-verification.json", "a-little-room-to-focus.zip", "alternate-4x5.zip", "journey-hashes.json", "lifecycle.json", "same-data-restart.json"], evidence_root: pathFromRoot(publicDir), artifact_manifest: pathFromRoot(resolve(publicDir, "artifact-manifest.json")), artifact_manifest_sha256: await sha256File(resolve(publicDir, "artifact-manifest.json")) };
   await writeJson(resolve(publicDir, "proof-result.json"), result);
   await writeJson(resolve(publicDir, "verifier-result.json"), { ok: validation.ok, strict_acceptance: false, report: pathFromRoot(resolve(publicDir, "gate-results.json")), implementation_commit: implementationCommit, run_id: runId, gate_counts: gateCounts });
   return result.exit_code;
@@ -1417,12 +1419,12 @@ try {
   failures.push(`Coordinator: ${detail}`);
   if (evidenceOwned) await sourceReview().catch(() => undefined);
   await finalizeComposeLifecycle().catch((cleanupError) => failures.push(`Compose finalization failed: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`));
-  await writeCoordinatorFailureReport({ publicDir, ownsEvidence: evidenceOwned, report: { profile: "CH-001R-r12 migration-proof repair qualification", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." } }).catch(() => undefined);
-  console.error(`CH-001R-r12 coordinator error: ${detail}`);
+  await writeCoordinatorFailureReport({ publicDir, ownsEvidence: evidenceOwned, report: { profile: "CH-001R-r13 bounded source repair qualification", status: environmentFailures.length > 0 ? "BLOCKED_ENVIRONMENT" : "TEST_FAILURE", exit_code: environmentFailures.length > 0 ? 2 : 1, application_acceptance: false, accepted_application_version: "none", run_id: runId, implementation_commit: implementationCommit, workflow_sha: workflowSha, failures, environment_failures: environmentFailures, steps: proofSteps, scope: "Coordinator failed before all bounded proof steps completed; see command logs." } }).catch(() => undefined);
+  console.error(`CH-001R-r13 coordinator error: ${detail}`);
   exitCode = environmentFailures.length > 0 ? 2 : 1;
 } finally {
   await cleanup();
 }
 
-console.error(`CH-001R-r12 proof ${exitCode === 0 ? "ready for review" : exitCode === 2 ? "blocked by environment" : "failed"}; implementation ${implementationCommit}; run ${runId}.`);
+console.error(`CH-001R-r13 proof ${exitCode === 0 ? "ready for review" : exitCode === 2 ? "blocked by environment" : "failed"}; implementation ${implementationCommit}; run ${runId}.`);
 process.exit(exitCode);

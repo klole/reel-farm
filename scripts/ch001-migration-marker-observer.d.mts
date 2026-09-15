@@ -8,6 +8,8 @@ export type MarkerQueryResult = {
   output_truncated?: boolean;
   output?: string;
   log_path?: string | null;
+  database?: string;
+  user?: string;
   [key: string]: unknown;
 };
 export type MarkerObservation = {

@@ -56,12 +56,15 @@ export type SuiteReport = {
   unavailable_reason?: string;
 };
 
+export type CommandRecordFormat = "legacy-v1" | "invocation-v2";
+
 export type CommandRecord = {
   command: string;
   startedAt: string;
   endedAt: string;
   exitCode: number;
   logPath: string;
+  invocationId?: string;
   reportPath?: string;
   discovered?: number;
   executed?: number;
@@ -70,8 +73,22 @@ export type CommandRecord = {
   skipped?: number;
 };
 
+export type ChildInvocationRecord = {
+  id: string;
+  command: string;
+  started_at: string;
+  ended_at: string;
+  log_path: string;
+  run_id: string;
+  implementation_commit: string;
+  report_path?: string;
+};
+
 export type EvidencePackage = {
   chapter: string;
+  command_record_format?: CommandRecordFormat;
+  run_id?: string;
+  child_invocations?: ChildInvocationRecord[];
   target_application_version: string;
   report_kind: string;
   implementation_commit: string;
@@ -163,8 +180,135 @@ function numeric(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value >= 0;
 }
 
-function requiredCommandPresent(commands: CommandRecord[], command: string): CommandRecord | undefined {
-  return commands.find((record) => Boolean(record && typeof record === "object" && typeof record.command === "string" && (record.command === command || record.command.startsWith(`${command} `))));
+function recordObject(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : null;
+}
+
+function commandMatches(value: unknown, command: string): boolean {
+  const record = recordObject(value);
+  return typeof record?.command === "string" && (record.command === command || record.command.startsWith(`${command} `));
+}
+
+async function validateRepositoryFile(root: string, value: unknown, label: string, errors: string[]): Promise<boolean> {
+  if (!stringValue(value) || isAbsolute(value)) { errors.push(`${label} has no safe repository-relative path.`); return false; }
+  const repositoryRoot = await realpath(resolve(root)).catch(() => resolve(root));
+  const candidate = resolve(repositoryRoot, value);
+  const relativePath = relative(repositoryRoot, candidate);
+  if (!relativePath || relativePath.startsWith("..") || isAbsolute(relativePath)) { errors.push(`${label} escapes the repository.`); return false; }
+  const details = await stat(candidate).catch(() => null);
+  if (!details?.isFile()) { errors.push(`${label} is not a retrievable file.`); return false; }
+  try {
+    const actual = await realpath(candidate);
+    const actualRelative = relative(repositoryRoot, actual);
+    if (!actualRelative || actualRelative.startsWith("..") || isAbsolute(actualRelative)) { errors.push(`${label} escapes the repository through a symlink.`); return false; }
+  } catch { errors.push(`${label} could not be resolved safely.`); return false; }
+  return true;
+}
+
+/**
+ * Validate the command-record boundary independently of the full 72-gate
+ * package. Legacy reports retain their historical duplicate-text rule; r13
+ * reports use invocation identities and a child-invocation projection.
+ */
+export async function validateCommandRecords(input: {
+  root: string;
+  commands: unknown;
+  format: CommandRecordFormat;
+  childInvocations?: unknown;
+  expectedCommit?: string;
+  runId?: string;
+  requiredCommands?: readonly string[];
+  allowMissingRequired?: boolean;
+}): Promise<string[]> {
+  const errors: string[] = [];
+  const commands = Array.isArray(input.commands) ? input.commands : [];
+  if (!Array.isArray(input.commands)) { errors.push("Command report must contain a commands array."); return errors; }
+
+  if (input.format === "legacy-v1") {
+    const commandNames = commands.map((command) => {
+      const record = recordObject(command);
+      return typeof record?.command === "string" ? record.command : "";
+    });
+    if (commandNames.some((command) => !command)) errors.push("Command report contains a malformed command record.");
+    if (new Set(commandNames).size !== commands.length) errors.push("Command report contains duplicate command records.");
+    if (commands.some((command) => Object.prototype.hasOwnProperty.call(recordObject(command) ?? {}, "invocationId"))) errors.push("Legacy command records cannot contain invocation IDs without the r13 format.");
+    for (const required of input.requiredCommands ?? []) {
+      const command = commands.find((record) => commandMatches(record, required));
+      if (!command) { if (!input.allowMissingRequired) errors.push(`Missing required command ${required}.`); continue; }
+      const record = recordObject(command);
+      if (!numeric(record?.exitCode) || record.exitCode !== 0) errors.push(`${required} did not pass (exit ${String(record?.exitCode)}).`);
+      if (!(await validateRepositoryFile(input.root, record?.logPath, required, errors))) errors.push(`${required} has no retrievable command log.`);
+    }
+    return errors;
+  }
+
+  if (input.format !== "invocation-v2") { errors.push(`Unsupported command-record format ${String(input.format)}.`); return errors; }
+  const invocationIds = new Set<string>();
+  const publicLogPaths = new Set<string>();
+  for (const [index, value] of commands.entries()) {
+    const label = `Command record ${index + 1}`;
+    const record = recordObject(value);
+    if (!record) { errors.push(`${label} is not an object.`); continue; }
+    if (!stringValue(record.invocationId)) errors.push(`${label} has no invocationId.`);
+    else if (invocationIds.has(record.invocationId)) errors.push(`Duplicate invocationId ${record.invocationId}.`);
+    else invocationIds.add(record.invocationId);
+    if (!stringValue(record.command)) errors.push(`${label} has no command text.`);
+    if (!stringValue(record.startedAt) || !stringValue(record.endedAt)) errors.push(`${label} has incomplete timestamps.`);
+    if (!numeric(record.exitCode)) errors.push(`${label} has an invalid exit code.`);
+    if (stringValue(record.logPath)) {
+      if (publicLogPaths.has(record.logPath)) errors.push(`Command report reuses public log path ${record.logPath}.`);
+      publicLogPaths.add(record.logPath);
+    }
+    await validateRepositoryFile(input.root, record.logPath, `${label} log`, errors);
+    if (record.reportPath !== undefined) await validateRepositoryFile(input.root, record.reportPath, `${label} report`, errors);
+  }
+
+  const childValues = input.childInvocations;
+  if (!Array.isArray(childValues)) {
+    errors.push("Invocation-v2 command reports must contain child_invocations.");
+  } else {
+    if (childValues.length !== commands.length) errors.push("child_invocations does not contain one record for every command.");
+    const childIds = new Set<string>();
+    const childById = new Map<string, Record<string, unknown>>();
+    const childLogPaths = new Set<string>();
+    for (const [index, value] of childValues.entries()) {
+      const label = `Child invocation ${index + 1}`;
+      const child = recordObject(value);
+      if (!child) { errors.push(`${label} is not an object.`); continue; }
+      if (!stringValue(child.id)) errors.push(`${label} has no id.`);
+      else if (childIds.has(child.id)) errors.push(`Duplicate child invocation id ${child.id}.`);
+      else { childIds.add(child.id); childById.set(child.id, child); }
+      if (!stringValue(child.command) || !stringValue(child.started_at) || !stringValue(child.ended_at)) errors.push(`${label} has incomplete captured command fields.`);
+      if (input.runId !== undefined && child.run_id !== input.runId) errors.push(`${label} has a stale run binding.`);
+      if (input.expectedCommit !== undefined && child.implementation_commit !== input.expectedCommit) errors.push(`${label} has a stale implementation binding.`);
+      if (stringValue(child.log_path)) {
+        if (childLogPaths.has(child.log_path)) errors.push(`Child invocations reuse public log path ${child.log_path}.`);
+        childLogPaths.add(child.log_path);
+      }
+      await validateRepositoryFile(input.root, child.log_path, `${label} log`, errors);
+      if (child.report_path !== undefined) await validateRepositoryFile(input.root, child.report_path, `${label} report`, errors);
+    }
+    for (const [index, value] of commands.entries()) {
+      const record = recordObject(value);
+      if (!record) { errors.push(`Command record ${index + 1} has no matching child invocation.`); continue; }
+      const id = record?.invocationId;
+      const child = typeof id === "string" ? childById.get(id) : undefined;
+      if (!child) { errors.push(`Command record ${index + 1} has no matching child invocation.`); continue; }
+      if (child.command !== record.command || child.started_at !== record.startedAt || child.ended_at !== record.endedAt || child.log_path !== record.logPath || child.report_path !== record.reportPath) errors.push(`Invocation ${id} disagrees with its serialized command record.`);
+    }
+    for (const id of childIds) if (!invocationIds.has(id)) errors.push(`Child invocation ${id} has no serialized command record.`);
+  }
+
+  for (const required of input.requiredCommands ?? []) {
+    const matches = commands.filter((record) => commandMatches(record, required));
+    if (matches.length === 0) { if (!input.allowMissingRequired) errors.push(`Missing required command ${required}.`); continue; }
+    for (const [index, value] of matches.entries()) {
+      const record = recordObject(value);
+      if (!numeric(record?.exitCode) || record.exitCode !== 0) errors.push(`${required} invocation ${index + 1} did not pass (exit ${String(record?.exitCode)}).`);
+      if (!(await validateRepositoryFile(input.root, record?.logPath, `${required} invocation ${index + 1}`, errors))) errors.push(`${required} invocation ${index + 1} has no retrievable command log.`);
+    }
+  }
+  return errors;
 }
 
 export async function validateEvidencePackage(input: { root: string; report: EvidencePackage; reportPath?: string; requireCompleted?: boolean }): Promise<ValidationResult> {
@@ -182,19 +326,17 @@ export async function validateEvidencePackage(input: { root: string; report: Evi
   let contract: { ids: string[]; requiredEvidence: Map<string, string> };
   try { contract = await loadOriginalContract(input.root); } catch (error) { return { ok: false, errors: [error instanceof Error ? error.message : "Original acceptance contract could not be loaded."] }; }
 
-  if (!(report.chapter === "CH-001R-r2" || report.chapter === "CH-001R-r3" || report.chapter === "CH-001R-r11" || report.chapter === "CH-001R-r12") || report.target_application_version !== "0.1.0") errors.push("Report is not for CH-001R-r2, CH-001R-r3, CH-001R-r11, or CH-001R-r12 / v0.1.0.");
+  const r13Report = report.chapter === "CH-001R-r13";
+  if (!(report.chapter === "CH-001R-r2" || report.chapter === "CH-001R-r3" || report.chapter === "CH-001R-r11" || report.chapter === "CH-001R-r12" || r13Report) || report.target_application_version !== "0.1.0") errors.push("Report is not for CH-001R-r2, CH-001R-r3, CH-001R-r11, CH-001R-r12, or CH-001R-r13 / v0.1.0.");
   if (!stringValue(report.implementation_commit) || !/^[0-9a-f]{40}$/.test(report.implementation_commit)) errors.push("Report has no full implementation commit.");
   const expectedCommit = stringValue(report.implementation_commit) ? report.implementation_commit : "";
-  const commandNames = commands.map((command) => command && typeof command === "object" && typeof command.command === "string" ? command.command : "");
-  if (commandNames.some((command) => !command)) errors.push("Command report contains a malformed command record.");
-  if (new Set(commandNames).size !== commands.length) errors.push("Command report contains duplicate command records.");
   const boundedProof = report.report_kind === "BOUNDED_LIVE_PROOF_NOT_FULL_ACCEPTANCE";
-  for (const required of REQUIRED_ROOT_COMMANDS) {
-    const command = requiredCommandPresent(commands, required);
-    if (!command) { if (!boundedProof) errors.push(`Missing required command ${required}.`); continue; }
-    if (!numeric(command.exitCode) || command.exitCode !== 0) errors.push(`${required} did not pass (exit ${command.exitCode}).`);
-    if (!stringValue(command.logPath) || !(await fileExists(resolve(input.root, command.logPath)))) errors.push(`${required} has no retrievable command log.`);
-  }
+  if (r13Report && report.command_record_format !== "invocation-v2") errors.push("CH-001R-r13 must declare command_record_format invocation-v2.");
+  if (!r13Report && report.command_record_format === "invocation-v2") errors.push("Invocation-v2 command records are admitted only for CH-001R-r13.");
+  if (!r13Report && Array.isArray(report.child_invocations)) errors.push("Legacy reports cannot carry child_invocations without the r13 format.");
+  if (r13Report && !stringValue(report.run_id)) errors.push("CH-001R-r13 must contain a run_id for invocation binding.");
+  const commandValidationInput = { root: input.root, commands, format: r13Report ? "invocation-v2" as const : "legacy-v1" as const, expectedCommit, requiredCommands: REQUIRED_ROOT_COMMANDS, allowMissingRequired: boundedProof, ...(report.child_invocations !== undefined ? { childInvocations: report.child_invocations } : {}), ...(report.run_id !== undefined ? { runId: report.run_id } : {}) };
+  errors.push(...await validateCommandRecords(commandValidationInput));
   for (const suiteName of REQUIRED_GATED_COMMANDS) {
     const suite = suites.find((candidate) => candidate && typeof candidate === "object" && candidate.suite === suiteName);
     if (!suite) { errors.push(`Missing ${suiteName} suite report.`); continue; }

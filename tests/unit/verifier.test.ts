@@ -3,7 +3,8 @@ import { mkdtemp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { EXPECTED_GATE_IDS, REQUIRED_ROOT_COMMANDS, makeEvidenceRef, type EvidencePackage, type EvidenceRef, validateEvidencePackage, writeJson } from "../../scripts/ch001-harness.ts";
+import { EXPECTED_GATE_IDS, REQUIRED_ROOT_COMMANDS, makeEvidenceRef, type EvidencePackage, type EvidenceRef, validateCommandRecords, validateEvidencePackage, writeJson } from "../../scripts/ch001-harness.ts";
+import { serializeCommandEvidence } from "../../scripts/ch001-command-records.mjs";
 
 const testCommit = "a".repeat(40);
 
@@ -29,6 +30,96 @@ describe("CH-001 fail-closed evidence validator", () => {
   it("accepts a complete, same-commit synthetic contract fixture", async () => {
     const { root, report } = await fixture();
     await expect(validateEvidencePackage({ root, report })).resolves.toEqual({ ok: true, errors: [] });
+  });
+
+  it("accepts r13 repeated command text when serializer and child invocations carry distinct identities", async () => {
+    const { root, report } = await fixture();
+    const outputs = report.commands.map((command, index) => {
+      const logPath = `command-${index}.log`;
+      return {
+        result: {
+          invocationId: `r13-invocation-${index}`,
+          command: command.command,
+          startedAt: `2026-09-11T00:00:${String(index).padStart(2, "0")}.000Z`,
+          endedAt: `2026-09-11T00:00:${String(index).padStart(2, "0")}.500Z`,
+          exitCode: 0
+        },
+        publicLogPath: logPath
+      };
+    });
+    outputs.push(
+      { result: { invocationId: "r13-invocation-repeat-0", command: "psql -U oss -d fixture -Atc SELECT 1", startedAt: "2026-09-11T00:01:00.000Z", endedAt: "2026-09-11T00:01:00.500Z", exitCode: 0 }, publicLogPath: "command-repeat-0.log" },
+      { result: { invocationId: "r13-invocation-repeat-1", command: "psql -U oss -d fixture -Atc SELECT 1", startedAt: "2026-09-11T00:01:01.000Z", endedAt: "2026-09-11T00:01:01.500Z", exitCode: 0 }, publicLogPath: "command-repeat-1.log" }
+    );
+    for (const output of outputs) await writeFile(resolve(root, output.publicLogPath), `${output.result.command}\n`);
+    const serialized = serializeCommandEvidence(outputs, (value) => value, { runId: "r13-unit-run", implementationCommit: testCommit });
+    report.chapter = "CH-001R-r13";
+    report.command_record_format = serialized.command_record_format;
+    report.run_id = "r13-unit-run";
+    report.commands = serialized.commands;
+    report.child_invocations = serialized.child_invocations;
+    const result = await validateEvidencePackage({ root, report });
+    expect(result).toEqual({ ok: true, errors: [] });
+  });
+
+  it("rejects r13 duplicate/missing IDs, stale bindings, reused logs, and missing evidence", async () => {
+    const { root } = await fixture();
+    const outputs = [0, 1].map((index) => ({
+      result: { invocationId: `r13-boundary-${index}`, command: "psql -U oss -d fixture -Atc SELECT 1", startedAt: `2026-09-11T00:00:0${index}.000Z`, endedAt: `2026-09-11T00:00:0${index}.500Z`, exitCode: 0 },
+      publicLogPath: `repeat-${index}.log`
+    }));
+    await writeFile(resolve(root, "repeat-0.log"), "first\n");
+    await writeFile(resolve(root, "repeat-1.log"), "second\n");
+    const serialized = serializeCommandEvidence(outputs, (value) => value, { runId: "r13-unit-run", implementationCommit: testCommit });
+    const firstCommand = serialized.commands[0];
+    const secondCommand = serialized.commands[1];
+    const firstChild = serialized.child_invocations[0];
+    const secondChild = serialized.child_invocations[1];
+    if (!firstCommand || !secondCommand || !firstChild || !secondChild) throw new Error("The repeated-command fixture was not serialized.");
+    const valid = { commands: serialized.commands, childInvocations: serialized.child_invocations };
+    await expect(validateCommandRecords({ root, format: "invocation-v2", ...valid, expectedCommit: testCommit, runId: "r13-unit-run" })).resolves.toEqual([]);
+
+    const cases = [
+      { name: "duplicate ID", commands: [{ ...firstCommand }, { ...secondCommand, invocationId: firstCommand.invocationId }], childInvocations: serialized.child_invocations },
+      { name: "missing ID", commands: [{ ...firstCommand, invocationId: "" }, secondCommand], childInvocations: serialized.child_invocations },
+      { name: "stale child binding", commands: serialized.commands, childInvocations: [{ ...firstChild, run_id: "stale-run" }, secondChild] },
+      { name: "reused log", commands: [firstCommand, { ...secondCommand, logPath: firstCommand.logPath }], childInvocations: [firstChild, { ...secondChild, log_path: firstChild.log_path }] },
+      { name: "missing log", commands: [{ ...firstCommand, logPath: "missing.log" }, secondCommand], childInvocations: [{ ...firstChild, log_path: "missing.log" }, secondChild] }
+    ];
+    for (const testCase of cases) {
+      const errors = await validateCommandRecords({ root, format: "invocation-v2", commands: testCase.commands, childInvocations: testCase.childInvocations, expectedCommit: testCommit, runId: "r13-unit-run" });
+      expect(errors.length, testCase.name).toBeGreaterThan(0);
+    }
+  });
+
+  it("checks every matching required invocation so pass-then-fail and fail-then-pass remain blocking", async () => {
+    const { root } = await fixture();
+    const makeRecords = async (exits: number[]) => {
+      const outputs = exits.map((exitCode, index) => ({
+        result: { invocationId: `required-${index}`, command: "pnpm lint", startedAt: `2026-09-11T00:00:1${index}.000Z`, endedAt: `2026-09-11T00:00:1${index}.500Z`, exitCode },
+        publicLogPath: `required-${index}.log`
+      }));
+      for (const output of outputs) await writeFile(resolve(root, output.publicLogPath), `${output.result.exitCode}\n`);
+      return serializeCommandEvidence(outputs, (value) => value, { runId: "r13-required-run", implementationCommit: testCommit });
+    };
+    for (const exits of [[0, 1], [1, 0]]) {
+      const serialized = await makeRecords(exits);
+      const errors = await validateCommandRecords({ root, format: "invocation-v2", commands: serialized.commands, childInvocations: serialized.child_invocations, expectedCommit: testCommit, runId: "r13-required-run", requiredCommands: ["pnpm lint"] });
+      expect(errors.some((error) => /pnpm lint invocation 1|pnpm lint invocation 2/.test(error) && /did not pass/.test(error))).toBe(true);
+    }
+  });
+
+  it("keeps legacy duplicate-text validation explicit", async () => {
+    const { root } = await fixture();
+    const errors = await validateCommandRecords({
+      root,
+      format: "legacy-v1",
+      commands: [
+        { command: "same command", startedAt: "2026-09-11T00:00:00.000Z", endedAt: "2026-09-11T00:00:01.000Z", exitCode: 0, logPath: "evidence.txt" },
+        { command: "same command", startedAt: "2026-09-11T00:00:02.000Z", endedAt: "2026-09-11T00:00:03.000Z", exitCode: 0, logPath: "evidence.txt" }
+      ]
+    });
+    expect(errors).toContain("Command report contains duplicate command records.");
   });
 
   it("accepts an absolute inside-root writer path but rejects a symlink escape", async () => {
